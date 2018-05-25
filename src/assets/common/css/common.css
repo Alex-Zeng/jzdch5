@@ -1,0 +1,235 @@
+@import url(//at.alicdn.com/t/font_670323_6u0civi996bt9.css);
+*{
+	padding: 0;
+	margin: 0;
+	outline: none;
+	border: none;
+	text-decoration: none;
+	-webkit-tap-highlight-color:transparent;
+	list-style: none;
+}
+a{
+	display: inline-block;
+}
+a:active, a:visited{
+	outline: none;
+}
+body{
+  background: #F5F5F5;
+}
+.iconfont{
+	font-size: 0.8rem!important;
+}
+
+#app input {
+  font-size: 0.7rem;
+}
+
+#app .form {
+  padding: 0 1rem;
+}
+/*搜索*/
+.search {
+  display: flex;
+  height: 1.2rem;
+  color: #FFFFFF;
+  background: #1EB9EE;
+  padding: 0.5rem 1rem;
+  align-items: center;
+}
+.search input {
+  margin-right: 1rem;
+  flex: 1;
+  height: 100%;
+  background: rgba(246, 246, 246, 0.3) url(../../images/search.png) no-repeat 0.5rem center;
+  border-radius: 0.65rem;
+  padding-left: 1.8rem;
+}
+.search .iconfont{
+  position: relative;
+  color: #FFFFFF;
+}
+.search .vux-badge{
+  position: absolute;
+  top: -0.4rem;
+  left: 0.5rem;
+}
+input::-webkit-input-placeholder {
+  color: #E1E1E1;
+}
+
+input::-moz-placeholder {
+  color: #E1E1E1;
+}
+
+input:-moz-placeholder {
+  color: #E1E1E1;
+}
+
+input:-ms-input-placeholder {
+  color: #E1E1E1;
+}
+
+.search input::-webkit-input-placeholder {
+  color: #FFFFFF;
+}
+
+.search input::-moz-placeholder {
+  color: #FFFFFF;
+}
+
+.search input:-moz-placeholder {
+  color: #FFFFFF;
+}
+
+.search input:-ms-input-placeholder {
+  color: #FFFFFF;
+}
+/*搜索*/
+.footer-nav{
+  width: 100%;
+  height: 2.5rem;
+  box-sizing: border-box;
+  display: flex;
+  align-content: center;
+  justify-content: space-between;
+  position: fixed;
+  bottom: 0;
+  background: #fff;
+
+}
+.footer-nav a{
+  font-size: 0.6rem;
+  color: #999999;
+  display: block;
+  flex-grow: 1;
+  padding: 0.3rem 0;
+  text-align: center;
+  position: relative;
+
+}
+.footer-nav i{
+  height: 1rem;
+  margin: 0.2rem;
+  background-size: 1rem;
+  position: relative;
+}
+.footer-nav a.active{
+	color: #1EB9EE;
+}
+.footer-nav .router-link-exact-active{
+	color: #1EB9EE;
+}
+.footer-nav .vux-badge{
+  background: #FFFFFF;
+  color: #E22425;
+  border: 1px solid #E22425;
+  box-sizing: border-box;
+  position: absolute;
+  top: -0.25rem;
+  left: 0.7rem;
+  margin: auto;
+  transform:scale(0.8);
+}
+/*辅助类*/
+.text-red{
+	color: #E22425!important;
+}
+.text-muted{
+	color: #999999!important;
+}
+
+.text-gray {
+  color: #E1E1E1;
+}
+.text-truncate{
+  word-wrap: normal; /* for IE */
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.text-blue{
+  color: #1EB9EE!important;
+}
+
+.fl {
+  float: left;
+}
+
+.fr {
+  float: right;
+}
+
+.btn {
+  width: 100%;
+  border-radius: 0.2rem;
+  position: relative;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 14px;
+  padding-right: 14px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  font-size: 18px;
+  text-align: center;
+  text-decoration: none;
+  color: #FFFFFF;
+  line-height: 2.33333333;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  overflow: hidden;
+}
+
+.btn-primary {
+  background: #5FCAED;
+}
+
+.btn-link {
+  background: transparent;
+  color: #5FCAED;
+}
+/*辅助类*/
+/*修改插件样式*/
+.vux-slider > .vux-indicator > a > .vux-icon-dot, .vux-slider .vux-indicator-right > a > .vux-icon-dot{
+	width: 0.4rem!important;
+	height: 0.4rem!important;;
+	border-radius: 50%!important;;
+	border: 0.05rem solid #FFFFFF!important;;
+	background-color: transparent!important;;
+}
+.vux-slider > .vux-indicator > a > .vux-icon-dot.active, .vux-slider .vux-indicator-right > a > .vux-icon-dot.active{
+	background-color: #FFFFFF!important;;
+}
+.vux-badge-single{
+  width: auto!important;
+  height: auto!important;
+}
+.vux-badge{
+  padding: 0 0.2rem!important;
+}
+.weui-cell{
+  padding: 0.75rem!important;
+}
+.weui-cells{
+  margin-top: -1px!important;
+}
+
+.weui-btn:after {
+  border: none !important;
+}
+
+.weui-btn_primary {
+  background-color: #5FCAED !important;;
+}
+
+.weui-btn_primary:not(.weui-btn_disabled):visited {
+  color: #FFFFFF;
+}
+
+.weui-btn_primary:not(.weui-btn_disabled):active {
+  color: rgba(255, 255, 255, 0.6);
+  background-color: #5FCAED !important;
+}
+/*修改插件样式*/
+
+

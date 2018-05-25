@@ -1,0 +1,62 @@
+import Vue from 'vue'
+import Router from 'vue-router'
+import Index from '@/components/home/index'
+import GoodsClass from '@/components/goods-class/goods-class'
+import User from '@/components/user/user'
+import shopCard from '@/components/shop-card/shop-card'
+import Login from '@/components/login/login'
+import Register from '@/components/login/register'
+
+Vue.use(Router)
+export default new Router({
+  routes: [
+    {
+      path: '/',
+      name: 'index',
+      meta: {
+        title: '首页'
+      },
+      component: Index
+    },
+    {
+      path: '/goods-class',
+      name: 'goods-class',
+      meta: {
+        title: '分类'
+      },
+      component: GoodsClass
+    },
+    {
+      path: '/user',
+      name: 'user',
+      meta: {
+        title: '用户中心'
+      },
+      component: User
+    },
+    {
+      path: '/shop-card',
+      name: 'shop-card',
+      meta: {
+        title: '采购清单'
+      },
+      component: shopCard
+    },
+    {
+      path: '/login',
+      name: 'login',
+      meta: {
+        title: '登录'
+      },
+      component: Login
+    },
+    {
+      path: '/register',
+      name: 'register',
+      meta: {
+        title: '注册'
+      },
+      component: Register
+    }
+  ]
+})

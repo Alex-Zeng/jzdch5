@@ -1,0 +1,39 @@
+.login-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+  padding: 1rem;
+  padding-bottom: 4rem;
+  color: #999999;
+  background: url("../images/login-icon.png") no-repeat center 3.25rem;
+}
+
+.user-agreement {
+  font-size: 0.6rem;
+  color: #999999;
+  text-align: center;
+  padding: 1rem;
+}
+
+.user-agreement a {
+  color: #5FCAED;
+}
+
+.text-gray {
+  font-size: 0.7rem;
+  text-align: center;
+}
+
+.code-input-box {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 2.5rem;
+}
+
+.code-input-box input {
+  width: 2.5rem;
+  height: 2rem;
+  border-bottom: 1px solid #E1E1E1;
+  text-align: center;
+}

@@ -1,0 +1,44 @@
+.user-header{
+  height: 9.4rem;
+  display: flex;
+  background: #1EB9EE;
+  align-items: center;
+}
+.user-header img{
+	margin-left: 1.5rem;
+	margin-right: 0.5rem;
+	width: 4rem;
+	height: 4rem;
+}
+.user-header > div{
+	flex: 1;
+	font-family: 'PingFang-SC-Bold';
+	font-weight: bold;
+	color: #FFFFFF;
+	font-size: 0.8rem;
+}
+.user-msg i{
+  margin-right: 0.5rem;
+}
+.user-grid{
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center;
+}
+.user-grid .item{
+    padding-top: 1.8rem;
+    width: 50%;
+    height: 6.25rem;
+    background: #FFFFFF;
+    margin-top: -1px;
+    border: 0.05rem solid #E1E1E1;
+    box-sizing: border-box;
+}
+.user-grid .item i{
+  position: relative;
+}
+.user-grid .item .vux-badge{
+  position: absolute;
+  top: -0.25rem;
+  left: 0.75rem;
+}
