@@ -14,6 +14,7 @@ require('./fit.js')
 require('./assets/common/css/common.css')
 Vue.config.productionTip = false
 
+
 // 搜索
 Vue.component('search-view', {
   template: '<div class="search"><input type="text" placeholder="搜索您想要的商品"/><a><i class="icon iconfont icon-xiaoxi"><badge text="9"></badge></i></a></div>'
