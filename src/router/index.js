@@ -5,8 +5,9 @@ import GoodsClass from '@/components/goods-class/goods-class'
 import User from '@/components/user/user'
 import shopCard from '@/components/shop-card/shop-card'
 import Login from '@/components/login/login'
+import LoginCode from '@/components/login/Login-code'
 import Register from '@/components/login/register'
-
+import myForm from '@/components/form'
 Vue.use(Router)
 export default new Router({
   routes: [
@@ -51,12 +52,28 @@ export default new Router({
       component: Login
     },
     {
+      path: '/loginByCode',
+      name: 'loginByCode',
+      meta: {
+        title: '免密登录'
+      },
+      component: LoginCode
+    },
+    {
       path: '/register',
       name: 'register',
       meta: {
         title: '注册'
       },
       component: Register
+    },
+    {
+      path: '/form',
+      name: 'myForm',
+      meta: {
+        title: '表单验证'
+      },
+      component: myForm
     }
   ]
 })

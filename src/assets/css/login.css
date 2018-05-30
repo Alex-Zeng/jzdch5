@@ -4,11 +4,14 @@
   align-items: center;
   font-size: 0.75rem;
   padding: 1rem;
+  height: 1rem;
   padding-bottom: 4rem;
   color: #999999;
   background: url("../images/login-icon.png") no-repeat center 3.25rem;
 }
-
+.login-top a{
+  color: #999999;
+}
 .user-agreement {
   font-size: 0.6rem;
   color: #999999;
@@ -34,6 +37,8 @@
 .code-input-box input {
   width: 2.5rem;
   height: 2rem;
-  border-bottom: 1px solid #E1E1E1;
+  border-radius: 0;
   text-align: center;
+  border-bottom: 1px solid #E1E1E1;
 }
+
