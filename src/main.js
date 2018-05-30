@@ -3,12 +3,13 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+/*import VeeValidate from 'vee-validate'*/
 import {Badge, ToastPlugin} from 'vux'
 import VueResource from 'vue-resource'
-
 Vue.component('badge', Badge)
 Vue.use(ToastPlugin)
 Vue.use(VueResource)
+/*Vue.use(VeeValidate)*/
 require('./fit.js')
 require('./assets/common/css/common.css')
 Vue.config.productionTip = false

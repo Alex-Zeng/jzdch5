@@ -1,4 +1,4 @@
-@import url(//at.alicdn.com/t/font_670323_6u0civi996bt9.css);
+@import url(//at.alicdn.com/t/font_670323_0ecza5snleb6s9k9.css);
 *{
 	padding: 0;
 	margin: 0;
@@ -24,7 +24,15 @@ body{
 #app input {
   font-size: 0.7rem;
 }
-
+.border-input{
+  width: 100%;
+  height: 2.4rem;
+  padding: 0 0.5rem;
+  box-sizing: border-box;
+  border-radius: 0.2rem;
+  border: 1px solid #5FCAED;
+  margin-bottom: 1.5rem;
+}
 #app .form {
   padding: 0 1rem;
 }
@@ -230,6 +238,35 @@ input:-ms-input-placeholder {
   color: rgba(255, 255, 255, 0.6);
   background-color: #5FCAED !important;
 }
+#app .vux-x-input-right-full img{
+  height: 1.5rem;
+}
 /*修改插件样式*/
 
-
+/*表单*/
+.form ul li {
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  border-bottom: 1px solid #E1E1E1;
+}
+.form ul li .cells{
+  padding: 10px 15px;
+  position: relative;
+  display: flex;
+  flex: 1;
+  align-items: center;
+}
+.form ul li .cells label{
+  padding-right: 1rem;
+  color: #222222;
+  font-size: 15px;
+}
+.form ul li .cells input{
+  height: 1.5rem;
+  flex: 1;
+}
+.form ul li .cells .img-code{
+  width: 115px;
+}
+/*表单*/
