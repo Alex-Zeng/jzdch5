@@ -3,14 +3,34 @@
     <template v-if="model1Show">
       <div class="login-top">
         <i class="icon iconfont icon-guanbi" onclick="history.go(-1)"></i>
-        <router-link to="/login">账号密码登录</router-link>
+        <!--<router-link to="/login">账号密码登录</router-link>-->
       </div>
       <form class="form" action="">
         <ul>
           <li>
+            <div class="text-muted form-title">
+              找回密码
+            </div>
+          </li>
+          <li>
             <div class="cells">
               <label for="">+86</label>
-              <input name="mobile" required v-model="mobile" placeholder="填写手机号码，未注册用户也可直接登录"/>
+              <input name="mobile" required v-model="mobile" placeholder="请输入注册手机号"/>
+            </div>
+          </li>
+        </ul>
+        <button type="button" class="btn btn-primary" @click="getImgCode">下一步</button>
+      </form>
+    </template>
+    <template  v-if="model2Show">
+      <div class="login-top">
+        <i class="icon iconfont icon-back" @click="back"></i>
+      </div>
+      <form action="" class="form">
+        <ul>
+          <li>
+            <div class="text-muted form-title">
+              找回密码
             </div>
           </li>
           <li>
@@ -22,15 +42,10 @@
         </ul>
         <button type="button" class="btn btn-primary" @click="getMobileCode(1)">下一步</button>
       </form>
-      <div class="user-agreement">
-        未注册用户登录后代表您已阅读并同意
-        <a href="javascript:;">《用户协议》</a>
-      </div>
     </template>
-    <template v-if="model2Show">
+    <template v-if="model3Show">
       <div class="login-top">
         <i class="icon iconfont icon-back" @click="back"></i>
-        <span>免密登录</span>
       </div>
       <form class="form" action="">
         <div class="text-gray">短信验证码已发送至 {{mobile}}</div>
@@ -44,7 +59,7 @@
         <button type="button" class="btn btn-link" @click="getMobileCode(0)" v-if="resetCode">重新发送验证码</button>
       </form>
     </template>
-    <template v-if="model3Show">
+    <template v-if="false">
       <div class="login-top"></div>
       <form class="form" action="" method="post">
         <input type="hidden" v-model="mobileCode">
@@ -58,7 +73,7 @@
 
 require('../../assets/css/login.css')
 export default {
-  name: 'login',
+  name: 'forget-password',
   data () {
     return {
       mobile: '',
@@ -67,9 +82,10 @@ export default {
       code3: '',
       code4: '',
       mobileCode: '',
-      userName: '',
-      imgCodeSrc: '',
+      password: '',
       id: '',
+      confirmPassword: '',
+      imgCodeSrc: '',
       verificationCode: '',
       model1Show: true,
       model2Show: false,
@@ -93,10 +109,34 @@ export default {
       })
     },
     getImgCode () {
-      this.$http.get('api/captcha/img', this.mobile).then((response) => {
+      this.$http.post('api/password/checkPhone', {
+        'phone': this.mobile
+      }).then((response) => {
+        console.log(response)
         if (response.data.status === 0) {
-          this.id = response.data.data.id
-          this.imgCodeSrc = response.data.data.src + '?' + new Date().getTime()
+          this.model2Show = true
+          this.model1Show = false
+          this.$http.get('api/captcha/img', this.mobile).then((response) => {
+            console.log(response)
+            if (response.data.status === 0) {
+              this.id = response.data.data.id
+              this.imgCodeSrc = response.data.data.src + '?' + new Date().getTime()
+            } else {
+              this.$vux.toast.show({
+                type: 'warn',
+                text: response.data.msg,
+                onShow () {
+                  console.log('Plugin: I\'m showing')
+                },
+                onHide () {
+                  console.log('Plugin: I\'m hiding')
+                }
+              })
+            }
+          }, (response) => {
+            // 响应错误回调
+            this.errorMsg()
+          })
         } else {
           this.$vux.toast.show({
             type: 'warn',
@@ -115,16 +155,17 @@ export default {
       })
     },
     getMobileCode (val) {
-      this.$http.post('api/code/registerSend', {
+      this.$http.post('api/code/passwordSend', {
         'phone': this.mobile,
         'code': this.verificationCode,
-        'id': this.id,
-        'codeValid': val
+        'codeValid': val,
+        'id': this.id
       }).then((response) => {
         if (response.data.status === 0) {
           console.log(response)
           this.model1Show = false
-          this.model2Show = true
+          this.model2Show = false
+          this.model3Show = true
           this.time = 60
           this.setTimeOut = true
           this.resetCode = false
@@ -153,9 +194,11 @@ export default {
       })
     },
     checkCode () {
-      this.$http.post('api/code/registerValid', {
+      this.$http.post('api/password/update', {
         'phone': this.mobile,
-        'code': this.mobileCode
+        'code': this.mobileCode,
+        'password': this.password,
+        'confirmPassword': this.confirmPassword
       }).then((response) => {
         if (response.data.status === 0) {
           console.log(this.mobileCode)
@@ -274,27 +317,21 @@ export default {
     }
   },
   mounted () {
-    this.getImgCode()
   },
   updated: function () {
   },
   watch: {
-    code1 (val) {
-      console.log(val)
+    code1 () {
       document.getElementById('code2').focus()
     },
-    code2 (val) {
-      console.log(val)
+    code2 () {
       document.getElementById('code3').focus()
     },
-    code3 (val) {
-      console.log(val)
+    code3 () {
       document.getElementById('code4').focus()
     },
-    code4 (val) {
+    code4 () {
       this.mobileCode = this.code1 + this.code2 + this.code3 + this.code4
-      console.log(val)
-      console.log(this.mobileCode)
       this.checkCode()
     }
   },

@@ -115,6 +115,48 @@ export default {
         this.menunListsFirst = this.menunLists.slice(0, 8)
         this.menunListsSecond = this.menunLists.slice(8, 16)
       }
+    },
+    getBanner () {
+      this.$http.post('api/img/banner', {
+        'phone': this.mobile,
+        'code': this.mobileCode
+      }).then((response) => {
+        if (response.data.status === 0) {
+          console.log(this.mobileCode)
+          this.model1Show = false
+          this.model2Show = false
+          this.model3Show = true
+          // 响应成功回调
+          console.log('success')
+        } else {
+          this.$vux.toast.show({
+            type: 'warn',
+            text: response.data.msg,
+            onShow () {
+              console.log('Plugin: I\'m showing')
+            },
+            onHide () {
+              console.log('Plugin: I\'m hiding')
+            }
+          })
+        }
+      }, (response) => {
+        // 响应错误回调
+        console.log('error')
+        this.errorMsg()
+      })
+    },
+    errorMsg () {
+      this.$vux.toast.show({
+        type: 'warn',
+        text: '网络可能有点问题',
+        onShow () {
+          console.log('Plugin: I\'m showing')
+        },
+        onHide () {
+          console.log('Plugin: I\'m hiding')
+        }
+      })
     }
   },
   created () {

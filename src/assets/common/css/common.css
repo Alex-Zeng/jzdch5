@@ -248,14 +248,19 @@ input:-ms-input-placeholder {
   display: flex;
   overflow: hidden;
   position: relative;
-  border-bottom: 1px solid #E1E1E1;
+  padding-bottom: 0.9rem;
+}
+.form ul li .form-title{
+  font-size: 0.9rem;
+  color: #999999;
 }
 .form ul li .cells{
-  padding: 10px 15px;
+  padding: 0.25rem 0.75rem;
   position: relative;
   display: flex;
   flex: 1;
   align-items: center;
+  border-bottom: 1px solid #E1E1E1;
 }
 .form ul li .cells label{
   padding-right: 1rem;
@@ -266,7 +271,8 @@ input:-ms-input-placeholder {
   height: 1.5rem;
   flex: 1;
 }
-.form ul li .cells .img-code{
-  width: 115px;
+.form ul li .img-code{
+  height: 1.8rem;
+  margin-left: 0.5rem;
 }
 /*表单*/
