@@ -7,6 +7,7 @@ import shopCard from '@/components/shop-card/shop-card'
 import Login from '@/components/login/login'
 import LoginCode from '@/components/login/Login-code'
 import Register from '@/components/login/register'
+import forgetPassword from '@/components/login/forget-password'
 import myForm from '@/components/form'
 Vue.use(Router)
 export default new Router({
@@ -66,6 +67,14 @@ export default new Router({
         title: '注册'
       },
       component: Register
+    },
+    {
+      path: '/forget-password',
+      name: 'forget-password',
+      meta: {
+        title: '忘记密码'
+      },
+      component: forgetPassword
     },
     {
       path: '/form',

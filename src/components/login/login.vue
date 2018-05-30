@@ -5,23 +5,31 @@
       <router-link to="/loginByCode">免密登录</router-link>
     </div>
     <form class="form" action="" method="post">
-      <group>
-        <x-input title="用户名" required name="mobile" v-model="mobile" placeholder="请输入您的用户名/手机号/邮箱" keyboard="number"></x-input>
-      </group>
-      <group>
-        <x-input type="password" required title="密码" v-model="password" name="password" placeholder="请输入您的登陆密码"
-                 keyboard="number"></x-input>
-      </group>
-      <group v-if="false">
-        <x-input title="验证码" required name="verificationCode" placeholder="请输入右侧验证码">
-          <img slot="right-full-height" src="https://ws1.sinaimg.cn/large/663d3650gy1fq684go3glj203m01hmwy.jpg">
-        </x-input>
-      </group>
+      <ul>
+        <li>
+          <div class="cells">
+            <label for="">用户名</label>
+            <input type="text" name="mobile" required v-model="mobile" placeholder="请输入您的用户名/手机号/邮箱"/>
+          </div>
+        </li>
+        <li>
+          <div class="cells">
+            <label for="">密码</label>
+            <input type="password" name="password" required v-model="password" placeholder="请输入您的登陆密码"/>
+          </div>
+        </li>
+        <li v-if="false">
+          <div class="cells">
+            <input type="text" name="verificationCode" required maxlength="5" v-model="verificationCode" placeholder="请输入右侧验证码"/>
+          </div>
+          <img class="img-code" @click="getImgCode" :src="imgCodeSrc">
+        </li>
+      </ul>
       <button type="button" class="btn btn-primary" @click="login">登录</button>
     </form>
     <div class="user-agreement">
       <router-link to="/register" class="text-muted fl">免费注册</router-link>
-      <a href="javascript:;" class="text-muted fr">忘记密码</a>
+      <router-link to="/forget-password" class="text-muted fr">忘记密码</router-link>
     </div>
   </div>
 </template>
@@ -35,7 +43,8 @@ export default {
   data () {
     return {
       mobile: '',
-      password: ''
+      password: '',
+      imgCodeSrc: ''
     }
   },
   methods: {
@@ -58,6 +67,28 @@ export default {
               _sel.$router.push('/')
             }
           })
+        } else {
+          this.$vux.toast.show({
+            type: 'warn',
+            text: response.data.msg,
+            onShow () {
+              console.log('Plugin: I\'m showing')
+            },
+            onHide () {
+              console.log('Plugin: I\'m hiding')
+            }
+          })
+        }
+      }, (response) => {
+        // 响应错误回调
+        this.errorMsg()
+      })
+    },
+    getImgCode () {
+      this.$http.get('api/captcha/img', this.mobile).then((response) => {
+        console.log(response)
+        if (response.data.status === 0) {
+          this.imgCodeSrc = response.data.data.src + '?' + new Date().getTime()
         } else {
           this.$vux.toast.show({
             type: 'warn',
