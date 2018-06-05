@@ -36,7 +36,7 @@
 
 <script>
 import {Cell, Group, XButton, XInput} from 'vux'
-
+import axios from 'axios'
 require('../../assets/css/login.css')
 export default {
   name: 'login',
@@ -50,17 +50,17 @@ export default {
   methods: {
     login () {
       var _sel = this
-      this.$http.post('api/login/index', {
+      axios.post('api/login/index', {
         'userName': this.mobile,
         'password': this.password
       }).then((response) => {
-        console.log(response)
         if (response.data.status === 0) {
           this.$vux.toast.show({
             type: 'success',
             text: '登陆成功',
             onShow () {
               console.log('Plugin: I\'m showing')
+              sessionStorage.setItem('loginToken', response.data.token)
             },
             onHide () {
               console.log('Plugin: I\'m hiding')
@@ -79,13 +79,13 @@ export default {
             }
           })
         }
-      }, (response) => {
+      }).catch((response) => {
         // 响应错误回调
         this.errorMsg()
       })
     },
     getImgCode () {
-      this.$http.get('api/captcha/img', this.mobile).then((response) => {
+      axios.get('api/captcha/img', this.mobile).then((response) => {
         console.log(response)
         if (response.data.status === 0) {
           this.imgCodeSrc = response.data.data.src + '?' + new Date().getTime()
@@ -101,7 +101,7 @@ export default {
             }
           })
         }
-      }, (response) => {
+      }).catch((response) => {
         // 响应错误回调
         this.errorMsg()
       })

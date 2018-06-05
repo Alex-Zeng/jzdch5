@@ -44,7 +44,7 @@
   </div>
 </template>
 <script>
-
+import axios from 'axios'
 require('../../assets/css/login.css')
 export default {
   name: 'loginByCode',
@@ -67,7 +67,7 @@ export default {
   },
   methods: {
     getImgCode () {
-      this.$http.get('api/captcha/img', this.mobile).then((response) => {
+      axios.get('api/captcha/img', this.mobile).then((response) => {
         console.log(response)
         if (response.data.status === 0) {
           this.imgCodeSrc = response.data.data.src + '?' + new Date().getTime()
@@ -83,13 +83,13 @@ export default {
             }
           })
         }
-      }, (response) => {
+      }).catch((response) => {
         // 响应错误回调
         this.errorMsg()
       })
     },
     getMobileCode (val) {
-      this.$http.post('api/code/loginSend', {
+      axios.post('api/code/loginSend', {
         'phone': this.mobile,
         'code': val
       }).then((response) => {
@@ -117,20 +117,20 @@ export default {
             }
           })
         }
-      }, (response) => {
+      }).catch((response) => {
         // 响应错误回调
         console.log('error')
         this.errorMsg()
       })
     },
     checkCode () {
-      this.$http.post('api/login/phone', {
+      axios.post('api/login/phone', {
         'phone': this.mobile,
         'code': this.mobileCode
       }).then((response) => {
         if (response.data.status === 0) {
           console.log(this.mobileCode)
-          localStorage.setItem('loginToken', response.data.data)
+          sessionStorage.setItem('loginToken', response.data.token)
           // 响应成功回调
           console.log('success')
           this.$router.push('/')
@@ -146,7 +146,7 @@ export default {
             }
           })
         }
-      }, (response) => {
+      }).catch((response) => {
         // 响应错误回调
         console.log('error')
         this.errorMsg()

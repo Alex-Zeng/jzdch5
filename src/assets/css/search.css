@@ -1,0 +1,48 @@
+.search-lists-header{
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid #E1E1E1;
+  border-top: 0.5rem solid #F5F5F5;
+  position: fixed;
+  width: 100%;
+  box-sizing: border-box;
+  background: #ffffff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #999999;
+  z-index: 9;
+}
+.search-lists{
+  border-bottom: 1px solid #E1E1E1;
+  padding-top: 2.8rem;
+}
+.search-lists li{
+  border-top: 1px solid #E1E1E1;
+  padding: 0.5rem;
+}
+.search-lists li a{
+  display: flex;
+}
+.search-lists li a img{
+  width: 3rem;
+  height: 3rem;
+  background: #E0E0E0;
+  margin-right: 0.5rem;
+}
+.search-lists li a div{
+  flex: 1;
+  font-size: 0.6rem;
+}
+.search-lists li a h3{
+  width: 13rem;
+  font-size: 0.65rem;
+  color: #222222;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0.5rem 0 0.8rem 0;
+}
+.search-lists li a div > div{
+
+}

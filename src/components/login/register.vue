@@ -55,7 +55,7 @@
   </div>
 </template>
 <script>
-
+import axios from 'axios'
 require('../../assets/css/login.css')
 export default {
   name: 'login',
@@ -80,20 +80,8 @@ export default {
     }
   },
   methods: {
-    checkMobile () {
-      this.$vux.toast.show({
-        type: 'warn',
-        text: '手机号码已存在',
-        onShow () {
-          console.log('Plugin: I\'m showing')
-        },
-        onHide () {
-          console.log('Plugin: I\'m hiding')
-        }
-      })
-    },
     getImgCode () {
-      this.$http.get('api/captcha/img', this.mobile).then((response) => {
+      axios.get('api/captcha/img', this.mobile).then((response) => {
         if (response.data.status === 0) {
           this.id = response.data.data.id
           this.imgCodeSrc = response.data.data.src + '?' + new Date().getTime()
@@ -109,13 +97,13 @@ export default {
             }
           })
         }
-      }, (response) => {
+      }).catch((response) => {
         // 响应错误回调
         this.errorMsg()
       })
     },
     getMobileCode (val) {
-      this.$http.post('api/code/registerSend', {
+      axios.post('api/code/registerSend', {
         'phone': this.mobile,
         'code': this.verificationCode,
         'id': this.id,
@@ -146,14 +134,14 @@ export default {
             }
           })
         }
-      }, (response) => {
+      }).catch((response) => {
         // 响应错误回调
         console.log('error')
         this.errorMsg()
       })
     },
     checkCode () {
-      this.$http.post('api/code/registerValid', {
+      axios.post('api/code/registerValid', {
         'phone': this.mobile,
         'code': this.mobileCode
       }).then((response) => {
@@ -176,7 +164,7 @@ export default {
             }
           })
         }
-      }, (response) => {
+      }).catch((response) => {
         // 响应错误回调
         console.log('error')
         this.errorMsg()
@@ -184,7 +172,7 @@ export default {
     },
     submit () {
       var _sel = this
-      this.$http.post('api/register/phone', {
+      axios.post('api/register/phone', {
         'phone': this.mobile,
         'code': this.mobileCode,
         'userName': this.userName
@@ -198,6 +186,7 @@ export default {
               console.log('Plugin: I\'m showing')
               // 响应成功回调
               console.log('success')
+              sessionStorage.setItem('loginToken', response.data.token)
             },
             onHide () {
               console.log('Plugin: I\'m hiding')
@@ -216,7 +205,7 @@ export default {
             }
           })
         }
-      }, (response) => {
+      }).catch((response) => {
         // 响应错误回调
         console.log('error')
         this.errorMsg()

@@ -46,7 +46,8 @@
   </div>
 </template>
 
-<script>import FooterNav from '../common/footer-nav'
+<script>
+import FooterNav from '../common/footer-nav'
 import {Cell, CellBox, Group} from 'vux'
 
 require('../../assets/css/user.css')

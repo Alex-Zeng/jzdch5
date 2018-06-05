@@ -13,9 +13,13 @@ export default {
 <style>
 
 #app {
+  height: 100%;
   font-family: 'PingFang-SC-Medium', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   padding-bottom: 2.5rem;
+}
+#app > div{
+  height: 100%;
 }
 </style>

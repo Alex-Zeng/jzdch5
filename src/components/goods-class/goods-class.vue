@@ -1,6 +1,5 @@
 <template>
   <div>
-    <search-view></search-view>
     <div class="goods-class">
       <div class="sub-nav"></div>
     </div>

@@ -3,9 +3,10 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import {Badge, ToastPlugin} from 'vux'
+import {Badge, ToastPlugin, ConfirmPlugin} from 'vux'
 import VueResource from 'vue-resource'
 Vue.component('badge', Badge)
+Vue.use(ConfirmPlugin)
 Vue.use(ToastPlugin)
 Vue.use(VueResource)
 require('./fit.js')
@@ -13,9 +14,6 @@ require('./assets/common/css/common.css')
 Vue.config.productionTip = false
 
 // 搜索
-Vue.component('search-view', {
-  template: '<div class="search"><input type="text" placeholder="搜索您想要的商品"/><a><i class="icon iconfont icon-xiaoxi"><badge text="9"></badge></i></a></div>'
-})
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

@@ -59,18 +59,18 @@
         <button type="button" class="btn btn-link" @click="getMobileCode(0)" v-if="resetCode">重新发送验证码</button>
       </form>
     </template>
-    <template v-if="false">
+    <template v-if="model4Show">
       <div class="login-top"></div>
       <form class="form" action="" method="post">
-        <input type="hidden" v-model="mobileCode">
-        <input type="text" class="border-input" name="userName" minlength="4" maxlength="20" required v-model="userName" placeholder="首次登录，请设置4~20位非纯数字用户名">
+          <input type="text" class="border-input" name="password" minlength="4" maxlength="20" required v-model="password" placeholder="请设置4-20位密码">
+          <input type="text" class="border-input" name="confirmPassword" minlength="4" maxlength="20" required v-model="confirmPassword" placeholder="请再次输入密码">
         <button type="button" class="btn btn-primary" @click="submit">提交</button>
       </form>
     </template>
   </div>
 </template>
 <script>
-
+import axios from 'axios'
 require('../../assets/css/login.css')
 export default {
   name: 'forget-password',
@@ -82,34 +82,23 @@ export default {
       code3: '',
       code4: '',
       mobileCode: '',
-      password: '',
       id: '',
+      password: '',
       confirmPassword: '',
       imgCodeSrc: '',
       verificationCode: '',
       model1Show: true,
       model2Show: false,
       model3Show: false,
+      model4Show: false,
       setTimeOut: true,
       resetCode: false,
       time: 60
     }
   },
   methods: {
-    checkMobile () {
-      this.$vux.toast.show({
-        type: 'warn',
-        text: '手机号码已存在',
-        onShow () {
-          console.log('Plugin: I\'m showing')
-        },
-        onHide () {
-          console.log('Plugin: I\'m hiding')
-        }
-      })
-    },
     getImgCode () {
-      this.$http.post('api/password/checkPhone', {
+      axios.post('api/password/checkPhone', {
         'phone': this.mobile
       }).then((response) => {
         console.log(response)
@@ -149,13 +138,13 @@ export default {
             }
           })
         }
-      }, (response) => {
+      }).catch((response) => {
         // 响应错误回调
         this.errorMsg()
       })
     },
     getMobileCode (val) {
-      this.$http.post('api/code/passwordSend', {
+      axios.post('api/code/passwordSend', {
         'phone': this.mobile,
         'code': this.verificationCode,
         'codeValid': val,
@@ -187,24 +176,23 @@ export default {
             }
           })
         }
-      }, (response) => {
+      }).catch((response) => {
         // 响应错误回调
         console.log('error')
         this.errorMsg()
       })
     },
     checkCode () {
-      this.$http.post('api/password/update', {
+      axios.post('api/password/checkCode', {
         'phone': this.mobile,
-        'code': this.mobileCode,
-        'password': this.password,
-        'confirmPassword': this.confirmPassword
+        'code': this.mobileCode
       }).then((response) => {
         if (response.data.status === 0) {
           console.log(this.mobileCode)
           this.model1Show = false
           this.model2Show = false
-          this.model3Show = true
+          this.model3Show = false
+          this.model4Show = true
           // 响应成功回调
           console.log('success')
         } else {
@@ -219,7 +207,7 @@ export default {
             }
           })
         }
-      }, (response) => {
+      }).catch((response) => {
         // 响应错误回调
         console.log('error')
         this.errorMsg()
@@ -227,10 +215,11 @@ export default {
     },
     submit () {
       var _sel = this
-      this.$http.post('api/register/phone', {
+      axios.post('api/password/update', {
         'phone': this.mobile,
         'code': this.mobileCode,
-        'userName': this.userName
+        'password': this.password,
+        'confirmPassword': this.confirmPassword
       }).then((response) => {
         if (response.data.status === 0) {
           console.log(response)
@@ -259,7 +248,7 @@ export default {
             }
           })
         }
-      }, (response) => {
+      }).catch((response) => {
         // 响应错误回调
         console.log('error')
         this.errorMsg()
