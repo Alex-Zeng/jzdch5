@@ -1,7 +1,7 @@
 <template>
   <!--滑动区域-->
   <div class="mescroll"  id="mescroll">
-    <div class="search"><input type="text" placeholder="搜索您想要的商品" readonly @click="search"/><a><i class="icon iconfont icon-xiaoxi"><badge text="9"></badge></i></a></div>
+    <headerMessage></headerMessage>
     <div class="banner">
       <swiper loop :show-desc-mask="false" dots-position="center" height="9.9rem" :list="banners" :show-dots="banners.length > 1? true:false"></swiper>
     </div>
@@ -44,7 +44,7 @@
     <!--展示上拉加载的数据列表-->
     <ul id="dataList" class="goods-lists data-list" v-cloak>
       <li v-for="(item, index) in goodsLists" :key="index">
-        <router-link to="/">
+        <router-link :to="'/detail/'+ item.id">
           <img :src="item.url" alt=""/>
           <div class="goods-title">
             {{item.title}}
@@ -60,6 +60,7 @@
 </template>
 
 <script>
+import headerMessage from '../common/header-message'
 import FooterNav from '../common/footer-nav'
 import {Badge, Swiper, SwiperItem} from 'vux'
 import axios from 'axios'
@@ -82,9 +83,6 @@ export default {
     }
   },
   methods: {
-    search () {
-      this.$router.push('/search')
-    },
     menunListsCouter () {},
     getBanner () {
       axios.post('api/img/banner', {
@@ -164,6 +162,7 @@ export default {
       })
     },
     getListDataFromNet (pageNum, pageSize, successCallback, errorCallback) {
+      let self = this
       // 延时一秒,模拟联网
       setTimeout(function () {
         axios.post('api/goods/getRecommend', {
@@ -229,11 +228,6 @@ export default {
         // 以下参数可删除,不配置
         isBounce: false, // 此处禁止ios回弹,解析(务必认真阅读,特别是最后一点): http://www.mescroll.com/qa.html#q10
         // page:{size:8}, //可配置每页8条数据,默认10
-        toTop: { // 配置回到顶部按钮
-          src: '../../assets/images/mescroll-totop.png', // 默认滚动到1000px显示,可配置offset修改
-          // html: null, //html标签内容,默认null; 如果同时设置了src,则优先取src
-          offset: 100
-        },
         offset: 500,
         empty: { // 配置列表无任何数据的提示
           warpId: null,
@@ -248,7 +242,7 @@ export default {
     })
   },
   components: {
-    FooterNav, Swiper, SwiperItem, Badge
+    headerMessage, FooterNav, Swiper, SwiperItem, Badge
   }
 }
 </script>

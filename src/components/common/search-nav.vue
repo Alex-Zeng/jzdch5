@@ -74,7 +74,7 @@ export default {
       }
     },
     getResult (val) {
-      if (val.keyCode === 13) {
+      if (val.keyCode === 13 || val === true) {
         var obj = { 'keywords': this.keywords }
         this.historyLists.push(obj)
         sessionStorage.setItem('keyword', JSON.stringify(this.historyLists))
@@ -206,6 +206,7 @@ export default {
           'type': self.type,
           'keywords': self.keywords,
           'sort': self.mySort,
+          'id': self.$route.query.id,
           'pageNumber': pageNum,
           'pageSize': pageSize
         }).then((response) => {
@@ -247,6 +248,14 @@ export default {
   mounted () {
     this.loginToken = sessionStorage.getItem('loginToken')
     this.getHistory()
+    var keywords = this.$route.query.name
+    console.log(keywords)
+    if (keywords !== undefined) {
+      this.keywords = keywords
+      this.getResult(true)
+    }
+    console.log(this.$route.query.name)
+    console.log(this.$route.query.id)
   },
   watch: {
     keywords (val) {

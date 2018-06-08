@@ -10,7 +10,7 @@
         <!--展示上拉加载的数据列表-->
         <ul  id="dataList" v-if="showList" class="search-lists"  v-cloak>
           <li v-for="(item, index) in goodsLists" :key="index">
-            <router-link to="/">
+            <router-link :to="'/detail/'+item.id">
               <img :src="item.url" alt="">
               <div>
                 <h3>{{item.title}}</h3>
@@ -23,7 +23,7 @@
         </ul>
         <ul v-if="!showList" class="goods-lists" style="padding-top: 2.8rem;">
           <li v-for="(item, index) in goodsLists" :key="index">
-            <router-link to="/">
+            <router-link :to="'/detail/'+item.id">
               <img :src="item.url" alt=""/>
               <div class="goods-title">
                 {{item.title}}

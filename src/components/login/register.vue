@@ -10,7 +10,7 @@
           <li>
             <div class="cells">
               <label for="">+86</label>
-              <input name="mobile" required v-model="mobile" placeholder="填写手机号码，未注册用户也可直接登录"/>
+              <input name="mobile" type="tel" required v-model="mobile" placeholder="填写手机号码，未注册用户也可直接登录"/>
             </div>
           </li>
           <li>
@@ -34,7 +34,7 @@
       </div>
       <form class="form" action="">
         <div class="text-gray">短信验证码已发送至 {{mobile}}</div>
-        <div class="code-input-box" @click="focusInput">
+        <div class="code-input-box" @click="focusInput" @keyup="clear($event)">
           <input type="number" id="code1" v-model="code1" oninput="if(value.length>1)value=value.slice(0,1)">
           <input type="number" id="code2" v-model="code2" oninput="if(value.length>1)value=value.slice(0,1)">
           <input type="number" id="code3" v-model="code3" oninput="if(value.length>1)value=value.slice(0,1)">
@@ -84,7 +84,7 @@ export default {
       axios.get('api/captcha/img', this.mobile).then((response) => {
         if (response.data.status === 0) {
           this.id = response.data.data.id
-          this.imgCodeSrc = response.data.data.src + '?' + new Date().getTime()
+          this.imgCodeSrc = response.data.data.src
         } else {
           this.$vux.toast.show({
             type: 'warn',
@@ -228,6 +228,17 @@ export default {
         setTimeout(function () {
           document.getElementById('code4').focus()
         }, 200)
+      }
+    },
+    clear (event) {
+      console.log(event.keyCode)
+      if (event.keyCode === 8) {
+        this.code3 = ''
+        this.code2 = ''
+        this.code1 = ''
+        setTimeout(function () {
+          document.getElementById('code1').focus()
+        }, 100)
       }
     },
     back () {

@@ -1,4 +1,4 @@
-@import url(//at.alicdn.com/t/font_670323_51vyh0ps837n9udi.css);
+@import url(//at.alicdn.com/t/font_670323_78jkguq89t2ihpvi.css);
 *{
 	padding: 0;
 	margin: 0;
@@ -151,6 +151,7 @@ body{
   position: absolute;
   top: -0.4rem;
   left: 0.5rem;
+  transform: scale(0.9);
 }
 .search-history-box{
   width: 100%;
@@ -389,6 +390,12 @@ input:-ms-input-placeholder {
   background: transparent;
 }
 #app .mescroll{ -webkit-box-sizing: border-box; box-sizing: border-box; }
+#app .vux-number-selector svg{
+  fill: #222222;
+}
+#app .vux-number-selector.vux-number-disabled svg{
+  fill: #999999;
+}
 /*修改插件样式*/
 
 /*表单*/

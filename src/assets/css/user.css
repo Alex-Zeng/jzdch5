@@ -4,6 +4,14 @@
   background: #1EB9EE;
   align-items: center;
 }
+.user-header i{
+  font-size: 1rem;
+  color: #FFFFFF;
+  padding: 0.5rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
 .user-header img{
 	margin-left: 1.5rem;
 	margin-right: 0.5rem;
@@ -26,19 +34,54 @@
   text-align: center;
 }
 .user-grid .item{
+  color: #999999;
     padding-top: 1.8rem;
     width: 50%;
     height: 6.25rem;
     background: #FFFFFF;
     margin-top: -1px;
+  font-size: 0.8rem;
     border: 0.05rem solid #E1E1E1;
     box-sizing: border-box;
 }
 .user-grid .item i{
   position: relative;
+  font-size: 1.5rem!important;
 }
 .user-grid .item .vux-badge{
   position: absolute;
   top: -0.25rem;
   left: 0.75rem;
+}
+.all-indent{
+  height: 2.7rem;
+  line-height: 2.7rem;
+  font-size: 0.8rem;
+  color: #1EB9EE;
+  text-align: center;
+  background: #FFFFFF;
+  margin-bottom: 0.5rem;
+  border-bottom: 0.05rem solid #E1E1E1;
+}
+.footer-ad{
+	height: 6.25rem;
+  background: #E5F9FF;
+  margin-bottom: 3rem;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #5FCAED;
+  text-align: center;
+}
+.footer-ad > div:first-child{
+  padding-top: 0.9rem;
+  padding-bottom: 0.8rem;
+}
+.footer-ad a{
+  font-size: 1.2rem;
+  font-weight: normal;
+  color: #5FCAED;
+  border: 0.05rem solid #5FCAED;
+  padding: 0.25rem 1rem;
+  border-radius: 0.25rem;
+
 }

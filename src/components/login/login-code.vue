@@ -91,7 +91,8 @@ export default {
     getMobileCode (val) {
       axios.post('api/code/loginSend', {
         'phone': this.mobile,
-        'code': val
+        'code': this.verificationCode,
+        'codeValid': val
       }).then((response) => {
         if (response.data.status === 0) {
           console.log(response)

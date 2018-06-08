@@ -1,19 +1,67 @@
 <template>
   <div>
+    <headerMessage></headerMessage>
     <div class="goods-class">
-      <div class="sub-nav"></div>
+      <div class="sub-nav">
+        <ul>
+          <li v-for="(item, index) in categoryList" :key="index">
+            <a href="javascript:;" @click="tabsort(index)" :class="{ active: iscur == index }">{{item.name}}</a>
+          </li>
+        </ul>
+      </div>
+      <div class="main-nav">
+        <ul>
+          <li v-for="(item, index) in categoryListChildren" :key="index">
+            <router-link :to="{path: '/search', query: { name: item.name, id: item.id }}">
+              <img :src="item.path" :alt="item.id">
+              <h3>{{item.name}}</h3>
+            </router-link>
+          </li>
+        </ul>
+      </div>
     </div>
     <FooterNav></FooterNav>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
+import headerMessage from '../common/header-message'
 import FooterNav from '../common/footer-nav'
-
+import '@/assets/css/goods-class.css'
 export default {
   name: 'goods-class',
+  data () {
+    return {
+      iscur: 0,
+      totalData: [],
+      categoryList: [],
+      categoryListChildren: []
+    }
+  },
+  methods: {
+    getCategoryList () {
+      axios.get('api/goods/getCategoryList').then((response) => {
+        if (response.data.status === 0) {
+          let data = response.data.data
+          for (let i = 0; i < data.length; i++) {
+            this.categoryList.push({'id': data[i].id, 'name': data[i].name})
+          }
+          this.totalData = data
+          this.categoryListChildren = this.totalData[0].child
+        }
+      }).catch((response) => {})
+    },
+    tabsort (index) {
+      this.iscur = index
+      this.categoryListChildren = this.totalData[index].child
+    }
+  },
+  created () {
+    this.getCategoryList()
+  },
   components: {
-    FooterNav
+    headerMessage, FooterNav
   }
 }
 </script>

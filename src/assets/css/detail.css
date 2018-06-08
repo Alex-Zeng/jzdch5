@@ -1,0 +1,171 @@
+.header-nav{
+  color: #FFFFFF;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  background: #1EB9EE;
+}
+.header-nav a , .header-nav i{
+  padding: 0.5rem;
+  height: 1.2rem;
+  line-height: 1.2rem;
+  color: #FFFFFF;
+}
+.detai-header{
+
+}
+.goods-title-box{
+  height: 4rem;
+  padding: 0.5rem;
+  box-sizing: border-box;
+  border-top: 1px solid #E1E1E1;
+  border-bottom: 1px solid #E1E1E1;
+  margin-bottom: 0.5rem;
+  background: #FFFFFF;
+}
+.goods-title-box h3{
+  color: #222222;
+  font-size: 0.9rem;
+  padding-bottom: 0.5rem;
+}
+.goods-seller{
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  margin-bottom: 0.5rem;
+}
+.goods-seller div{
+  background: #FFFFFF;
+  padding: 0 0.5rem;
+  display: flex;
+  align-items: center;
+  border: 1px solid #E1E1E1;
+  font-size: 0.8rem;
+  color: #999999;
+}
+.goods-seller > div:first-child{
+  height: 4rem;
+  font-weight: bold;
+  margin-right: 0.5rem;
+  flex: 1;
+  border-left: none;
+}
+.goods-seller > div:first-child img{
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 2.5rem;
+  margin-right: 0.5rem;
+  background: #E5F9FF;
+}
+.select-rule{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0.5rem;
+  height: 2.5rem;
+  border-top: 1px solid #E1E1E1;
+  border-bottom: 1px solid #E1E1E1;
+  margin-bottom: 0.5rem;
+  background: #FFFFFF;
+}
+.select-rule span{
+  font-size: 0.8rem;
+  color: #222222;
+  font-weight: bold;
+}
+.select-rule i{
+  color: #999999;
+}
+.detail-shop-car{
+  width: 100%;
+  height: 2.5rem;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  font-size: 0.8rem;
+  border-top: 1px solid #E1E1E1;
+  background: #FFFFFF;
+  padding-left: 0.5rem;
+  box-sizing: border-box;
+}
+.detail-shop-car a{
+  color: #999999;
+}
+.detail-shop-car .vux-badge{
+}
+.detail-shop-car .vux-number-selector{
+  border: none;
+}
+.detail-shop-car> div:last-child{
+  width: 5rem;
+  height: 100%;
+  line-height: 2.5rem;
+  background: #E22425;
+  color: #FFFFFF;
+}
+.detail-title{
+  padding: 0 0.5rem;
+  height: 2.5rem;
+  line-height: 2.5rem;
+  text-align: center;
+  color: #222222;
+  font-weight: bold;
+  font-size: 0.8rem;
+  border-top: 1px solid #E1E1E1;
+  border-bottom: 1px solid #E1E1E1;
+  margin-bottom: 0.5rem;
+  background: #FFFFFF;
+}
+.goods-guige{
+  width: 100%;
+  background: #FFFFFF;
+  position: fixed;
+  bottom: 2.5rem;
+  padding: 0.5rem;
+}
+.goods-guige h3{
+  font-size: 0.8rem;
+  color: #222222;
+  font-weight: bold;
+}
+.goods-guige ul{
+  display: flex;
+  flex-wrap: wrap;
+  padding: 1rem;
+}
+.goods-guige li{
+  display: inline-block;
+  width: 4rem;
+  height: 1.3rem;
+  text-align: center;
+  margin: 0.5rem;
+  font-size: 0.65rem;
+}
+.goods-guige li a{
+  width: 100%;
+  height: 100%;
+  line-height: 1.3rem;
+  display: block;
+  background: #E1E1E1;
+  border-radius: 0.25rem;
+  color: #FFFFFF;
+}
+.goods-guige li a:active, .goods-guige li a.active{
+  background: #5FCAED;
+}
+.shadow-box{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0,0,0,0.3);
+}
+
