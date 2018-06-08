@@ -15,7 +15,7 @@
           </li>
           <li>
             <div class="cells">
-              <input title="验证码" name="code" required maxlength="5" v-model="verificationCode" placeholder="请输入右侧验证码"/>
+              <input title="验证码" name="code" required maxlength="4" v-model="verificationCode" placeholder="请输入右侧验证码"/>
             </div>
             <img class="img-code" @click="getImgCode" :src="imgCodeSrc">
           </li>

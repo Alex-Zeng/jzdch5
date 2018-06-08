@@ -31,7 +31,7 @@
       </div>
       <form class="form" action="">
         <div class="text-gray">短信验证码已发送至 {{mobile}}</div>
-        <div class="code-input-box" @click="focusInput">
+        <div class="code-input-box" @click="focusInput"  @keyup="clear($event)">
           <input type="number" id="code1" v-model="code1" oninput="if(value.length>1)value=value.slice(0,1)">
           <input type="number" id="code2" v-model="code2" oninput="if(value.length>1)value=value.slice(0,1)">
           <input type="number" id="code3" v-model="code3" oninput="if(value.length>1)value=value.slice(0,1)">
@@ -170,6 +170,17 @@ export default {
         setTimeout(function () {
           document.getElementById('code4').focus()
         }, 200)
+      }
+    },
+    clear (event) {
+      console.log(event.keyCode)
+      if (event.keyCode === 8) {
+        this.code3 = ''
+        this.code2 = ''
+        this.code1 = ''
+        setTimeout(function () {
+          document.getElementById('code1').focus()
+        }, 100)
       }
     },
     back () {
