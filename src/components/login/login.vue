@@ -1,21 +1,23 @@
 <template>
-  <div>
+  <div style="background: #FFFFFF;">
     <div class="login-top">
       <i class="icon iconfont icon-guanbi" @click="$router.push('/')"></i>
       <router-link to="/loginByCode">免密登录</router-link>
     </div>
-    <form class="form" action="" method="post">
+    <form class="form">
       <ul>
         <li>
+          <i :class="{'is-danger': errors.has('mobile')}"></i>
           <div class="cells">
             <label for="">用户名</label>
-            <input type="text" name="mobile" required v-model="mobile" placeholder="请输入您的用户名/手机号/邮箱"/>
+            <input type="text" name="mobile" v-validate="'required'" v-model="mobile" placeholder="请输入您的用户名/手机号/邮箱"/>
           </div>
         </li>
         <li>
+          <i :class="{'is-danger': errors.has('password')}"></i>
           <div class="cells">
             <label for="">密码</label>
-            <input type="password" name="password" required v-model="password" placeholder="请输入您的登陆密码"/>
+            <input type="password" name="password" v-validate="'required'" v-model="password" placeholder="请输入您的登陆密码"/>
           </div>
         </li>
         <li v-if="false">
@@ -50,38 +52,53 @@ export default {
   methods: {
     login () {
       var _sel = this
-      axios.post('api/login/index', {
-        'userName': this.mobile,
-        'password': this.password
-      }).then((response) => {
-        if (response.data.status === 0) {
-          this.$vux.toast.show({
-            type: 'success',
-            text: '登陆成功',
-            onShow () {
-              console.log('Plugin: I\'m showing')
-              sessionStorage.setItem('loginToken', response.data.token)
-            },
-            onHide () {
-              console.log('Plugin: I\'m hiding')
-              _sel.$router.push('/')
+      this.$validator.validateAll().then((result) => {
+        if (result) {
+          axios.post('api/login/index', {
+            'userName': this.mobile,
+            'password': this.password
+          }).then((response) => {
+            if (response.data.status === 0) {
+              this.$vux.toast.show({
+                type: 'success',
+                text: '登陆成功',
+                onShow () {
+                  console.log('Plugin: I\'m showing')
+                  sessionStorage.setItem('loginToken', response.data.token)
+                },
+                onHide () {
+                  console.log('Plugin: I\'m hiding')
+                  _sel.$router.push('/')
+                }
+              })
+            } else {
+              this.$vux.toast.show({
+                type: 'warn',
+                text: response.data.msg,
+                onShow () {
+                  console.log('Plugin: I\'m showing')
+                },
+                onHide () {
+                  console.log('Plugin: I\'m hiding')
+                }
+              })
             }
+          }).catch((response) => {
+            // 响应错误回调
+            this.errorMsg()
           })
-        } else {
-          this.$vux.toast.show({
-            type: 'warn',
-            text: response.data.msg,
-            onShow () {
-              console.log('Plugin: I\'m showing')
-            },
-            onHide () {
-              console.log('Plugin: I\'m hiding')
-            }
-          })
+          return
         }
-      }).catch((response) => {
-        // 响应错误回调
-        this.errorMsg()
+        this.$vux.toast.show({
+          type: 'warn',
+          text: '请填写用户名和密码',
+          onShow () {
+            console.log('Plugin: I\'m showing')
+          },
+          onHide () {
+            console.log('Plugin: I\'m hiding')
+          }
+        })
       })
     },
     getImgCode () {

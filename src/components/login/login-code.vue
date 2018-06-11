@@ -1,17 +1,17 @@
 <template>
-  <div>
+  <div style="background: #FFFFFF;">
     <template v-if="modelShow">
       <div class="login-top">
         <i class="icon iconfont icon-guanbi" onclick="history.go(-1)"></i>
         <router-link to="/login">账号密码登录</router-link>
       </div>
-      <form class="form" action="">
+      <form class="form" @submit.prevent="getMobileCode(1)">
         <ul>
           <li>
+            <i :class="{'is-danger': errors.has('mobile')}"></i>
             <div class="cells">
               <label for="">+86</label>
-              <input name="mobile" required v-model="mobile" placeholder="填写手机号码，未注册用户也可直接登录"
-                     keyboard="number"/>
+              <input name="mobile" v-model="mobile" v-validate="'required|phone'" maxlength="11" type="text" placeholder="填写手机号码，未注册用户也可直接登录">
             </div>
           </li>
           <li>
@@ -21,7 +21,7 @@
             </div>
           </li>
         </ul>
-        <button type="button" class="btn btn-primary" @click="getMobileCode(1)">下一步</button>
+        <button type="submit" class="btn btn-primary">下一步</button>
       </form>
     </template>
     <template v-if="!modelShow">
@@ -29,7 +29,7 @@
         <i class="icon iconfont icon-back" @click="back"></i>
         <router-link to="/login">账号密码登录</router-link>
       </div>
-      <form class="form" action="">
+      <form class="form" @submit.prevent="getMobileCode(0)">
         <div class="text-gray">短信验证码已发送至 {{mobile}}</div>
         <div class="code-input-box" @click="focusInput"  @keyup="clear($event)">
           <input type="number" id="code1" v-model="code1" oninput="if(value.length>1)value=value.slice(0,1)">
@@ -38,7 +38,7 @@
           <input type="number" id="code4" v-model="code4" oninput="if(value.length>1)value=value.slice(0,1)">
         </div>
         <div class="text-gray" v-if="setTimeOut"><span v-text="time"></span>s后重新发送</div>
-        <button type="button" class="btn btn-link" @click="getMobileCode(0)" v-if="resetCode">重新发送验证码</button>
+        <button type="button" class="btn btn-link" v-if="resetCode">重新发送验证码</button>
       </form>
     </template>
   </div>
@@ -89,68 +89,98 @@ export default {
       })
     },
     getMobileCode (val) {
-      axios.post('api/code/loginSend', {
-        'phone': this.mobile,
-        'code': this.verificationCode,
-        'codeValid': val
-      }).then((response) => {
-        if (response.data.status === 0) {
-          console.log(response)
-          this.modelShow = false
-          this.time = 60
-          this.setTimeOut = true
-          this.resetCode = false
-          this.setTimeMethods()
-          // 响应成功回调
-          console.log('success')
-          setTimeout(function () {
-            document.getElementById('code1').focus()
-          }, 50)
-        } else {
-          this.$vux.toast.show({
-            type: 'warn',
-            text: response.data.msg,
-            onShow () {
-              console.log('Plugin: I\'m showing')
-            },
-            onHide () {
-              console.log('Plugin: I\'m hiding')
+      this.$validator.validateAll().then((result) => {
+        if (result) {
+          axios.post('api/code/loginSend', {
+            'phone': this.mobile,
+            'code': this.verificationCode,
+            'codeValid': val
+          }).then((response) => {
+            if (response.data.status === 0) {
+              console.log(response)
+              this.modelShow = false
+              this.time = 60
+              this.setTimeOut = true
+              this.resetCode = false
+              this.setTimeMethods()
+              // 响应成功回调
+              console.log('success')
+              setTimeout(function () {
+                document.getElementById('code1').focus()
+              }, 50)
+            } else {
+              this.$vux.toast.show({
+                type: 'warn',
+                text: response.data.msg,
+                onShow () {
+                  console.log('Plugin: I\'m showing')
+                },
+                onHide () {
+                  console.log('Plugin: I\'m hiding')
+                }
+              })
             }
+          }).catch((response) => {
+            // 响应错误回调
+            console.log('error')
+            this.errorMsg()
           })
+          return
         }
-      }).catch((response) => {
-        // 响应错误回调
-        console.log('error')
-        this.errorMsg()
+        this.$vux.toast.show({
+          type: 'warn',
+          text: '请填写手机号或图片验证码',
+          onShow () {
+            console.log('Plugin: I\'m showing')
+          },
+          onHide () {
+            console.log('Plugin: I\'m hiding')
+          }
+        })
       })
     },
     checkCode () {
-      axios.post('api/login/phone', {
-        'phone': this.mobile,
-        'code': this.mobileCode
-      }).then((response) => {
-        if (response.data.status === 0) {
-          console.log(this.mobileCode)
-          sessionStorage.setItem('loginToken', response.data.token)
-          // 响应成功回调
-          console.log('success')
-          this.$router.push('/')
-        } else {
-          this.$vux.toast.show({
-            type: 'warn',
-            text: response.data.msg,
-            onShow () {
-              console.log('Plugin: I\'m showing')
-            },
-            onHide () {
-              console.log('Plugin: I\'m hiding')
+      this.$validator.validateAll().then((result) => {
+        if (result) {
+          axios.post('api/login/phone', {
+            'phone': this.mobile,
+            'code': this.mobileCode
+          }).then((response) => {
+            if (response.data.status === 0) {
+              console.log(this.mobileCode)
+              sessionStorage.setItem('loginToken', response.data.token)
+              // 响应成功回调
+              console.log('success')
+              this.$router.push('/')
+            } else {
+              this.$vux.toast.show({
+                type: 'warn',
+                text: response.data.msg,
+                onShow () {
+                  console.log('Plugin: I\'m showing')
+                },
+                onHide () {
+                  console.log('Plugin: I\'m hiding')
+                }
+              })
             }
+          }).catch((response) => {
+            // 响应错误回调
+            console.log('error')
+            this.errorMsg()
           })
+          return
         }
-      }).catch((response) => {
-        // 响应错误回调
-        console.log('error')
-        this.errorMsg()
+        this.$vux.toast.show({
+          type: 'warn',
+          text: '请填写短信验证码',
+          onShow () {
+            console.log('Plugin: I\'m showing')
+          },
+          onHide () {
+            console.log('Plugin: I\'m hiding')
+          }
+        })
       })
     },
     focusInput (event) {

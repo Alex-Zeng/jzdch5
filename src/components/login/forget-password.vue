@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="background: #FFFFFF;">
     <template v-if="model1Show">
       <div class="login-top">
         <i class="icon iconfont icon-guanbi" onclick="history.go(-1)"></i>
@@ -13,9 +13,10 @@
             </div>
           </li>
           <li>
+            <i :class="{'is-danger': errors.has('mobile')}"></i>
             <div class="cells">
               <label for="">+86</label>
-              <input name="mobile" required v-model="mobile" placeholder="请输入注册手机号"/>
+              <input name="mobile" v-model="mobile" v-validate="'required|phone'" placeholder="请输入注册手机号"/>
             </div>
           </li>
         </ul>
@@ -98,18 +99,36 @@ export default {
   },
   methods: {
     getImgCode () {
-      axios.post('api/password/checkPhone', {
-        'phone': this.mobile
-      }).then((response) => {
-        console.log(response)
-        if (response.data.status === 0) {
-          this.model2Show = true
-          this.model1Show = false
-          this.$http.get('api/captcha/img', this.mobile).then((response) => {
+      this.$validator.validateAll().then((result) => {
+        if (result) {
+          axios.post('api/password/checkPhone', {
+            'phone': this.mobile
+          }).then((response) => {
             console.log(response)
             if (response.data.status === 0) {
-              this.id = response.data.data.id
-              this.imgCodeSrc = response.data.data.src + '?' + new Date().getTime()
+              this.model2Show = true
+              this.model1Show = false
+              this.$http.get('api/captcha/img', this.mobile).then((response) => {
+                console.log(response)
+                if (response.data.status === 0) {
+                  this.id = response.data.data.id
+                  this.imgCodeSrc = response.data.data.src + '?' + new Date().getTime()
+                } else {
+                  this.$vux.toast.show({
+                    type: 'warn',
+                    text: response.data.msg,
+                    onShow () {
+                      console.log('Plugin: I\'m showing')
+                    },
+                    onHide () {
+                      console.log('Plugin: I\'m hiding')
+                    }
+                  })
+                }
+              }, (response) => {
+                // 响应错误回调
+                this.errorMsg()
+              })
             } else {
               this.$vux.toast.show({
                 type: 'warn',
@@ -122,25 +141,22 @@ export default {
                 }
               })
             }
-          }, (response) => {
+          }).catch((response) => {
             // 响应错误回调
             this.errorMsg()
           })
-        } else {
-          this.$vux.toast.show({
-            type: 'warn',
-            text: response.data.msg,
-            onShow () {
-              console.log('Plugin: I\'m showing')
-            },
-            onHide () {
-              console.log('Plugin: I\'m hiding')
-            }
-          })
+          return
         }
-      }).catch((response) => {
-        // 响应错误回调
-        this.errorMsg()
+        this.$vux.toast.show({
+          type: 'warn',
+          text: '请填写注册手机号',
+          onShow () {
+            console.log('Plugin: I\'m showing')
+          },
+          onHide () {
+            console.log('Plugin: I\'m hiding')
+          }
+        })
       })
     },
     getMobileCode (val) {

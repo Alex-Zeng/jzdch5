@@ -1,26 +1,28 @@
 <template>
-  <div>
+  <div style="background: #FFFFFF;">
     <template v-if="model1Show">
       <div class="login-top">
         <i class="icon iconfont icon-guanbi" onclick="history.go(-1)"></i>
         <router-link to="/login">账号密码登录</router-link>
       </div>
-      <form class="form" action="">
+      <form class="form" @submit.prevent="getMobileCode(1)">
         <ul>
           <li>
+            <i :class="{'is-danger': errors.has('mobile')}"></i>
             <div class="cells">
               <label for="">+86</label>
-              <input name="mobile" type="tel" required v-model="mobile" placeholder="填写手机号码，未注册用户也可直接登录"/>
+              <input name="mobile" v-model="mobile" v-validate="'required|phone'" type="text" placeholder="填写手机号码，未注册用户也可直接登录">
             </div>
           </li>
           <li>
+            <i :class="{'is-danger': errors.has('verificationCode')}"></i>
             <div class="cells">
-              <input title="验证码" name="code" required maxlength="4" v-model="verificationCode" placeholder="请输入右侧验证码"/>
+              <input title="验证码" name="verificationCode" v-model="verificationCode" v-validate="'required|verificationCode'" type="text" maxlength="4" placeholder="请输入右侧验证码"/>
             </div>
             <img class="img-code" @click="getImgCode" :src="imgCodeSrc">
           </li>
         </ul>
-        <button type="button" class="btn btn-primary" @click="getMobileCode(1)">下一步</button>
+        <button type="submit" class="btn btn-primary">下一步</button>
       </form>
       <div class="user-agreement">
         未注册用户登录后代表您已阅读并同意
@@ -32,7 +34,7 @@
         <i class="icon iconfont icon-back" @click="back"></i>
         <span>免密登录</span>
       </div>
-      <form class="form" action="">
+      <form class="form" @submit.prevent="getMobileCode(0)">
         <div class="text-gray">短信验证码已发送至 {{mobile}}</div>
         <div class="code-input-box" @click="focusInput" @keyup="clear($event)">
           <input type="number" id="code1" v-model="code1" oninput="if(value.length>1)value=value.slice(0,1)">
@@ -41,15 +43,15 @@
           <input type="number" id="code4" v-model="code4" oninput="if(value.length>1)value=value.slice(0,1)">
         </div>
         <div class="text-gray" v-if="setTimeOut"><span v-text="time"></span>s后重新发送</div>
-        <button type="button" class="btn btn-link" @click="getMobileCode(0)" v-if="resetCode">重新发送验证码</button>
+        <button type="submit" class="btn btn-link" v-if="resetCode">重新发送验证码</button>
       </form>
     </template>
     <template v-if="model3Show">
       <div class="login-top"></div>
-      <form class="form" action="" method="post">
+      <form class="form" @submit.prevent="submit">
         <input type="hidden" v-model="mobileCode">
-        <input type="text" class="border-input" name="userName" minlength="4" maxlength="20" required v-model="userName" placeholder="首次登录，请设置4~20位非纯数字用户名">
-        <button type="button" class="btn btn-primary" @click="submit">提交</button>
+        <input type="text" class="border-input" name="userName" v-validate="'required'" minlength="4" maxlength="20" required v-model="userName" placeholder="首次登录，请设置4~20位非纯数字用户名">
+        <button type="submit" class="btn btn-primary">提交</button>
       </form>
     </template>
   </div>
@@ -84,7 +86,7 @@ export default {
       axios.get('api/captcha/img', this.mobile).then((response) => {
         if (response.data.status === 0) {
           this.id = response.data.data.id
-          this.imgCodeSrc = response.data.data.src
+          this.imgCodeSrc = response.data.data.src + new Date().getTime()
         } else {
           this.$vux.toast.show({
             type: 'warn',
@@ -103,112 +105,157 @@ export default {
       })
     },
     getMobileCode (val) {
-      axios.post('api/code/registerSend', {
-        'phone': this.mobile,
-        'code': this.verificationCode,
-        'id': this.id,
-        'codeValid': val
-      }).then((response) => {
-        if (response.data.status === 0) {
-          console.log(response)
-          this.model1Show = false
-          this.model2Show = true
-          this.time = 60
-          this.setTimeOut = true
-          this.resetCode = false
-          this.setTimeMethods()
-          // 响应成功回调
-          console.log('success')
-          setTimeout(function () {
-            document.getElementById('code1').focus()
-          }, 50)
-        } else {
-          this.$vux.toast.show({
-            type: 'warn',
-            text: response.data.msg,
-            onShow () {
-              console.log('Plugin: I\'m showing')
-            },
-            onHide () {
-              console.log('Plugin: I\'m hiding')
+      this.$validator.validateAll().then((result) => {
+        if (result) {
+          axios.post('api/code/registerSend', {
+            'phone': this.mobile,
+            'code': this.verificationCode,
+            'id': this.id,
+            'codeValid': val
+          }).then((response) => {
+            if (response.data.status === 0) {
+              console.log(response)
+              this.model1Show = false
+              this.model2Show = true
+              this.time = 60
+              this.setTimeOut = true
+              this.resetCode = false
+              this.setTimeMethods()
+              // 响应成功回调
+              console.log('success')
+              setTimeout(function () {
+                document.getElementById('code1').focus()
+              }, 50)
+            } else {
+              this.$vux.toast.show({
+                type: 'warn',
+                text: response.data.msg,
+                onShow () {
+                  console.log('Plugin: I\'m showing')
+                },
+                onHide () {
+                  console.log('Plugin: I\'m hiding')
+                }
+              })
             }
+          }).catch((response) => {
+            // 响应错误回调
+            console.log('error')
+            this.errorMsg()
           })
+          return
         }
-      }).catch((response) => {
-        // 响应错误回调
-        console.log('error')
-        this.errorMsg()
+        this.$vux.toast.show({
+          type: 'warn',
+          text: '请填写手机号或图片验证码',
+          onShow () {
+            console.log('Plugin: I\'m showing')
+          },
+          onHide () {
+            console.log('Plugin: I\'m hiding')
+          }
+        })
       })
     },
     checkCode () {
-      axios.post('api/code/registerValid', {
-        'phone': this.mobile,
-        'code': this.mobileCode
-      }).then((response) => {
-        if (response.data.status === 0) {
-          console.log(this.mobileCode)
-          this.model1Show = false
-          this.model2Show = false
-          this.model3Show = true
-          // 响应成功回调
-          console.log('success')
-        } else {
-          this.$vux.toast.show({
-            type: 'warn',
-            text: response.data.msg,
-            onShow () {
-              console.log('Plugin: I\'m showing')
-            },
-            onHide () {
-              console.log('Plugin: I\'m hiding')
+      this.$validator.validateAll().then((result) => {
+        if (result) {
+          axios.post('api/code/registerValid', {
+            'phone': this.mobile,
+            'code': this.mobileCode
+          }).then((response) => {
+            if (response.data.status === 0) {
+              console.log(this.mobileCode)
+              this.model1Show = false
+              this.model2Show = false
+              this.model3Show = true
+              // 响应成功回调
+              console.log('success')
+            } else {
+              this.$vux.toast.show({
+                type: 'warn',
+                text: response.data.msg,
+                onShow () {
+                  console.log('Plugin: I\'m showing')
+                },
+                onHide () {
+                  console.log('Plugin: I\'m hiding')
+                }
+              })
             }
+          }).catch((response) => {
+            // 响应错误回调
+            console.log('error')
+            this.errorMsg()
           })
+          return
         }
-      }).catch((response) => {
-        // 响应错误回调
-        console.log('error')
-        this.errorMsg()
+        this.$vux.toast.show({
+          type: 'warn',
+          text: '请填写短信验证码',
+          onShow () {
+            console.log('Plugin: I\'m showing')
+          },
+          onHide () {
+            console.log('Plugin: I\'m hiding')
+          }
+        })
       })
     },
     submit () {
       var _sel = this
-      axios.post('api/register/phone', {
-        'phone': this.mobile,
-        'code': this.mobileCode,
-        'userName': this.userName
-      }).then((response) => {
-        if (response.data.status === 0) {
-          console.log(response)
-          this.$vux.toast.show({
-            type: 'success',
-            text: '注册成功',
-            onShow () {
-              console.log('Plugin: I\'m showing')
-              // 响应成功回调
-              console.log('success')
-              sessionStorage.setItem('loginToken', response.data.token)
-            },
-            onHide () {
-              console.log('Plugin: I\'m hiding')
-              _sel.$router.push('/')
+      this.$validator.validateAll().then((result) => {
+        if (result) {
+          axios.post('api/register/phone', {
+            'phone': this.mobile,
+            'code': this.mobileCode,
+            'userName': this.userName
+          }).then((response) => {
+            if (response.data.status === 0) {
+              console.log(response)
+              this.$vux.toast.show({
+                type: 'success',
+                text: '注册成功',
+                onShow () {
+                  console.log('Plugin: I\'m showing')
+                  // 响应成功回调
+                  console.log('success')
+                  sessionStorage.setItem('loginToken', response.data.token)
+                },
+                onHide () {
+                  console.log('Plugin: I\'m hiding')
+                  _sel.$router.push('/')
+                }
+              })
+            } else {
+              this.$vux.toast.show({
+                type: 'warn',
+                text: response.data.msg,
+                onShow () {
+                  console.log('Plugin: I\'m showing')
+                },
+                onHide () {
+                  console.log('Plugin: I\'m hiding')
+                }
+              })
             }
+          }).catch((response) => {
+            // 响应错误回调
+            console.log('error')
+            this.errorMsg()
           })
-        } else {
-          this.$vux.toast.show({
-            type: 'warn',
-            text: response.data.msg,
-            onShow () {
-              console.log('Plugin: I\'m showing')
-            },
-            onHide () {
-              console.log('Plugin: I\'m hiding')
-            }
-          })
+          return
         }
-      }).catch((response) => {
-        // 响应错误回调
-        console.log('error')
-        this.errorMsg()
+        this.$vux.toast.show({
+          type: 'warn',
+          text: '请填写用户名',
+          onShow () {
+            console.log('Plugin: I\'m showing')
+          },
+          onHide () {
+            console.log('Plugin: I\'m hiding')
+          }
+        })
       })
     },
     focusInput (event) {
@@ -279,22 +326,17 @@ export default {
   updated: function () {
   },
   watch: {
-    code1 (val) {
-      console.log(val)
+    code1 () {
       document.getElementById('code2').focus()
     },
-    code2 (val) {
-      console.log(val)
+    code2 () {
       document.getElementById('code3').focus()
     },
-    code3 (val) {
-      console.log(val)
+    code3 () {
       document.getElementById('code4').focus()
     },
-    code4 (val) {
+    code4 () {
       this.mobileCode = this.code1 + this.code2 + this.code3 + this.code4
-      console.log(val)
-      console.log(this.mobileCode)
       this.checkCode()
     }
   },

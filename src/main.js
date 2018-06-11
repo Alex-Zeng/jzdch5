@@ -4,15 +4,14 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import {Badge, ToastPlugin, ConfirmPlugin} from 'vux'
-import VueResource from 'vue-resource'
+import '../static/js/validate.js'
 Vue.component('badge', Badge)
 Vue.use(ConfirmPlugin)
 Vue.use(ToastPlugin)
-Vue.use(VueResource)
 require('./fit.js')
 require('./assets/common/css/common.css')
 Vue.config.productionTip = false
-
+// var path =''
 // 搜索
 /* eslint-disable no-new */
 new Vue({
