@@ -94,6 +94,7 @@ export default {
           axios.post('api/code/loginSend', {
             'phone': this.mobile,
             'code': this.verificationCode,
+            'id': this.id,
             'codeValid': val
           }).then((response) => {
             if (response.data.status === 0) {
