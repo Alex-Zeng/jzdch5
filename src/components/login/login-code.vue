@@ -58,6 +58,7 @@ export default {
       mobileCode: '',
       userName: '',
       imgCodeSrc: '',
+      id: '',
       verificationCode: '',
       modelShow: true,
       setTimeOut: true,
