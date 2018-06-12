@@ -58,6 +58,7 @@ export default {
       mobileCode: '',
       userName: '',
       imgCodeSrc: '',
+      id: '',
       verificationCode: '',
       modelShow: true,
       setTimeOut: true,
@@ -94,6 +95,7 @@ export default {
           axios.post('api/code/loginSend', {
             'phone': this.mobile,
             'code': this.verificationCode,
+            'id': this.id,
             'codeValid': val
           }).then((response) => {
             if (response.data.status === 0) {
