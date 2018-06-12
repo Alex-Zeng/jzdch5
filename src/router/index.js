@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Index from '@/components/home/index'
 import GoodsClass from '@/components/goods-class/goods-class'
 import User from '@/components/user/user'
-import shopCard from '@/components/shop-card/shop-card'
+import shopCar from '@/components/shop-car/shop-car'
 import Login from '@/components/login/login'
 import LoginCode from '@/components/login/login-code'
 import Register from '@/components/login/register'
@@ -39,12 +39,12 @@ export default new Router({
       component: User
     },
     {
-      path: '/shop-card',
-      name: 'shop-card',
+      path: '/shop-car',
+      name: 'shop-car',
       meta: {
         title: '采购清单'
       },
-      component: shopCard
+      component: shopCar
     },
     {
       path: '/login',

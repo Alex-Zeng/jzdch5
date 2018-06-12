@@ -86,7 +86,6 @@
   }
   .goods-lists .goods-price{
   	display: flex;
-  	justify-content: space-between;
   	font-size: 0.55rem;
     padding-bottom: 0.3rem;
     padding: 0 0.5rem 0.3rem 0.5rem;

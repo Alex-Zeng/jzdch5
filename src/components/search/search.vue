@@ -14,8 +14,8 @@
               <img :src="item.url" alt="">
               <div>
                 <h3>{{item.title}}</h3>
-                <div>
-                  <span class="text-red">￥ {{item.min_price}}</span>
+                <div class="text-red">
+                  ￥ {{item.min_price}}{{item.max_price=item.min_price?'':' ~ ￥'+item.max_price}}
                 </div>
               </div>
             </router-link>
@@ -28,8 +28,8 @@
               <div class="goods-title">
                 {{item.title}}
               </div>
-              <div class="goods-price">
-                <span class="text-red">￥ {{item.min_price}}</span>
+              <div class="goods-price text-red">
+                ￥ {{item.min_price}}{{item.max_price=item.min_price?'':' ~ ￥'+item.max_price}}
               </div>
             </router-link>
           </li>
@@ -90,7 +90,6 @@ export default {
       } else {
         this.sort = 'asc'
       }
-      this.mescroll.resetUpScroll(true)
     },
     lisLogFn (data) {
       console.log(data)

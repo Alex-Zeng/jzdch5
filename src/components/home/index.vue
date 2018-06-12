@@ -2,6 +2,7 @@
   <!--滑动区域-->
   <div class="mescroll"  id="mescroll">
     <headerMessage></headerMessage>
+    <Financial :childFinancial="financial" @childEvent="parentEvent"></Financial>
     <div class="banner">
       <swiper loop :show-desc-mask="false" dots-position="center" height="9.9rem" :list="banners" :show-dots="banners.length > 1? true:false"></swiper>
     </div>
@@ -11,12 +12,24 @@
           <swiper-item class="black">
             <div class="menu-nav">
               <template v-for="(item, index) in menunListsFirst">
-                <a :href="item.url" :key="index">
+                <a href="javascript:;" v-if="item.id === 19" @click="financialShow" :key="index">
                   <img :src="item.img" alt=""/>
                   <div class="text-truncate">
                     {{item.name}}
                   </div>
                 </a>
+                <a href="javascript:;" v-else-if="item.id === 18"  :key="index">
+                  <img :src="item.img" alt=""/>
+                  <div class="text-truncate">
+                    {{item.name}}
+                  </div>
+                </a>
+                <router-link v-else :to="{path: '/search', query: { name: item.name, id: item.id }}" :key="index">
+                  <img :src="item.img" alt=""/>
+                  <div class="text-truncate">
+                    {{item.name}}
+                  </div>
+                </router-link>
               </template>
             </div>
           </swiper-item>
@@ -49,8 +62,8 @@
           <div class="goods-title">
             {{item.title}}
           </div>
-          <div class="goods-price">
-            <span class="text-red">￥ {{item.min_price}}</span>
+          <div class="goods-price text-red">
+            ￥ {{item.min_price}}{{item.max_price=item.min_price?'':' ~ ￥'+item.max_price}}
           </div>
         </router-link>
       </li>
@@ -62,6 +75,7 @@
 <script>
 import headerMessage from '../common/header-message'
 import FooterNav from '../common/footer-nav'
+import Financial from '../common/financial'
 import {Badge, Swiper, SwiperItem} from 'vux'
 import axios from 'axios'
 import MeScroll from '../../../static/js/mescroll.min.js'
@@ -73,6 +87,7 @@ export default {
   name: 'home',
   data () {
     return {
+      financial: false,
       type: 2,
       banners: [],
       menunLists: [],
@@ -144,6 +159,13 @@ export default {
         console.log('error')
         this.errorMsg()
       })
+    },
+    financialShow () {
+      this.financial = true
+    },
+    parentEvent (data) {
+      console.log(data)
+      this.financial = data
     },
     // 上拉回调 page = {num:1, size:10}; num:当前页 ,默认从1开始; size:每页数据条数,默认10
     upCallback: function (page) {
@@ -242,7 +264,7 @@ export default {
     })
   },
   components: {
-    headerMessage, FooterNav, Swiper, SwiperItem, Badge
+    headerMessage, FooterNav, Financial, Swiper, SwiperItem, Badge
   }
 }
 </script>

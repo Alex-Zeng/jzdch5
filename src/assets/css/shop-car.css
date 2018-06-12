@@ -1,0 +1,60 @@
+.shop-car-container{
+  padding-bottom: 6rem;
+}
+.shop-car-content{
+  display: flex;
+  align-items: center;
+  color: #222222;
+  border-bottom: 0.05rem solid #E1E1E1;
+  padding: 0.5rem;
+  font-size: 0.6rem;
+}
+.shop-car-content > div:last-child{
+  flex: 1;
+  display: flex;
+}
+.shop-car-content h3{
+  font-size: 0.75rem;
+}
+.shop-car-content > div:last-child img{
+  width: 3rem;
+  height: 3rem;
+  margin: 0 0.5rem;
+}
+.shop-car-content > div:last-child > div{
+  flex: 1;
+  line-height: 1.8;
+}
+.shop-car-content > div:last-child > div .vux-inline-x-number{
+  float: right;
+}
+#app .shop-car-content .vux-number-selector svg{
+  fill: #5FCAED;
+}
+.shller-title{
+  margin-top: 1rem;
+  padding: 0.5rem;
+  border-top: 0.05rem solid #E1E1E1;
+  border-bottom: 0.05rem solid #E1E1E1;
+  background: #FFFFFF;
+}
+.shop-car-total{
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #FFFFFF;
+}
+.shop-car-total > div:first-child{
+  padding-left: 0.5rem;
+}
+.shop-car-total > div:last-child{
+  height: 100%;
+  line-height: 2.5rem;
+  padding: 0 1.4rem;
+  color: #FFFFFF;
+  background: #E22425;
+}

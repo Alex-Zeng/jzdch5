@@ -64,7 +64,7 @@ export default {
                 text: '登陆成功',
                 onShow () {
                   console.log('Plugin: I\'m showing')
-                  sessionStorage.setItem('loginToken', response.data.token)
+                  sessionStorage.setItem('loginToken', response.data.data.token)
                 },
                 onHide () {
                   console.log('Plugin: I\'m hiding')

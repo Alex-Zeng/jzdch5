@@ -16,12 +16,17 @@
     </div>
     <div class="goods-title-box">
       <h3>{{goodsData.title}}</h3>
-      <span class="text-red">￥ {{goodsData.price}}</span>
+      <span class="text-red" v-if="price">
+        {{price}}
+      </span>
+      <span v-else class="text-red">
+        ￥ {{goodsData.min_price}}{{goodsData.max_price=goodsData.min_price?'':' ~ ￥'+goodsData.max_price}}
+      </span>
     </div>
     <div class="goods-seller">
       <div class="text-blue">
         <img :src="goodsData.supplierLogo" alt="Logo">
-        金晶科技
+        {{goodsData.supplier}}
       </div>
       <div style="border-right: none;" :class="{ 'text-blue': isActive }" @click="collectMethod"><i class="icon iconfont icon-shoucang1"></i>&nbsp;收藏</div>
     </div>
@@ -49,12 +54,21 @@
     </div>
     <div class="shadow-box" v-if="shawdow" @click="shawdowMethod"></div>
     <div class="goods-guige" v-if="shawdow">
-      <h3>请选择规格</h3>
-      <ul>
-        <li v-for="(item, index) in option" :key="index">
-          <a href="javascript:;" @click="tabsort(index)" :class="{ active: iscur == index }">{{item.name}}</a>
-        </li>
-      </ul>
+      <div v-for="i in goodsData.standard.length" :key="i">
+        <h3>{{goodsData.standard[i-1].title}}</h3>
+        <ul v-if="goodsData.standard[i-1].title === '颜色'">
+          <li v-for="(item, index) in goodsData.standard[i-1].list" :key="index">
+            <a href="javascript:;" @click="tabsort0(index)" :class="{ active: iscur0 === index}">{{item.color_name}}</a>
+            <input type="hidden" class="color" v-model="item.color_id">
+          </li>
+        </ul>
+        <ul v-if="goodsData.standard[i-1].title !== '颜色'">
+          <li v-for="(item, index) in goodsData.standard[i-1].list" :key="index">
+            <a href="javascript:;" @click="tabsort1(index)" :class="{ active: iscur1 === index}">{{item.option_name}}</a>
+            <input type="hidden" class="option" v-model="item.option_id">
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -71,36 +85,39 @@ export default {
       isActive: true,
       active: false,
       badge: false,
-      iscur: 0,
+      price: null,
+      iscur0: 0,
+      iscur1: 0,
+      optionId: 0,
+      colorId: 0,
       showCarNum: 0,
-      goodsData: {},
-      option: [
-        {
-          'id': 12,
-          'name': '规格一'
-        },
-        {
-          'id': 13,
-          'name': '规格一'
-        },
-        {
-          'id': 14,
-          'name': '规格一'
-        },
-        {
-          'id': 15,
-          'name': '规格一'
-        }
-      ]
+      goodsData: {}
     }
   },
   methods: {
     showDetai () {
+      var self = this
       axios.get('api/goods/get&id=' + this.$route.params.id).then((response) => {
         if (response.data.status === 0) {
           this.goodsData = response.data.data
+          if (this.goodsData.isFavorite === 1) {
+            this.isActive = true
+          } else {
+            this.isActive = false
+          }
+        } else {
+          this.$vux.toast.show({
+            type: 'warn',
+            text: response.data.msg,
+            onShow () {},
+            onHide () {
+              self.$router.go(-1)
+            }
+          })
         }
-      }).catch()
+      }).catch((response) => {
+        this.errorMsg()
+      })
     },
     custormAnchor (anchorName) {
       // 找到锚点
@@ -109,11 +126,22 @@ export default {
         anchorElement.scrollIntoView()
       }
     },
-    tabsort (index) {
-      this.iscur = index
+    tabsort0 (index) {
+      this.iscur0 = index
+      this.colorId = document.getElementsByClassName('color')[index].value
+      this.getPrice()
     },
-    selectGuige (event) {
-      console.log(event)
+    tabsort1 (index) {
+      this.iscur1 = index
+      this.optionId = document.getElementsByClassName('option')[index].value
+      this.getPrice()
+    },
+    getPrice () {
+      for (let i = 0; i < this.goodsData.standardPrice.length; i++) {
+        if (this.colorId === this.goodsData.standardPrice[i].color_id && this.optionId === this.goodsData.standardPrice[i].option_id) {
+          this.price = this.goodsData.standardPrice[i].price
+        }
+      }
     },
     shawdowMethod (event) {
       event.stopPropagation()
@@ -134,37 +162,63 @@ export default {
             alert('成功')
           }
         }).catch((response) => {})
+      } else {
+        this.$vux.toast.show({
+          type: 'warn',
+          text: '数量为0，无法加入清单',
+          onShow () {
+            console.log('Plugin: I\'m showing')
+          },
+          onHide () {
+            console.log('Plugin: I\'m hiding')
+          }
+        })
       }
     },
     collectMethod () {
       if (this.isActive === false) {
+        var self = this
         axios.post('api/goods/addFavorite', {
           'goodsId': this.$route.params.id
         }).then((response) => {
-          if (response.data.status === 0) {
+          if (response.data.status === -2) {
             this.$vux.toast.show({
-              type: 'success',
-              text: '收藏成功',
+              type: 'warn',
+              text: '请先登录',
               onShow () {
                 console.log('Plugin: I\'m showing')
-                this.isActive = true
               },
               onHide () {
+                self.$router.push('/login')
                 console.log('Plugin: I\'m hiding')
               }
             })
           } else {
-            this.$vux.toast.show({
-              type: 'warn',
-              text: response.data.msg,
-              onShow () {
-                console.log('Plugin: I\'m showing')
-                this.isActive = false
-              },
-              onHide () {
-                console.log('Plugin: I\'m hiding')
-              }
-            })
+            if (response.data.status === 0) {
+              this.$vux.toast.show({
+                type: 'success',
+                text: '收藏成功',
+                onShow () {
+                  console.log('Plugin: I\'m showing')
+                  this.isActive = true
+                },
+                onHide () {
+                  console.log('Plugin: I\'m hiding')
+                }
+              })
+            } else {
+              this.$vux.toast.show({
+                type: 'warn',
+                text: response.data.msg,
+                onShow () {
+                  console.log('Plugin: I\'m showing')
+                  this.isActive = false
+                },
+                onHide () {
+                  console.log('Plugin: I\'m hiding')
+                }
+              })
+            }
           }
         }).catch((response) => {
           this.errorMsg()
@@ -200,6 +254,18 @@ export default {
           this.errorMsg()
         })
       }
+    },
+    errorMsg () {
+      this.$vux.toast.show({
+        type: 'warn',
+        text: '网络可能有点问题',
+        onShow () {
+          console.log('Plugin: I\'m showing')
+        },
+        onHide () {
+          console.log('Plugin: I\'m hiding')
+        }
+      })
     }
   },
   created () {

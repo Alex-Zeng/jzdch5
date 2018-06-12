@@ -1,17 +1,4 @@
-.header-nav{
-  color: #FFFFFF;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-sizing: border-box;
-  background: #1EB9EE;
-}
-.header-nav a , .header-nav i{
-  padding: 0.5rem;
-  height: 1.2rem;
-  line-height: 1.2rem;
-  color: #FFFFFF;
-}
+
 .detai-header{
 
 }
