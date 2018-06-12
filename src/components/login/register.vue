@@ -86,7 +86,7 @@ export default {
       axios.get('api/captcha/img', this.mobile).then((response) => {
         if (response.data.status === 0) {
           this.id = response.data.data.id
-          this.imgCodeSrc = response.data.data.src + new Date().getTime()
+          this.imgCodeSrc = response.data.data.src + '?t=' + new Date().getTime()
         } else {
           this.$vux.toast.show({
             type: 'warn',
