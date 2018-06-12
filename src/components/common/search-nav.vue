@@ -11,7 +11,7 @@
       </div>
       <div class="input-box">
         <form action="javascript:;">
-          <input type="text" v-model="keywords" @keyup="getResult($event)" @focus="getHistory" @blur="onBlur" placeholder="搜索您想要的商品"/>
+          <input type="text" v-model="keywords" @keyup="getResult($event)" @focus="getHistory" @blur="onBlur" placeholder="搜索您想要的商品或供应商"/>
           <i class="icon iconfont icon-clear clear" v-if="clear" @click="onCancel"></i>
           <a onclick="history.go(-1)"><span>取消</span></a>
         </form>
