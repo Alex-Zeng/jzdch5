@@ -108,7 +108,7 @@ export default {
             if (response.data.status === 0) {
               this.model2Show = true
               this.model1Show = false
-              this.$http.get('api/captcha/img', this.mobile).then((response) => {
+              axios.get('api/captcha/img', this.mobile).then((response) => {
                 console.log(response)
                 if (response.data.status === 0) {
                   this.id = response.data.data.id
@@ -125,7 +125,7 @@ export default {
                     }
                   })
                 }
-              }, (response) => {
+              }).catch((response) => {
                 // 响应错误回调
                 this.errorMsg()
               })
