@@ -75,9 +75,11 @@ export default {
     },
     getResult (val) {
       if (val.keyCode === 13 || val === true) {
-        var obj = { 'keywords': this.keywords }
-        this.historyLists.push(obj)
-        sessionStorage.setItem('keyword', JSON.stringify(this.historyLists))
+        if (val.keyCode === 13) {
+          var obj = { 'keywords': this.keywords }
+          this.historyLists.push(obj)
+          sessionStorage.setItem('keyword', JSON.stringify(this.historyLists))
+        }
         var self = this
         self.mescroll = new MeScroll('mescroll', {
           up: {
@@ -109,15 +111,10 @@ export default {
     getHistory () {
       if (this.loginToken === '' || this.loginToken === null) {
         var localKeywords = sessionStorage.getItem('keyword')
-        console.log(1)
-        console.log(localKeywords)
         if (localKeywords !== null) {
-          console.log(2)
           this.showHistory = true
           this.historyLists = JSON.parse(localKeywords)
-          console.log(this.historyLists)
         } else {
-          console.log(3)
           this.showHistory = false
         }
       } else {
