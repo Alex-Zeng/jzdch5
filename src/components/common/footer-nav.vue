@@ -10,7 +10,7 @@
     </router-link>
     <router-link v-if="shopCard" to="/shop-card">
       <i class="icon iconfont icon-gouwuche2">
-        <badge text="9"></badge>
+        <badge :text="total"></badge>
       </i>
       <div>采购清单</div>
     </router-link>
@@ -27,23 +27,27 @@ export default {
   name: 'footer-nav',
   data () {
     return {
-      shopCard: false
+      shopCard: false,
+      total: ''
     }
   },
   methods: {
   },
   created () {
+    console.log(sessionStorage.getItem('loginToken'))
     let loginToken = sessionStorage.getItem('loginToken')
     if (loginToken !== null) {
       axios.get('api/user/getGroup').then((response) => {
         if (response.data.status === 0) {
           console.log(response.data.status)
-          axios.get('api/mall_cart/getNumber').then((response) => {
+          axios.get('api/mall_cart/getNumber&_token=' + loginToken).then((response) => {
             console.log(response.data.status)
             if (response.data.status === -2) {
               // this.$router.push('/login')
               this.shopCard = false
+              console.log('未登录')
             } else if (response.data.status === 0) {
+              this.total = response.data.data.total
               this.shopCard = true
             } else {
               this.shopCard = false

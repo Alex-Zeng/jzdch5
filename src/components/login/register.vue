@@ -209,7 +209,8 @@ export default {
           axios.post('api/register/phone', {
             'phone': this.mobile,
             'code': this.mobileCode,
-            'userName': this.userName
+            'userName': this.userName,
+            'channel': 1
           }).then((response) => {
             if (response.data.status === 0) {
               console.log(response)

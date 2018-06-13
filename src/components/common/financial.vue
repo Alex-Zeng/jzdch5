@@ -8,7 +8,7 @@
             <i :class="{'is-danger': errors.has('mobile')}"></i>
             <div class="cells">
               <label for="">&emsp;姓名</label>
-              <input name="mobile" v-model="userName" v-validate="'required'" type="text" placeholder="请输入您的姓名">
+              <input name="userName" v-model="userName" v-validate="'required'" type="text" placeholder="请输入您的姓名">
             </div>
           </li>
           <li>

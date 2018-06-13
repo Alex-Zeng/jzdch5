@@ -15,7 +15,7 @@
               <div>
                 <h3>{{item.title}}</h3>
                 <div class="text-red">
-                  ￥ {{item.min_price}}{{item.max_price=item.min_price?'':' ~ ￥'+item.max_price}}
+                  ￥ {{item.min_price}}{{item.max_price===item.min_price?'':' ~ ￥'+item.max_price}}
                 </div>
               </div>
             </router-link>

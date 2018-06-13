@@ -63,7 +63,7 @@
             {{item.title}}
           </div>
           <div class="goods-price text-red">
-            ￥ {{item.min_price}}{{item.max_price=item.min_price?'':' ~ ￥'+item.max_price}}
+            ￥ {{item.min_price}}{{item.max_price===item.min_price?'':' ~ ￥'+item.max_price}}
           </div>
         </router-link>
       </li>
