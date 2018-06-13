@@ -2,7 +2,7 @@
   <div class="container"  v-if="childFinancial">
     <template v-if="success">
       <form class="form" @submit.prevent="getMobileCode(1)">
-        <h3 class="text-blue">请填写并确认您的联系方式</h3>
+        <h3 class="text-blue">请填写并确认您的联系方式TEST</h3>
         <ul>
           <li>
             <i :class="{'is-danger': errors.has('mobile')}"></i>
