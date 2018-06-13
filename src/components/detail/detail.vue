@@ -20,7 +20,7 @@
         {{price}}
       </span>
       <span v-else class="text-red">
-        ￥ {{goodsData.min_price}}{{goodsData.max_price=goodsData.min_price?'':' ~ ￥'+goodsData.max_price}}
+        ￥ {{goodsData.min_price}}{{goodsData.max_price===goodsData.min_price?'':' ~ ￥'+goodsData.max_price}}
       </span>
     </div>
     <div class="goods-seller">
@@ -41,10 +41,10 @@
     </div>
     <div class="detail-shop-car footer-nav">
       <div>
-        <span style="vertical-align: top;line-height: 2;">数量&nbsp;</span>
+        <span class="text-muted" style="vertical-align: top;line-height: 2;">数量&nbsp;</span>
         <inline-x-number :min="0" width="2.6rem"></inline-x-number>
       </div>
-      <router-link to="/shop-card">
+      <router-link to="/shop-car">
         <i class="icon iconfont icon-gouwuche2">
           <badge :text="showCarNum" v-if="badge"></badge>
         </i>
@@ -82,7 +82,7 @@ export default {
   data () {
     return {
       shawdow: false,
-      isActive: true,
+      isActive: false,
       active: false,
       badge: false,
       price: null,
@@ -153,13 +153,14 @@ export default {
       var num = document.getElementsByClassName('vux-number-input')[0].value
       num = parseInt(num)
       if (num > 0) {
-        this.showCarNum += num
         axios.post('api/mall_cart/add', {
           'id': this.$route.params.id,
-          'number': this.showCarNum
+          'number': num,
+          'colorId': this.colorId,
+          'optionId': this.optionId,
+          '_token': sessionStorage.getItem('loginToken')
         }).then((response) => {
           if (response.data.status === 0) {
-            alert('成功')
           }
         }).catch((response) => {})
       } else {
@@ -179,7 +180,8 @@ export default {
       if (this.isActive === false) {
         var self = this
         axios.post('api/goods/addFavorite', {
-          'goodsId': this.$route.params.id
+          'goodsId': this.$route.params.id,
+          '_token': sessionStorage.getItem('loginToken')
         }).then((response) => {
           if (response.data.status === -2) {
             this.$vux.toast.show({
@@ -200,7 +202,7 @@ export default {
                 text: '收藏成功',
                 onShow () {
                   console.log('Plugin: I\'m showing')
-                  this.isActive = true
+                  self.isActive = true
                 },
                 onHide () {
                   console.log('Plugin: I\'m hiding')
@@ -230,7 +232,7 @@ export default {
           if (response.data.status === 0) {
             this.$vux.toast.show({
               type: 'success',
-              text: '收藏成功',
+              text: '取消成功',
               onShow () {
                 console.log('Plugin: I\'m showing')
               },
@@ -269,6 +271,20 @@ export default {
     }
   },
   created () {
+    axios.get('api/mall_cart/getNumber&_token=' + sessionStorage.getItem('loginToken')).then((response) => {
+      console.log(response.data.status)
+      if (response.data.status === -2) {
+        // this.$router.push('/login')
+        this.shopCard = false
+        console.log('未登录')
+      } else if (response.data.status === 0) {
+        this.showCarNum = response.data.data.total
+        this.shopCard = true
+      } else {
+        this.shopCard = false
+      }
+    }).catch((response) => {
+    })
     axios.get('api/mall_cart/getNumber').then((response) => {
       console.log(response)
     }).catch((response) => {

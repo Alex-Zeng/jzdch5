@@ -1,6 +1,6 @@
 <template>
   <div style="background: #FFFFFF;">
-    <template v-if="modelShow">
+    <template v-if="model1Show">
       <div class="login-top">
         <i class="icon iconfont icon-guanbi" onclick="history.go(-1)"></i>
         <router-link to="/login">账号密码登录</router-link>
@@ -24,7 +24,7 @@
         <button type="submit" class="btn btn-primary">下一步</button>
       </form>
     </template>
-    <template v-if="!modelShow">
+    <template v-if="model2Show">
       <div class="login-top">
         <i class="icon iconfont icon-back" @click="back"></i>
         <router-link to="/login">账号密码登录</router-link>
@@ -38,7 +38,15 @@
           <input type="number" id="code4" v-model="code4" oninput="if(value.length>1)value=value.slice(0,1)">
         </div>
         <div class="text-gray" v-if="setTimeOut"><span v-text="time"></span>s后重新发送</div>
-        <button type="button" class="btn btn-link" v-if="resetCode">重新发送验证码</button>
+        <button type="button" class="btn btn-link" v-if="resetCode" @click="getMobileCode(0)">重新发送验证码</button>
+      </form>
+    </template>
+    <template v-if="model3Show">
+      <div class="login-top"></div>
+      <form class="form" @submit.prevent="submit">
+        <input type="hidden" v-model="mobileCode">
+        <input type="text" class="border-input" name="userName" v-validate="'required'" minlength="4" maxlength="20" required v-model="userName" placeholder="首次登录，请设置4~20位非纯数字用户名">
+        <button type="submit" class="btn btn-primary">提交</button>
       </form>
     </template>
   </div>
@@ -61,7 +69,9 @@ export default {
       channel: '2',
       id: '',
       verificationCode: '',
-      modelShow: true,
+      model1Show: true,
+      model2Show: false,
+      model3Show: false,
       setTimeOut: true,
       resetCode: false,
       time: 60
@@ -102,7 +112,8 @@ export default {
           }).then((response) => {
             if (response.data.status === 0) {
               console.log(response)
-              this.modelShow = false
+              this.model1Show = false
+              this.model2Show = true
               this.time = 60
               this.setTimeOut = true
               this.resetCode = false
@@ -144,6 +155,7 @@ export default {
       })
     },
     checkCode () {
+      let self = this
       this.$validator.validateAll().then((result) => {
         if (result) {
           axios.post('api/login/phone', {
@@ -156,6 +168,20 @@ export default {
               // 响应成功回调
               console.log('success')
               this.$router.push('/')
+            } else if (response.data.status === -2) {
+              this.$vux.toast.show({
+                type: 'warn',
+                text: '用户不存在，请输入用户名，提交注册',
+                onShow () {
+                  console.log('Plugin: I\'m showing')
+                  self.model1Show = false
+                  self.model2Show = false
+                  self.model3Show = true
+                },
+                onHide () {
+                  console.log('Plugin: I\'m hiding')
+                }
+              })
             } else {
               this.$vux.toast.show({
                 type: 'warn',
@@ -178,6 +204,63 @@ export default {
         this.$vux.toast.show({
           type: 'warn',
           text: '请填写短信验证码',
+          onShow () {
+            console.log('Plugin: I\'m showing')
+          },
+          onHide () {
+            console.log('Plugin: I\'m hiding')
+          }
+        })
+      })
+    },
+    submit () {
+      var _sel = this
+      this.$validator.validateAll().then((result) => {
+        if (result) {
+          axios.post('api/register/phone', {
+            'phone': this.mobile,
+            'code': this.mobileCode,
+            'userName': this.userName,
+            'channel': 0
+          }).then((response) => {
+            if (response.data.status === 0) {
+              console.log(response)
+              this.$vux.toast.show({
+                type: 'success',
+                text: '注册成功',
+                onShow () {
+                  console.log('Plugin: I\'m showing')
+                  // 响应成功回调
+                  console.log('success')
+                  sessionStorage.setItem('loginToken', response.data.token)
+                },
+                onHide () {
+                  console.log('Plugin: I\'m hiding')
+                  _sel.$router.push('/')
+                }
+              })
+            } else {
+              this.$vux.toast.show({
+                type: 'warn',
+                text: response.data.msg,
+                onShow () {
+                  console.log('Plugin: I\'m showing')
+                },
+                onHide () {
+                  console.log('Plugin: I\'m hiding')
+                }
+              })
+            }
+          }).catch((response) => {
+            // 响应错误回调
+            console.log('error')
+            this.errorMsg()
+          })
+          return
+        }
+        this.$vux.toast.show({
+          type: 'warn',
+          text: '请填写用户名',
           onShow () {
             console.log('Plugin: I\'m showing')
           },

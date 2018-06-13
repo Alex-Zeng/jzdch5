@@ -118,7 +118,7 @@ export default {
           this.showHistory = false
         }
       } else {
-        axios.get('api/record/getSearch').then((response) => {
+        axios.get('api/record/getSearch&_token=' + this.loginToken).then((response) => {
           if (response.data.status === 0) {
             this.historyLists = response.data.data
           } else {

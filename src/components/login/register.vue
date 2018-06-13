@@ -70,7 +70,6 @@ export default {
       code4: '',
       mobileCode: '',
       userName: '',
-      channel: '1',
       imgCodeSrc: '',
       id: '',
       verificationCode: '',
@@ -211,7 +210,7 @@ export default {
             'phone': this.mobile,
             'code': this.mobileCode,
             'userName': this.userName,
-            'channel': this.channel
+            'channel': 1
           }).then((response) => {
             if (response.data.status === 0) {
               console.log(response)

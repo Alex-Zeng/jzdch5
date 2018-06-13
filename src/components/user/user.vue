@@ -112,7 +112,6 @@ export default {
     },
     loginMethod () {
       let loginToken = sessionStorage.getItem('loginToken')
-      console.log(loginToken)
       if (loginToken === null || loginToken === 'undefined') {
         this.$router.push('/login')
       } else {

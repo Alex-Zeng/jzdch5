@@ -241,11 +241,12 @@ export default {
           console.log(response)
           this.$vux.toast.show({
             type: 'success',
-            text: '注册成功',
+            text: '密码修改成功',
             onShow () {
               console.log('Plugin: I\'m showing')
               // 响应成功回调
               console.log('success')
+              sessionStorage.clear()
             },
             onHide () {
               console.log('Plugin: I\'m hiding')
