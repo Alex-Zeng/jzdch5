@@ -8,7 +8,7 @@
             <i :class="{'is-danger': errors.has('mobile')}"></i>
             <div class="cells">
               <label for="">&emsp;姓名</label>
-              <input name="mobile" v-model="userName" v-validate="'required'" type="text" placeholder="请输入您的姓名">
+              <input name="userName" v-model="userName" v-validate="'required'" type="text" placeholder="请输入您的姓名">
             </div>
           </li>
           <li>
@@ -30,7 +30,7 @@
     </template>
     <template v-if="!success">
       <div class="text-blue success">
-        <div>感谢{{userName}}{{sex='男'?'先生':'女士'}}</div>
+        <div>感谢{{userName}}{{sex==='男'?'先生':'女士'}}</div>
         您的金融服务已提交成功
         <br/>
         稍后将有工作人员与您联系
