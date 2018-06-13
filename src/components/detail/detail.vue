@@ -41,7 +41,7 @@
     </div>
     <div class="detail-shop-car footer-nav">
       <div>
-        <span style="vertical-align: top;line-height: 2;">数量&nbsp;</span>
+        <span class="text-muted" style="vertical-align: top;line-height: 2;">数量&nbsp;</span>
         <inline-x-number :min="0" width="2.6rem"></inline-x-number>
       </div>
       <router-link to="/shop-card">

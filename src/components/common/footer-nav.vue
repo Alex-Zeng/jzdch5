@@ -34,16 +34,19 @@ export default {
   },
   created () {
     let loginToken = sessionStorage.getItem('loginToken')
-    console.log(loginToken)
     if (loginToken !== null) {
       axios.get('api/user/getGroup').then((response) => {
-        console.log(response)
         if (response.data.status === 0) {
-          console.log(response)
+          console.log(response.data.status)
           axios.get('api/mall_cart/getNumber').then((response) => {
-            console.log(response)
-            if (response.data.status === 0) {
-              console.log(response)
+            console.log(response.data.status)
+            if (response.data.status === -2) {
+              // this.$router.push('/login')
+              this.shopCard = false
+            } else if (response.data.status === 0) {
+              this.shopCard = true
+            } else {
+              this.shopCard = false
             }
           }).catch((response) => {
           })
