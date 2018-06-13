@@ -70,6 +70,7 @@ export default {
       code4: '',
       mobileCode: '',
       userName: '',
+      channel: '1',
       imgCodeSrc: '',
       id: '',
       verificationCode: '',
@@ -209,7 +210,8 @@ export default {
           axios.post('api/register/phone', {
             'phone': this.mobile,
             'code': this.mobileCode,
-            'userName': this.userName
+            'userName': this.userName,
+            'channel': this.channel
           }).then((response) => {
             if (response.data.status === 0) {
               console.log(response)

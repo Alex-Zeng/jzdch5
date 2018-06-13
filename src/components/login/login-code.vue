@@ -58,6 +58,7 @@ export default {
       mobileCode: '',
       userName: '',
       imgCodeSrc: '',
+      channel: '2',
       id: '',
       verificationCode: '',
       modelShow: true,
