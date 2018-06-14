@@ -168,10 +168,10 @@ export default {
               // 响应成功回调
               console.log('success')
               this.$router.push('/')
-            } else if (response.data.status === -2) {
+            } else if (response.data.status === -3) {
               this.$vux.toast.show({
                 type: 'warn',
-                text: '用户不存在，请输入用户名，提交注册',
+                text: '请输入用户名，提交注册',
                 onShow () {
                   console.log('Plugin: I\'m showing')
                   self.model1Show = false
