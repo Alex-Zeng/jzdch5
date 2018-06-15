@@ -13,7 +13,8 @@
       <div v-for="(item, index) in proData" :key="index">
         <div class="shller-title" :key="'list'+index">
           <div>
-            <input type="checkbox" :value="item.supplierName" @click="selsectAll('box'+index, $event)">
+            <!--{{checkedList[index]}}-->
+            <input type="checkbox" :value="item.supplierName" @click="selsectAll(index, $event)" v-model="allList[index]">
             <!--<icon type="circle" v-if="!checked"></icon>-->
             <!--<icon type="success" v-if="checked"></icon>-->
           </div>
@@ -21,14 +22,14 @@
         </div>
         <div :id="'box'+index">
         <swipeout>
-          <swipeout-item transition-mode="follow" v-for="i in item.list" :key="i.cartId">
+          <swipeout-item transition-mode="follow" v-for="(i, k) in item.list" :key="i.cartId">
             <div slot="right-menu">
               <swipeout-button @click.native="onButtonClick(i.cartId)" type="warn">删除</swipeout-button>
             </div>
             <div slot="content" class="shop-car-content">
               <div>
                 <!--<icon type="circle"></icon>-->
-                <input type="checkbox" name="checkbox" class="input" :value="i.cartId" @change="select(i.price*i.quantity, $event)">
+                <input type="checkbox" name="checkbox" class="input" :value="i.cartId" v-model="checkedList[index][k]" @change="select(i.price*i.quantity, checkedList[index][k], index, k)">
                 <input type="hidden" name="price" :value="i.price*i.quantity">
               </div>
               <div>
@@ -66,7 +67,8 @@ export default {
   name: 'shop-car',
   data () {
     return {
-      checked: false,
+      checkedList: [],
+      allList: [],
       total: 0,
       price: 0,
       price2: 0,
@@ -86,6 +88,15 @@ export default {
         axios.get('api/mall_cart/index&_token=' + loginToken).then((response) => {
           if (response.data.status === 0) {
             this.proData = response.data.data
+            // 动态生成选中数组
+            let tempList = []
+            response.data.data.forEach((v) => {
+              let temp = new Array(v.list.length)
+              temp.fill(false)
+              tempList.push(temp)
+              this.allList.push(false)
+            })
+            this.checkedList = tempList
           }
         }).catch((response) => {
           this.errorMsg()
@@ -101,15 +112,32 @@ export default {
       })
       this.total = price
     },
-    select (val, event) {
-      if (event.target.checked) {
+    select (val, isChecked, index, k) {
+      if (isChecked) {
         this.price = val
       } else {
         this.price = -val
       }
       this.total += this.price
+      let newAll = this.allList
+      newAll[index] = !(this.checkedList[index].includes(false))
+      this.allList = newAll
     },
-    selsectAll (obj, event) {
+    selsectAll (index, event) {
+      // 填充
+      let list = this.checkedList[index]
+      list.fill(event.target.checked)
+      this.$set(this.checkedList, index, list)
+      // 计算价格，重新遍历
+      this.total = 0
+      this.checkedList.forEach((v, index) => {
+        v.forEach((t, k) => {
+          if (t) {
+            const {price, quantity} = (this.proData)[index].list[k]
+            this.total += (price * quantity)
+          }
+        })
+      })
     },
     errorMsg () {
       this.$vux.toast.show({
