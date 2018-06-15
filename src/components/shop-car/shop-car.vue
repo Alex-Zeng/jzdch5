@@ -5,18 +5,17 @@
       <div>
         采购清单
       </div>
-      <div style="padding-right: 0.5rem">
-        管理
+      <div @click="manageMethods" style="padding-right: 0.5rem">
+        {{manage?'管理':'完成'}}
       </div>
     </div>
     <div class="shop-car-container">
       <div v-for="(item, index) in proData" :key="index">
         <div class="shller-title" :key="'list'+index">
           <div>
-            <!--{{checkedList[index]}}-->
+            <i class="icon iconfont icon-danxuananniu" v-if="!allList[index]"></i>
+            <i class="icon iconfont icon-danxuananniu-xuanzhong1" v-if="allList[index]" style="color: #1EB9EE;"></i>
             <input type="checkbox" :value="item.supplierName" @click="selsectAll(index, $event)" v-model="allList[index]">
-            <!--<icon type="circle" v-if="!checked"></icon>-->
-            <!--<icon type="success" v-if="checked"></icon>-->
           </div>
           <div>{{item.supplierName}}</div>
         </div>
@@ -28,8 +27,9 @@
             </div>
             <div slot="content" class="shop-car-content">
               <div>
-                <!--<icon type="circle"></icon>-->
-                <input type="checkbox" name="checkbox" class="input" :value="i.cartId" v-model="checkedList[index][k]" @change="select(i.price*i.quantity, checkedList[index][k], index, k)">
+                <i class="icon iconfont icon-danxuananniu" v-if="!checkedList[index][k]"></i>
+                <i class="icon iconfont icon-danxuananniu-xuanzhong1" v-if="checkedList[index][k]" style="color: #1EB9EE;"></i>
+                <input type="checkbox" name="checkbox" class="input" :value="i.cartId" :data-i="checkedList[index][k]" v-model="checkedList[index][k]" @change="select(i.price*i.quantity, checkedList[index][k], index, k)">
                 <input type="hidden" name="price" :value="i.price*i.quantity">
               </div>
               <div>
@@ -48,11 +48,19 @@
       </div>
     </div>
     <div class="shop-car-total">
-      <div>
+      <div v-if="manage">
         合计：
         <span class="text-red">{{total}}</span>
       </div>
-      <div>
+      <div v-if="!manage">
+        <i class="icon iconfont icon-danxuananniu" v-if="!all"></i>
+        <i class="icon iconfont icon-danxuananniu-xuanzhong1" v-if="all" style="color: #1EB9EE;"></i>
+        <input type="checkbox" value="all" v-model="all">
+      </div>
+      <div class="delete-goods" v-if="!manage">
+        删除商品
+      </div>
+      <div @click="goMethods">
         去结算
       </div>
     </div>
@@ -69,10 +77,12 @@ export default {
     return {
       checkedList: [],
       allList: [],
+      all: false,
       total: 0,
       price: 0,
       price2: 0,
-      proData: []
+      proData: [],
+      manage: true
     }
   },
   methods: {
@@ -83,7 +93,6 @@ export default {
     },
     getLists () {
       let loginToken = sessionStorage.getItem('loginToken')
-      console.log(loginToken)
       if (loginToken !== null) {
         axios.get('api/mall_cart/index&_token=' + loginToken).then((response) => {
           if (response.data.status === 0) {
@@ -138,6 +147,17 @@ export default {
           }
         })
       })
+    },
+    manageMethods () {
+      this.manage = !this.manage
+    },
+    deleteMethods () {
+      axios.post('api/mall_cart/delete', {
+        'ids': ''
+      }).then((response) => {}).catch((response) => {})
+    },
+    goMethods () {
+      this.$router.push('indent')
     },
     errorMsg () {
       this.$vux.toast.show({

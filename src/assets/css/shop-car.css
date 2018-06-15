@@ -17,7 +17,7 @@
   margin: auto;
   width: 2rem;
   height: 100%;
-  opacity: 0.5;
+  opacity: 0;
 }
 .shop-car-content > div:last-child{
   flex: 1;
@@ -43,7 +43,7 @@
 }
 .shller-title{
   display: flex;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   padding: 0.5rem;
   background: #FFFFFF;
   border-top: 0.05rem solid #E1E1E1;
@@ -64,7 +64,7 @@
   right: 0;
   bottom: 0;
   left: 0;
-  opacity: 0.5;
+  opacity: 0;
 }
 .shller-title span{
   font-size: 0.6rem;
@@ -77,15 +77,20 @@
   left: 0;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: stretch;
+  line-height: 2.5rem;
   background: #FFFFFF;
 }
 .shop-car-total > div:first-child{
   padding-left: 0.5rem;
+  flex: 1;
+}
+.shop-car-total .delete-goods{
+  padding: 0 1.4rem;
+  color: #FFFFFF;
+  background: #999999;
 }
 .shop-car-total > div:last-child{
-  height: 100%;
-  line-height: 2.5rem;
   padding: 0 1.4rem;
   color: #FFFFFF;
   background: #E22425;

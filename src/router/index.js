@@ -3,7 +3,9 @@ import Router from 'vue-router'
 import Index from '@/components/home/index'
 import GoodsClass from '@/components/goods-class/goods-class'
 import User from '@/components/user/user'
-import shopCar from '@/components/shop-car/shop-car'
+import ShopCartemplate from '@/components/shop-car/shop-car-template'
+import ShopCar from '@/components/shop-car/shop-car'
+import Indent from '@/components/shop-car/indent'
 import Login from '@/components/login/login'
 import LoginCode from '@/components/login/login-code'
 import Register from '@/components/login/register'
@@ -41,10 +43,25 @@ export default new Router({
     {
       path: '/shop-car',
       name: 'shop-car',
-      meta: {
-        title: '采购清单'
-      },
-      component: shopCar
+      component: ShopCartemplate,
+      children: [
+        {
+          path: '/',
+          name: 'shop-car-lists',
+          meta: {
+            title: '采购清单'
+          },
+          component: ShopCar
+        },
+        {
+          path: 'indent',
+          name: 'indent',
+          meta: {
+            title: '确认订单'
+          },
+          component: Indent
+        }
+      ]
     },
     {
       path: '/login',
