@@ -55,9 +55,9 @@
       <div v-if="!manage">
         <i class="icon iconfont icon-danxuananniu" v-if="!all"></i>
         <i class="icon iconfont icon-danxuananniu-xuanzhong1" v-if="all" style="color: #1EB9EE;"></i>
-        <input type="checkbox" value="all" v-model="all">
+        <input type="checkbox" value="all" v-model="all" @click="manageAll">
       </div>
-      <div class="delete-goods" v-if="!manage">
+      <div class="delete-goods" v-if="!manage" @click="deleteMethods">
         删除商品
       </div>
       <div @click="goMethods">
@@ -87,9 +87,29 @@ export default {
   },
   methods: {
     onButtonClick (event) {
-      axios.post('api/mall_cart/delete', {
-        'ids': [event]
-      }).then((response) => {}).catch((response) => {})
+      let loginToken = sessionStorage.getItem('loginToken')
+      if (loginToken != null) {
+        axios.post('api/mall_cart/delete', {
+          'ids': [event].join(','),
+          '_token': loginToken
+        }).then((response) => {
+          const {data: {status, msg}} = response
+          if (status === 0) {
+            this.$vux.toast.show({
+              type: 'success',
+              text: msg
+            })
+            this.getLists()
+          } else {
+            this.$vux.toast.show({
+              type: 'warn',
+              text: msg
+            })
+          }
+        }).catch((response) => {
+          this.errorMsg()
+        })
+      }
     },
     getLists () {
       let loginToken = sessionStorage.getItem('loginToken')
@@ -131,6 +151,9 @@ export default {
       let newAll = this.allList
       newAll[index] = !(this.checkedList[index].includes(false))
       this.allList = newAll
+      this.allList.forEach((v) => {
+        this.all = v
+      })
     },
     selsectAll (index, event) {
       // 填充
@@ -148,13 +171,46 @@ export default {
         })
       })
     },
+    manageAll () {
+      this.checkedList.forEach((v, k) => {
+        this.$set(this.checkedList, k, v.fill(!this.all))
+        this.allList.fill(!this.all)
+      })
+    },
     manageMethods () {
       this.manage = !this.manage
     },
     deleteMethods () {
-      axios.post('api/mall_cart/delete', {
-        'ids': ''
-      }).then((response) => {}).catch((response) => {})
+      let ids = []
+      let loginToken = sessionStorage.getItem('loginToken')
+      if (loginToken !== null) {
+        this.checkedList.forEach((v, k) => {
+          v.forEach((t, d) => {
+            if (t) {
+              ids.push(this.proData[k].list[d].cartId)
+            }
+          })
+        })
+        axios.post('api/mall_cart/delete', {
+          'ids': ids.join(','),
+          '_token': loginToken
+        }).then((response) => {
+          const {data: {status, msg}} = response
+          if (status === 0) {
+            this.$vux.toast.show({
+              type: 'success',
+              text: msg
+            })
+            this.getLists()
+          } else {
+            this.$vux.toast.show({
+              type: 'warn',
+              text: msg
+            })
+          }
+        }).catch((response) => {
+        })
+      }
     },
     goMethods () {
       this.$router.push('indent')
