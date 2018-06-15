@@ -90,12 +90,12 @@ export default {
             this.proData = response.data.data
             // 动态生成选中数组
             let tempList = []
-            response.data.data.forEach((v) => {
-              let temp = new Array(v.list.length)
-              temp.fill(false)
-              tempList.push(temp)
-              this.allList.push(false)
+            const { data } = response.data
+            data.forEach((v) => {
+              const {list: { length }} = v
+              tempList.push(Array(length).fill(false))
             })
+            this.allList = Array(data.length).fill(false)
             this.checkedList = tempList
           }
         }).catch((response) => {
