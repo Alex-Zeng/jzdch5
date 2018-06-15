@@ -10,37 +10,46 @@
       </div>
     </div>
     <div class="shop-car-container">
-      <div class="shller-title">
-        <check-icon :value.sync="demo1">
-          <i class="icon iconfont icon-daifukuan"></i> 广东津晶电器有限责任公司
-        </check-icon>
-      </div>
-      <swipeout>
-        <swipeout-item transition-mode="follow" v-for="(item, index) in lists" :key="index">
-          <div slot="right-menu">
-            <swipeout-button @click.native="onButtonClick('delete')" type="warn">删除</swipeout-button>
+      <div v-for="(item, index) in proData" :key="index">
+        <div class="shller-title" :key="'list'+index">
+          <div>
+            <input type="checkbox" :value="item.supplierName" @click="selsectAll('box'+index, $event)">
+            <!--<icon type="circle" v-if="!checked"></icon>-->
+            <!--<icon type="success" v-if="checked"></icon>-->
           </div>
-          <div slot="content" class="shop-car-content">
-            <check-icon :value.sync="demo2">
-            </check-icon>
-            <div>
-              <img :src="item.icon" alt="">
+          <div>{{item.supplierName}}</div>
+        </div>
+        <div :id="'box'+index">
+        <swipeout>
+          <swipeout-item transition-mode="follow" v-for="i in item.list" :key="i.cartId">
+            <div slot="right-menu">
+              <swipeout-button @click.native="onButtonClick(i.cartId)" type="warn">删除</swipeout-button>
+            </div>
+            <div slot="content" class="shop-car-content">
               <div>
-                <h3>{{item.title}}</h3>
-                <div class="text-muted">产品规格描述</div>
-                <span class="text-red">￥ {{item.price}}</span>
-                <inline-x-number width="50px" :min="0"></inline-x-number>
+                <!--<icon type="circle"></icon>-->
+                <input type="checkbox" name="checkbox" class="input" :value="i.cartId" @change="select(i.price*i.quantity, $event)">
+                <input type="hidden" name="price" :value="i.price*i.quantity">
+              </div>
+              <div>
+                <img :src="i.icon" alt="">
+                <div>
+                  <h3>{{i.title}}</h3>
+                  <div class="text-muted">{{i.specificationsInfo}}</div>
+                  <span class="text-red">￥ {{i.price}}</span>
+                  <inline-x-number width="50px" :min="0" v-model="i.quantity" @on-change="change(i.price*i.quantity)"></inline-x-number>
+                </div>
               </div>
             </div>
-
-          </div>
-        </swipeout-item>
-      </swipeout>
+          </swipeout-item>
+        </swipeout>
+        </div>
+      </div>
     </div>
     <div class="shop-car-total">
       <div>
         合计：
-        <span class="text-red">88.88</span>
+        <span class="text-red">{{total}}</span>
       </div>
       <div>
         去结算
@@ -51,50 +60,56 @@
 
 <script>
 import axios from 'axios'
-import { Swipeout, SwipeoutItem, SwipeoutButton, InlineXNumber, CheckIcon } from 'vux'
+import { Swipeout, SwipeoutItem, SwipeoutButton, InlineXNumber, Icon, Checklist, CheckIcon } from 'vux'
 import '@/assets/css/shop-car.css'
 export default {
   name: 'shop-car',
   data () {
     return {
-      demo1: false,
-      demo2: false,
-      demo3: false,
-      lists: [
-        {
-          'goodsId': 10,
-          'cartId': 62,
-          'price': '20.00',
-          'title': '测试压缩机',
-          'icon': 'http:\/\/192.168.3.101\/program\/mall\/img_thumb\/2018_04\/23\/1524475233_0_6137.jpg',
-          'quantity': 136
-        },
-        {
-          'goodsId': 12,
-          'cartId': 64,
-          'price': '30.00',
-          'title': '插头系列-KJ-126(美式极性插)',
-          'icon': 'http:\/\/192.168.3.101\/program\/mall\/img_thumb\/2018_04\/24\/1524535351_0_9369.jpg',
-          'quantity': 132
-        }
-      ]
+      checked: false,
+      total: 0,
+      price: 0,
+      price2: 0,
+      proData: []
     }
   },
   methods: {
-    onButtonClick (type) {
-      alert('on button click ' + type)
-    },
-    handleEvents (type) {
-      console.log('event: ', type)
+    onButtonClick (event) {
+      axios.post('api/mall_cart/delete', {
+        'ids': [event]
+      }).then((response) => {}).catch((response) => {})
     },
     getLists () {
-      axios.get('api/mall_cart/index&_token=' + sessionStorage.getItem('loginToken')).then((response) => {
-        if (response.data.status === 0) {
-
+      let loginToken = sessionStorage.getItem('loginToken')
+      console.log(loginToken)
+      if (loginToken !== null) {
+        axios.get('api/mall_cart/index&_token=' + loginToken).then((response) => {
+          if (response.data.status === 0) {
+            this.proData = response.data.data
+          }
+        }).catch((response) => {
+          this.errorMsg()
+        })
+      }
+    },
+    change (val) {
+      var price = 0
+      document.getElementsByName('checkbox').forEach(function (item, index) {
+        if (item.checked) {
+          price += parseInt(document.getElementsByName('price')[index].value)
         }
-      }).catch((response) => {
-        this.errorMsg()
       })
+      this.total = price
+    },
+    select (val, event) {
+      if (event.target.checked) {
+        this.price = val
+      } else {
+        this.price = -val
+      }
+      this.total += this.price
+    },
+    selsectAll (obj, event) {
     },
     errorMsg () {
       this.$vux.toast.show({
@@ -117,6 +132,8 @@ export default {
     SwipeoutItem,
     SwipeoutButton,
     InlineXNumber,
+    Icon,
+    Checklist,
     CheckIcon
   }
 }
