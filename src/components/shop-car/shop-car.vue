@@ -157,7 +157,7 @@ export default {
       }).then((response) => {}).catch((response) => {})
     },
     goMethods () {
-      this.$router.push('indent')
+      this.$router.push('/shop-car/indent')
     },
     errorMsg () {
       this.$vux.toast.show({
