@@ -38,7 +38,7 @@
                   <h3>{{i.title}}</h3>
                   <div class="text-muted">{{i.specificationsInfo}}</div>
                   <span class="text-red">￥ {{i.price}}</span>
-                  <inline-x-number width="50px" :min="0" v-model="i.quantity" @on-change="change(i.cartId, i.quantity)"></inline-x-number>
+                  <inline-x-number width="50px" :min="0" fillable v-model="i.quantity" @on-change="change(i.cartId, i.quantity)"></inline-x-number>
                 </div>
               </div>
             </div>
