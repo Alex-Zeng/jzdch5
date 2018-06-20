@@ -1,3 +1,4 @@
+
 .enterprise .enterprise-title{
   height: 2.5rem;
   line-height: 2.5rem;
@@ -30,10 +31,26 @@
 .enterprise .weui-cell{
   padding-left: 0!important;
 }
+.enterprise-upload-wrap{
+  padding:0 0.5rem 0.5rem;
+}
+
+.enterprise-upload-list{
+  display: flex;
+  height: 6.1rem;
+  margin-bottom: 1rem;
+}
+
+.enterprise-upload-item{
+  flex: 1;
+  text-align: center;
+  padding:0 0.5rem;
+}
+
 .enterprise-footer-btn{
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  /*position: fixed;*/
+  /*bottom: 0;*/
+  /*left: 0;*/
+  /*right: 0;*/
   padding: 0.5rem;
 }

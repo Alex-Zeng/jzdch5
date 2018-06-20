@@ -15,7 +15,7 @@
         <i :class="{'is-danger': errors.has('name')}"></i>
         <div class="cells">
           <label for="">企业名称 <span class="text-red">*</span></label>
-          <input name="mobile" v-model="enterpriseName" v-validate="'required'" type="text" placeholder="请按营业执照填写">
+          <input name="mobile" v-model="companyName" v-validate="'required'" type="text" placeholder="请按营业执照填写">
         </div>
       </li>
       <li>
@@ -34,7 +34,7 @@
         <i :class="{'is-danger': errors.has('mobile')}"></i>
         <div class="cells">
           <label for="">注册资本 <span class="text-red">*</span></label>
-          <input name="mobile" v-model="legalName" v-validate="'required'" type="text" placeholder="请按营业执照填写">
+          <input name="mobile" v-model="capital" v-validate="'required'" type="text" placeholder="请按营业执照填写">
           <span>&emsp;&nbsp;万元</span>
         </div>
       </li>
@@ -45,23 +45,64 @@
     <div class="enterprise-title">
       证件影像资料上传
     </div>
+    <div class="enterprise-upload-wrap">
+      <label for="">必填项 <span class="text-red">*</span></label>
+      <div class="enterprise-upload-list">
+        <div class="enterprise-upload-item">
+          <uploader title="工商营业执照" id="1" @uploaded="businessUp"></uploader>
+        </div>
+        <div class="enterprise-upload-item">
+          <uploader title="开户许可证" id="2" @uploaded="businessUp"></uploader>
+        </div>
+      </div>
+      <div class="enterprise-upload-list" style="width: 50%;">
+        <div class="enterprise-upload-item">
+          <uploader title="企业法人身份证" id="3" @uploaded="businessUp"></uploader>
+        </div>
+      </div>
+    </div>
+
+    <div class="enterprise-upload-wrap">
+      <label for="">可选项</label>
+      <div class="enterprise-upload-list">
+        <div class="enterprise-upload-item">
+          <uploader title="组织机构代码证" id="4" @uploaded="businessUp"></uploader>
+        </div>
+        <div class="enterprise-upload-item">
+          <uploader title="税务登记证" id="5" @uploaded="businessUp"></uploader>
+        </div>
+      </div>
+    </div>
+
     <div class="enterprise-footer-btn">
-      <button type="submit" class="btn btn-primary">提交</button>
+      <button type="submit" class="btn btn-primary" @click="submit">提交</button>
     </div>
   </div>
 </template>
 
 <script>
 import { Datetime, PopupPicker, Group, Cell, Picker, XButton, Divider, XSwitch, XTextarea } from 'vux'
+import uploader from '@/components/common/uploader'
+// import axios from 'axios'
 import '@/assets/css/enterprise.css'
 export default {
   name: 'enterprise',
   data () {
     return {
-      enterpriseName: '',
+      type: 1,
+      agent: 0,
+      companyName: '',
       legalName: '',
-      value1: ['iPhone'],
-      list1: [['小米', 'iPhone', '华为', '情怀', '三星', '其他', '不告诉你']],
+      capital: 0,
+      value1: ['有限责任公司'],
+      list1: [['有限责任公司', '股份有限公司', '个体工商户', '合伙企业']],
+      business: '',
+      permitsAccount: '',
+      legalIdentityCard: '',
+      agentIdentityCard: '',
+      orgStructureCode: '',
+      taxRegistrationCert: '',
+      attorney: ''
     }
   },
   methods: {
@@ -76,6 +117,13 @@ export default {
     },
     onEvent (event) {
       console.log('on', event)
+    },
+    businessUp (url) {
+      this.business = url
+    },
+    submit () {
+      // if ()
+      // 验证 提交
     }
   },
   components: {
@@ -87,7 +135,8 @@ export default {
     Cell,
     XSwitch,
     Datetime,
-    XTextarea
+    XTextarea,
+    uploader
   }
 }
 </script>
