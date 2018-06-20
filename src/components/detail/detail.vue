@@ -227,7 +227,8 @@ export default {
         })
       } else {
         axios.post('api/goods/removeFavorite', {
-          'goodsId': this.$route.params.id
+          'goodsId': this.$route.params.id,
+          '_token': sessionStorage.getItem('loginToken')
         }).then((response) => {
           if (response.data.status === 0) {
             this.$vux.toast.show({
@@ -271,25 +272,23 @@ export default {
     }
   },
   created () {
-    axios.get('api/mall_cart/getNumber&_token=' + sessionStorage.getItem('loginToken')).then((response) => {
-      console.log(response.data.status)
-      if (response.data.status === -2) {
-        // this.$router.push('/login')
-        this.shopCard = false
-        console.log('未登录')
-      } else if (response.data.status === 0) {
-        this.showCarNum = response.data.data.total
-        this.shopCard = true
-      } else {
-        this.shopCard = false
-      }
-    }).catch((response) => {
-    })
-    axios.get('api/mall_cart/getNumber').then((response) => {
-      console.log(response)
-    }).catch((response) => {
-
-    })
+    let loginToken = sessionStorage.getItem('loginToken')
+    if (loginToken !== null) {
+      axios.get('api/mall_cart/getNumber&_token=' + sessionStorage.getItem('loginToken')).then((response) => {
+        console.log(response.data.status)
+        if (response.data.status === -2) {
+          // this.$router.push('/login')
+          this.shopCard = false
+          console.log('未登录')
+        } else if (response.data.status === 0) {
+          this.showCarNum = response.data.data.total
+          this.shopCard = true
+        } else {
+          this.shopCard = false
+        }
+      }).catch((response) => {
+      })
+    }
   },
   mounted () {
     this.showDetai()

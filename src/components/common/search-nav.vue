@@ -133,7 +133,6 @@ export default {
       this.$vux.confirm.show({
         content: '是否确认删除所有历史记录？',
         onCancel () {
-          alert('取消删除')
         },
         onConfirm () {
           sessionStorage.clear()

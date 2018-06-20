@@ -8,7 +8,7 @@
       <i class="icon iconfont icon-fenlei2"></i>
       <div>分类</div>
     </router-link>
-    <router-link v-if="shopCard" to="/shop-card">
+    <router-link v-if="shopCard" to="/shop-car">
       <i class="icon iconfont icon-gouwuche2">
         <badge :text="total"></badge>
       </i>

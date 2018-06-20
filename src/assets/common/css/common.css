@@ -1,4 +1,4 @@
-@import url('../../font/iconfont.css');
+@import url('//at.alicdn.com/t/font_670323_x4vf7bfykq.css');
 *{
 	padding: 0;
 	margin: 0;
@@ -36,6 +36,7 @@ body{
 }
 #app .form {
   padding: 0 1rem;
+  background: #FFFFFF;
 }
 .form ul li .is-danger + .cells{
   border-color: red;

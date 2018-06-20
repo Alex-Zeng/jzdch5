@@ -9,6 +9,16 @@
   padding: 0.5rem;
   font-size: 0.6rem;
 }
+.shop-car-content > div:first-child input{
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  margin: auto;
+  width: 2rem;
+  height: 100%;
+  opacity: 0;
+}
 .shop-car-content > div:last-child{
   flex: 1;
   display: flex;
@@ -32,11 +42,33 @@
   fill: #5FCAED;
 }
 .shller-title{
-  margin-top: 1rem;
+  display: flex;
+  margin-top: 0.5rem;
   padding: 0.5rem;
+  background: #FFFFFF;
   border-top: 0.05rem solid #E1E1E1;
   border-bottom: 0.05rem solid #E1E1E1;
-  background: #FFFFFF;
+  position: relative;
+  font-size: 0.6rem;
+}
+.shller-title > div:first-child{
+  width: 3rem;
+  background: #FFFFFF url("../images/sho-car-title.png") no-repeat 1.6rem center;
+  background-size: 1.1rem;
+}
+.shller-title input{
+  position: absolute;
+  width: 2rem;
+  height: 100%;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+}
+.shller-title span{
+  font-size: 0.6rem;
+  font-weight: bold;
 }
 .shop-car-total{
   width: 100%;
@@ -45,15 +77,27 @@
   left: 0;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: stretch;
+  line-height: 2.5rem;
   background: #FFFFFF;
 }
 .shop-car-total > div:first-child{
   padding-left: 0.5rem;
+  flex: 1;
+}
+.shop-car-total > div:first-child input{
+  height: 100%;
+  position: absolute;
+  left: 0;
+  width: 2rem;
+  opacity: 0;
+}
+.shop-car-total .delete-goods{
+  padding: 0 1.4rem;
+  color: #FFFFFF;
+  background: #999999;
 }
 .shop-car-total > div:last-child{
-  height: 100%;
-  line-height: 2.5rem;
   padding: 0 1.4rem;
   color: #FFFFFF;
   background: #E22425;

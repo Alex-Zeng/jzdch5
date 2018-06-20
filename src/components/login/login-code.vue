@@ -232,7 +232,7 @@ export default {
                   console.log('Plugin: I\'m showing')
                   // 响应成功回调
                   console.log('success')
-                  sessionStorage.setItem('loginToken', response.data.token)
+                  sessionStorage.setItem('loginToken', response.data.data.token)
                 },
                 onHide () {
                   console.log('Plugin: I\'m hiding')

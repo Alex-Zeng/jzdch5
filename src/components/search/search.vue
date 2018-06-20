@@ -66,23 +66,11 @@ export default {
     searchHistory (index) {
       this.historyLists[index].isActive = !this.historyLists[index].isActive
     },
-    confirm () {
-      this.$vux.confirm.show({
-        content: '是否确认删除所有历史记录？',
-        onCancel () {
-          alert('取消删除')
-        },
-        onConfirm () {
-          alert('确定删除')
-        }
-      })
-    },
     toggle () {
       this.isA = !this.isA
       this.showList = !this.showList
     },
     submit () {
-
     },
     sortMethod () {
       if (this.sort === 'asc') {

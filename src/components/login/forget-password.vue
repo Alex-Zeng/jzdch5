@@ -250,7 +250,7 @@ export default {
             },
             onHide () {
               console.log('Plugin: I\'m hiding')
-              _sel.$router.push('/')
+              _sel.$router.push('/login')
             }
           })
         } else {

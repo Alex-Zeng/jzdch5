@@ -3,7 +3,12 @@ import Router from 'vue-router'
 import Index from '@/components/home/index'
 import GoodsClass from '@/components/goods-class/goods-class'
 import User from '@/components/user/user'
-import shopCar from '@/components/shop-car/shop-car'
+import ShopCartemplate from '@/components/shop-car/shop-car-template'
+import ShopCar from '@/components/shop-car/shop-car'
+import Indent from '@/components/shop-car/indent'
+import IndentDetail from '@/components/shop-car/detail'
+import AddressLists from '@/components/address/address-lists'
+import AddressNew from '@/components/address/address-new'
 import Login from '@/components/login/login'
 import LoginCode from '@/components/login/login-code'
 import Register from '@/components/login/register'
@@ -41,10 +46,49 @@ export default new Router({
     {
       path: '/shop-car',
       name: 'shop-car',
+      component: ShopCartemplate,
+      children: [
+        {
+          path: '/',
+          name: 'shop-car-lists',
+          meta: {
+            title: '采购清单'
+          },
+          component: ShopCar
+        },
+        {
+          path: '/shop-car/indent',
+          name: 'indent',
+          meta: {
+            title: '确认订单'
+          },
+          component: Indent
+        },
+        {
+          path: '/shop-car/detail',
+          name: 'detail',
+          meta: {
+            title: '订单详情'
+          },
+          component: IndentDetail
+        }
+      ]
+    },
+    {
+      path: '/address-lists',
+      name: 'address-lists',
       meta: {
-        title: '采购清单'
+        title: '收货地址'
       },
-      component: shopCar
+      component: AddressLists
+    },
+    {
+      path: '/address-new',
+      name: 'address-new',
+      meta: {
+        title: '新建收货地址'
+      },
+      component: AddressNew
     },
     {
       path: '/login',
