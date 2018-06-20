@@ -5,7 +5,7 @@
   background: #FFFFFF;
   min-height: 3rem;
   font-size: 0.7rem;
-  margin: 1rem 0 0.5rem 0;
+  margin: 0.5rem 0;
   padding: 0.75rem 0.5rem;
   border-top: 0.05rem solid #e1e1e1;
   border-bottom: 0.05rem solid #e1e1e1;
@@ -28,6 +28,12 @@
 }
 .indent-list{
   padding-bottom: 4rem;
+}
+.indent-list > div{
+  margin-bottom: 0.5rem;
+}
+.indent-list .weui-cells {
+  margin-top: 0.5rem!important;
 }
 .indent-list .icon-bianji{
   font-size: 1.5rem!important;
@@ -60,6 +66,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 0.5rem;
+  background: #fff;
 }
 .indent-content img{
   width: 4.5rem;
@@ -73,4 +80,30 @@
 }
 .indent-content .indent-info h3{
   font-size: 0.8rem;
+}
+.editor-container{
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: #F5F5F5;
+}
+.editor{
+}
+.editor li{
+  display: flex;
+  padding: 0.5rem;
+  background: #FFFFFF;
+  margin-bottom: 0.5rem;
+}
+.editor li:last-child{
+  background: none;
+}
+.editor li label{
+  font-size: 0.7rem;
+  font-weight: bold;
+}
+.editor li input{
+  flex: 1;
 }

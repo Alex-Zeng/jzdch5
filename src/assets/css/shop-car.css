@@ -85,6 +85,13 @@
   padding-left: 0.5rem;
   flex: 1;
 }
+.shop-car-total > div:first-child input{
+  height: 100%;
+  position: absolute;
+  left: 0;
+  width: 2rem;
+  opacity: 0;
+}
 .shop-car-total .delete-goods{
   padding: 0 1.4rem;
   color: #FFFFFF;

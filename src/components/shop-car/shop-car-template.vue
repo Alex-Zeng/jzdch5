@@ -1,6 +1,6 @@
 <template>
   <div>
-    <router-view></router-view>
+    <router-view @children-selected="getSelected" :lists="lists"></router-view>
   </div>
 </template>
 
@@ -10,9 +10,17 @@ import '@/assets/css/shop-car.css'
 export default {
   name: 'shop-car-template',
   data () {
-    return {}
+    return {
+      lists: [],
+      num: 654
+    }
   },
-  methods: {},
+  methods: {
+    getSelected (data) {
+      this.lists = data
+      console.log(this.lists)
+    }
+  },
   created () {},
   components: {
     Swipeout,

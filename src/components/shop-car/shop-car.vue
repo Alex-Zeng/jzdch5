@@ -38,7 +38,7 @@
                   <h3>{{i.title}}</h3>
                   <div class="text-muted">{{i.specificationsInfo}}</div>
                   <span class="text-red">￥ {{i.price}}</span>
-                  <inline-x-number width="50px" :min="0" v-model="i.quantity" @on-change="change(i.price*i.quantity)"></inline-x-number>
+                  <inline-x-number width="50px" :min="0" v-model="i.quantity" @on-change="change(i.cartId, i.quantity)"></inline-x-number>
                 </div>
               </div>
             </div>
@@ -132,7 +132,7 @@ export default {
         })
       }
     },
-    change (val) {
+    change (id, number) {
       var price = 0
       document.getElementsByName('checkbox').forEach(function (item, index) {
         if (item.checked) {
@@ -140,6 +140,13 @@ export default {
         }
       })
       this.total = price
+      axios.post('api/mall_cart/update', {
+        'id': id,
+        'number': number
+      }).then((response) => {
+        console.log(id)
+        console.log(number)
+      }).catch((response) => {})
     },
     select (val, isChecked, index, k) {
       if (isChecked) {
@@ -213,7 +220,25 @@ export default {
       }
     },
     goMethods () {
-      this.$router.push('/shop-car/indent')
+      let loginToken = sessionStorage.getItem('loginToken')
+      if (loginToken !== null) {
+        let ids = []
+        this.checkedList.forEach((v, k) => {
+          console.log(v)
+          console.log(k)
+          if (v) {
+            v.forEach((t, d) => {
+              if (t) {
+                ids.push(this.proData[k].list[d].cartId)
+              }
+            })
+          }
+        })
+        axios.get('api/mall_cart/index&_token=' + loginToken + '&ids=' + ids).then((response) => {
+          this.$emit('children-selected', response.data.data)
+          this.$router.push('/shop-car/indent')
+        }).catch((response) => {})
+      }
     },
     errorMsg () {
       this.$vux.toast.show({
