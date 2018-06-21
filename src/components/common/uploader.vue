@@ -2,13 +2,13 @@
   <div class="upload-item-content">
     <input :id="'img'+id" style="visibility: hidden;height: 0; width: 1px;" type="file" @change="upload"/>
     <span>{{title}}</span>
-    <div class="upload-plus" @click="open" v-show="!showImg">
+    <div class="upload-plus" @click="open" v-show="!value">
       +
     </div>
-    <div v-show="showImg" @click="open">
-      <img width="100%" :src="url" alt="">
+    <div v-show="value" @click="open">
+      <img width="100%" :src="path||value" alt="">
     </div>
-    <XProgress :percent="progress" :show-cancel="false" v-show="isProgress"></XProgress>
+    <XProgress :percent="count" :show-cancel="false" v-show="isProgress"></XProgress>
   </div>
 </template>
 
@@ -29,10 +29,21 @@ export default {
   },
   data () {
     return {
-      progress: 0,
+      count: 0,
       isProgress: false,
-      showImg: false,
-      url: ''
+      path: ''
+    }
+  },
+  created () {
+    if (this.imgurl) {
+      this.url = this.imgurl
+      this.showImg = true
+    }
+  },
+  updated () {
+    if (this.imgurl) {
+      this.url = this.imgurl
+      this.showImg = true
     }
   },
   methods: {
@@ -47,18 +58,17 @@ export default {
       let config = {
         onUploadProgress: progressEvent => {
           let complete = (progressEvent.loaded / progressEvent.total * 100 | 0)
-          this.progress = complete
+          this.count = complete
         }
       }
       const { data } = await axios.post('api/image_upload/index', fd, config)
-      const {data: { filename }, status} = data
+      const {data: { filename }, status, path} = data
       setTimeout(() => {
         this.isProgress = false
       }, 200)
       if (status === 0) {
-        this.$emit('uploaded', filename)
-        this.showImg = true
-        this.url = filename
+        this.$emit('input', filename)
+        this.path = path
       }
     }
   }

@@ -47,6 +47,14 @@
   padding:0 0.5rem;
 }
 
+.enterprise-msg{
+  background-color: #1EB9EE;
+  font-size: 0.9rem;
+  text-align: center;
+  color: #ffffff;
+  padding: 2rem 0;
+}
+
 .enterprise-footer-btn{
   /*position: fixed;*/
   /*bottom: 0;*/
