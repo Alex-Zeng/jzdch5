@@ -7,6 +7,21 @@
       </div>
       <div style="padding-right: 2rem">&emsp;</div>
     </div>
+    <div v-show="data.status !== 0" class="enterprise-msg">
+      <div v-if="data.status == 2">
+        您的审核信息已通过
+      </div>
+      <div v-else>
+        <div v-if="data.status == 1">
+          工作人员努力审核中，请耐心等待
+        </div>
+        <div v-if="data.status == 3">
+          <div>抱歉，审核未通过</div>
+          <div>拒绝原因：{{data.refuseReason}}</div>
+        </div>
+
+      </div>
+    </div>
     <div class="enterprise-title">
       企业基本信息
     </div>
@@ -15,54 +30,103 @@
         <i :class="{'is-danger': errors.has('name')}"></i>
         <div class="cells">
           <label for="">企业名称 <span class="text-red">*</span></label>
-          <input name="mobile" v-model="enterpriseName" v-validate="'required'" type="text" placeholder="请按营业执照填写">
+          <input name="mobile" v-model="data.companyName" v-validate="'required'" type="text" placeholder="请按营业执照填写" :disabled="data.status != 0">
         </div>
       </li>
       <li>
         <i :class="{'is-danger': errors.has('mobile')}"></i>
         <div class="cells">
           <label for="">法人代表 <span class="text-red">*</span></label>
-          <input name="mobile" v-model="legalName" v-validate="'required'" type="text" placeholder="请按营业执照填写">
+          <input name="mobile" v-model="data.representative" v-validate="'required'" type="text" placeholder="请按营业执照填写" :disabled="data.status != 0">
         </div>
       </li>
       <li>
         <group>
-          <popup-picker title="注册类型 <span class='text-red'>*</span>" :data="list1" v-model="value1" @on-show="onShow" @on-hide="onHide" @on-change="onChange" v-validate="'required'" placeholder="please select"></popup-picker>
+          <popup-picker title="注册类型 <span class='text-red'>*</span>" :data="list1" v-model="data.property" @on-show="onShow" @on-hide="onHide" @on-change="onChange" v-validate="'required'" placeholder="please select" :disabled="data.status != 0"></popup-picker>
         </group>
       </li>
       <li>
         <i :class="{'is-danger': errors.has('mobile')}"></i>
         <div class="cells">
           <label for="">注册资本 <span class="text-red">*</span></label>
-          <input name="mobile" v-model="legalName" v-validate="'required'" type="text" placeholder="请按营业执照填写">
+          <input name="mobile" v-model="data.capital" v-validate="'required'" type="text" placeholder="请按营业执照填写" :disabled="data.status != 0">
           <span>&emsp;&nbsp;万元</span>
         </div>
       </li>
       <li style="height: auto;">
-          住所<x-textarea placeholder="请按营业执照填写" @on-focus="onEvent('focus')" @on-blur="onEvent('blur')"></x-textarea>
+        住所<x-textarea placeholder="请按营业执照填写" @on-focus="onEvent('focus')" @on-blur="onEvent('blur')" v-model="data.address" :disabled="data.status != 0"></x-textarea>
       </li>
     </ul>
     <div class="enterprise-title">
       证件影像资料上传
     </div>
-    <div class="enterprise-footer-btn">
-      <button type="submit" class="btn btn-primary">提交</button>
+    <div class="enterprise-upload-wrap">
+      <label for="">必填项 <span class="text-red">*</span></label>
+      <div class="enterprise-upload-list">
+        <div class="enterprise-upload-item">
+          <uploader title="工商营业执照" id="1" v-model="data.business"></uploader>
+        </div>
+        <div class="enterprise-upload-item">
+          <uploader title="开户许可证" id="2" v-model="data.permitsAccount"></uploader>
+        </div>
+      </div>
+      <div class="enterprise-upload-list" style="width: 50%;">
+        <div class="enterprise-upload-item">
+          <uploader title="企业法人身份证" id="3" v-model="data.legalIdentityCard"></uploader>
+        </div>
+      </div>
+    </div>
+    <div class="enterprise-upload-wrap">
+      <label for="">可选项</label>
+      <div class="enterprise-upload-list">
+        <div class="enterprise-upload-item">
+          <uploader title="组织机构代码证" id="4"></uploader>
+        </div>
+        <div class="enterprise-upload-item">
+          <uploader title="税务登记证" id="5"></uploader>
+        </div>
+      </div>
+    </div>
+    <div class="enterprise-footer-btn" v-if="data.status == 0 || data.status == 3 ">
+      <button type="submit" class="btn btn-primary" @click="submit">提交</button>
+    </div>
+    <div class="enterprise-footer-btn" v-else>
+      <button type="submit" class="btn btn-primary" @click="back">返回</button>
     </div>
   </div>
 </template>
 
 <script>
 import { Datetime, PopupPicker, Group, Cell, Picker, XButton, Divider, XSwitch, XTextarea } from 'vux'
+import uploader from '@/components/common/uploader'
+import axios from 'axios'
 import '@/assets/css/enterprise.css'
 export default {
   name: 'enterprise',
   data () {
     return {
-      enterpriseName: '',
-      legalName: '',
-      value1: ['iPhone'],
-      list1: [['小米', 'iPhone', '华为', '情怀', '三星', '其他', '不告诉你']]
+      list1: [['有限责任公司', '股份有限公司', '个体工商户', '合伙企业']],
+      data: {
+        type: 1,
+        agent: 0,
+        companyName: '',
+        address: '',
+        representative: '',
+        capital: 0,
+        property: ['有限责任公司'],
+        business: '',
+        permitsAccount: '',
+        legalIdentityCard: '',
+        agentIdentityCard: '',
+        orgStructureCode: '',
+        taxRegistrationCert: '',
+        attorney: '',
+        status: 0
+      }
     }
+  },
+  mounted () {
+    this.check()
   },
   methods: {
     onChange (val) {
@@ -76,6 +140,52 @@ export default {
     },
     onEvent (event) {
       console.log('on', event)
+    },
+    back () {
+      window.history.go(-1)
+    },
+    async check () {
+      // 检查审核状态
+      const token = sessionStorage.getItem('loginToken')
+      const {data: {data}} = await axios.get('api/user/getCertification&_token=' + token)
+      this.data = {...data, property: [data.property]}
+    },
+    async submit () {
+      const token = sessionStorage.getItem('loginToken')
+      const {companyName, representative, capital, property, business, permitsAccount, legalIdentityCard, address} = this.data
+      if (!companyName || !representative || !capital || !property || !business || !permitsAccount || !legalIdentityCard) {
+        this.$vux.toast.show({
+          type: 'warn',
+          text: '请填写必填字段'
+        })
+        return
+      }
+      if (token) {
+        const {data: {status, msg}} = await axios.post('api/user/certification', {
+          type: this.data.type,
+          agent: this.data.agent,
+          companyName,
+          representative,
+          capital,
+          property: ['有限责任公司', '股份有限公司', '个体工商户', '合伙企业'].indexOf(property[0]),
+          business,
+          address,
+          permitsAccount,
+          legalIdentityCard,
+          _token: token
+        })
+        if (status !== 0) {
+          this.$vux.toast.show({
+            type: 'warn',
+            text: msg
+          })
+        } else {
+          this.$vux.toast.show({
+            type: 'success',
+            text: msg
+          })
+        }
+      }
     }
   },
   components: {
@@ -87,7 +197,8 @@ export default {
     Cell,
     XSwitch,
     Datetime,
-    XTextarea
+    XTextarea,
+    uploader
   }
 }
 </script>
