@@ -61,7 +61,7 @@ export default {
       enterpriseName: '',
       legalName: '',
       value1: ['iPhone'],
-      list1: [['小米', 'iPhone', '华为', '情怀', '三星', '其他', '不告诉你']],
+      list1: [['小米', 'iPhone', '华为', '情怀', '三星', '其他', '不告诉你']]
     }
   },
   methods: {

@@ -138,7 +138,11 @@ export default {
     },
     getPrice () {
       for (let i = 0; i < this.goodsData.standardPrice.length; i++) {
-        if (this.colorId === this.goodsData.standardPrice[i].color_id && this.optionId === this.goodsData.standardPrice[i].option_id) {
+        let colorId = Number(this.colorId)
+        let optionId = Number(this.optionId)
+        let colorIdI = Number(this.goodsData.standardPrice[i].color_id)
+        let optionIdI = Number(this.goodsData.standardPrice[i].option_id)
+        if (colorId === colorIdI && optionId === optionIdI) {
           this.price = this.goodsData.standardPrice[i].price
         }
       }

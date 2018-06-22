@@ -20,30 +20,30 @@
           <div>{{item.supplierName}}</div>
         </div>
         <div :id="'box'+index">
-        <swipeout>
-          <swipeout-item transition-mode="follow" v-for="(i, k) in item.list" :key="i.cartId">
-            <div slot="right-menu">
-              <swipeout-button @click.native="onButtonClick(i.cartId)" type="warn">删除</swipeout-button>
-            </div>
-            <div slot="content" class="shop-car-content">
-              <div>
-                <i class="icon iconfont icon-danxuananniu" v-if="!checkedList[index][k]"></i>
-                <i class="icon iconfont icon-danxuananniu-xuanzhong1" v-if="checkedList[index][k]" style="color: #1EB9EE;"></i>
-                <input type="checkbox" name="checkbox" class="input" :value="i.cartId" :data-i="checkedList[index][k]" v-model="checkedList[index][k]" @change="select(i.price*i.quantity, checkedList[index][k], index, k)">
-                <input type="hidden" name="price" :value="i.price*i.quantity">
+          <swipeout>
+            <swipeout-item transition-mode="follow" v-for="(i, k) in item.list" :key="i.cartId">
+              <div slot="right-menu">
+                <swipeout-button @click.native="onButtonClick(i.cartId)" type="warn">删除</swipeout-button>
               </div>
-              <div>
-                <img :src="i.icon" alt="">
+              <div slot="content" class="shop-car-content">
                 <div>
-                  <h3>{{i.title}}</h3>
-                  <div class="text-muted">{{i.specificationsInfo}}</div>
-                  <span class="text-red">￥ {{i.price}}</span>
-                  <inline-x-number width="50px" :min="0" fillable v-model="i.quantity" @on-change="change(i.cartId, i.quantity)"></inline-x-number>
+                  <i class="icon iconfont icon-danxuananniu" v-if="!checkedList[index][k]"></i>
+                  <i class="icon iconfont icon-danxuananniu-xuanzhong1" v-if="checkedList[index][k]" style="color: #1EB9EE;"></i>
+                  <input type="checkbox" name="checkbox" class="input" :value="i.cartId" :data-i="checkedList[index][k]" v-model="checkedList[index][k]" @change="select(i.price*i.quantity, checkedList[index][k], index, k)">
+                  <input type="hidden" name="price" :value="i.price*i.quantity">
+                </div>
+                <div>
+                  <img :src="i.icon" alt="">
+                  <div>
+                    <h3>{{i.title}}</h3>
+                    <div class="text-muted">{{i.specificationsInfo}}</div>
+                    <span class="text-red">￥ {{i.price}}</span>
+                    <inline-x-number width="50px" :min="0" fillable v-model="i.quantity" @on-change="change(i.cartId, i.quantity)"></inline-x-number>
+                  </div>
                 </div>
               </div>
-            </div>
-          </swipeout-item>
-        </swipeout>
+            </swipeout-item>
+          </swipeout>
         </div>
       </div>
     </div>
@@ -141,11 +141,12 @@ export default {
       })
       this.total = price
       axios.post('api/mall_cart/update', {
+        '_token': sessionStorage.getItem('loginToken'),
         'id': id,
         'number': number
       }).then((response) => {
-        console.log(id)
-        console.log(number)
+        sessionStorage.removeItem('total')
+        sessionStorage.setItem('total', this.total)
       }).catch((response) => {})
     },
     select (val, isChecked, index, k) {
@@ -234,10 +235,26 @@ export default {
             })
           }
         })
-        axios.get('api/mall_cart/index&_token=' + loginToken + '&ids=' + ids).then((response) => {
-          this.$emit('children-selected', response.data.data)
-          this.$router.push('/shop-car/indent')
-        }).catch((response) => {})
+        if (ids) {
+          axios.get('api/mall_cart/index&_token=' + loginToken + '&ids=' + ids).then((response) => {
+            sessionStorage.removeItem('indentLists')
+            sessionStorage.setItem('indentLists', JSON.stringify(response.data.data))
+            sessionStorage.removeItem('total')
+            sessionStorage.setItem('total', this.total)
+            this.$router.push('/shop-car/indent')
+          }).catch((response) => {})
+        } else {
+          this.$vux.toast.show({
+            type: 'warn',
+            text: '请选择商品',
+            onShow () {
+              console.log('Plugin: I\'m showing')
+            },
+            onHide () {
+              console.log('Plugin: I\'m hiding')
+            }
+          })
+        }
       }
     },
     errorMsg () {
@@ -254,6 +271,7 @@ export default {
     }
   },
   created () {
+    sessionStorage.removeItem('indentLists')
     this.getLists()
   },
   components: {

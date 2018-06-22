@@ -8,73 +8,96 @@
       <div style="padding-right: 2rem">&emsp;</div>
     </div>
     <ul class="address-lists">
-      <li>
-        <div>
-          <h3><span class="name">张三</span>18802020905 <span class="tag"> 公司</span></h3>
-          <div class="text-muted">
-            广东省-广州市-海珠区-昌岗中路166号5楼505、
-            506室
-          </div>
+      <li v-for="(item, index) in lists" :key="index">
+        <div  @click="selectAddress(index)">
+          <h3><span class="name">{{item.name}}</span>{{item.phone}} <span class="tag"> {{item.tag}}</span></h3>
+          <div class="text-muted">{{item.areaName}} {{item.detail}}</div>
         </div>
         <div class="address-btn">
           <div>
-            <i class="icon iconfont icon-danxuananniu" v-if="!defaultAddress"></i>
-            <i class="icon iconfont icon-danxuananniu-xuanzhong1" v-if="defaultAddress" style="color: #1EB9EE;"></i>
-            <label class="text-muted"><input type="checkbox" :value="2" v-model="defaultAddress">设为默认</label>
+            <i class="icon iconfont icon-danxuananniu" v-if="!item.is_default"></i>
+            <i class="icon iconfont icon-danxuananniu-xuanzhong1" v-if="item.is_default" style="color: #1EB9EE;"></i>
+            <label class="text-muted"><input type="checkbox" :value="2" v-model="item.is_default">设为默认{{item.is_default}}</label>
           </div>
           <div>
-            <span class="text-muted">
+            <span class="text-muted" @click="editorAddress(item.id, index)">
               <i class="icon iconfont icon-bianji"></i>
               编辑
             </span>&nbsp;
-            <span class="text-muted">
-              <i class="icon iconfont icon-shanchu1"></i>
-              删除
-            </span>
-          </div>
-        </div>
-      </li>
-      <li>
-        <div>
-          <h3><span class="name">张三</span>18802020905 <span class="tag"> 公司</span></h3>
-          <div class="text-muted">
-            广东省-广州市-海珠区-昌岗中路166号5楼505、
-            506室
-          </div>
-        </div>
-        <div class="address-btn">
-          <div>
-            <i class="icon iconfont icon-danxuananniu" v-if="!defaultAddress"></i>
-            <i class="icon iconfont icon-danxuananniu-xuanzhong1" v-if="defaultAddress" style="color: #1EB9EE;"></i>
-            <label class="text-muted"><input type="checkbox" :value="2" v-model="defaultAddress">设为默认</label>
-          </div>
-          <div>
-            <span class="text-muted">
-              <i class="icon iconfont icon-bianji"></i>
-              编辑
-            </span>&nbsp;
-            <span class="text-muted">
-              <i class="icon iconfont icon-shanchu1"></i>
+            <span class="text-muted" @click="deleteAddress(item.id, index)">
+              <i class="icon iconfont icon-shanchu1"></i>{{item.id}}
               删除
             </span>
           </div>
         </div>
       </li>
     </ul>
-    <div class="address-footer">
+    <router-link class="address-footer" to="/address-new">
       新增地址
-    </div>
+    </router-link>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
 import '@/assets/css/address.css'
 export default {
   name: 'address-lists',
   data () {
     return {
-      defaultAddress: true
+      defaultAddress: true,
+      lists: []
     }
+  },
+  methods: {
+    getLists () {
+      axios.get('api/user/getAddressList&_token=' + sessionStorage.getItem('loginToken')).then((response) => {
+        console.log(response)
+        this.lists = response.data.data.list
+      }).catch((response) => {
+        this.errorMsg()
+      })
+    },
+    editorAddress (id, index) {
+      localStorage.removeItem('editorAdd')
+      let tagert = this.lists[index]
+      localStorage.setItem('editorAdd', JSON.stringify(tagert))
+      this.$router.push('/address-editor')
+    },
+    deleteAddress (id, index) {
+      axios.post('api/user/removeAddress', {
+        '_token': sessionStorage.getItem('loginToken'),
+        'id': id
+      }).then((response) => {
+        console.log(response)
+        this.lists.splice(index, 1)
+      }).catch((response) => {
+        this.errorMsg()
+      })
+    },
+    selectAddress (index) {
+      sessionStorage.setItem('selectAddressIndex', index)
+      this.$router.push('/shop-car/indent')
+      return false
+    },
+    errorMsg () {
+      this.$vux.toast.show({
+        type: 'warn',
+        text: '网络可能有点问题',
+        onShow () {
+          console.log('Plugin: I\'m showing')
+        },
+        onHide () {
+          console.log('Plugin: I\'m hiding')
+        }
+      })
+    }
+  },
+  created () {
+    if (sessionStorage.getItem('loginToken') === null) {
+      this.$router.push('/login')
+    }
+    this.getLists()
   }
 }
 </script>

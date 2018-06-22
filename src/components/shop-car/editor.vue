@@ -34,7 +34,9 @@
 </template>
 <script>
 export default {
-  name: 'editor'
+  name: 'editor',
+  created () {
+  }
 }
 </script>
 <style scoped>

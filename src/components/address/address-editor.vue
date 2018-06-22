@@ -54,7 +54,7 @@
         </li>
       </ul>
     </form>
-    <div class="address-footer" @click="addressNew">
+    <div class="address-footer" @click="addressNew()">
       保存
     </div>
   </div>
@@ -67,6 +67,7 @@ export default {
   name: 'address-new',
   data () {
     return {
+      id: '',
       value: [],
       addressData: [],
       showAddress: false,
@@ -109,20 +110,19 @@ export default {
             let str = JSON.stringify(response.data.data.list)
             localStorage.setItem('addressData', str)
             this.addressData = JSON.parse(localStorage.getItem('addressData'))
-            console.log(this.addressData)
           }
         }).catch((response) => {
           this.errors()
         })
       } else {
         this.addressData = JSON.parse(localStorage.getItem('addressData'))
-        console.log(this.addressData)
       }
     },
     addressNew () {
       this.$validator.validateAll().then((result) => {
         if (result) {
-          axios.post('api/user/addAddress', {
+          axios.post('api/user/editAddress', {
+            'id': this.id,
             '_token': sessionStorage.getItem('loginToken'),
             'name': this.userName,
             'phone': this.mobile,
@@ -188,12 +188,17 @@ export default {
     }
   },
   created () {
+    let item = JSON.parse(localStorage.getItem('editorAdd'))
+    this.id = item.id
+    this.userName = item.name
+    this.mobile = item.phone
+    this.areaId = item.areaId
+    this.value = item.areaIds
+    this.addressDetail = item.detail
     if (sessionStorage.getItem('loginToken') === null) {
       this.$router.push('/login')
     }
     this.getAreaMethods()
-  },
-  mounted () {
   },
   components: {
     Group, XAddress
