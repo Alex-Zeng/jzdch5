@@ -43,7 +43,7 @@ export default {
       userName: '',
       mobile: '',
       defaultValue: '',
-      list: [{key: 'gd', value: '广东'}, {key: 'gx', value: '广西'}],
+      list: [{key: 'gd', value: '广东'}, {key: 'gx', value: '广西'}]
     }
   },
   methods: {

@@ -15,6 +15,7 @@ import Register from '@/components/login/register'
 import ForgetPassword from '@/components/login/forget-password'
 import Search from '@/components/search/search'
 import GoodsDetail from '@/components/detail/detail'
+import Enterprise from '@/components/enterprise/enterprise'
 import myForm from '@/components/form'
 Vue.use(Router)
 export default new Router({
@@ -137,6 +138,14 @@ export default new Router({
         title: '详情'
       },
       component: GoodsDetail
+    },
+    {
+      path: '/enterprise',
+      name: 'enterprise',
+      meta: {
+        title: '企业认证'
+      },
+      component: Enterprise
     },
     {
       path: '/form',
