@@ -50,15 +50,6 @@ export default {
       isA: true,
       showList: true,
       sort: null,
-      historyLists: [
-        {'val': '冰箱', 'id': '1', 'isActive': false},
-        {'val': '空调', 'id': '2', 'isActive': false},
-        {'val': '洗衣机', 'id': '3', 'isActive': false},
-        {'val': '热水器', 'id': '4', 'isActive': false},
-        {'val': '消毒柜', 'id': '5', 'isActive': false},
-        {'val': '美的洗衣机', 'id': '6', 'isActive': false},
-        {'val': '美的冰箱', 'id': '7', 'isActive': false}
-      ],
       goodsLists: []
     }
   },
