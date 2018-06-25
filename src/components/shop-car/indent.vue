@@ -82,11 +82,11 @@
         </div>
         <ul class="editor">
           <li>
-            <label for="">物料编号&nbsp;</label>
+            <label>物料编号&nbsp;</label>
             <input name="" type="text" v-model="editor.no" placeholder="点击设置物料编号，最多30个字">
           </li>
           <li>
-            <label for="">规格要求&nbsp;</label>
+            <label>规格要求&nbsp;</label>
             <input name="" type="text" v-model="editor.requirement" placeholder="点击设置规格要求，最多40个字">
           </li>
           <li style="padding: 0 1rem;">
@@ -114,8 +114,9 @@ export default {
       index: null,
       receiverId: '',
       lists: [],
+      detail:
+        [{"supplierName":"我是供应商","list":[{"goodsId":38,"cartId":110,"price":"300.00","title":"牛牛","icon":"http://192.168.3.135:8079/web/public/uploads/goods_thumb/2018_05/11/1526025650_0_7072.jpg","quantity":2,"specificationsInfo":"","no":"牛牛XX1122","requirement":"规格要求1"},{"goodsId":36,"cartId":125,"price":"100.00","title":"太阳啊","icon":"http://192.168.3.135:8079/web/public/uploads/goods_thumb/2018_05/11/1526024345_0_5379.jpg","quantity":7,"specificationsInfo":"","no":"太阳XX22","requirement":"规格要求2"},{"goodsId":39,"cartId":126,"price":"2.00","title":"手术室","icon":"http://192.168.3.135:8079/web/public/uploads/goods_thumb/2018_05/11/1526025678_0_8400.jpg","quantity":4,"specificationsInfo":"","no":"手术室XX","requirement":"无要求"}],"date":"2018-06-24","remark":"晚点发货"},{"supplierName":"集众电采供应商","list":[{"goodsId":19,"cartId":111,"price":"0.00","title":"空调压板450","icon":"http://192.168.3.135:8079/web/public/uploads/goods_thumb/2018_04/24/1524561780_0_5704.png","quantity":1,"specificationsInfo":"","no":"空调编号88","requirement":"省电的就可以"}],"date":"2018-06-23","remark":"尽快发货"}],
       editorSHow: false,
-      $t: '',
       total: 0
     }
   },
@@ -134,7 +135,6 @@ export default {
     },
     getLists (index) {
       axios.get('api/user/getAddressList&_token=' + sessionStorage.getItem('loginToken')).then((response) => {
-        console.log(response)
         this.address = response.data.data.list[index]
         this.receiverId = response.data.data.list[index].id
       }).catch((response) => {
@@ -145,9 +145,9 @@ export default {
       this.editorSHow = !this.editorSHow
     },
     submit () {
-      axios.post('api/order/make', {
-        'receiverId': this.receiverId,
-        'detail': this.lists
+      axios.post('api/order/make&tt=1', {
+        'receiverId': 126,
+        'detail': [{"supplierName":"我是供应商","list":[{"goodsId":38,"cartId":110,"price":"300.00","title":"牛牛","icon":"http://192.168.3.135:8079/web/public/uploads/goods_thumb/2018_05/11/1526025650_0_7072.jpg","quantity":2,"specificationsInfo":"","no":"牛牛XX1122","requirement":"规格要求1"},{"goodsId":36,"cartId":125,"price":"100.00","title":"太阳啊","icon":"http://192.168.3.135:8079/web/public/uploads/goods_thumb/2018_05/11/1526024345_0_5379.jpg","quantity":7,"specificationsInfo":"","no":"太阳XX22","requirement":"规格要求2"},{"goodsId":39,"cartId":126,"price":"2.00","title":"手术室","icon":"http://192.168.3.135:8079/web/public/uploads/goods_thumb/2018_05/11/1526025678_0_8400.jpg","quantity":4,"specificationsInfo":"","no":"手术室XX","requirement":"无要求"}],"date":"2018-06-24","remark":"晚点发货"},{"supplierName":"集众电采供应商","list":[{"goodsId":19,"cartId":111,"price":"0.00","title":"空调压板450","icon":"http://192.168.3.135:8079/web/public/uploads/goods_thumb/2018_04/24/1524561780_0_5704.png","quantity":1,"specificationsInfo":"","no":"空调编号88","requirement":"省电的就可以"}],"date":"2018-06-23","remark":"尽快发货"}]
       }).then((response) => {
         if (response.data.status === 0) {
           sessionStorage.setItem('indent-detail', response.data.data())
@@ -162,7 +162,6 @@ export default {
     },
     onConfirm (val) {
       console.log('on-confirm arg', val)
-      console.log('current value', this.value1)
     },
     change (value, index) {
       console.log('change', value, index)
@@ -183,20 +182,19 @@ export default {
   created () {
     sessionStorage.removeItem('indent-detail')
     let index = sessionStorage.getItem('selectAddressIndex')
-    if (index !== null) {
-      this.getLists(index)
-    } else {
+    if (index === null) {
       this.getLists(0)
+    } else {
+      this.getLists(index)
     }
     this.total = sessionStorage.getItem('total')
     this.lists = JSON.parse(sessionStorage.getItem('indentLists'))
-    this.lists.forEach((v, index) => {
-      console.log(v)
+    this.lists.forEach((v) => {
       v.date = ''
       v.remark = ''
-      console.log(index)
+      v.goods = v.list
+      delete v.list
     })
-    console.log(this.lists)
   },
   mounted () {
   },
