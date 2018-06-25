@@ -20,16 +20,16 @@
               <p><span>交货期</span>{{item.date}}</p>
             </div>
             <div class="indent-detail-seller indent-title">
-              广东津晶电器有限责任公司
+              {{item.supplierName}}
             </div>
             <div class="indent-content" v-for="i in item.goods" :key="i.goods_id">
               <img src="http://192.168.3.135:8079/web/public/uploads/goods_thumb/2018_05/11/1526025650_0_7072.jpg" alt="">
               <div class="indent-info">
-                <h3>牛牛</h3>
-                <div class="text-muted">商品规格</div>
-                <div class="text-muted">物料编号&emsp;水电费水电费</div>
-                <div data-v-eef590aa="" class="text-muted">物料规格&emsp;是的发放</div>
-                <div data-v-eef590aa="" class="text-muted">
+                <h3>{{i.title}}</h3>
+                <div class="text-muted" v-if="i.specificationsInfo">商品规格 {{i.specificationsInfo}}</div>
+                <div class="text-muted" v-if="i.no">物料编号&emsp;{{i.no}}</div>
+                <div class="text-muted" v-if="i.requirement">物料规格&emsp;{{i.requirement}}</div>
+                <div class="text-muted">
                   数量&emsp;{{i.quantity}}&emsp;&emsp;&emsp;&emsp;单价&emsp;
                   <span class="text-red">{{i.price}}元</span>
                 </div>
@@ -45,9 +45,9 @@
       <div class="shop-car-total">
         <div>
           总金额：
-          <span class="text-red">6000</span>
+          <span class="text-red">{{total}}</span>
         </div>
-        <div>
+        <div @click="$router.push('/')">
           返回首页
         </div>
       </div>
@@ -65,6 +65,7 @@ export default {
   },
   created () {
     this.detail = JSON.parse(sessionStorage.getItem('indent-detail'))
+    this.total = sessionStorage.getItem('total')
   }
 }
 </script>

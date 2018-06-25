@@ -31,7 +31,7 @@
                 <img :src="i.icon" alt="">
                 <div class="indent-info">
                   <h3>{{i.title}}</h3>
-                  <div class="text-muted">{{i.specificationsInfo}}</div>
+                  <div class="text-muted" v-if="i.specificationsInfo">商品规格 {{i.specificationsInfo}}</div>
                   <div class="text-muted" v-if="i.no">物料编号&emsp;{{i.no}}</div>
                   <div class="text-muted" v-if="i.requirement">物料规格&emsp;{{i.requirement}}</div>
                   <div class="text-muted">数量&emsp;{{i.quantity}}&emsp;&emsp;&emsp;&emsp;单价&emsp;<span class="text-red">{{i.price}}元</span></div>
