@@ -48,6 +48,10 @@
   background: #FFFFFF url("../images/sho-car-title.png") no-repeat 0.5rem center;
   background-size: 1.1rem;
   color: #222222;
+  padding-right: 7rem;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
   font-size: 0.6rem;
   font-weight: bold;
   position: relative;
@@ -55,7 +59,7 @@
 .indent-title > span:last-child{
   font-weight: normal;
   color: #1EB9EE;
-  transform: scale(0.9);
+  transform: scale(0.8);
   position: absolute;
   right: -0.5rem;
   top: 0;
@@ -80,6 +84,9 @@
 }
 .indent-content .indent-info h3{
   font-size: 0.8rem;
+}
+.indent-content .indent-info h3 a{
+  color: #222222;
 }
 .editor-container{
   position: fixed;

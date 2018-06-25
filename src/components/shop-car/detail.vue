@@ -25,7 +25,7 @@
             <div class="indent-content" v-for="i in item.goods" :key="i.goods_id">
               <img src="http://192.168.3.135:8079/web/public/uploads/goods_thumb/2018_05/11/1526025650_0_7072.jpg" alt="">
               <div class="indent-info">
-                <h3>{{i.title}}</h3>
+                <h3><router-link :to="'/detail/'+i.goods_id">{{i.title}}</router-link></h3>
                 <div class="text-muted" v-if="i.specificationsInfo">商品规格 {{i.specificationsInfo}}</div>
                 <div class="text-muted" v-if="i.no">物料编号&emsp;{{i.no}}</div>
                 <div class="text-muted" v-if="i.requirement">物料规格&emsp;{{i.requirement}}</div>

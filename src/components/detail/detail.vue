@@ -42,7 +42,7 @@
     <div class="detail-shop-car footer-nav">
       <div>
         <span class="text-muted" style="vertical-align: top;line-height: 2;">数量&nbsp;</span>
-        <inline-x-number :min="0" fillable width="2.6rem" v-model="value"></inline-x-number>
+        <inline-x-number :min="0" width="2.6rem" fillable v-model="value"></inline-x-number>
       </div>
       <router-link to="/shop-car">
         <i class="icon iconfont icon-gouwuche2">
@@ -98,7 +98,7 @@ export default {
   methods: {
     showDetai () {
       var self = this
-      axios.get('api/goods/get&id=' + this.$route.params.id).then((response) => {
+      axios.get('api/goods/get&id=' + this.$route.params.id + '&_token=' + sessionStorage.getItem('loginToken')).then((response) => {
         if (response.data.status === 0) {
           this.goodsData = response.data.data
           if (this.goodsData.isFavorite === 1) {
@@ -179,6 +179,17 @@ export default {
               onHide () {
               }
             })
+          } else if (response.data.status === -2) {
+            let self = this
+            this.$vux.confirm.show({
+              title: '提示',
+              content: '您尚未登录，确定现在去登录？',
+              onCancel () {
+              },
+              onConfirm () {
+                self.$router.push('/login')
+              }
+            })
           }
         }).catch((response) => {})
       } else {
@@ -195,8 +206,8 @@ export default {
       }
     },
     collectMethod () {
+      let self = this
       if (this.isActive === false) {
-        var self = this
         axios.post('api/goods/addFavorite', {
           'goodsId': this.$route.params.id,
           '_token': sessionStorage.getItem('loginToken')
@@ -218,6 +229,7 @@ export default {
               this.$vux.toast.show({
                 type: 'success',
                 text: '收藏成功',
+                isShowMask: true,
                 onShow () {
                   console.log('Plugin: I\'m showing')
                   self.isActive = true
@@ -232,7 +244,7 @@ export default {
                 text: response.data.msg,
                 onShow () {
                   console.log('Plugin: I\'m showing')
-                  this.isActive = false
+                  self.isActive = false
                 },
                 onHide () {
                   console.log('Plugin: I\'m hiding')
@@ -252,7 +264,9 @@ export default {
             this.$vux.toast.show({
               type: 'success',
               text: '取消成功',
+              isShowMask: true,
               onShow () {
+                self.isActive = false
                 console.log('Plugin: I\'m showing')
               },
               onHide () {

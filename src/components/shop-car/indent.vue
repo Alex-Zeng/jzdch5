@@ -30,7 +30,7 @@
               <div slot="content" class="indent-content">
                 <img :src="i.icon" alt="">
                 <div class="indent-info">
-                  <h3>{{i.title}}</h3>
+                  <h3><router-link :to="'/detail/'+i.goodsId">{{i.title}}</router-link></h3>
                   <div class="text-muted" v-if="i.specificationsInfo">商品规格 {{i.specificationsInfo}}</div>
                   <div class="text-muted" v-if="i.no">物料编号&emsp;{{i.no}}</div>
                   <div class="text-muted" v-if="i.requirement">物料规格&emsp;{{i.requirement}}</div>
