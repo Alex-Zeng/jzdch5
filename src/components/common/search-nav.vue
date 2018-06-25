@@ -95,7 +95,7 @@ export default {
               tip: '亲,暂无相关数据哦~',
               btntext: '去逛逛 >',
               btnClick: function () {
-                alert('点击了去逛逛按钮')
+                // alert('点击了去逛逛按钮')
               }
             }
           }
@@ -158,7 +158,7 @@ export default {
             tip: '亲,暂无相关数据哦~',
             btntext: '去逛逛 >',
             btnClick: function () {
-              alert('点击了去逛逛按钮')
+              // alert('点击了去逛逛按钮')
             }
           }
         }
