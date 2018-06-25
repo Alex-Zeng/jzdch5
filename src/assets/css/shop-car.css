@@ -84,6 +84,7 @@
 .shop-car-total > div:first-child{
   padding-left: 0.5rem;
   flex: 1;
+  color: #999999;
 }
 .shop-car-total > div:first-child input{
   height: 100%;

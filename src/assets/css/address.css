@@ -3,6 +3,7 @@
   font-size: 0.7rem;
   margin: 0.5rem 0;
   padding: 0.75rem 0.5rem;
+  padding-bottom: 3rem;
 }
 .address-lists li{
   width: 100%;
@@ -66,4 +67,58 @@
   bottom: 0;
   left: 0;
   background: #5FCAED;
+}
+.address-new .weui-cells:before{
+  border: none;
+}
+#app .address-new .form{
+  padding: 0 0.5rem;
+}
+.address-new .form ul li{
+  padding: 0.25rem 0;
+}
+.address-new .form ul li > div:first-child{
+  width: 100%;
+}
+.address-new .weui-cell{
+  padding-top: 0.25rem!important;
+}
+.address-tag-box{
+  flex: 1;
+}
+.address-tag-box .tag{
+  font-size: 0.7rem;
+  margin: 0.25rem;
+  height: 1rem;
+  line-height: 1rem;
+  font-weight: normal;
+  color: #1EB9EE;
+  border: 1px solid #1EB9EE;
+  padding: 0 0.4rem;
+  border-radius: 0.2rem;
+}
+.address-tag-box .tag.active{
+  background: #1EB9EE;
+  color: #FFFFFF;
+}
+.tag-input{
+  width: 100%;
+  padding: 0.25rem;
+}
+.tag-input input{
+  width: 60%;
+  height: 1.5rem;
+  line-height: 1.5rem;
+  padding: 0 0.5rem;
+  box-sizing: border-box;
+  border: 0.05rem solid #5FCAED;
+}
+.tag-input button{
+  height: 1.5rem;
+  line-height: 1.5rem;
+  padding: 0 0.6rem;
+  background: #5FCAED;
+  color: #FFFFFF;
+  vertical-align: top;
+  border-radius: 0 0.25rem 0.25rem 0;
 }

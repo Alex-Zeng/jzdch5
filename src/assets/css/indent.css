@@ -107,3 +107,63 @@
 .editor li input{
   flex: 1;
 }
+.success-info{
+  background: #1EB9EE;
+  text-align: center;
+  line-height: 1.5;
+  font-family: 'PingFang SC';
+  font-weight: bold;
+  color: #FFFFFF;
+  padding-bottom: 0.5rem;
+}
+.success-info i{
+  font-size: 1.5rem!important;
+  color: #FFFFFF;
+}
+.indent-detail{
+  margin: 0.8rem 0.5rem;
+  border-radius: 0.25rem;
+  background: #FFFFFF;
+  padding: 0.5rem 0;
+  border: 0.05rem solid #E1E1E1;
+  margin-bottom: 4rem;
+}
+.indent-detail ul li{
+}
+.indent-detail-order{
+  line-height: 2;
+  padding: 0 0.5rem;
+  color: #999999;
+  font-size: 0.7rem;
+  padding-bottom: 0.5rem;
+}
+.indent-detail-order span{
+  margin-right: 1.8rem;
+}
+.indent-detail-seller{
+  height: 2.5rem;
+  line-height: 2.5rem;
+  padding-left: 2.5rem;
+  font-size: 0.75rem;
+  border-bottom: 0.05rem solid #E1E1E1;
+  background-size: 1.5rem;
+}
+.indent-detail .indent-content{
+  border-bottom: 0.05rem solid #E1E1E1;
+}
+.indent-remark{
+  display: flex;
+  padding: 0.5rem;
+  font-size: 0.75rem;
+  color: #999999;
+  border-bottom: 0.05rem solid #E1E1E1;
+}
+ul li:last-child .indent-remark{
+  border: none;
+}
+.indent-remark span{
+  width: 3.5rem;
+}
+.indent-remark > div{
+  flex: 1;
+}

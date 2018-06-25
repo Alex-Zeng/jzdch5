@@ -8,6 +8,7 @@ import ShopCar from '@/components/shop-car/shop-car'
 import Indent from '@/components/shop-car/indent'
 import IndentDetail from '@/components/shop-car/detail'
 import AddressLists from '@/components/address/address-lists'
+import AddressEditor from '@/components/address/address-editor'
 import AddressNew from '@/components/address/address-new'
 import Login from '@/components/login/login'
 import LoginCode from '@/components/login/login-code'
@@ -82,6 +83,14 @@ export default new Router({
         title: '收货地址'
       },
       component: AddressLists
+    },
+    {
+      path: '/address-editor',
+      name: 'address-editor',
+      meta: {
+        title: '编辑收货地址'
+      },
+      component: AddressEditor
     },
     {
       path: '/address-new',
