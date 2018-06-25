@@ -30,8 +30,8 @@
                 <div class="text-muted">物料编号&emsp;水电费水电费</div>
                 <div data-v-eef590aa="" class="text-muted">物料规格&emsp;是的发放</div>
                 <div data-v-eef590aa="" class="text-muted">
-                  数量&emsp;2&emsp;&emsp;&emsp;&emsp;单价&emsp;
-                  <span class="text-red">300.00元</span>
+                  数量&emsp;{{i.quantity}}&emsp;&emsp;&emsp;&emsp;单价&emsp;
+                  <span class="text-red">{{i.price}}元</span>
                 </div>
               </div>
             </div>
@@ -48,7 +48,7 @@
           <span class="text-red">6000</span>
         </div>
         <div>
-          提交订单
+          返回首页
         </div>
       </div>
     </div>
@@ -59,8 +59,12 @@ export default {
   name: 'detail',
   data () {
     return {
+      total: '',
       detail: []
     }
+  },
+  created () {
+    this.detail = JSON.parse(sessionStorage.getItem('indent-detail'))
   }
 }
 </script>

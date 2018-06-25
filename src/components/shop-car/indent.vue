@@ -146,11 +146,11 @@ export default {
     submit () {
       axios.post('api/order/make', {
         '_token': sessionStorage.getItem('loginToken'),
-        'receiverId': 126,
+        'receiverId': this.receiverId,
         'detail': JSON.stringify(this.lists)
       }).then((response) => {
         if (response.data.status === 0) {
-          sessionStorage.setItem('indent-detail', response.data.data)
+          sessionStorage.setItem('indent-detail', JSON.stringify(response.data.data))
           sessionStorage.removeItem('indentLists')
           this.$router.push('/shop-car/detail')
         }
@@ -190,12 +190,16 @@ export default {
     }
     this.total = sessionStorage.getItem('total')
     this.lists = JSON.parse(sessionStorage.getItem('indentLists'))
-    this.lists.forEach((v) => {
-      v.date = ''
-      v.remark = ''
-      // v.goods = v.list
-      // delete v.list
-    })
+    if (sessionStorage.getItem('indentLists') === null) {
+      this.$router.push('/')
+    } else {
+      this.lists.forEach((v) => {
+        v.date = ''
+        v.remark = ''
+        // v.goods = v.list
+        // delete v.list
+      })
+    }
   },
   mounted () {
   },

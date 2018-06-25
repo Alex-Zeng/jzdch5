@@ -76,7 +76,7 @@ export default {
     getResult (val) {
       if (val.keyCode === 13 || val === true) {
         if (val.keyCode === 13) {
-          var obj = { 'keywords': this.keywords }
+          let obj = { 'keywords': this.keywords }
           this.historyLists.push(obj)
           sessionStorage.setItem('keyword', JSON.stringify(this.historyLists))
         }
@@ -130,13 +130,14 @@ export default {
       }
     },
     confirm () {
+      let self = this
       this.$vux.confirm.show({
         content: '是否确认删除所有历史记录？',
         onCancel () {
         },
         onConfirm () {
-          sessionStorage.clear()
-          this.historyLists = null
+          sessionStorage.removeItem('keyword')
+          self.historyLists = null
         }
       })
     },
