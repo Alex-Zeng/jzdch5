@@ -114,8 +114,7 @@ export default {
       index: null,
       receiverId: '',
       lists: [],
-      detail:
-        [{"supplierName":"我是供应商","list":[{"goodsId":38,"cartId":110,"price":"300.00","title":"牛牛","icon":"http://192.168.3.135:8079/web/public/uploads/goods_thumb/2018_05/11/1526025650_0_7072.jpg","quantity":2,"specificationsInfo":"","no":"牛牛XX1122","requirement":"规格要求1"},{"goodsId":36,"cartId":125,"price":"100.00","title":"太阳啊","icon":"http://192.168.3.135:8079/web/public/uploads/goods_thumb/2018_05/11/1526024345_0_5379.jpg","quantity":7,"specificationsInfo":"","no":"太阳XX22","requirement":"规格要求2"},{"goodsId":39,"cartId":126,"price":"2.00","title":"手术室","icon":"http://192.168.3.135:8079/web/public/uploads/goods_thumb/2018_05/11/1526025678_0_8400.jpg","quantity":4,"specificationsInfo":"","no":"手术室XX","requirement":"无要求"}],"date":"2018-06-24","remark":"晚点发货"},{"supplierName":"集众电采供应商","list":[{"goodsId":19,"cartId":111,"price":"0.00","title":"空调压板450","icon":"http://192.168.3.135:8079/web/public/uploads/goods_thumb/2018_04/24/1524561780_0_5704.png","quantity":1,"specificationsInfo":"","no":"空调编号88","requirement":"省电的就可以"}],"date":"2018-06-23","remark":"尽快发货"}],
+      detail: [],
       editorSHow: false,
       total: 0
     }
@@ -145,12 +144,14 @@ export default {
       this.editorSHow = !this.editorSHow
     },
     submit () {
-      axios.post('api/order/make&tt=1', {
+      axios.post('api/order/make', {
+        '_token': sessionStorage.getItem('loginToken'),
         'receiverId': 126,
-        'detail': [{"supplierName":"我是供应商","list":[{"goodsId":38,"cartId":110,"price":"300.00","title":"牛牛","icon":"http://192.168.3.135:8079/web/public/uploads/goods_thumb/2018_05/11/1526025650_0_7072.jpg","quantity":2,"specificationsInfo":"","no":"牛牛XX1122","requirement":"规格要求1"},{"goodsId":36,"cartId":125,"price":"100.00","title":"太阳啊","icon":"http://192.168.3.135:8079/web/public/uploads/goods_thumb/2018_05/11/1526024345_0_5379.jpg","quantity":7,"specificationsInfo":"","no":"太阳XX22","requirement":"规格要求2"},{"goodsId":39,"cartId":126,"price":"2.00","title":"手术室","icon":"http://192.168.3.135:8079/web/public/uploads/goods_thumb/2018_05/11/1526025678_0_8400.jpg","quantity":4,"specificationsInfo":"","no":"手术室XX","requirement":"无要求"}],"date":"2018-06-24","remark":"晚点发货"},{"supplierName":"集众电采供应商","list":[{"goodsId":19,"cartId":111,"price":"0.00","title":"空调压板450","icon":"http://192.168.3.135:8079/web/public/uploads/goods_thumb/2018_04/24/1524561780_0_5704.png","quantity":1,"specificationsInfo":"","no":"空调编号88","requirement":"省电的就可以"}],"date":"2018-06-23","remark":"尽快发货"}]
+        'detail': JSON.stringify(this.lists)
       }).then((response) => {
         if (response.data.status === 0) {
-          sessionStorage.setItem('indent-detail', response.data.data())
+          sessionStorage.setItem('indent-detail', response.data.data)
+          sessionStorage.removeItem('indentLists')
           this.$router.push('/shop-car/detail')
         }
       }).catch((response) => {
@@ -192,8 +193,8 @@ export default {
     this.lists.forEach((v) => {
       v.date = ''
       v.remark = ''
-      v.goods = v.list
-      delete v.list
+      // v.goods = v.list
+      // delete v.list
     })
   },
   mounted () {

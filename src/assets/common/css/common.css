@@ -241,6 +241,7 @@ input:-ms-input-placeholder {
   align-items: center;
   box-sizing: border-box;
   background: #1EB9EE;
+  font-size: 0.9rem;
 }
 .header-nav a , .header-nav i{
   padding: 0.5rem;

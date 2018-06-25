@@ -22,20 +22,7 @@
             <div class="indent-detail-seller indent-title">
               广东津晶电器有限责任公司
             </div>
-            <div class="indent-content">
-              <img src="http://192.168.3.135:8079/web/public/uploads/goods_thumb/2018_05/11/1526025650_0_7072.jpg" alt="">
-              <div class="indent-info">
-                <h3>牛牛</h3>
-                <div class="text-muted">商品规格</div>
-                <div class="text-muted">物料编号&emsp;水电费水电费</div>
-                <div data-v-eef590aa="" class="text-muted">物料规格&emsp;是的发放</div>
-                <div data-v-eef590aa="" class="text-muted">
-                  数量&emsp;2&emsp;&emsp;&emsp;&emsp;单价&emsp;
-                  <span class="text-red">300.00元</span>
-                </div>
-              </div>
-            </div>
-            <div class="indent-content">
+            <div class="indent-content" v-for="i in item.goods" :key="i.goods_id">
               <img src="http://192.168.3.135:8079/web/public/uploads/goods_thumb/2018_05/11/1526025650_0_7072.jpg" alt="">
               <div class="indent-info">
                 <h3>牛牛</h3>

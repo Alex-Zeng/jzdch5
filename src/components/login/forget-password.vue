@@ -50,7 +50,7 @@
       </div>
       <form class="form" action="">
         <div class="text-gray">短信验证码已发送至 {{mobile}}</div>
-        <div class="code-input-box" @click="focusInput">
+        <div class="code-input-box" @click="focusInput"  @keyup="clear($event)">
           <input type="number" id="code1" v-model="code1" oninput="if(value.length>1)value=value.slice(0,1)">
           <input type="number" id="code2" v-model="code2" oninput="if(value.length>1)value=value.slice(0,1)">
           <input type="number" id="code3" v-model="code3" oninput="if(value.length>1)value=value.slice(0,1)">
@@ -63,8 +63,8 @@
     <template v-if="model4Show">
       <div class="login-top"></div>
       <form class="form" action="" method="post">
-          <input type="text" class="border-input" name="password" minlength="4" maxlength="20" required v-model="password" placeholder="请设置4-20位密码">
-          <input type="text" class="border-input" name="confirmPassword" minlength="4" maxlength="20" required v-model="confirmPassword" placeholder="请再次输入密码">
+          <input type="password" class="border-input" name="password" minlength="4" maxlength="20" v-validate="'required|verificationPassword'" v-model="password" placeholder="请设置4-20位密码">
+          <input type="password" class="border-input" name="confirmPassword" minlength="4" maxlength="20" v-validate="'required|verificationPassword|confirmed:password'" v-model="confirmPassword" placeholder="请再次输入密码">
         <button type="button" class="btn btn-primary" @click="submit">提交</button>
       </form>
     </template>
@@ -160,42 +160,46 @@ export default {
       })
     },
     getMobileCode (val) {
-      axios.post('api/code/passwordSend', {
-        'phone': this.mobile,
-        'code': this.verificationCode,
-        'codeValid': val,
-        'id': this.id
-      }).then((response) => {
-        if (response.data.status === 0) {
-          console.log(response)
-          this.model1Show = false
-          this.model2Show = false
-          this.model3Show = true
-          this.time = 60
-          this.setTimeOut = true
-          this.resetCode = false
-          this.setTimeMethods()
-          // 响应成功回调
-          console.log('success')
-          setTimeout(function () {
-            document.getElementById('code1').focus()
-          }, 50)
-        } else {
-          this.$vux.toast.show({
-            type: 'warn',
-            text: response.data.msg,
-            onShow () {
-              console.log('Plugin: I\'m showing')
-            },
-            onHide () {
-              console.log('Plugin: I\'m hiding')
+      this.$validator.validateAll().then((result) => {
+        if (result) {
+          axios.post('api/code/passwordSend', {
+            'phone': this.mobile,
+            'code': this.verificationCode,
+            'codeValid': val,
+            'id': this.id
+          }).then((response) => {
+            if (response.data.status === 0) {
+              console.log(response)
+              this.model1Show = false
+              this.model2Show = false
+              this.model3Show = true
+              this.time = 60
+              this.setTimeOut = true
+              this.resetCode = false
+              this.setTimeMethods()
+              // 响应成功回调
+              console.log('success')
+              setTimeout(function () {
+                document.getElementById('code1').focus()
+              }, 50)
+            } else {
+              this.$vux.toast.show({
+                type: 'warn',
+                text: response.data.msg,
+                onShow () {
+                  console.log('Plugin: I\'m showing')
+                },
+                onHide () {
+                  console.log('Plugin: I\'m hiding')
+                }
+              })
             }
+          }).catch((response) => {
+            // 响应错误回调
+            console.log('error')
+            this.errorMsg()
           })
         }
-      }).catch((response) => {
-        // 响应错误回调
-        console.log('error')
-        this.errorMsg()
       })
     },
     checkCode () {
@@ -288,6 +292,17 @@ export default {
         setTimeout(function () {
           document.getElementById('code4').focus()
         }, 200)
+      }
+    },
+    clear (event) {
+      console.log(event.keyCode)
+      if (event.keyCode === 8) {
+        this.code3 = ''
+        this.code2 = ''
+        this.code1 = ''
+        setTimeout(function () {
+          document.getElementById('code1').focus()
+        }, 100)
       }
     },
     back () {

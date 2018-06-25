@@ -11,8 +11,6 @@ Vue.use(ToastPlugin)
 require('./fit.js')
 require('./assets/common/css/common.css')
 Vue.config.productionTip = false
-// var path =''
-// 搜索
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

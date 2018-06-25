@@ -157,6 +157,7 @@ export default {
       var num = document.getElementsByClassName('vux-number-input')[0].value
       num = parseInt(num)
       if (num > 0) {
+        let self = this
         axios.post('api/mall_cart/add', {
           'id': this.$route.params.id,
           'number': num,
@@ -165,6 +166,16 @@ export default {
           '_token': sessionStorage.getItem('loginToken')
         }).then((response) => {
           if (response.data.status === 0) {
+            this.$vux.toast.show({
+              type: 'success',
+              text: '添加成功',
+              onShow () {
+                console.log('Plugin: I\'m showing')
+              },
+              onHide () {
+                self.$router.push('/shop-car')
+              }
+            })
           }
         }).catch((response) => {})
       } else {

@@ -18,6 +18,7 @@
           <div class="cells">
             <label for="">密码</label>
             <input type="password" name="password" v-validate="'required'" v-model="password" placeholder="请输入您的登陆密码"/>
+            <input type="hidden" v-model="password2">
           </div>
         </li>
         <li v-if="false">
@@ -38,6 +39,7 @@
 
 <script>
 import {Cell, Group, XButton, XInput} from 'vux'
+import crypto from 'crypto'
 import axios from 'axios'
 require('../../assets/css/login.css')
 export default {
@@ -46,10 +48,16 @@ export default {
     return {
       mobile: '',
       password: '',
+      password2: '',
       imgCodeSrc: ''
     }
   },
   methods: {
+    setMd5 () {
+      var md5 = crypto.createHash('md5')
+      md5.update(this.password) // this.pw2这是你要加密的密码
+      this.password2 = md5.digest('hex') // this.pw这就是你加密完的密码，这个往后台传就行了
+    },
     login () {
       var _sel = this
       this.$validator.validateAll().then((result) => {
