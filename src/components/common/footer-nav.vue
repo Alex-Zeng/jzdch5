@@ -10,7 +10,7 @@
     </router-link>
     <router-link v-if="shopCard" to="/shop-car">
       <i class="icon iconfont icon-gouwuche2">
-        <badge :text="total"></badge>
+        <badge :text="total" v-if="total"></badge>
       </i>
       <div>采购清单</div>
     </router-link>

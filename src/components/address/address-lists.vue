@@ -65,14 +65,22 @@ export default {
       this.$router.push('/address-editor')
     },
     deleteAddress (id, index) {
-      axios.post('api/user/removeAddress', {
-        '_token': sessionStorage.getItem('loginToken'),
-        'id': id
-      }).then((response) => {
-        console.log(response)
-        this.lists.splice(index, 1)
-      }).catch((response) => {
-        this.errorMsg()
+      let self = this
+      this.$vux.confirm.show({
+        title: '提示',
+        content: '确定删除？',
+        onCancel () {},
+        onConfirm () {
+          axios.post('api/user/removeAddress', {
+            '_token': sessionStorage.getItem('loginToken'),
+            'id': id
+          }).then((response) => {
+            console.log(response)
+            self.lists.splice(index, 1)
+          }).catch((response) => {
+            self.errorMsg()
+          })
+        }
       })
     },
     selectAddress (index) {

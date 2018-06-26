@@ -55,7 +55,7 @@
       <div v-if="!manage">
         <i class="icon iconfont icon-danxuananniu" v-if="!all"></i>
         <i class="icon iconfont icon-danxuananniu-xuanzhong1" v-if="all" style="color: #1EB9EE;"></i>
-        <input type="checkbox" value="all" v-model="all" @click="manageAll">
+        <input type="checkbox" value="all" v-model="all" @click="manageAll">全选
       </div>
       <div class="delete-goods" v-if="!manage" @click="deleteMethods">
         删除商品
@@ -189,35 +189,50 @@ export default {
       this.manage = !this.manage
     },
     deleteMethods () {
-      let ids = []
+      let self = this
       let loginToken = sessionStorage.getItem('loginToken')
+      let ids = []
+      self.checkedList.forEach((v, k) => {
+        v.forEach((t, d) => {
+          if (t) {
+            ids.push(self.proData[k].list[d].cartId)
+          }
+        })
+      })
       if (loginToken !== null) {
-        this.checkedList.forEach((v, k) => {
-          v.forEach((t, d) => {
-            if (t) {
-              ids.push(this.proData[k].list[d].cartId)
+        if (ids.length > 0) {
+          this.$vux.confirm.show({
+            title: '提示',
+            content: '确定删除？',
+            onCancel () {},
+            onConfirm () {
+              axios.post('api/mall_cart/delete', {
+                'ids': ids.join(','),
+                '_token': loginToken
+              }).then((response) => {
+                const {data: {status, msg}} = response
+                if (status === 0) {
+                  self.$vux.toast.show({
+                    type: 'success',
+                    text: msg
+                  })
+                  self.getLists()
+                } else {
+                  self.$vux.toast.show({
+                    type: 'warn',
+                    text: msg
+                  })
+                }
+              }).catch((response) => {
+              })
             }
           })
-        })
-        axios.post('api/mall_cart/delete', {
-          'ids': ids.join(','),
-          '_token': loginToken
-        }).then((response) => {
-          const {data: {status, msg}} = response
-          if (status === 0) {
-            this.$vux.toast.show({
-              type: 'success',
-              text: msg
-            })
-            this.getLists()
-          } else {
-            this.$vux.toast.show({
-              type: 'warn',
-              text: msg
-            })
-          }
-        }).catch((response) => {
-        })
+        } else {
+          this.$vux.toast.show({
+            type: 'warn',
+            text: '请选择要删除的商品'
+          })
+        }
       }
     },
     goMethods () {
@@ -235,7 +250,20 @@ export default {
             })
           }
         })
-        if (ids) {
+        if (this.allList.length === 0) {
+          this.$vux.toast.show({
+            type: 'warn',
+            text: '购物清单为空<br>请先添加商品',
+            onShow () {
+              console.log('Plugin: I\'m showing')
+            },
+            onHide () {
+              console.log('Plugin: I\'m hiding')
+            }
+          })
+          return false
+        }
+        if (ids.length > 0) {
           axios.get('api/mall_cart/index&_token=' + loginToken + '&ids=' + ids).then((response) => {
             sessionStorage.removeItem('indentLists')
             sessionStorage.setItem('indentLists', JSON.stringify(response.data.data))
@@ -271,6 +299,7 @@ export default {
     }
   },
   created () {
+    window.scrollTo(0, 0)
     sessionStorage.removeItem('indentLists')
     this.getLists()
   },

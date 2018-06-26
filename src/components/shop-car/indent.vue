@@ -9,10 +9,13 @@
       </div>
       <div class="address" @click="$router.push('/address-lists')">
         <div>
+          <template v-if="address">
           <h3><span class="name">{{address.name}}</span>{{address.phone}} <span class="tag"> {{address.tag}}</span></h3>
           <div class="text-muted">
             {{address.areaName}} {{address.detail}}
           </div>
+          </template>
+          <template v-if="!address">请添加收货地址</template>
         </div>
         <i class="icon iconfont icon-youdanjiantou"></i>
       </div>
@@ -71,7 +74,7 @@
           <div style="padding-right: 2rem">&emsp;</div>
         </div>
         <div class="indent-content" style="margin-top: 0.5rem;">
-          <img src="" alt="图片">
+          <img :src="editor.icon" alt="图片">
           <div class="indent-info">
             <h3>{{editor.title}}</h3>
             <div class="text-muted">{{editor.specificationsInfo}}</div>
@@ -144,19 +147,32 @@ export default {
       this.editorSHow = !this.editorSHow
     },
     submit () {
-      axios.post('api/order/make', {
-        '_token': sessionStorage.getItem('loginToken'),
-        'receiverId': this.receiverId,
-        'detail': JSON.stringify(this.lists)
-      }).then((response) => {
-        if (response.data.status === 0) {
-          sessionStorage.setItem('indent-detail', JSON.stringify(response.data.data))
-          sessionStorage.removeItem('indentLists')
-          this.$router.push('/shop-car/detail')
-        }
-      }).catch((response) => {
-        this.errorMsg()
-      })
+      if (this.address !== undefined) {
+        axios.post('api/order/make', {
+          '_token': sessionStorage.getItem('loginToken'),
+          'receiverId': this.receiverId,
+          'detail': JSON.stringify(this.lists)
+        }).then((response) => {
+          if (response.data.status === 0) {
+            sessionStorage.setItem('indent-detail', JSON.stringify(response.data.data))
+            sessionStorage.removeItem('indentLists')
+            this.$router.push('/shop-car/detail')
+          }
+        }).catch((response) => {
+          this.errorMsg()
+        })
+      } else {
+        this.$vux.toast.show({
+          type: 'warn',
+          text: '请添加收货地址',
+          onShow () {
+            console.log('Plugin: I\'m showing')
+          },
+          onHide () {
+            console.log('Plugin: I\'m hiding')
+          }
+        })
+      }
     },
     log (str1, str2 = '') {
       console.log(str1, str2)
@@ -181,6 +197,7 @@ export default {
     }
   },
   created () {
+    window.scrollTo(0, 0)
     sessionStorage.removeItem('indent-detail')
     let index = sessionStorage.getItem('selectAddressIndex')
     if (index === null) {
