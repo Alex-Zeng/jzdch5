@@ -156,7 +156,7 @@ export default {
         let self = this
         this.$vux.confirm.show({
           title: '提示',
-          content: '是否已确认订单信息？点击是提交！',
+          content: '是否已正确填写相关信息？',
           onCancel () {},
           onConfirm () {
             axios.post('api/order/make', {
