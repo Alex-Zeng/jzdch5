@@ -42,7 +42,7 @@
     <div class="detail-shop-car footer-nav">
       <div>
         <span class="text-muted" style="vertical-align: top;line-height: 2;">数量&nbsp;</span>
-        <inline-x-number :min="0" width="2.6rem" fillable v-model="value"></inline-x-number>
+        <inline-x-number :min="1" width="2.6rem" fillable v-model="value"></inline-x-number>
       </div>
       <router-link to="/shop-car">
         <i class="icon iconfont icon-gouwuche2">
@@ -88,7 +88,7 @@ export default {
       price: null,
       iscur0: 0,
       iscur1: 0,
-      value: 0,
+      value: 1,
       optionId: 0,
       colorId: 0,
       showCarNum: 0,
@@ -155,55 +155,42 @@ export default {
       return false
     },
     showCarMethod () {
-      if (this.value > 0) {
-        axios.post('api/mall_cart/add', {
-          'id': this.$route.params.id,
-          'number': this.value,
-          'colorId': this.colorId,
-          'optionId': this.optionId,
-          '_token': sessionStorage.getItem('loginToken')
-        }).then((response) => {
-          if (response.data.status === 0) {
-            axios.get('api/mall_cart/getNumber&_token=' + sessionStorage.getItem('loginToken')).then((response) => {
-              if (response.data.status === 0) {
-                this.showCarNum = response.data.data.total
-              }
-            }).catch((response) => {
-            })
-            this.$vux.toast.show({
-              type: 'success',
-              text: '添加成功',
-              onShow () {
-                console.log('Plugin: I\'m showing')
-              },
-              onHide () {
-              }
-            })
-          } else if (response.data.status === -2) {
-            let self = this
-            this.$vux.confirm.show({
-              title: '提示',
-              content: '您尚未登录，确定现在去登录？',
-              onCancel () {
-              },
-              onConfirm () {
-                self.$router.push('/login')
-              }
-            })
-          }
-        }).catch((response) => {})
-      } else {
-        this.$vux.toast.show({
-          type: 'warn',
-          text: '数量为0，无法加入清单',
-          onShow () {
-            console.log('Plugin: I\'m showing')
-          },
-          onHide () {
-            console.log('Plugin: I\'m hiding')
-          }
-        })
-      }
+      axios.post('api/mall_cart/add', {
+        'id': this.$route.params.id,
+        'number': this.value,
+        'colorId': this.colorId,
+        'optionId': this.optionId,
+        '_token': sessionStorage.getItem('loginToken')
+      }).then((response) => {
+        if (response.data.status === 0) {
+          axios.get('api/mall_cart/getNumber&_token=' + sessionStorage.getItem('loginToken')).then((response) => {
+            if (response.data.status === 0) {
+              this.showCarNum = response.data.data.total
+            }
+          }).catch((response) => {
+          })
+          this.$vux.toast.show({
+            type: 'success',
+            text: '添加成功',
+            onShow () {
+              console.log('Plugin: I\'m showing')
+            },
+            onHide () {
+            }
+          })
+        } else if (response.data.status === -2) {
+          let self = this
+          this.$vux.confirm.show({
+            title: '提示',
+            content: '您尚未登录，确定现在去登录？',
+            onCancel () {
+            },
+            onConfirm () {
+              self.$router.push('/login')
+            }
+          })
+        }
+      }).catch((response) => {})
     },
     collectMethod () {
       let self = this

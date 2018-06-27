@@ -5,14 +5,12 @@ import App from './App'
 import router from './router'
 import {Badge, ToastPlugin, ConfirmPlugin} from 'vux'
 import '../static/js/validate.js'
-import axios from 'axios'
 Vue.component('badge', Badge)
 Vue.use(ConfirmPlugin)
 Vue.use(ToastPlugin)
 require('./fit.js')
 require('./assets/common/css/common.css')
 Vue.config.productionTip = false
-// axios.defaults.headers.common['_token'] = sessionStorage.getItem('loginToken')
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

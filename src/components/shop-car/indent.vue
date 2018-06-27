@@ -102,7 +102,6 @@
 
 <script>
 import axios from 'axios'
-import IndentEditor from '@/components/shop-car/editor'
 import { Swipeout, SwipeoutItem, SwipeoutButton, Group, Datetime, XTextarea } from 'vux'
 import '@/assets/css/indent.css'
 export default {
@@ -146,7 +145,6 @@ export default {
         }
       }).catch((response) => {
         console.log(response)
-        alert(777)
         this.errorMsg()
       })
     },
@@ -155,18 +153,26 @@ export default {
     },
     submit () {
       if (this.address !== null) {
-        axios.post('api/order/make', {
-          '_token': sessionStorage.getItem('loginToken'),
-          'receiverId': this.receiverId,
-          'detail': JSON.stringify(this.lists)
-        }).then((response) => {
-          if (response.data.status === 0) {
-            sessionStorage.setItem('indent-detail', JSON.stringify(response.data.data))
-            sessionStorage.removeItem('indentLists')
-            this.$router.push('/shop-car/detail')
+        let self = this
+        this.$vux.confirm.show({
+          title: '提示',
+          content: '确定删除？',
+          onCancel () {},
+          onConfirm () {
+            axios.post('api/order/make', {
+              '_token': sessionStorage.getItem('loginToken'),
+              'receiverId': self.receiverId,
+              'detail': JSON.stringify(self.lists)
+            }).then((response) => {
+              if (response.data.status === 0) {
+                sessionStorage.setItem('indent-detail', JSON.stringify(response.data.data))
+                sessionStorage.removeItem('indentLists')
+                self.$router.push('/shop-car/detail')
+              }
+            }).catch((response) => {
+              this.errorMsg()
+            })
           }
-        }).catch((response) => {
-          this.errorMsg()
         })
       } else {
         this.$vux.toast.show({
@@ -226,7 +232,6 @@ export default {
   mounted () {
   },
   components: {
-    IndentEditor,
     Swipeout,
     SwipeoutItem,
     SwipeoutButton,

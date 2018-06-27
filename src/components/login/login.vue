@@ -16,7 +16,7 @@
         <li>
           <i :class="{'is-danger': errors.has('password')}"></i>
           <div class="cells">
-            <label for="">密码</label>
+            <label for="">密码&emsp;</label>
             <input type="password" name="password" v-validate="'required'" v-model="password" placeholder="请输入您的登陆密码"/>
             <input type="hidden" v-model="password2">
           </div>

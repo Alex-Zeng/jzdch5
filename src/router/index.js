@@ -4,6 +4,7 @@ import Index from '@/components/home/index'
 import GoodsClass from '@/components/goods-class/goods-class'
 import User from '@/components/user/user'
 import GoodsCollect from '@/components/user/goods-collect'
+import Message from '@/components/user/message'
 import ShopCartemplate from '@/components/shop-car/shop-car-template'
 import ShopCar from '@/components/shop-car/shop-car'
 import Indent from '@/components/shop-car/indent'
@@ -53,6 +54,14 @@ export default new Router({
         title: '收藏夹'
       },
       component: GoodsCollect
+    },
+    {
+      path: '/message',
+      name: 'message',
+      meta: {
+        title: '消息中心'
+      },
+      component: Message
     },
     {
       path: '/shop-car',

@@ -7,27 +7,29 @@
        </div>
        <div style="padding-right: 2rem">&emsp;</div>
      </div>
-     <div class="search-lists-header"><span style="color: #222222;">默认</span> <span>价格<i class="icon iconfont icon-jiagepaixu1"></i></span></div>
+     <div class="search-lists-header"><span style="color: #222222;">默认</span> <span @click="sortMethods">价格<i class="icon iconfont icon-jiagepaixu1"></i></span></div>
      <div  class="mescroll" id="mescroll" style="margin-top: 5.5rem;border-top: 0.05rem solid #E0E0E0;">
        <div id="favoriteList" v-cloak>
          <!--展示上拉加载的数据列表-->
-         <swipeout>
-           <swipeout-item transition-mode="follow">
-             <div slot="right-menu">
-               <swipeout-button @click.native="onButtonClick()" type="warn">删除</swipeout-button>
-             </div>
-             <div slot="content" class="shop-car-content">
-               <div>
-                 <img src="../../assets/logo.png" alt="">
+         <div v-for="(item, index) in favoriteList" :key="index" @click="$router.push('/detail/'+item.id)">
+           <swipeout>
+             <swipeout-item transition-mode="follow">
+               <div slot="right-menu">
+                 <swipeout-button @click.native="onButtonClick()" type="warn">删除</swipeout-button>
+               </div>
+               <div slot="content" class="shop-car-content">
                  <div>
-                   <h3><router-link to="/detail/12">454545</router-link></h3>
-                   <span class="text-red">￥ 454545</span>
-                   <div class="text-muted fr">详情 <i class="icon iconfont icon-youjiantou"></i></div>
+                   <img :src="item.icon" alt="图片">
+                   <div>
+                     <h3>{{item.title}}</h3>
+                     <span class="text-red">￥ {{item.price}}</span>
+                     <div class="text-muted fr">详情 <i class="icon iconfont icon-youjiantou"></i></div>
+                   </div>
                  </div>
                </div>
-             </div>
-           </swipeout-item>
-         </swipeout>
+             </swipeout-item>
+           </swipeout>
+         </div>
        </div>
      </div>
    </div>
@@ -42,7 +44,8 @@ export default {
   name: 'goods-collect',
   data () {
     return {
-      favoriteList: []
+      favoriteList: [],
+      mySort: 'asc'
     }
   },
   methods: {
@@ -71,7 +74,9 @@ export default {
       setTimeout(function () {
         axios.post('api/user/getFavoriteList', {
           'pageNumber': pageNum,
-          'pageSize': pageSize
+          'pageSize': pageSize,
+          'field': 'price',
+          'sort': self.mySort
         }).then((response) => {
           if (response.data.status === 0) {
             // 响应成功回调
@@ -85,7 +90,7 @@ export default {
             }
             successCallback && successCallback(listData, total)// 成功回调
           } else {
-            this.$vux.toast.show({
+            self.$vux.toast.show({
               type: 'warn',
               text: response.data.msg,
               onShow () {
@@ -99,30 +104,53 @@ export default {
         }).catch((response) => {
           // 响应错误回调
           console.log('error')
-          // self.errorMsg()
+          self.errorMsg()
           errorCallback && errorCallback()// 失败回调
         })
       }, 1000)
+    },
+    sortMethods () {
+      if (this.mySort === 'asc') {
+        this.mySort = 'desc'
+      } else {
+        this.mySort = 'asc'
+      }
+      console.log(this.mySort)
+    },
+    errorMsg () {
+      this.$vux.toast.show({
+        type: 'warn',
+        text: '网络可能有点问题',
+        onShow () {
+          console.log('Plugin: I\'m showing')
+        },
+        onHide () {
+          console.log('Plugin: I\'m hiding')
+        }
+      })
     }
   },
+  created () {
+    window.scrollTo(0, 0)
+  },
   mounted () {
-    var _sel = this
-    _sel.mescroll = new MeScroll('mescroll', {
+    var self = this
+    self.mescroll = new MeScroll('mescroll', {
       up: {
         /* 上拉加载的配置参数 */
         auto: true, // 是否在初始化时以上拉加载的方式自动加载第一页数据; 默认false
-        callback: _sel.upCallback, // 上拉回调
+        callback: self.upCallback, // 上拉回调
         // 以下参数可删除,不配置
         isBounce: false, // 此处禁止ios回弹,解析(务必认真阅读,特别是最后一点): http://www.mescroll.com/qa.html#q10
         // page:{size:8}, //可配置每页8条数据,默认10
         offset: 500,
         empty: { // 配置列表无任何数据的提示
-          warpId: null,
-          // icon: '../res/img/mescroll-empty.png'
+          warpId: 'favoriteList',
+          // icon: '../res/img/mescroll-empty.png',
           tip: '亲,暂无相关数据哦~',
           btntext: '去逛逛 >',
           btnClick: function () {
-            alert('点击了去逛逛按钮')
+            self.$router.push('/')
           }
         }
       }

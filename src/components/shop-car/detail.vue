@@ -23,7 +23,7 @@
               {{item.supplierName}}
             </div>
             <div class="indent-content" v-for="i in item.goods" :key="i.goods_id">
-              <img src="http://192.168.3.135:8079/web/public/uploads/goods_thumb/2018_05/11/1526025650_0_7072.jpg" alt="">
+              <img :src="i.icon" alt="">
               <div class="indent-info">
                 <h3><router-link :to="'/detail/'+i.goods_id">{{i.title}}</router-link></h3>
                 <div class="text-muted" v-if="i.specificationsInfo">商品规格 {{i.specificationsInfo}}</div>
@@ -65,6 +65,7 @@ export default {
   },
   created () {
     this.detail = JSON.parse(sessionStorage.getItem('indent-detail'))
+    console.log(this.detail)
     this.total = sessionStorage.getItem('total')
   }
 }

@@ -250,6 +250,7 @@ export default {
               console.log('Plugin: I\'m showing')
               // 响应成功回调
               console.log('success')
+              document.cookie = '_token='
               sessionStorage.clear()
             },
             onHide () {

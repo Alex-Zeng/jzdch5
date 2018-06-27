@@ -24,7 +24,7 @@
       </div>
       <ul class="search-history">
         <li v-for="(item, index) in historyLists" :key="item.id" @click="searchHistory(index)">
-          <a href="javascript:;">{{item.keywords}}</a>
+          <a href="javascript:;">{{item.keyword}}</a>
         </li>
       </ul>
     </div>
@@ -76,14 +76,14 @@ export default {
     getResult (val) {
       if (val.keyCode === 13 || val === true) {
         if (val.keyCode === 13) {
-          let obj = { 'keywords': this.keywords }
+          let obj = { 'keyword': this.keywords }
           let allArr = []
           let oldArr = this.historyLists
           oldArr.push(obj)
           for (let i = 0; i < oldArr.length; i++) {
             let flag = true
             for (let j = 0; j < allArr.length; j++) {
-              if (oldArr[i].keywords === allArr[j].keywords) {
+              if (oldArr[i].keyword === allArr[j].keyword) {
                 flag = false
               }
             }
@@ -104,12 +104,13 @@ export default {
             isBounce: false, // 此处禁止ios回弹,解析(务必认真阅读,特别是最后一点): http://www.mescroll.com/qa.html#q10
             offset: 500,
             empty: { // 配置列表无任何数据的提示
-              warpId: null,
+              warpId: 'dataList',
               // icon: '../res/img/mescroll-empty.png'
               tip: '亲,暂无相关数据哦~',
               btntext: '去逛逛 >',
               btnClick: function () {
                 // alert('点击了去逛逛按钮')
+                self.$router.push('/')
               }
             }
           }
@@ -168,12 +169,13 @@ export default {
           // page:{size:8}, //可配置每页8条数据,默认10
           offset: 500,
           empty: { // 配置列表无任何数据的提示
-            warpId: null,
+            warpId: 'dataList',
             // icon: '../res/img/mescroll-empty.png'
             tip: '亲,暂无相关数据哦~',
             btntext: '去逛逛 >',
             btnClick: function () {
               // alert('点击了去逛逛按钮')
+              self.$router.push('/')
             }
           }
         }

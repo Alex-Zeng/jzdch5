@@ -163,7 +163,7 @@ export default {
             'code': this.mobileCode
           }).then((response) => {
             if (response.data.status === 0) {
-              console.log(this.mobileCode)
+              document.cookie = '_token=' + response.data.data.token
               sessionStorage.setItem('loginToken', response.data.token)
               // 响应成功回调
               console.log('success')
@@ -232,6 +232,7 @@ export default {
                   console.log('Plugin: I\'m showing')
                   // 响应成功回调
                   console.log('success')
+                  document.cookie = '_token=' + response.data.data.token
                   sessionStorage.setItem('loginToken', response.data.data.token)
                 },
                 onHide () {

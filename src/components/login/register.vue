@@ -221,6 +221,7 @@ export default {
                   console.log('Plugin: I\'m showing')
                   // 响应成功回调
                   console.log('success')
+                  document.cookie = '_token=' + response.data.data.token
                   sessionStorage.setItem('loginToken', response.data.data.token)
                 },
                 onHide () {
