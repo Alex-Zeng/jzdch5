@@ -8,36 +8,125 @@
        <div style="padding-right: 2rem">&emsp;</div>
      </div>
      <div class="search-lists-header"><span style="color: #222222;">默认</span> <span>价格<i class="icon iconfont icon-jiagepaixu1"></i></span></div>
-     <div style="margin-top: 5.5rem;border-top: 0.05rem solid #E0E0E0;">
-       <swipeout>
-         <swipeout-item transition-mode="follow">
-           <div slot="right-menu">
-             <swipeout-button @click.native="onButtonClick()" type="warn">删除</swipeout-button>
-           </div>
-           <div slot="content" class="shop-car-content">
-             <div>
-               <img src="../../assets/logo.png" alt="">
+     <div  class="mescroll" id="mescroll" style="margin-top: 5.5rem;border-top: 0.05rem solid #E0E0E0;">
+       <div id="favoriteList" v-cloak>
+         <!--展示上拉加载的数据列表-->
+         <swipeout>
+           <swipeout-item transition-mode="follow">
+             <div slot="right-menu">
+               <swipeout-button @click.native="onButtonClick()" type="warn">删除</swipeout-button>
+             </div>
+             <div slot="content" class="shop-car-content">
                <div>
-                 <h3><router-link to="/detail/12">454545</router-link></h3>
-                 <span class="text-red">￥ 454545</span>
-                 <div class="text-muted fr">详情 <i class="icon iconfont icon-youjiantou"></i></div>
+                 <img src="../../assets/logo.png" alt="">
+                 <div>
+                   <h3><router-link to="/detail/12">454545</router-link></h3>
+                   <span class="text-red">￥ 454545</span>
+                   <div class="text-muted fr">详情 <i class="icon iconfont icon-youjiantou"></i></div>
+                 </div>
                </div>
              </div>
-           </div>
-         </swipeout-item>
-       </swipeout>
+           </swipeout-item>
+         </swipeout>
+       </div>
      </div>
    </div>
 </template>
 
 <script>
+import axios from 'axios'
 import { Swipeout, SwipeoutItem, SwipeoutButton, InlineXNumber, Icon, Checklist, CheckIcon } from 'vux'
+import MeScroll from '../../../static/js/mescroll.min.js'
+import 'mescroll.js/mescroll.min.css'
 export default {
   name: 'goods-collect',
+  data () {
+    return {
+      favoriteList: []
+    }
+  },
   methods: {
     onButtonClick () {
       console.log('删除')
+    },
+    // 上拉回调 page = {num:1, size:10}; num:当前页 ,默认从1开始; size:每页数据条数,默认10
+    upCallback: function (page) {
+      console.log('联网加载数据')
+      // 联网加载数据
+      var self = this
+      this.getListDataFromNet(page.num, page.size, function (curPageData, totalSize) {
+        // curPageData = [] // 打开本行注释,可演示列表无任何数据empty的配置
+        if (page.num === 1) self.favoriteList = []
+        // 更新列表数据
+        self.favoriteList = self.favoriteList.concat(curPageData)
+        self.mescroll.endBySize(curPageData.length, totalSize) // 必传参数(当前页的数据个数, 总数据量)
+      }, function () {
+        // 联网失败的回调,隐藏下拉刷新和上拉加载的状态;
+        self.mescroll.endErr()
+      })
+    },
+    getListDataFromNet (pageNum, pageSize, successCallback, errorCallback) {
+      let self = this
+      // 延时一秒,模拟联网
+      setTimeout(function () {
+        axios.post('api/user/getFavoriteList', {
+          'pageNumber': pageNum,
+          'pageSize': pageSize
+        }).then((response) => {
+          if (response.data.status === 0) {
+            // 响应成功回调
+            var data = response.data.data.list
+            var total = response.data.data.total
+            var listData = []// 模拟分页数据
+            for (var i = 0; i < data.length; i++) {
+              if (data[i] !== undefined) {
+                listData.push(data[i])
+              }
+            }
+            successCallback && successCallback(listData, total)// 成功回调
+          } else {
+            this.$vux.toast.show({
+              type: 'warn',
+              text: response.data.msg,
+              onShow () {
+                console.log('Plugin: I\'m showing')
+              },
+              onHide () {
+                console.log('Plugin: I\'m hiding')
+              }
+            })
+          }
+        }).catch((response) => {
+          // 响应错误回调
+          console.log('error')
+          // self.errorMsg()
+          errorCallback && errorCallback()// 失败回调
+        })
+      }, 1000)
     }
+  },
+  mounted () {
+    var _sel = this
+    _sel.mescroll = new MeScroll('mescroll', {
+      up: {
+        /* 上拉加载的配置参数 */
+        auto: true, // 是否在初始化时以上拉加载的方式自动加载第一页数据; 默认false
+        callback: _sel.upCallback, // 上拉回调
+        // 以下参数可删除,不配置
+        isBounce: false, // 此处禁止ios回弹,解析(务必认真阅读,特别是最后一点): http://www.mescroll.com/qa.html#q10
+        // page:{size:8}, //可配置每页8条数据,默认10
+        offset: 500,
+        empty: { // 配置列表无任何数据的提示
+          warpId: null,
+          // icon: '../res/img/mescroll-empty.png'
+          tip: '亲,暂无相关数据哦~',
+          btntext: '去逛逛 >',
+          btnClick: function () {
+            alert('点击了去逛逛按钮')
+          }
+        }
+      }
+    })
   },
   components: {
     Swipeout, SwipeoutItem, SwipeoutButton, InlineXNumber, Icon, Checklist, CheckIcon
