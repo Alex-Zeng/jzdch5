@@ -111,7 +111,7 @@ export default {
     return {
       value1: '',
       value2: '',
-      address: {},
+      address: null,
       editor: {},
       k: null,
       index: null,
@@ -137,9 +137,16 @@ export default {
     },
     getLists (index) {
       axios.get('api/user/getAddressList&_token=' + sessionStorage.getItem('loginToken')).then((response) => {
-        this.address = response.data.data.list[index]
-        this.receiverId = response.data.data.list[index].id
+        if (response.data.status === 0) {
+          if (response.data.data.list.length > 0) {
+            this.address = response.data.data.list[index]
+            this.receiverId = response.data.data.list[index].id
+          } else {
+          }
+        }
       }).catch((response) => {
+        console.log(response)
+        alert(777)
         this.errorMsg()
       })
     },
@@ -147,7 +154,7 @@ export default {
       this.editorSHow = !this.editorSHow
     },
     submit () {
-      if (this.address !== undefined) {
+      if (this.address !== null) {
         axios.post('api/order/make', {
           '_token': sessionStorage.getItem('loginToken'),
           'receiverId': this.receiverId,
@@ -213,8 +220,6 @@ export default {
       this.lists.forEach((v) => {
         v.date = ''
         v.remark = ''
-        // v.goods = v.list
-        // delete v.list
       })
     }
   },

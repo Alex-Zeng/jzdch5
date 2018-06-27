@@ -1,4 +1,4 @@
-@import url('//at.alicdn.com/t/font_670323_t1mmdun12n.css');
+@import url('//at.alicdn.com/t/font_670323_ck585hvz0ou.css');
 *{
 	padding: 0;
 	margin: 0;
@@ -84,7 +84,7 @@ body{
   width: 3rem;
   text-align: center;
   background: #5FCAED;
-  padding-right: 0.5rem;
+  padding-right: 0.2rem;
   position: absolute;
   top: 1.2rem;
   left: 0;
@@ -242,6 +242,13 @@ input:-ms-input-placeholder {
   box-sizing: border-box;
   background: #1EB9EE;
   font-size: 0.9rem;
+}
+.header-nav-fixed{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
 }
 .header-nav a , .header-nav i{
   padding: 0.5rem;
@@ -417,6 +424,9 @@ input:-ms-input-placeholder {
 }
 #app .vux-number-selector.vux-number-disabled svg{
   fill: #999999;
+}
+.vux-label a{
+  color: #222222;
 }
 /*修改插件样式*/
 

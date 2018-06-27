@@ -17,7 +17,9 @@
           <div>
             <i class="icon iconfont icon-danxuananniu" v-if="!item.is_default"></i>
             <i class="icon iconfont icon-danxuananniu-xuanzhong1" v-if="item.is_default" style="color: #1EB9EE;"></i>
-            <label class="text-muted"><input type="checkbox" :value="2" v-model="item.is_default">设为默认</label>
+            <label class="text-muted">
+              <input type="radio" name="is_default" :value="2" v-model="item.is_default">设为默认
+            </label>
           </div>
           <div>
             <span class="text-muted" @click="editorAddress(item.id, index)">

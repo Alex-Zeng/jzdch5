@@ -77,7 +77,21 @@ export default {
       if (val.keyCode === 13 || val === true) {
         if (val.keyCode === 13) {
           let obj = { 'keywords': this.keywords }
-          this.historyLists.push(obj)
+          let allArr = []
+          let oldArr = this.historyLists
+          oldArr.push(obj)
+          for (let i = 0; i < oldArr.length; i++) {
+            let flag = true
+            for (let j = 0; j < allArr.length; j++) {
+              if (oldArr[i].keywords === allArr[j].keywords) {
+                flag = false
+              }
+            }
+            if (flag) {
+              allArr.push(oldArr[i])
+            }
+          }
+          this.historyLists = allArr
           sessionStorage.setItem('keyword', JSON.stringify(this.historyLists))
         }
         var self = this

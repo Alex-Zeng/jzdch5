@@ -5,12 +5,12 @@
       <div>{{userMsg.name}}</div>
       <i class="icon iconfont icon-shezhi"></i>
     </div>
-    <template>
+    <template v-if="groupId === 5">
       <div class="user-msg">
         <group>
           <cell is-link>
             <i class="icon iconfont icon-xingxing text-blue"></i>
-            <span slot="title"><span style="vertical-align:middle;">收藏夹</span>(15)</span>
+            <span slot="title"><span style="vertical-align:middle;">收藏夹</span>({{favoriteNumber}})</span>
           </cell>
         </group>
       </div>
@@ -41,16 +41,20 @@
         </div>
       </div>
     </template>
-    <template v-if="false">
+    <template v-if="groupId === 4">
       <div class="user-msg">
         <group>
-          <cell is-link>
-            <i class="icon iconfont icon-xingxing text-blue"></i>
-            <span slot="title"><span style="vertical-align:middle;">消息</span>(15)</span>
+          <cell is-link link="/goods-collect">
+            <i slot="icon" class="icon iconfont icon-shoucang1 text-blue"></i>
+            <span slot="title">
+                <span style="vertical-align:middle;">收藏夹</span>({{favoriteNumber}})
+            </span>
           </cell>
-          <cell is-link>
-            <i slot="icon" class="icon iconfont icon-gouwuche text-blue"></i>
-            <span slot="title"><span style="vertical-align:middle;">购物清单</span>(12)</span>
+          <cell is-link link="/shop-car">
+            <i slot="icon" class="icon iconfont icon-gouwuche3 text-blue"></i>
+            <span slot="title">
+              <span style="vertical-align:middle;">购物清单</span>(12)
+            </span>
           </cell>
         </group>
       </div>
@@ -81,7 +85,10 @@
         </div>
       </div>
     </template>
-    <div class="all-indent">查看全部订单<i class="icon iconfont icon-youjiantou"></i></div>
+    <template v-if="groupId === 6">
+      去认证
+    </template>
+    <div class="all-indent" v-if="groupId !== 6">查看全部订单<i class="icon iconfont icon-youjiantou"></i></div>
     <div class="footer-ad">
       <div>集众金融 急你所需</div>
       <div><a href="javascript:;">申请融资</a></div>
@@ -99,7 +106,8 @@ export default {
   name: 'user',
   data () {
     return {
-      loginToken: '',
+      groupId: null,
+      favoriteNumber: '',
       userMsg: {
         'name': '广东律晶电器有限责任公司',
         'photo': require('../../assets/images/bingxiang-icon.png')
@@ -119,15 +127,18 @@ export default {
       }
     },
     getFavoriteNumber () {
-      axios.get('api/user/getFavoriteNumber').then((response) => {
+      axios.get('api/user/getFavoriteNumber&_token=' + sessionStorage.getItem('loginToken')).then((response) => {
         if (response.data.status === 0) {
           console.log(response)
+          this.favoriteNumber = response.data.data.number
         }
       }).catch()
     }
   },
   created () {
+    this.groupId = Number(sessionStorage.getItem('groupId'))
     this.loginMethod()
+    this.getFavoriteNumber()
   },
   watch: {
     // 如果路由有变化，会再次执行该方法

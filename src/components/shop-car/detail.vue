@@ -1,7 +1,7 @@
 <template>
     <div>
       <div class="header-nav">
-        <i class="icon iconfont icon-back" style="padding-right: 1rem;" onclick="history.go(-2)"></i>
+        <i class="icon iconfont icon-back" style="padding-right: 1rem;" onclick="history.go(-1)"></i>
         <div>
           &emsp;
         </div>

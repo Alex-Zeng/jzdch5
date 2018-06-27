@@ -77,7 +77,8 @@ export default {
       addressDetail: '',
       showInput: false,
       checkedTag: '公司',
-      newTag: ''
+      tag: ['公司', '家'],
+      newTag: null
     }
   },
   methods: {
@@ -99,6 +100,9 @@ export default {
     },
     editor () {
       this.showInput = !this.showInput
+      if (this.newTag !== null) {
+        this.tag.push(this.newTag)
+      }
     },
     getTag (event) {
       this.checkedTag = event.target.innerText

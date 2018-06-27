@@ -1,17 +1,17 @@
 <template>
   <div>
-    <div class="header-nav">
+    <div class="header-nav" style="position: fixed;top: 0;left: 0;width: 100%;z-index: 999;">
       <i class="icon iconfont icon-back" style="padding-right: 1rem;" onclick="history.go(-1)"></i>
       <div>
-        <a href="javascript:;" style="margin-right: 1rem;">图片</a>
-        <a href="javascript:;" @click.prevent="custormAnchor('goods-detail')">详情</a>
+        <a href="javascript:;" @click.prevent="custormAnchor('goods-detail')" style="margin-right: 1rem;">图片</a>
+        <a href="javascript:;" @click.prevent="custormAnchor('goods-img')">详情</a>
       </div>
       <div>
         <i class="icon iconfont icon-fenxiang" style="padding-right: 0;"></i>
         <i class="icon iconfont icon-xiaoxi"></i>
       </div>
     </div>
-    <div class="header-detail">
+    <div id="goods-detail" class="header-detail">
       <swiper :show-desc-mask="false" dots-position="center" height="18.75rem" :list="goodsData.imgList"></swiper>
     </div>
     <div class="goods-title-box">
@@ -34,7 +34,7 @@
       <span>请选择规格分类</span>
       <i class="icon iconfont icon-youdanjiantou"></i>
     </div>
-    <div id="goods-detail"  class="detail-title">
+    <div id="goods-img"  class="detail-title">
       商品详情
     </div>
     <div style="background: #FFFFFF;padding: 0.5rem;padding-bottom: 4rem;word-wrap: break-word;" v-html="goodsData.detail">

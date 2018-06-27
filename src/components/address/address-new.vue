@@ -41,12 +41,12 @@
             <label for="" style="align-self: flex-start;">设置标签</label>
             <div class="address-tag-box">
               <div @click="getTag">
-                <span class="tag"> 公司</span><span class="tag"> 家</span>
+                <span class="tag" v-for="(item, index) in tag" :key="item.id"  @click="tabsort(index)" :class="{ active: iscur == index }"> {{item.tag}}</span>
               </div>
-              <div>
+              <div style="padding-top: 0.8rem;">
                 <span class="tag" style="width: 2em;text-align: center;" v-if="!showInput" @click="editor">+</span>
                 <div class="tag-input" v-if="showInput">
-                  <input type="text" name="newTag" v-model="newTag" v-validate="'required'"><button type="button" @click="editor">确定</button>
+                  <input type="text" name="newTag" maxlength="5" v-model="newTag" v-validate="'required'"><button type="button" @click="editor">确定</button>
                 </div>
               </div>
             </div>
@@ -76,7 +76,9 @@ export default {
       addressDetail: '',
       showInput: false,
       checkedTag: '公司',
-      newTag: ''
+      tag: [],
+      newTag: null,
+      iscur: 0
     }
   },
   methods: {
@@ -98,9 +100,24 @@ export default {
     },
     editor () {
       this.showInput = !this.showInput
+      if (this.newTag !== null) {
+        this.tag.push({'tag': this.newTag})
+        axios.post('api/user/addAddressTag', {
+          '_token': sessionStorage.getItem('loginToken'),
+          'tag': this.newTag
+        }).then((response) => {
+          if (response.data.status === 0) {
+          }
+        }).catch((response) => {
+          this.errorMsg()
+        })
+      }
     },
     getTag (event) {
       this.checkedTag = event.target.innerText
+    },
+    tabsort (index) {
+      this.iscur = index
     },
     getAreaMethods () {
       if (localStorage.getItem('addressData') === null) {
@@ -191,6 +208,13 @@ export default {
     if (sessionStorage.getItem('loginToken') === null) {
       this.$router.push('/login')
     }
+    axios.get('api/user/getAddressTag&_token=' + sessionStorage.getItem('loginToken')).then((response) => {
+      if (response.data.status === 0) {
+        this.tag = response.data.data
+      }
+    }).catch((response) => {
+      this.errorMsg()
+    })
     this.getAreaMethods()
   },
   mounted () {
