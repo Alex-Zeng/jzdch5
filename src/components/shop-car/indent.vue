@@ -85,11 +85,11 @@
         </div>
         <ul class="editor">
           <li>
-            <label>物料编号&nbsp;</label>
+            <label>物料编号&emsp;</label>
             <input name="" type="text" v-model="editor.no" placeholder="点击设置物料编号，最多30个字">
           </li>
           <li>
-            <label>规格要求&nbsp;</label>
+            <label>规格要求&emsp;</label>
             <input name="" type="text" v-model="editor.requirement" placeholder="点击设置规格要求，最多40个字">
           </li>
           <li style="padding: 0 1rem;">
@@ -113,7 +113,7 @@ export default {
       address: null,
       editor: {},
       k: null,
-      index: null,
+      editorIndex: null,
       receiverId: '',
       lists: [],
       detail: [],
@@ -126,7 +126,7 @@ export default {
       let editor = this.lists
       this.editor = editor[index].list[k]
       this.k = k
-      this.index = index
+      this.editorIndex = index
       this.editorSHow = true
     },
     cancelEditor () {
