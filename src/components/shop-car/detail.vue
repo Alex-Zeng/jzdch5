@@ -65,8 +65,8 @@ export default {
   },
   created () {
     this.detail = JSON.parse(sessionStorage.getItem('indent-detail'))
-    console.log(this.detail)
     this.total = sessionStorage.getItem('total')
+    this.total = parseFloat(this.total).toFixed(2)
   }
 }
 </script>
