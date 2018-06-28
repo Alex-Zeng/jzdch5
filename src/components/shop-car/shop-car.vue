@@ -175,6 +175,7 @@ export default {
           if (t) {
             const {price, quantity} = (this.proData)[index].list[k]
             this.total += (price * quantity)
+            console.log(this.total)
           }
         })
       })
@@ -183,6 +184,17 @@ export default {
       this.checkedList.forEach((v, k) => {
         this.$set(this.checkedList, k, v.fill(!this.all))
         this.allList.fill(!this.all)
+      })
+      // 计算价格，重新遍历
+      this.total = 0
+      this.checkedList.forEach((v, index) => {
+        v.forEach((t, k) => {
+          if (t) {
+            const {price, quantity} = (this.proData)[index].list[k]
+            this.total += (price * quantity)
+            console.log(this.total)
+          }
+        })
       })
     },
     manageMethods () {
