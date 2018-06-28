@@ -64,6 +64,7 @@ export default {
     }
   },
   created () {
+    window.scrollTo(0, 0)
     this.detail = JSON.parse(sessionStorage.getItem('indent-detail'))
     this.total = sessionStorage.getItem('total')
     this.total = parseFloat(this.total).toFixed(2)

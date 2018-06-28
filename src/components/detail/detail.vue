@@ -292,6 +292,7 @@ export default {
     }
   },
   created () {
+    window.scrollTo(0, 0)
     let loginToken = sessionStorage.getItem('loginToken')
     if (loginToken !== null) {
       axios.get('api/mall_cart/getNumber&_token=' + sessionStorage.getItem('loginToken')).then((response) => {
