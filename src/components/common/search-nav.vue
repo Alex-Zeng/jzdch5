@@ -176,7 +176,7 @@ export default {
       })
     },
     searchHistory (index) {
-      this.keywords = this.historyLists[index].keywords
+      this.keywords = this.historyLists[index].keyword
       var self = this
       self.mescroll.removeEmpty()
       self.mescroll = new MeScroll('mescroll', {
