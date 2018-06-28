@@ -218,7 +218,7 @@ export default {
     } else {
       this.getLists(index)
     }
-    this.total = sessionStorage.getItem('total')
+    this.total = Number(sessionStorage.getItem('total')).toFixed(2)
     this.lists = JSON.parse(sessionStorage.getItem('indentLists'))
     if (sessionStorage.getItem('indentLists') === null) {
       this.$router.push('/')
