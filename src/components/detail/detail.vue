@@ -20,7 +20,7 @@
         {{price}}
       </span>
       <span v-else class="text-red">
-        ￥ {{goodsData.min_price}}{{goodsData.max_price===goodsData.min_price?'':' ~ ￥'+goodsData.max_price}}
+        ￥ {{goodsData.min_price === '0.00'?goodsData.price:goodsData.min_price}}{{goodsData.max_price===goodsData.min_price?'':' ~ ￥'+goodsData.max_price}}
       </span>
     </div>
     <div class="goods-seller">

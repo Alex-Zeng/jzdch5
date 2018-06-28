@@ -236,6 +236,7 @@ export default {
     }
   },
   created () {
+    window.scrollTo(0, 0)
     this.getBanner()
     this.getMenunLists()
     this.menunListsCouter()
