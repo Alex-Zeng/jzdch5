@@ -12,7 +12,7 @@
         <li>
           <i :class="{'is-danger': errors.has('userName')}"></i>
           <div class="cells">
-            <label for="">收货人</label>
+            <label for="">收货人&emsp;</label>
             <input name="userName" v-model="userName" v-validate="'required'" type="text" placeholder="请输入收货人姓名">
           </div>
         </li>
@@ -136,6 +136,15 @@ export default {
         console.log(this.addressData)
       }
     },
+    getOldTag () {
+      axios.get('api/user/getAddressTag&_token=' + sessionStorage.getItem('loginToken')).then((response) => {
+        if (response.data.status === 0) {
+          this.tag = response.data.data
+        }
+      }).catch((response) => {
+        this.errorMsg()
+      })
+    },
     addressNew () {
       this.$validator.validateAll().then((result) => {
         if (result) {
@@ -208,13 +217,7 @@ export default {
     if (sessionStorage.getItem('loginToken') === null) {
       this.$router.push('/login')
     }
-    axios.get('api/user/getAddressTag&_token=' + sessionStorage.getItem('loginToken')).then((response) => {
-      if (response.data.status === 0) {
-        this.tag = response.data.data
-      }
-    }).catch((response) => {
-      this.errorMsg()
-    })
+    this.getOldTag()
     this.getAreaMethods()
   },
   mounted () {

@@ -1,5 +1,5 @@
 <template>
-  <div class="search"><input type="text" placeholder="搜索您想要的商品" readonly @click="$router.push('/search')"/><a><i class="icon iconfont icon-xiaoxi"><badge :text="message < 99?message: '99+'" v-if="message > 0? true:false"></badge></i></a></div>
+  <div class="search"><input type="text" placeholder="搜索您想要的商品" readonly @click="$router.push('/search')"/><a @click="$router.push('/message')"><i class="icon iconfont icon-xiaoxi"><badge :text="message < 99?message: '99+'" v-if="message > 0? true:false" ></badge></i></a></div>
 </template>
 
 <script>

@@ -46,7 +46,7 @@ export default {
               // this.$router.push('/login')
               this.shopCard = false
               console.log('未登录')
-            } else if (response.data.status === 0) {
+            } else if (response.data.status === 0 && response.data.data.groupId === 4) {
               this.total = response.data.data.total
               this.shopCard = true
             } else {

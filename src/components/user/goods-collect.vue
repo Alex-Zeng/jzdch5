@@ -8,7 +8,7 @@
        <div style="padding-right: 2rem">&emsp;</div>
      </div>
      <div class="search-lists-header"><span style="color: #222222;">默认</span> <span @click="sortMethods">价格<i class="icon iconfont icon-jiagepaixu1"></i></span></div>
-     <div  class="mescroll" id="mescroll" style="margin-top: 5.5rem;border-top: 0.05rem solid #E0E0E0;">
+     <div  class="mescroll" id="mescroll" style="padding-top: 5.5rem;border-top: 0.05rem solid #E0E0E0;">
        <div id="favoriteList" v-cloak>
          <!--展示上拉加载的数据列表-->
          <div v-for="(item, index) in favoriteList" :key="index" @click="$router.push('/detail/'+item.id)">
@@ -22,7 +22,7 @@
                    <img :src="item.icon" alt="图片">
                    <div>
                      <h3>{{item.title}}</h3>
-                     <span class="text-red">￥ {{item.price}}</span>
+                     <span class="text-red">￥ {{item.w_price}}</span>
                      <div class="text-muted fr">详情 <i class="icon iconfont icon-youjiantou"></i></div>
                    </div>
                  </div>
@@ -112,10 +112,13 @@ export default {
     sortMethods () {
       if (this.mySort === 'asc') {
         this.mySort = 'desc'
+        sessionStorage.setItem('searchSort', 'desc')
       } else {
         this.mySort = 'asc'
+        sessionStorage.setItem('searchSort', 'asc')
       }
       console.log(this.mySort)
+      this.mescroll.resetUpScroll()
     },
     errorMsg () {
       this.$vux.toast.show({

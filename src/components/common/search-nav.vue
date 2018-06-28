@@ -37,6 +37,7 @@ import axios from 'axios'
 import MeScroll from '../../../static/js/mescroll.min.js'
 export default {
   name: 'search-nav',
+  props: ['mySort'],
   data () {
     return {
       loginToken: null,
@@ -50,7 +51,6 @@ export default {
       value: '商品',
       type: '0',
       keywords: '',
-      mySort: 'asc',
       list: [{key: '0', value: '商品'}, {key: '1', value: '供货商'}],
       historyLists: [],
       goodsLists: []
@@ -72,6 +72,9 @@ export default {
         this.select = true
         this.isActive = true
       }
+    },
+    sortMethods () {
+      this.mescroll.resetUpScroll()
     },
     getResult (val) {
       if (val.keyCode === 13 || val === true) {
@@ -261,6 +264,9 @@ export default {
     console.log(this.$route.query.id)
   },
   watch: {
+    mySort (val) {
+      console.log(val)
+    },
     keywords (val) {
       if (val !== '') {
         this.clear = true

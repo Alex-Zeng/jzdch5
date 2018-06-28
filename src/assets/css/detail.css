@@ -108,6 +108,18 @@
   margin-bottom: 0.5rem;
   background: #FFFFFF;
 }
+.goods-detail{
+  background: #FFFFFF;
+  padding: 0.5rem;
+  padding-bottom: 4rem;
+  word-wrap: break-word;
+}
+.goods-detail img{
+  max-width: 100%;
+}
+.goods-detail table{
+  width: 100%!important;
+}
 .goods-guige{
   width: 100%;
   background: #FFFFFF;

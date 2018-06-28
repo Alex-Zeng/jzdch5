@@ -37,9 +37,9 @@
     <div id="goods-img"  class="detail-title">
       商品详情
     </div>
-    <div style="background: #FFFFFF;padding: 0.5rem;padding-bottom: 4rem;word-wrap: break-word;" v-html="goodsData.detail">
+    <div class="goods-detail" v-html="goodsData.detail">
     </div>
-    <div class="detail-shop-car footer-nav">
+    <div class="detail-shop-car footer-nav" v-if="shopCard">
       <div>
         <span class="text-muted" style="vertical-align: top;line-height: 2;">数量&nbsp;</span>
         <inline-x-number :min="1" width="2.6rem" fillable v-model="value"></inline-x-number>
@@ -85,6 +85,7 @@ export default {
       isActive: false,
       active: false,
       badge: false,
+      shopCard: false,
       price: null,
       iscur0: 0,
       iscur1: 0,
@@ -299,7 +300,7 @@ export default {
           // this.$router.push('/login')
           this.shopCard = false
           console.log('未登录')
-        } else if (response.data.status === 0) {
+        } else if (response.data.status === 0 && Number(sessionStorage.getItem('groupId')) === 4) {
           this.showCarNum = response.data.data.total
           this.shopCard = true
         } else {

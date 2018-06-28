@@ -49,7 +49,7 @@ export default {
     return {
       isA: true,
       showList: true,
-      sort: null,
+      mySort: 'asc',
       goodsLists: []
     }
   },
@@ -64,10 +64,10 @@ export default {
     submit () {
     },
     sortMethod () {
-      if (this.sort === 'asc') {
-        this.sort = 'desc'
+      if (this.mySort === 'asc') {
+        this.mySort = 'desc'
       } else {
-        this.sort = 'asc'
+        this.mySort = 'asc'
       }
     },
     lisLogFn (data) {

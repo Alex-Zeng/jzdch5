@@ -49,9 +49,9 @@
       </div>
       <div class="floor floor-recommend">
         <span>商品推荐</span>
-        <a class="text-muted" href="javascript:;">
+        <router-link to="/goods-class" class="text-muted">
           更多&nbsp;<i class="icon iconfont icon-youjiantou"></i>
-        </a>
+        </router-link >
       </div>
     </div>
     <!--展示上拉加载的数据列表-->

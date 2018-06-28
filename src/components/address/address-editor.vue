@@ -3,7 +3,7 @@
     <div class="header-nav">
       <i class="icon iconfont icon-back" style="padding-right: 1rem;" onclick="history.go(-1)"></i>
       <div>
-        新建收货地址
+        编辑收货地址
       </div>
       <div style="padding-right: 2rem">&emsp;</div>
     </div>
@@ -12,7 +12,7 @@
         <li>
           <i :class="{'is-danger': errors.has('userName')}"></i>
           <div class="cells">
-            <label for="">收货人</label>
+            <label for="">收货人&emsp;</label>
             <input name="userName" v-model="userName" v-validate="'required'" type="text" placeholder="请输入收货人姓名">
           </div>
         </li>
@@ -41,7 +41,7 @@
             <label for="" style="align-self: flex-start;">设置标签</label>
             <div class="address-tag-box">
               <div @click="getTag">
-                <span class="tag"> 公司</span><span class="tag"> 家</span>
+                <span class="tag" v-for="(item, index) in tag" :key="item.id"  @click="tabsort(index)" :class="{ active: iscur == index }"> {{item.tag}}</span>
               </div>
               <div>
                 <span class="tag" style="width: 2em;text-align: center;" v-if="!showInput" @click="editor">+</span>
@@ -77,8 +77,9 @@ export default {
       addressDetail: '',
       showInput: false,
       checkedTag: '公司',
-      tag: ['公司', '家'],
-      newTag: null
+      tag: [],
+      newTag: null,
+      iscur: 0
     }
   },
   methods: {
@@ -101,11 +102,23 @@ export default {
     editor () {
       this.showInput = !this.showInput
       if (this.newTag !== null) {
-        this.tag.push(this.newTag)
+        this.tag.push({'tag': this.newTag})
+        axios.post('api/user/addAddressTag', {
+          '_token': sessionStorage.getItem('loginToken'),
+          'tag': this.newTag
+        }).then((response) => {
+          if (response.data.status === 0) {
+          }
+        }).catch((response) => {
+          this.errorMsg()
+        })
       }
     },
     getTag (event) {
       this.checkedTag = event.target.innerText
+    },
+    tabsort (index) {
+      this.iscur = index
     },
     getAreaMethods () {
       if (localStorage.getItem('addressData') === null) {
@@ -121,6 +134,15 @@ export default {
       } else {
         this.addressData = JSON.parse(localStorage.getItem('addressData'))
       }
+    },
+    getOldTag () {
+      axios.get('api/user/getAddressTag&_token=' + sessionStorage.getItem('loginToken')).then((response) => {
+        if (response.data.status === 0) {
+          this.tag = response.data.data
+        }
+      }).catch((response) => {
+        this.errorMsg()
+      })
     },
     addressNew () {
       this.$validator.validateAll().then((result) => {
@@ -203,6 +225,7 @@ export default {
       this.$router.push('/login')
     }
     this.getAreaMethods()
+    this.getOldTag()
   },
   components: {
     Group, XAddress

@@ -83,7 +83,11 @@
   width: 100%;
 }
 .address-new .weui-cell{
-  padding-top: 0.25rem!important;
+  padding-top: 0.4rem!important;
+  padding-bottom: 0.5rem!important;
+}
+.address-new .weui-cells:after{
+  border-bottom: 2px solid #E1E1E1;
 }
 .address-tag-box{
   flex: 1;

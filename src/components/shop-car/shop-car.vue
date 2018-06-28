@@ -29,8 +29,8 @@
                 <div>
                   <i class="icon iconfont icon-danxuananniu" v-if="!checkedList[index][k]"></i>
                   <i class="icon iconfont icon-danxuananniu-xuanzhong1" v-if="checkedList[index][k]" style="color: #1EB9EE;"></i>
-                  <input type="checkbox" name="checkbox" class="input" :value="i.cartId" :data-i="checkedList[index][k]" v-model="checkedList[index][k]" @change="select(i.price*i.quantity, checkedList[index][k], index, k)">
-                  <input type="hidden" name="price" :value="i.price*i.quantity">
+                  <input type="checkbox" name="checkbox" class="input" :value="i.cartId" :data-i="checkedList[index][k]" v-model="checkedList[index][k]" @change="select((i.price*i.quantity).toFixed(2), checkedList[index][k], index, k)">
+                  <input type="hidden" name="price" :value="(i.price*i.quantity).toFixed(2)">
                 </div>
                 <div>
                   <img :src="i.icon" alt="">
@@ -133,13 +133,14 @@ export default {
       }
     },
     change (id, number) {
-      var price = 0
+      let price = 0
       document.getElementsByName('checkbox').forEach(function (item, index) {
         if (item.checked) {
-          price += parseInt(document.getElementsByName('price')[index].value)
+          let i = parseFloat(document.getElementsByName('price')[index].value).toFixed(2)
+          price += i
         }
       })
-      this.total = price
+      this.total = parseFloat(price).toFixed(2)
       axios.post('api/mall_cart/update', {
         '_token': sessionStorage.getItem('loginToken'),
         'id': id,
@@ -156,6 +157,7 @@ export default {
         this.price = -val
       }
       this.total += this.price
+      this.total = parseFloat(this.total).toFixed(2)
       let newAll = this.allList
       newAll[index] = !(this.checkedList[index].includes(false))
       this.allList = newAll
@@ -169,7 +171,7 @@ export default {
       list.fill(event.target.checked)
       this.$set(this.checkedList, index, list)
       // 计算价格，重新遍历
-      this.total = 0
+      this.total = null
       this.checkedList.forEach((v, index) => {
         v.forEach((t, k) => {
           if (t) {
@@ -178,6 +180,7 @@ export default {
           }
         })
       })
+      this.total = parseFloat(this.total).toFixed(2)
     },
     manageAll () {
       this.checkedList.forEach((v, k) => {
