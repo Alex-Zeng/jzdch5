@@ -99,7 +99,7 @@ export default {
   methods: {
     showDetai () {
       var self = this
-      axios.get('api/goods/get&id=' + this.$route.params.id + '&_token=' + sessionStorage.getItem('loginToken')).then((response) => {
+      axios.get('api/goods/get&id=' + this.$route.params.id).then((response) => {
         if (response.data.status === 0) {
           this.goodsData = response.data.data
           if (this.goodsData.isFavorite === 1) {
