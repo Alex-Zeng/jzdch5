@@ -17,7 +17,7 @@
         </form>
       </div>
     </div>
-    <div v-if="showHistory" class="search-history-box">
+    <div v-show="showHistory" class="search-history-box">
       <div class="search-history-header">
         <span>搜索记录</span>
         <i class="icon iconfont icon-shanchu1" @click="confirm"></i>
@@ -69,6 +69,7 @@ export default {
         this.select = false
         this.isActive = false
       } else {
+        this.showHistory = true
         this.select = true
         this.isActive = true
       }
@@ -128,7 +129,7 @@ export default {
       this.keywords = ''
     },
     getHistory () {
-      if (this.loginToken === '' || this.loginToken === null) {
+      if (this.loginToken === null) {
         var localKeywords = sessionStorage.getItem('keyword')
         if (localKeywords !== null) {
           this.showHistory = true
@@ -139,6 +140,7 @@ export default {
       } else {
         axios.get('api/record/getSearch&_token=' + this.loginToken).then((response) => {
           if (response.data.status === 0) {
+            this.showHistory = true
             this.historyLists = response.data.data
           } else {
             this.showHistory = false
@@ -157,6 +159,19 @@ export default {
         onConfirm () {
           sessionStorage.removeItem('keyword')
           self.historyLists = null
+          axios.get('api/record/removeSearch').then((response) => {
+            self.$vux.toast.show({
+              type: 'success',
+              text: '删除成功',
+              onShow () {
+                console.log('Plugin: I\'m showing')
+                self.showHistory = false
+              },
+              onHide () {
+                console.log('Plugin: I\'m hiding')
+              }
+            })
+          }).catch((response) => {})
         }
       })
     },
