@@ -106,6 +106,7 @@ export default {
             // 以下参数可删除,不配置
             isBounce: false, // 此处禁止ios回弹,解析(务必认真阅读,特别是最后一点): http://www.mescroll.com/qa.html#q10
             offset: 500,
+            clearEmptyId: 'dataList',
             empty: { // 配置列表无任何数据的提示
               warpId: 'dataList',
               // icon: '../res/img/mescroll-empty.png'
@@ -162,6 +163,7 @@ export default {
     searchHistory (index) {
       this.keywords = this.historyLists[index].keywords
       var self = this
+      self.mescroll.removeEmpty()
       self.mescroll = new MeScroll('mescroll', {
         up: {
           /* 上拉加载的配置参数 */
@@ -190,6 +192,7 @@ export default {
       // 联网加载数据
       var self = this
       this.getListDataFromNet(page.num, page.size, function (curPageData, totalSize) {
+        self.mescroll.destroy()
         // curPageData = [] // 打开本行注释,可演示列表无任何数据empty的配置
         if (page.num === 1) self.goodsLists = []
         // 更新列表数据
