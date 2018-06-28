@@ -120,7 +120,7 @@ export default {
     },
     loginMethod () {
       let loginToken = sessionStorage.getItem('loginToken')
-      if (loginToken === null || loginToken === 'undefined') {
+      if (loginToken === null) {
         this.$router.push('/login')
       } else {
         this.getFavoriteNumber()
