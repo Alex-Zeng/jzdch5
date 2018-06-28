@@ -6,7 +6,7 @@
       +
     </div>
     <div v-show="value" @click="open">
-      <img width="100%" :src="path||value" alt="">
+      <img width="100%" :src="path||defaultPath" alt="">
     </div>
     <XProgress :percent="count" :show-cancel="false" v-show="isProgress"></XProgress>
   </div>
@@ -18,8 +18,7 @@ import { XProgress } from 'vux'
 export default {
   name: 'uploader',
   props: {
-    successCb: Function,
-    prgCb: Function,
+    defaultPath: String,
     title: String,
     id: String,
     value: String
@@ -32,12 +31,6 @@ export default {
       count: 0,
       isProgress: false,
       path: ''
-    }
-  },
-  created () {
-    if (this.imgurl) {
-      this.url = this.imgurl
-      this.showImg = true
     }
   },
   updated () {
