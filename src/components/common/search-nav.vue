@@ -271,7 +271,7 @@ export default {
   },
   mounted () {
     this.loginToken = sessionStorage.getItem('loginToken')
-    this.getHistory()
+    // this.getHistory()
     var keywords = this.$route.query.name
     console.log(keywords)
     if (keywords !== undefined) {
