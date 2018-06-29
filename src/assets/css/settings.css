@@ -1,0 +1,56 @@
+.select-confirm{
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.3);
+  font-size: 0.9rem;
+  font-family: 'PingFang-SC-Bold';
+}
+.select-confirm .select-confirm-content{
+  width: 15.25rem;
+  height: 9rem;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  background: #FFFFFF;
+  border-radius: 0.25rem;
+  color: #999999;
+}
+.select-confirm .select-confirm-title, .select-confirm .select-confirm-checkbox{
+  padding: 0.5rem 1rem;
+}
+.select-confirm .select-confirm-checkbox > div{
+  padding: 0.3rem 0;
+}
+.select-confirm .select-confirm-button{
+  display: flex;
+  align-items: center;
+}
+.select-confirm .select-confirm-button button{
+  flex: 1;
+  height: 2.2rem;
+  background: #E1E1E1;
+  color: #FFFFFF;
+  font-size: 0.9rem;
+}
+.select-confirm .select-confirm-button button:first-child{
+  background: #5FCAED;
+  border-radius: 0 0 0 0.25rem;
+}
+.select-confirm .select-confirm-button button:last-child{
+  border-radius: 0 0 0.25rem 0;
+}
+.login-out{
+  width: 100%;
+  padding: 0.25rem;
+  margin-bottom: 0.25rem;
+  box-sizing: border-box;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}

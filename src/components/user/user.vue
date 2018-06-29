@@ -3,7 +3,7 @@
     <div class="user-header">
       <img :src="userMsg.photo" alt="头像">
       <div>{{userMsg.name}}</div>
-      <i class="icon iconfont icon-shezhi"></i>
+      <i class="icon iconfont icon-shezhi" @click="$router.push('/settings')"></i>
     </div>
     <template v-if="groupId === 5">
       <div class="user-msg">
@@ -53,7 +53,7 @@
           <cell is-link link="/shop-car">
             <i slot="icon" class="icon iconfont icon-gouwuche3 text-blue"></i>
             <span slot="title">
-              <span style="vertical-align:middle;">购物清单</span>(12)
+              <span style="vertical-align:middle;">购物清单</span>({{number}})
             </span>
           </cell>
         </group>
@@ -108,6 +108,7 @@ export default {
     return {
       groupId: null,
       favoriteNumber: '',
+      number: '',
       userMsg: {
         'name': '广东律晶电器有限责任公司',
         'photo': require('../../assets/images/bingxiang-icon.png')
@@ -127,10 +128,18 @@ export default {
       }
     },
     getFavoriteNumber () {
-      axios.get('api/user/getFavoriteNumber&_token=' + sessionStorage.getItem('loginToken')).then((response) => {
+      axios.get('api/user/getFavoriteNumber').then((response) => {
         if (response.data.status === 0) {
           console.log(response)
           this.favoriteNumber = response.data.data.number
+        }
+      }).catch()
+    },
+    getNumber () {
+      axios.get('api/mall_cart/getNumber').then((response) => {
+        if (response.data.status === 0) {
+          console.log(response)
+          this.number = response.data.data.total
         }
       }).catch()
     }
@@ -139,6 +148,7 @@ export default {
     this.groupId = Number(sessionStorage.getItem('groupId'))
     this.loginMethod()
     this.getFavoriteNumber()
+    this.getNumber()
   },
   watch: {
     // 如果路由有变化，会再次执行该方法

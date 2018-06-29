@@ -1,0 +1,59 @@
+.release-time{
+  font-size: 0.6rem;
+  padding: 0.5rem;
+}
+.notice-list{
+}
+.notice-list .notice-content{
+  background: #FFFFFF;
+  padding: 0.5rem 0;
+  margin: 0 0.5rem;
+  border: 0.05rem solid #CCCCCC;
+  border-radius: 0.25rem;
+  color: #999999;
+  font-size: 0.75rem;
+}
+.notice-list .notice-content h3{
+  padding: 0 0.5rem;
+  padding-bottom: 0.25rem;
+  font-size: 0.9rem;
+  color: #222222;
+}
+.notice-list .notice-content > div{
+  padding: 0 0.5rem;
+}
+.notice-list .notice-content > div:last-child{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.5rem;
+  margin-top: 0.5rem;
+  border-top: 0.05rem solid #CCCCCC;
+}
+.notice-detail{
+  padding: 0.5rem;
+  padding-top: 3rem;
+  font-size: 0.75rem;
+}
+.notice-detail h3{
+  font-size: 0.9rem;
+  color: #222222;
+  text-align: center;
+  padding-bottom: 1rem;
+}
+.notice-detail > div{
+  color: #222222;
+  text-indent: 2rem;
+  padding-bottom: 2.1rem;
+}
+.notice-detail p.footer{
+  text-align: right;
+  font-weight: bold;
+}
+.message-lists .mescroll-upwarp.mescroll-hardware{
+  display: none!important;;
+  visibility: hidden!important;
+}
+.message-lists i{
+  font-size: 1.5rem!important;
+}

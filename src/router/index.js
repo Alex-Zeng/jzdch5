@@ -3,8 +3,13 @@ import Router from 'vue-router'
 import Index from '@/components/home/index'
 import GoodsClass from '@/components/goods-class/goods-class'
 import User from '@/components/user/user'
+import Settings from '@/components/settings/index'
+import selectEnterprise from '@/components/settings/select-enterprise'
+import Safety from '@/components/settings/safety'
+import changePhone from '@/components/settings/phone'
 import GoodsCollect from '@/components/user/goods-collect'
 import Message from '@/components/user/message'
+import noticeDetail from '@/components/user/notice-detail'
 import ShopCartemplate from '@/components/shop-car/shop-car-template'
 import ShopCar from '@/components/shop-car/shop-car'
 import Indent from '@/components/shop-car/indent'
@@ -48,6 +53,38 @@ export default new Router({
       component: User
     },
     {
+      path: '/settings',
+      name: 'index',
+      meta: {
+        title: '设置中心'
+      },
+      component: Settings
+    },
+    {
+      path: '/select-enterprise',
+      name: 'select-enterprise',
+      meta: {
+        title: '设置中心'
+      },
+      component: selectEnterprise
+    },
+    {
+      path: '/safety',
+      name: 'safety',
+      meta: {
+        title: '安全设置'
+      },
+      component: Safety
+    },
+    {
+      path: '/safety/phone',
+      name: 'phone',
+      meta: {
+        title: '修改绑定手机'
+      },
+      component: changePhone
+    },
+    {
       path: '/goods-collect',
       name: 'goods-collect',
       meta: {
@@ -62,6 +99,14 @@ export default new Router({
         title: '消息中心'
       },
       component: Message
+    },
+    {
+      path: '/message/notice-detail/:id',
+      name: 'notice-detail',
+      meta: {
+        title: '公告详情'
+      },
+      component: noticeDetail
     },
     {
       path: '/shop-car',

@@ -11,13 +11,13 @@
      <div  class="mescroll" id="mescroll" style="padding-top: 5.5rem;border-top: 0.05rem solid #E0E0E0;">
        <div id="favoriteList" v-cloak>
          <!--展示上拉加载的数据列表-->
-         <div v-for="(item, index) in favoriteList" :key="index" @click="$router.push('/detail/'+item.id)">
+         <div v-for="(item, index) in favoriteList" :key="index">
            <swipeout>
              <swipeout-item transition-mode="follow">
                <div slot="right-menu">
-                 <swipeout-button @click.native="onButtonClick()" type="warn">删除</swipeout-button>
+                 <swipeout-button @click.native="onButtonClick(item.id, index)" type="warn">删除</swipeout-button>
                </div>
-               <div slot="content" class="shop-car-content">
+               <div slot="content" class="shop-car-content"  @click="$router.push('/detail/'+item.id)">
                  <div>
                    <img :src="item.icon" alt="图片">
                    <div>
@@ -49,8 +49,15 @@ export default {
     }
   },
   methods: {
-    onButtonClick () {
+    onButtonClick (id, index) {
+      let self = this
       console.log('删除')
+      axios.post('api/goods/removeFavorite', {
+        'goodsId': id
+      }).then((response) => {
+        console.log(index)
+        self.favoriteList.splice(index, 1)
+      }).catch((response) => {})
     },
     // 上拉回调 page = {num:1, size:10}; num:当前页 ,默认从1开始; size:每页数据条数,默认10
     upCallback: function (page) {
