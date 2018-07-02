@@ -67,13 +67,15 @@ export default {
             'password': this.password
           }).then((response) => {
             if (response.data.status === 0) {
+              sessionStorage.removeItem('loginToken')
               this.$vux.toast.show({
                 type: 'success',
                 text: '登陆成功',
                 onShow () {
                   console.log('Plugin: I\'m showing')
-                  document.cookie = '_token=' + response.data.data.token
                   sessionStorage.setItem('loginToken', response.data.data.token)
+                  document.cookie = '_token=' + response.data.data.token
+                  console.log(sessionStorage.getItem('loginToken'))
                 },
                 onHide () {
                   console.log('Plugin: I\'m hiding')

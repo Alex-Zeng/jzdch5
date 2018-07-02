@@ -33,7 +33,7 @@
               </template>
             </div>
           </swiper-item>
-          <swiper-item  v-if="false" class="black">
+          <swiper-item  v-if="menunListsSecond.length > 0" class="black">
             <div class="menu-nav">
               <template v-for="(item, index) in menunListsSecond">
                 <a :href="item.url" :key="index">

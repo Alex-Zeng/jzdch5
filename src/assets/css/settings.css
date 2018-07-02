@@ -54,3 +54,42 @@
   bottom: 0;
   left: 0;
 }
+.settings-form{
+  padding: 0.5rem;
+  padding-top: 1.5rem;
+}
+.settings-form ul{
+  padding-bottom: 1.5rem;
+}
+.settings-form li > div{
+  display: flex;
+}
+.settings-form li input{
+  line-height: 2.4rem;
+  background: #FFFFFF;
+  border: 0.05rem solid #5FCAED;
+  border-right: none;
+  border-radius: 0.25rem;
+  box-sizing: border-box;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+.settings-form li input.has-button{
+  flex: 1;
+  border-radius: 0.25rem 0 0 0.25rem;
+}
+.settings-form li button{
+  width: 7.5rem;
+  text-align: center;
+  line-height: 2.5rem;
+  background: #5FCAED;
+  font-size: 0.9rem;
+  color: #FFFFFF;
+  border-radius: 0 0.25rem 0.25rem 0;
+}
+.settings-form li button.disabled{
+  background: #E0E0E0;
+}
+.settings-form .btn{
+  line-height: 2.5rem;
+}

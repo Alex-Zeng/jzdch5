@@ -38,8 +38,9 @@ export default {
     let loginToken = sessionStorage.getItem('loginToken')
     if (loginToken !== null) {
       axios.get('api/user/getGroup&_token=' + sessionStorage.getItem('loginToken')).then((response) => {
+        sessionStorage.removeItem('groupId')
+        sessionStorage.setItem('groupId', response.data.data.groupId)
         if (response.data.status === 0 && response.data.data.groupId === 4) {
-          sessionStorage.setItem('groupId', response.data.data.groupId)
           axios.get('api/mall_cart/getNumber&_token=' + loginToken).then((response) => {
             console.log(response.data.status)
             if (response.data.status === -2) {

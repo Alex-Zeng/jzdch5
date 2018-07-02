@@ -63,6 +63,26 @@
   margin-bottom: 0.5rem;
   border-bottom: 0.05rem solid #E1E1E1;
 }
+.visitor-box{
+  text-align: center;
+}
+.visitor-box img{
+  height: 5.5rem;
+  display: block;
+  margin: 0 auto;
+  padding-top: 3.6rem;
+}
+.visitor-box p{
+  font-size: 0.6rem;
+  padding: 1rem 0;
+}
+.visitor-box .btn{
+  background: #FFFFFF;
+  width: auto;
+  color: #5FCAED;
+  padding: 0.2rem  2rem;
+  border: 0.05rem solid #5FCAED;
+}
 .footer-ad{
 	height: 6.25rem;
   background: #E5F9FF;

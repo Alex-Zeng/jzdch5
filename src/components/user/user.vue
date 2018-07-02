@@ -86,10 +86,14 @@
       </div>
     </template>
     <template v-if="groupId === 6">
-      去认证
+      <div class="visitor-box" @click="$router.push('/enterprise')">
+        <img src="@/assets/images/qurenzheng.png" alt="去认证">
+        <p class="text-muted">还没有进行企业验证，快去进行企业验证吧~</p>
+        <button class="btn">去认证</button>
+      </div>
     </template>
     <div class="all-indent" v-if="groupId !== 6">查看全部订单<i class="icon iconfont icon-youjiantou"></i></div>
-    <div class="footer-ad">
+    <div class="footer-ad" v-if="groupId !== 6">
       <div>集众金融 急你所需</div>
       <div><a href="javascript:;">申请融资</a></div>
     </div>
@@ -120,6 +124,7 @@ export default {
       console.log('路由变化')
     },
     loginMethod () {
+      console.log(sessionStorage.getItem('loginToken'))
       let loginToken = sessionStorage.getItem('loginToken')
       if (loginToken === null) {
         this.$router.push('/login')
@@ -146,6 +151,7 @@ export default {
   },
   created () {
     this.groupId = Number(sessionStorage.getItem('groupId'))
+    console.log('groupId:' + this.groupId)
     this.loginMethod()
     this.getFavoriteNumber()
     this.getNumber()
