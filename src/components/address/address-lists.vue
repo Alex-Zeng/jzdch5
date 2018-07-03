@@ -18,7 +18,7 @@
             <i class="icon iconfont icon-danxuananniu" v-if="!item.is_default"></i>
             <i class="icon iconfont icon-danxuananniu-xuanzhong1" v-if="item.is_default" style="color: #1EB9EE;"></i>
             <label class="text-muted">
-              <input type="radio" name="is_default" :value="2" v-model="item.is_default">设为默认
+              <input type="radio" name="is_default" :value="item.id" v-model="item.is_default" @click="setDefault(item.id)">设为默认
             </label>
           </div>
           <div>
@@ -53,7 +53,7 @@ export default {
   },
   methods: {
     getLists () {
-      axios.get('api/user/getAddressList&_token=' + sessionStorage.getItem('loginToken')).then((response) => {
+      axios.get('api/user/getAddressList').then((response) => {
         console.log(response)
         this.lists = response.data.data.list
       }).catch((response) => {
@@ -89,6 +89,22 @@ export default {
       sessionStorage.setItem('selectAddressIndex', index)
       this.$router.push('/shop-car/indent')
       return false
+    },
+    setDefault (id) {
+      axios.post('api/user/setDefaultAddress', {
+        'id': id
+      }).then((response) => {
+        if (response.data.status === 0) {
+          this.getLists()
+        } else {
+          this.$vux.toast.show({
+            type: 'warn',
+            text: response.data.msg
+          })
+        }
+      }).catch((response) => {
+        this.errorMsg()
+      })
     },
     errorMsg () {
       this.$vux.toast.show({

@@ -61,22 +61,26 @@
 .settings-form ul{
   padding-bottom: 1.5rem;
 }
+.settings-form li{
+  padding-bottom: 0.5rem;
+}
 .settings-form li > div{
   display: flex;
+  align-items: center;
 }
 .settings-form li input{
+  flex: 1;
   line-height: 2.4rem;
   background: #FFFFFF;
   border: 0.05rem solid #5FCAED;
-  border-right: none;
   border-radius: 0.25rem;
   box-sizing: border-box;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
 }
 .settings-form li input.has-button{
-  flex: 1;
   border-radius: 0.25rem 0 0 0.25rem;
+  border-right: none;
 }
 .settings-form li button{
   width: 7.5rem;
@@ -89,6 +93,14 @@
 }
 .settings-form li button.disabled{
   background: #E0E0E0;
+}
+.settings-form li img{
+  width: 7.5rem;
+  height: 2.5rem;
+  background: #E0E0E0;
+  border: 0.05rem solid #5FCAED;
+  border-radius: 0 0.25rem 0.25rem 0;
+  box-sizing: border-box;
 }
 .settings-form .btn{
   line-height: 2.5rem;
