@@ -96,42 +96,48 @@ export default {
     },
     getListDataFromNet (pageNum, pageSize, successCallback, errorCallback) {
       let self = this
-      // 延时一秒,模拟联网
-      setTimeout(function () {
-        axios.post(self.url[0], {
-          'pageNumber': pageNum,
-          'pageSize': pageSize
-        }).then((response) => {
-          if (response.data.status === 0) {
-            // 响应成功回调
-            var data = response.data.data.list
-            var total = response.data.data.total
-            var listData = []// 模拟分页数据
-            for (var i = 0; i < data.length; i++) {
-              if (data[i] !== undefined) {
-                listData.push(data[i])
-              }
+      axios.post(self.url[0], {
+        'pageNumber': pageNum,
+        'pageSize': pageSize
+      }).then((response) => {
+        if (response.data.status === 0) {
+          // 响应成功回调
+          var data = response.data.data.list
+          var total = response.data.data.total
+          var listData = []// 模拟分页数据
+          for (var i = 0; i < data.length; i++) {
+            if (data[i] !== undefined) {
+              listData.push(data[i])
             }
-            successCallback && successCallback(listData, total)// 成功回调
-          } else {
-            this.$vux.toast.show({
-              type: 'warn',
-              text: response.data.msg,
-              onShow () {
-                console.log('Plugin: I\'m showing')
-              },
-              onHide () {
-                console.log('Plugin: I\'m hiding')
-              }
-            })
           }
-        }).catch((response) => {
-          // 响应错误回调
-          console.log('error')
-          self.errorMsg()
-          errorCallback && errorCallback()// 失败回调
-        })
-      }, 1000)
+          successCallback && successCallback(listData, total)// 成功回调
+        } else if (response.data.status === -2) {
+          this.$vux.confirm.show({
+            title: '提示',
+            content: '您尚未登录，是否去登录？',
+            onCancel () {},
+            onConfirm () {
+              self.$router.push('/loginByCode')
+            }
+          })
+        } else {
+          this.$vux.toast.show({
+            type: 'warn',
+            text: response.data.msg,
+            onShow () {
+              console.log('Plugin: I\'m showing')
+            },
+            onHide () {
+              console.log('Plugin: I\'m hiding')
+            }
+          })
+        }
+      }).catch((response) => {
+        // 响应错误回调
+        console.log('error')
+        self.errorMsg()
+        errorCallback && errorCallback()// 失败回调
+      })
     },
     // 上拉回调 page = {num:1, size:10}; num:当前页 ,默认从1开始; size:每页数据条数,默认10
     upCallback1: function (page) {
@@ -239,6 +245,10 @@ export default {
         clearEmptyId: null // 相当于同时设置了clearId和empty.warpId; 简化写法;默认null
       }
     })
+  },
+  created () {
+    this.selectedDeafult = sessionStorage.getItem('selectedDeafult')
+    sessionStorage.removeItem('selectedDeafult')
   },
   components: { Tab, TabItem, Sticky, Swiper, SwiperItem, Swipeout, SwipeoutItem, SwipeoutButton }
 }

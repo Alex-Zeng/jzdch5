@@ -11,7 +11,7 @@ export default {
   created () {
     window.scrollTo(0, 0)
     if (sessionStorage.getItem('loginToken') === null) {
-      this.$router.push('/login')
+      this.$router.push('/loginByCode')
     }
   }
 }

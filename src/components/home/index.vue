@@ -24,7 +24,7 @@
                     {{item.name}}
                   </div>
                 </a>
-                <router-link v-else :to="{path: '/search', query: { name: item.name, id: item.id }}" :key="index">
+                <router-link v-else :to="{path: '/goods-class', query: { name: item.name, id: item.id }}" :key="index">
                   <img :src="item.img" alt=""/>
                   <div class="text-truncate">
                     {{item.name}}
@@ -36,12 +36,24 @@
           <swiper-item  v-if="menunListsSecond.length > 0" class="black">
             <div class="menu-nav">
               <template v-for="(item, index) in menunListsSecond">
-                <a :href="item.url" :key="index">
+                <a href="javascript:;" v-if="item.id === 19" @click="financialShow" :key="index">
                   <img :src="item.img" alt=""/>
                   <div class="text-truncate">
                     {{item.name}}
                   </div>
                 </a>
+                <a href="javascript:;" v-else-if="item.id === 18"  :key="index">
+                  <img :src="item.img" alt=""/>
+                  <div class="text-truncate">
+                    {{item.name}}
+                  </div>
+                </a>
+                <router-link v-else :to="{path: '/goods-class', query: { name: item.name, id: item.id }}" :key="index">
+                  <img :src="item.img" alt=""/>
+                  <div class="text-truncate">
+                    {{item.name}}
+                  </div>
+                </router-link>
               </template>
             </div>
           </swiper-item>
@@ -63,7 +75,7 @@
             {{item.title}}
           </div>
           <div class="goods-price text-red">
-            ￥ {{item.min_price}}{{item.max_price===item.min_price?'':' ~ ￥'+item.max_price}}
+            ￥ {{item.min_price === '0.00'? item.w_price:item.min_price}}{{item.max_price===item.min_price?'':' ~ ￥'+item.max_price}}
           </div>
         </router-link>
       </li>

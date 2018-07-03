@@ -135,7 +135,7 @@ export default {
       this.editorSHow = !this.editorSHow
     },
     getLists (index) {
-      axios.get('api/user/getAddressList&_token=' + sessionStorage.getItem('loginToken')).then((response) => {
+      axios.get('api/user/getAddressList').then((response) => {
         if (response.data.status === 0) {
           if (response.data.data.list.length > 0) {
             this.address = response.data.data.list[index]

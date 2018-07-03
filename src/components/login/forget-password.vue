@@ -63,8 +63,8 @@
     <template v-if="model4Show">
       <div class="login-top"></div>
       <form class="form" action="" method="post">
-          <input type="password" class="border-input" name="password" minlength="4" maxlength="20" v-validate="'required|verificationPassword'" v-model="password" placeholder="请设置4-20位密码">
-          <input type="password" class="border-input" name="confirmPassword" minlength="4" maxlength="20" v-validate="'required|verificationPassword|confirmed:password'" v-model="confirmPassword" placeholder="请再次输入密码">
+          <input type="password" class="border-input" name="password" minlength="6" maxlength="20" v-validate="'required|verificationPassword'" v-model="password" placeholder="请设置6-20位密码">
+          <input type="password" class="border-input" name="confirmPassword" minlength="6" maxlength="20" v-validate="'required|verificationPassword|confirmed:password'" v-model="confirmPassword" placeholder="请再次输入密码">
         <button type="button" class="btn btn-primary" @click="submit">提交</button>
       </form>
     </template>

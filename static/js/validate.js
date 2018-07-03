@@ -27,9 +27,9 @@ Validator.extend('verificationCode', {
   }
 })
 Validator.extend('verificationPassword', {
-  getMessage: (field, [args]) => `请输入4-20位的数字和字母组合`,
+  getMessage: (field, [args]) => `请输入6-20位的数字和字母组合`,
   validate: (value, [args]) =>{
-    const reg = /(?=.*[a-z])(?=.*[0-9])[A-Za-z0-9]{4,20}/
+    const reg = /(?=.*[a-z])(?=.*[0-9])[A-Za-z0-9]{6,20}/
     return reg.test(value)
   }
 })

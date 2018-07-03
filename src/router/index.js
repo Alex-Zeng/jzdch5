@@ -8,6 +8,7 @@ import selectEnterprise from '@/components/settings/select-enterprise'
 import Safety from '@/components/settings/safety'
 import changePhone from '@/components/settings/phone'
 import changeEmail from '@/components/settings/email'
+import changePassword from '@/components/settings/password'
 import GoodsCollect from '@/components/user/goods-collect'
 import Message from '@/components/user/message'
 import noticeDetail from '@/components/user/notice-detail'
@@ -92,6 +93,14 @@ export default new Router({
         title: '设置邮箱'
       },
       component: changeEmail
+    },
+    {
+      path: '/safety/password',
+      name: 'password',
+      meta: {
+        title: '设置密码'
+      },
+      component: changePassword
     },
     {
       path: '/goods-collect',

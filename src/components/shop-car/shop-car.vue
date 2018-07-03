@@ -114,7 +114,7 @@ export default {
     getLists () {
       let loginToken = sessionStorage.getItem('loginToken')
       if (loginToken !== null) {
-        axios.get('api/mall_cart/index&_token=' + loginToken).then((response) => {
+        axios.get('api/mall_cart/index').then((response) => {
           if (response.data.status === 0) {
             this.proData = response.data.data
             // 动态生成选中数组
@@ -276,7 +276,7 @@ export default {
           return false
         }
         if (ids.length > 0) {
-          axios.get('api/mall_cart/index&_token=' + loginToken + '&ids=' + ids).then((response) => {
+          axios.get('api/mall_cart/index&ids=' + ids).then((response) => {
             sessionStorage.removeItem('indentLists')
             sessionStorage.setItem('indentLists', JSON.stringify(response.data.data))
             sessionStorage.removeItem('total')

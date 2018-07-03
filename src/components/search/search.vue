@@ -15,7 +15,7 @@
               <div>
                 <h3>{{item.title}}</h3>
                 <div class="text-red">
-                  ￥ {{item.min_price}}{{item.max_price===item.min_price?'':' ~ ￥'+item.max_price}}
+                  ￥ {{item.min_price === '0.00'? item.w_price:item.min_price}}{{item.max_price===item.min_price?'':' ~ ￥'+item.max_price}}
                 </div>
               </div>
             </router-link>
@@ -29,7 +29,7 @@
                 {{item.title}}
               </div>
               <div class="goods-price text-red">
-                ￥ {{item.min_price}}{{item.max_price=item.min_price?'':' ~ ￥'+item.max_price}}
+                ￥ {{item.min_price === '0.00'? item.w_price:item.min_price}}{{item.max_price=item.min_price?'':' ~ ￥'+item.max_price}}
               </div>
             </router-link>
           </li>

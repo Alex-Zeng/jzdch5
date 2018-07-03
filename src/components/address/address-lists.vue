@@ -121,7 +121,7 @@ export default {
   },
   created () {
     if (sessionStorage.getItem('loginToken') === null) {
-      this.$router.push('/login')
+      this.$router.push('/loginByCode')
     }
     this.getLists()
   }

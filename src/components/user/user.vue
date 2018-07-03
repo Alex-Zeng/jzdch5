@@ -8,7 +8,7 @@
     <template v-if="groupId === 5">
       <div class="user-msg">
         <group>
-          <cell is-link>
+          <cell is-link link="/goods-collect">
             <i class="icon iconfont icon-xingxing text-blue"></i>
             <span slot="title"><span style="vertical-align:middle;">收藏夹</span>({{favoriteNumber}})</span>
           </cell>
@@ -127,7 +127,7 @@ export default {
       console.log(sessionStorage.getItem('loginToken'))
       let loginToken = sessionStorage.getItem('loginToken')
       if (loginToken === null) {
-        this.$router.push('/login')
+        this.$router.push('/loginByCode')
       } else {
         this.getFavoriteNumber()
       }

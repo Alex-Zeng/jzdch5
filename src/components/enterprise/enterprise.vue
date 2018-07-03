@@ -153,8 +153,7 @@ export default {
     },
     async check () {
       // 检查审核状态
-      const token = sessionStorage.getItem('loginToken')
-      const {data: {data}} = await axios.get('api/user/getCertification&_token=' + token)
+      const {data: {data}} = await axios.get('api/user/getCertification')
       this.data = {...data, property: [data.property]}
     },
     async submit () {

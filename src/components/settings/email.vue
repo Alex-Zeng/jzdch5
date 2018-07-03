@@ -79,6 +79,7 @@ export default {
       disabled2: false,
       code: '',
       oldCode: '',
+      newEmail: '',
       email: '',
       newCode: '',
       id: '',
@@ -104,8 +105,8 @@ export default {
       })
     },
     getCode (val) {
-      this.$validator.attach('email', 'required')
-      this.$validator.validate('email', this.email).then((result) => {
+      this.$validator.attach('邮箱', 'required|email')
+      this.$validator.validate('邮箱', this.email).then((result) => {
         if (result) {
           axios.post('api/email/sendNew', {
             'email': this.email,
@@ -149,8 +150,6 @@ export default {
       })
     },
     next () {
-      this.showModel0 = false
-      this.showModel1 = true
       this.$validator.validateAll().then((result) => {
         if (result) {
           axios.post('api/email/valid', {
@@ -204,29 +203,35 @@ export default {
       })
     },
     submit () {
-      let self = this
-      axios.post('api/user/updateEmail', {
-        'email': this.email,
-        'code': this.oldCode,
-        'newCode': this.newCode
-      }).then((response) => {
-        if (response.data.status === 0) {
-          this.$vux.toast.show({
-            type: 'success',
-            text: response.data.msg
-          })
-        } else {
-          this.$vux.toast.show({
-            type: 'warn',
-            text: response.data.msg,
-            onHide () {
-              console.log('Plugin: I\'m hiding')
-              self.$router.push('/safety')
+      this.$validator.validateAll().then((result) => {
+        if (result) {
+          let self = this
+          axios.post('api/user/updateEmail', {
+            'email': this.email,
+            'code': this.oldCode,
+            'newCode': this.newCode
+          }).then((response) => {
+            if (response.data.status === 0) {
+              this.$vux.toast.show({
+                type: 'success',
+                text: response.data.msg
+              })
+            } else {
+              this.$vux.toast.show({
+                type: 'warn',
+                text: response.data.msg,
+                onHide () {
+                  console.log('Plugin: I\'m hiding')
+                  self.$router.push('/safety')
+                }
+              })
             }
+          }).catch((response) => {
+            this.errorMsg()
           })
+          return
         }
-      }).catch((response) => {
-        this.errorMsg()
+        console.log('Correct them errors!')
       })
     },
     errorMsg () {

@@ -7,8 +7,8 @@
         <a href="javascript:;" @click.prevent="custormAnchor('goods-img')">详情</a>
       </div>
       <div>
-        <i class="icon iconfont icon-fenxiang" style="padding-right: 0;"></i>
-        <i class="icon iconfont icon-xiaoxi"></i>
+        <i class="icon iconfont icon-fenxiang" style="padding-right: 0;" @click="shareMethods"></i>
+        <i class="icon iconfont icon-xiaoxi" @click="$router.push('/message')"></i>
       </div>
     </div>
     <div id="goods-detail" class="header-detail">
@@ -59,13 +59,13 @@
         <ul v-if="goodsData.standard[i-1].title === '颜色'">
           <li v-for="(item, index) in goodsData.standard[i-1].list" :key="index">
             <a href="javascript:;" @click="tabsort0(index)" :class="{ active: iscur0 === index}">{{item.color_name}}</a>
-            <input type="hidden" class="color" v-model="item.color_id">
+            <input type="hidden" class="color" v-model="item.color_id">000
           </li>
         </ul>
         <ul v-if="goodsData.standard[i-1].title !== '颜色'">
           <li v-for="(item, index) in goodsData.standard[i-1].list" :key="index">
             <a href="javascript:;" @click="tabsort1(index)" :class="{ active: iscur1 === index}">{{item.option_name}}</a>
-            <input type="hidden" class="option" v-model="item.option_id">
+            <input type="hidden" class="option" v-model="item.option_id">111
           </li>
         </ul>
       </div>
@@ -87,8 +87,8 @@ export default {
       badge: false,
       shopCard: false,
       price: null,
-      iscur0: 0,
-      iscur1: 0,
+      iscur0: null,
+      iscur1: null,
       value: 1,
       optionId: 0,
       colorId: 0,
@@ -160,11 +160,10 @@ export default {
         'id': this.$route.params.id,
         'number': this.value,
         'colorId': this.colorId,
-        'optionId': this.optionId,
-        '_token': sessionStorage.getItem('loginToken')
+        'optionId': this.optionId
       }).then((response) => {
         if (response.data.status === 0) {
-          axios.get('api/mall_cart/getNumber&_token=' + sessionStorage.getItem('loginToken')).then((response) => {
+          axios.get('api/mall_cart/getNumber').then((response) => {
             if (response.data.status === 0) {
               this.showCarNum = response.data.data.total
             }
@@ -187,7 +186,7 @@ export default {
             onCancel () {
             },
             onConfirm () {
-              self.$router.push('/login')
+              self.$router.push('/loginByCode')
             }
           })
         }
@@ -208,7 +207,7 @@ export default {
                 console.log('Plugin: I\'m showing')
               },
               onHide () {
-                self.$router.push('/login')
+                self.$router.push('/loginByCode')
                 console.log('Plugin: I\'m hiding')
               }
             })
@@ -278,6 +277,14 @@ export default {
         })
       }
     },
+    shareMethods () {
+      // 点击分享按钮
+      let title = this.goodsData.title
+      let detail = this.goodsData.detail
+      let img = this.goodsData.imgList[0]
+      let url = window.location.href
+      share.detail(title, detail, img, url)
+    },
     errorMsg () {
       this.$vux.toast.show({
         type: 'warn',
@@ -295,10 +302,10 @@ export default {
     window.scrollTo(0, 0)
     let loginToken = sessionStorage.getItem('loginToken')
     if (loginToken !== null) {
-      axios.get('api/mall_cart/getNumber&_token=' + sessionStorage.getItem('loginToken')).then((response) => {
+      axios.get('api/mall_cart/getNumber').then((response) => {
         console.log(response.data.status)
         if (response.data.status === -2) {
-          // this.$router.push('/login')
+          // this.$router.push('/loginByCode')
           this.shopCard = false
           console.log('未登录')
         } else if (response.data.status === 0 && Number(sessionStorage.getItem('groupId')) === 4) {

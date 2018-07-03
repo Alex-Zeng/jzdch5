@@ -9,12 +9,12 @@
     </div>
     <group>
       <cell is-link>
-          <span slot="title"  @click="selectMethods">
+          <span slot="title"  @click="selectMethods(0)">
                 <span style="vertical-align:middle;">我是企业法人&emsp;&emsp;&emsp;&emsp;&emsp;</span>
           </span>
       </cell>
       <cell is-link>
-          <span slot="title"  @click="selectMethods">
+          <span slot="title"  @click="selectMethods(1)">
               <span style="vertical-align:middle;">我是委托代理人&emsp;&emsp;&emsp;&emsp;&emsp;</span>
           </span>
       </cell>
@@ -26,9 +26,9 @@
           <div class="select-confirm-checkbox">
             <div>
               <label>
-                <i class="icon iconfont icon-danxuananniu" v-if="selectItem==0?false:true"></i>
-                <i class="icon iconfont icon-danxuananniu-xuanzhong1" v-if="selectItem==0?true:false" style="color: #1EB9EE;"></i>
-                <input type="radio" name="name" v-show="false" v-model="selectItem" value="0">供应商
+                <i class="icon iconfont icon-danxuananniu" v-if="selectItem==2?false:true"></i>
+                <i class="icon iconfont icon-danxuananniu-xuanzhong1" v-if="selectItem==2?true:false" style="color: #1EB9EE;"></i>
+                <input type="radio" name="name" v-show="false" v-model="selectItem" value="2">供应商
               </label>
             </div>
             <div>
@@ -40,7 +40,7 @@
             </div>
           </div>
           <div class="select-confirm-button">
-            <button @click="$router.push('/enterprise')">确定</button>
+            <button @click="confirm">确定</button>
             <button @click="cancel">取消</button>
           </div>
         </div>
@@ -58,16 +58,18 @@ export default {
     return {
       checklist001: '',
       commonList: ['供应商', '采购商'],
-      selectItem: 0,
+      selectItem: 1,
       show: false
     }
   },
   methods: {
-    change (val, label) {
-      console.log('change', val, label)
-    },
-    selectMethods () {
+    selectMethods (val) {
+      sessionStorage.setItem('agent', val)
       this.show = true
+    },
+    confirm () {
+      sessionStorage.setItem('userType', this.selectItem)
+      this.$router.push('/enterprise')
     },
     cancel () {
       this.show = false
