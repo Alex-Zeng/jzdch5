@@ -281,7 +281,7 @@ export default {
       // 点击分享按钮
       let title = this.goodsData.title
       let detail = this.goodsData.detail
-      let img = this.goodsData.imgList[0]
+      let img = this.goodsData.imgList[0].img
       let url = window.location.href
       share.detail(title, detail, img, url)
     },
