@@ -8,13 +8,13 @@
       <div style="padding-right: 2rem">&emsp;</div>
     </div>
     <group>
-      <cell is-link>
-          <span slot="title"  @click="selectMethods(0)">
+      <cell @click.native="selectMethods(0)" is-link>
+          <span slot="title" >
                 <span style="vertical-align:middle;">我是企业法人&emsp;&emsp;&emsp;&emsp;&emsp;</span>
           </span>
       </cell>
-      <cell is-link>
-          <span slot="title"  @click="selectMethods(1)">
+      <cell is-link @click.native="selectMethods(1)">
+          <span slot="title">
               <span style="vertical-align:middle;">我是委托代理人&emsp;&emsp;&emsp;&emsp;&emsp;</span>
           </span>
       </cell>

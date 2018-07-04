@@ -60,8 +60,12 @@ export default {
     getCertification () {
       axios.get('api/user/getCertification').then((response) => {
         if (response.data.status === 0) {
-          if (response.data.data.length > 0) {
-            this.enterprise = true
+          if (response.data.data) {
+            const {status, agentIdentityCard, role} = response.data.data
+            if (status === '1') {
+              sessionStorage.setItem('userType', role === '采购商' ? 1 : 2)
+              sessionStorage.setItem('agent', agentIdentityCard ? 0 : 1)
+            }
           }
         } else if (response.data.status === -2) {
           this.$vux.confirm.show({

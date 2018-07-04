@@ -30,14 +30,14 @@
         <i :class="{'is-danger': errors.has('name')}"></i>
         <div class="cells">
           <label for="">企业名称 <span class="text-red">*</span></label>
-          <input name="mobile" v-model="data.companyName" v-validate="'required'" type="text" placeholder="请按营业执照填写">
+          <input name="mobile" v-model="data.companyName" v-validate="'required'" :disabled="data.status == 1" type="text" placeholder="请按营业执照填写">
         </div>
       </li>
       <li>
         <i :class="{'is-danger': errors.has('mobile')}"></i>
         <div class="cells">
           <label for="">法人代表 <span class="text-red">*</span></label>
-          <input name="mobile" v-model="data.representative" v-validate="'required'" type="text" placeholder="请按营业执照填写">
+          <input name="mobile" v-model="data.representative" v-validate="'required'" type="text" placeholder="请按营业执照填写" :disabled="data.status == 1">
         </div>
       </li>
       <li>
@@ -49,12 +49,13 @@
         <i :class="{'is-danger': errors.has('mobile')}"></i>
         <div class="cells">
           <label for="">注册资本 <span class="text-red">*</span></label>
-          <input name="mobile" v-model="data.capital" v-validate="'required'" type="text" placeholder="请按营业执照填写">
+          <input name="mobile" v-model="data.capital" v-validate="'required'" type="text" placeholder="请按营业执照填写" :disabled="data.status == 1">
           <span>&emsp;&nbsp;万元</span>
         </div>
       </li>
       <li style="height: auto;">
-        住所<x-textarea placeholder="请按营业执照填写" @on-focus="onEvent('focus')" @on-blur="onEvent('blur')" v-model="data.address"></x-textarea>
+        <label for="">住所<span class="text-red">*</span></label>
+        <x-textarea placeholder="请按营业执照填写" @on-focus="onEvent('focus')" @on-blur="onEvent('blur')" v-model="data.address" :disabled="data.status == 1"></x-textarea>
       </li>
     </ul>
     <div class="enterprise-title">
@@ -64,15 +65,23 @@
       <label for="">必填项 <span class="text-red">*</span></label>
       <div class="enterprise-upload-list">
         <div class="enterprise-upload-item">
-          <uploader title="工商营业执照" id="1" v-model="data.business" :defaultPath="data.businessPath"></uploader>
+          <uploader title="工商营业执照" id="1" v-model="data.business" :defaultPath="data.businessPath" :disabled="data.status == 1"></uploader>
         </div>
         <div class="enterprise-upload-item">
-          <uploader title="开户许可证" id="2" v-model="data.permitsAccount" :defaultPath="data.permitsAccountPath"></uploader>
+          <uploader title="开户许可证" id="2" v-model="data.permitsAccount" :defaultPath="data.permitsAccountPath" :disabled="data.status == 1"></uploader>
         </div>
       </div>
-      <div class="enterprise-upload-list" style="width: 50%;">
+      <div class="enterprise-upload-list">
         <div class="enterprise-upload-item">
-          <uploader title="企业法人身份证" id="3" v-model="data.legalIdentityCard" :defaultPath="data.legalIdentityCardPath"></uploader>
+          <uploader title="企业法人身份证" id="4" v-model="data.legalIdentityCard" :defaultPath="data.legalIdentityCardPath" :disabled="data.status == 1"></uploader>
+        </div>
+        <div class="enterprise-upload-item">
+          <uploader title="代办人身份证" id="5" v-model="data.agentIdentityCard" :defaultPath="data.agentIdentityCardPath" v-show="data.agent == 1" :disabled="data.status == 1"></uploader>
+        </div>
+      </div>
+      <div class="enterprise-upload-list" style="width: 50%;" v-show="data.agent == 1">
+        <div class="enterprise-upload-item">
+          <uploader title="授权委托书" id="6" v-model="data.attorney" :defaultPath="data.attorneyPath" :disabled="data.status == 1"></uploader>
         </div>
       </div>
     </div>
@@ -80,15 +89,16 @@
       <label for="">可选项</label>
       <div class="enterprise-upload-list">
         <div class="enterprise-upload-item">
-          <uploader title="组织机构代码证" id="4"></uploader>
+          <uploader title="组织机构代码证" id="7" v-model="data.orgStructureCode" :defaultPath="data.orgStructureCodePath" :disabled="data.status == 1"></uploader>
         </div>
         <div class="enterprise-upload-item">
-          <uploader title="税务登记证" id="5"></uploader>
+          <uploader title="税务登记证" id="8" v-model="data.taxRegistrationCert" :defaultPath="data.taxRegistrationCertPath" :disabled="data.status == 1"></uploader>
         </div>
       </div>
     </div>
     <div class="enterprise-footer-btn">
-      <button type="submit" class="btn btn-primary" @click="submit">提交</button>
+      <button type="submit" class="btn" v-if="data.status == 1" disabled="true">提交</button>
+      <button type="submit" class="btn btn-primary" @click="submit" v-else>提交</button>
     </div>
   </div>
 </template>
@@ -104,8 +114,8 @@ export default {
     return {
       list1: [['有限责任公司', '股份有限公司', '个体工商户', '合伙企业']],
       data: {
-        type: 1,
-        agent: 0,
+        type: sessionStorage.getItem('userType') || 1,
+        agent: sessionStorage.getItem('agent') || 0,
         companyName: '',
         address: '',
         representative: '',
@@ -154,11 +164,20 @@ export default {
     async check () {
       // 检查审核状态
       const {data: {data}} = await axios.get('api/user/getCertification')
-      this.data = {...data, property: [data.property]}
+      this.data = {...data, property: [data.property], type: sessionStorage.getItem('userType') || 1, agent: sessionStorage.getItem('agent') || 0}
     },
     async submit () {
       const token = sessionStorage.getItem('loginToken')
-      const {companyName, representative, capital, property, business, permitsAccount, legalIdentityCard, address} = this.data
+      const {companyName, representative, capital, property, business, permitsAccount, legalIdentityCard, address, orgStructureCode, agentIdentityCard, attorney, taxRegistrationCert} = this.data
+      if (this.data.agent === 1) {
+        if (!agentIdentityCard || !attorney) {
+          this.$vux.toast.show({
+            type: 'warn',
+            text: '请填写必填字段'
+          })
+          return
+        }
+      }
       if (!companyName || !representative || !capital || !property || !business || !permitsAccount || !legalIdentityCard) {
         this.$vux.toast.show({
           type: 'warn',
@@ -178,6 +197,10 @@ export default {
           address,
           permitsAccount,
           legalIdentityCard,
+          agentIdentityCard,
+          orgStructureCode,
+          attorney,
+          taxRegistrationCert,
           _token: token
         })
         if (status !== 0) {

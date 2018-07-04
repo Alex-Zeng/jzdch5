@@ -1,14 +1,26 @@
 <template>
   <div class="upload-item-content">
-    <input :id="'img'+id" style="visibility: hidden;height: 0; width: 1px;" type="file" @change="upload"/>
-    <span>{{title}}</span>
-    <div class="upload-plus" @click="open" v-show="!value">
-      +
+    <div v-if="!disabled">
+      <input :id="'img'+id" style="visibility: hidden;height: 0; width: 1px;" type="file" @change="upload"/>
+      <span>{{title}}</span>
+      <div class="upload-plus" @click="open" v-show="!value" v-if="!disabled">
+        +
+      </div>
+      <div class="upload-plus" style="color: #cccccc;" v-else>
+        +
+      </div>
+      <div v-show="value" @click="open">
+        <img width="100%" :src="path||defaultPath" alt="">
+      </div>
+      <XProgress :percent="count" :show-cancel="false" v-show="isProgress"></XProgress>
     </div>
-    <div v-show="value" @click="open">
-      <img width="100%" :src="path||defaultPath" alt="">
+    <div v-else>
+      <input :id="'img'+id" style="visibility: hidden;height: 0; width: 1px;" type="file" @change="upload"/>
+      <span>{{title}}</span>
+      <div class="upload-plus" style="color: #cccccc;">
+        +
+      </div>
     </div>
-    <XProgress :percent="count" :show-cancel="false" v-show="isProgress"></XProgress>
   </div>
 </template>
 
@@ -21,6 +33,7 @@ export default {
     defaultPath: String,
     title: String,
     id: String,
+    disabled: Boolean,
     value: String
   },
   components: {
