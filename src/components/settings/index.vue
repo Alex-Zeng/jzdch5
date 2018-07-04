@@ -28,7 +28,7 @@
                 <span style="vertical-align:middle;">安全设置</span>
             </span>
         </cell>
-        <cell is-link link="/shop-car">
+        <cell is-link link="/other">
           <span slot="title">
               <span style="vertical-align:middle;">其他设置</span>
             </span>

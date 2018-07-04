@@ -432,6 +432,9 @@ input:-ms-input-placeholder {
 .vux-label a{
   color: #222222;
 }
+#app .weui-cell__ft{
+  font-size: 0.7rem;
+}
 /*修改插件样式*/
 
 /*表单*/

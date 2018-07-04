@@ -9,6 +9,7 @@ import Safety from '@/components/settings/safety'
 import changePhone from '@/components/settings/phone'
 import changeEmail from '@/components/settings/email'
 import changePassword from '@/components/settings/password'
+import Other from '@/components/settings/other'
 import GoodsCollect from '@/components/user/goods-collect'
 import Message from '@/components/user/message'
 import noticeDetail from '@/components/user/notice-detail'
@@ -101,6 +102,14 @@ export default new Router({
         title: '设置密码'
       },
       component: changePassword
+    },
+    {
+      path: '/other',
+      name: 'other',
+      meta: {
+        title: '其他设置'
+      },
+      component: Other
     },
     {
       path: '/goods-collect',

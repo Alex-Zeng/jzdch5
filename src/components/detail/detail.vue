@@ -59,13 +59,13 @@
         <ul v-if="goodsData.standard[i-1].title === '颜色'">
           <li v-for="(item, index) in goodsData.standard[i-1].list" :key="index">
             <a href="javascript:;" @click="tabsort0(index)" :class="{ active: iscur0 === index}">{{item.color_name}}</a>
-            <input type="hidden" class="color" v-model="item.color_id">000
+            <input type="hidden" class="color" v-model="item.color_id">
           </li>
         </ul>
         <ul v-if="goodsData.standard[i-1].title !== '颜色'">
           <li v-for="(item, index) in goodsData.standard[i-1].list" :key="index">
             <a href="javascript:;" @click="tabsort1(index)" :class="{ active: iscur1 === index}">{{item.option_name}}</a>
-            <input type="hidden" class="option" v-model="item.option_id">111
+            <input type="hidden" class="option" v-model="item.option_id">
           </li>
         </ul>
       </div>
@@ -156,6 +156,18 @@ export default {
       return false
     },
     showCarMethod () {
+      if (this.goodsData.standard.length === 1) {
+        if (this.iscur1 === null) {
+          this.shawdow = true
+          return false
+        }
+      }
+      if (this.goodsData.standard.length === 2) {
+        if (this.iscur0 === null | this.iscur1 === null) {
+          this.shawdow = true
+          return false
+        }
+      }
       axios.post('api/mall_cart/add', {
         'id': this.$route.params.id,
         'number': this.value,
@@ -281,9 +293,9 @@ export default {
       // 点击分享按钮
       let title = this.goodsData.title
       let detail = this.goodsData.detail
-      let img = this.goodsData.imgList[0].img
+      // let img = this.goodsData.imgList[0].img
       let url = window.location.href
-      share.detail(title, detail, img, url)
+      window.jsb.detail(title, detail, 'http://192.168.3.135:8079/web/public/uploads/goods/2018_05/21/1526872303_0_2025.jpg', url)
     },
     errorMsg () {
       this.$vux.toast.show({

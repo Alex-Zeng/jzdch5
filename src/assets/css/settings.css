@@ -115,3 +115,10 @@
 .settings-form .btn{
   line-height: 2.5rem;
 }
+.other-settings {
+  color: #222222;
+}
+.other-settings label{
+  font-family: 'PingFang-SC-Bold';
+  font-weight: bold;
+}

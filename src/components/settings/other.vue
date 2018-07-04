@@ -1,53 +1,44 @@
 <template>
-  <div>
+  <div class="other-settings">
     <div class="header-nav">
       <i class="icon iconfont icon-back" style="padding-right: 1rem;" onclick="history.go(-1)"></i>
       <div>
-        安全设置
+        其他设置
       </div>
       <div style="padding-right: 2rem">&emsp;</div>
     </div>
     <group>
-      <cell is-link :value="phone" link="/safety/phone">
-          <span slot="title">
-              <i class="icon iconfont icon-bianji"></i>
-              <span style="vertical-align:middle;">绑定手机</span>
-          </span>
-      </cell>
-      <cell is-link :value="password" link="/safety/password">
-        <span slot="title">
-            <i class="icon iconfont icon-bianji"></i>
-            <span style="vertical-align:middle;">登录密码</span>
-        </span>
-      </cell>
-      <cell is-link :value="email" link="/safety/email">
-        <span slot="title">
-            <i class="icon iconfont icon-bianji"></i>
-            <span style="vertical-align:middle;">电子邮箱</span>
-        </span>
-      </cell>
+      <x-input title='联系人姓名' text-align="right" v-model="name" placeholder="未设置"></x-input>
+    </group>
+    <group>
+      <x-input title='公司固话' text-align="right" v-model="phone" placeholder="未设置"></x-input>
+    </group>
+    <group>
+      <x-input title='公司固话' type="file" text-align="right" v-model="phone" placeholder="未设置"></x-input>
     </group>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-import {Cell, CellBox, Group, Checklist, XButton} from 'vux'
+import {Cell, CellBox, Group, Checklist, XButton, XInput} from 'vux'
 export default {
-  name: 'safety',
+  name: 'other',
   data () {
     return {
-      phone: '15010825542',
-      password: '',
-      email: 'yangxu@jizhongdiancai.com'
+      phone: '',
+      name: '',
+      logo: ''
+
     }
   },
   methods: {
     getInfo () {
       axios.get('api/user/getProfile').then((response) => {
         if (response.data.status === 0) {
-          this.phone = response.data.data.phone
-          this.email = response.data.data.email
+          this.phone = response.data.data.tel
+          this.name = response.data.data.contact
+          this.logo = response.data.data.path
         } else if (response.data.status === -2) {
           this.$vux.confirm.show({
             title: '提示',
@@ -88,7 +79,8 @@ export default {
     CellBox,
     Group,
     Checklist,
-    XButton
+    XButton,
+    XInput
   }
 }
 </script>

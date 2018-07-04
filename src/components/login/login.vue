@@ -1,7 +1,7 @@
 <template>
   <div style="background: #FFFFFF;">
     <div class="login-top">
-      <i class="icon iconfont icon-guanbi" @click="$router.push('/')"></i>
+      <i class="icon iconfont icon-guanbi" onclick="history.go(-1)"></i>
       <router-link to="/loginByCode">免密登录</router-link>
     </div>
     <form class="form">

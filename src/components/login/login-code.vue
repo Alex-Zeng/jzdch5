@@ -2,7 +2,7 @@
   <div style="background: #FFFFFF;">
     <template v-if="model1Show">
       <div class="login-top">
-        <i class="icon iconfont icon-guanbi" onclick="history.go(-1)"></i>
+        <i class="icon iconfont icon-guanbi" @click="$router.push('/')"></i>
         <router-link to="/login">账号密码登录</router-link>
       </div>
       <form class="form" @submit.prevent="getMobileCode(1)">
