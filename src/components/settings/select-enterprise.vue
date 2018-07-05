@@ -8,7 +8,7 @@
       <div style="padding-right: 2rem">&emsp;</div>
     </div>
     <group>
-      <cell @click.native="selectMethods(0)" is-link>
+      <cell is-link @click.native="selectMethods(0)">
           <span slot="title" >
                 <span style="vertical-align:middle;">我是企业法人&emsp;&emsp;&emsp;&emsp;&emsp;</span>
           </span>

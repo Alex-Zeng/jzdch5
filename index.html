@@ -6,9 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0,minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>jzdc-app</title>
     <script src="https://cdn.bootcss.com/zepto/1.2.0/zepto.js"></script>
+    <script>
+      function getToken (token, url) {
+        sessionStorage.setItem('loginToken', token, true)
+        document.cookie = '_token=' + token
+        if (token !== null) {
+          window.location.reload()
+        }
+      }
+    </script>
   </head>
   <body>
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>
+
 </html>

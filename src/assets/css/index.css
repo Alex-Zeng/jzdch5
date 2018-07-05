@@ -68,6 +68,10 @@
     padding-bottom: 0.5rem;
 
   }
+  .goods-lists li{
+    width: 50%;
+    overflow: hidden;
+  }
   .goods-lists a{
   	width: 8.6rem;
     box-sizing: border-box;

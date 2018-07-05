@@ -74,6 +74,7 @@ export default {
       }, 200)
       if (status === 0) {
         this.$emit('input', filename)
+        this.$emit('change', filename)
         this.path = path
       }
     }

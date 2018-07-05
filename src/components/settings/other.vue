@@ -8,13 +8,13 @@
       <div style="padding-right: 2rem">&emsp;</div>
     </div>
     <group>
-      <x-input title='联系人姓名' text-align="right" v-model="name" placeholder="未设置"></x-input>
+      <x-input title='联系人姓名' text-align="right" v-model="name" @on-blur="updateInfo ('contact', name)" placeholder="未设置"></x-input>
     </group>
     <group>
-      <x-input title='公司固话' text-align="right" v-model="phone" placeholder="未设置"></x-input>
+      <x-input title='公司固话' text-align="right" v-model="phone" @on-blur="updateInfo ('tel', phone)" placeholder="未设置"></x-input>
     </group>
     <group>
-      <x-input title='公司固话' type="file" text-align="right" v-model="phone" placeholder="未设置"></x-input>
+      <uploader title="公司LOGO" id="1" v-model="logo" :defaultPath="logo" @change="changeTest"></uploader>
     </group>
   </div>
 </template>
@@ -22,6 +22,7 @@
 <script>
 import axios from 'axios'
 import {Cell, CellBox, Group, Checklist, XButton, XInput} from 'vux'
+import uploader from '@/components/common/uploader'
 export default {
   name: 'other',
   data () {
@@ -29,10 +30,13 @@ export default {
       phone: '',
       name: '',
       logo: ''
-
     }
   },
   methods: {
+    changeTest (s) {
+      console.log(s)
+      this.updateInfo('icon', s)
+    },
     getInfo () {
       axios.get('api/user/getProfile').then((response) => {
         if (response.data.status === 0) {
@@ -40,6 +44,7 @@ export default {
           this.name = response.data.data.contact
           this.logo = response.data.data.path
         } else if (response.data.status === -2) {
+          let self = this
           this.$vux.confirm.show({
             title: '提示',
             content: '您尚未登录，是否去登录？',
@@ -52,6 +57,33 @@ export default {
           this.$vux.toast.show({
             type: 'warn',
             text: '网络可能有点问题'
+          })
+        }
+      }).catch((response) => {
+        this.errorMsg()
+      })
+    },
+    updateInfo (field, value) {
+      console.log(2222222222)
+      axios.post('api/user/profile', {
+        'field': field,
+        'value': value
+      }).then((response) => {
+        if (response.data.status === 0) {
+          console.log('更新成功')
+        } else if (response.data.status === -2) {
+          this.$vux.confirm.show({
+            title: '提示',
+            content: '您尚未登录，是否去登录？',
+            onCancel () {},
+            onConfirm () {
+              self.$router.push('/loginByCode')
+            }
+          })
+        } else {
+          this.$vux.toast.show({
+            type: 'warn',
+            text: response.data.msg
           })
         }
       }).catch((response) => {
@@ -74,13 +106,28 @@ export default {
   created () {
     this.getInfo()
   },
+  watch: {
+    /* name (val, oldval) {
+      console.log(val, oldval)
+      this.updateInfo('name', val)
+    },
+    phone (val, oldval) {
+      console.log(val, oldval)
+      this.updateInfo('tel', val)
+    },
+    logo (val, oldval) {
+      console.log(val, oldval)
+      this.updateInfo('icon', val)
+    } */
+  },
   components: {
     Cell,
     CellBox,
     Group,
     Checklist,
     XButton,
-    XInput
+    XInput,
+    uploader
   }
 }
 </script>

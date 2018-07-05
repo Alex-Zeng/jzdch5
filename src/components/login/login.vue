@@ -75,7 +75,6 @@ export default {
                   console.log('Plugin: I\'m showing')
                   sessionStorage.setItem('loginToken', response.data.data.token)
                   document.cookie = '_token=' + response.data.data.token
-                  console.log(sessionStorage.getItem('loginToken'))
                 },
                 onHide () {
                   console.log('Plugin: I\'m hiding')

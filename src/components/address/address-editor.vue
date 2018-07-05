@@ -48,6 +48,7 @@
                 <div class="tag-input" v-if="showInput">
                   <input type="text" name="newTag" v-model="newTag" v-validate="'required'"><button type="button" @click="editor">确定</button>
                 </div>
+                <i class="icon iconfont icon-shanchu1"></i>
               </div>
             </div>
           </div>

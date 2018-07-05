@@ -120,5 +120,30 @@
 }
 .other-settings label{
   font-family: 'PingFang-SC-Bold';
-  font-weight: bold;
+}
+.other-settings .weui-cells img{
+  width: 4rem;
+  height: 4rem;
+  border-radius: 4rem;
+  position: absolute;
+  margin: 0.5rem;
+  top: 0;
+  right: 0;
+}
+.other-settings .upload-item-content{
+  border: none!important;
+  border-radius: 0!important;
+  height: 3.5rem!important;
+  padding: 0.75rem;
+  display: flex;
+  align-items: center;
+}
+.other-settings .upload-item-content span{
+  font-family: 'PingFang-SC-Bold';
+  font-size: 0.85rem!important;
+}
+.other-settings .upload-plus{
+  position: absolute;
+  right: 1rem;
+  color: #999999;
 }
