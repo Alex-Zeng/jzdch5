@@ -22,7 +22,27 @@
 .user-agreement a {
   color: #5FCAED;
 }
-
+.aggreement-content{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  overflow: scroll;
+  padding: 0.5rem;
+  font-size: 0.7rem;
+  color: #222222;
+  background: #FFFFFF;
+}
+.aggreement-content h3{
+  text-align: center;
+  line-height: 3;
+}
+.aggreement-content p{
+  text-indent: 2em;
+  padding-bottom: 0.5rem;
+}
 .text-gray {
   font-size: 0.7rem;
   text-align: center;

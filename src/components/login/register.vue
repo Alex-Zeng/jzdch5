@@ -10,7 +10,7 @@
           <li>
             <i :class="{'is-danger': errors.has('mobile')}"></i>
             <div class="cells">
-              <label for="">+86</label>
+              <label>+86</label>
               <input name="mobile" v-model="mobile" v-validate="'required|phone'" type="text" placeholder="填写手机号码，未注册用户也可直接登录">
             </div>
           </li>
@@ -26,8 +26,9 @@
       </form>
       <div class="user-agreement">
         未注册用户登录后代表您已阅读并同意
-        <a href="javascript:;">《用户协议》</a>
+        <a href="javascript:;" @click="msg = true">《用户协议》</a>
       </div>
+      <agreement @showbox="toshow" v-if="msg"></agreement>
     </template>
     <template v-if="model2Show">
       <div class="login-top">
@@ -58,6 +59,7 @@
 </template>
 <script>
 import axios from 'axios'
+import agreement from '@/components/login/agreement'
 require('../../assets/css/login.css')
 export default {
   name: 'login',
@@ -78,10 +80,14 @@ export default {
       model3Show: false,
       setTimeOut: true,
       resetCode: false,
-      time: 60
+      time: 60,
+      msg: false
     }
   },
   methods: {
+    toshow (msg) {
+      this.msg = msg
+    },
     getImgCode () {
       axios.get('api/captcha/img', this.mobile).then((response) => {
         if (response.data.status === 0) {
@@ -342,7 +348,9 @@ export default {
       this.checkCode()
     }
   },
-  components: {}
+  components: {
+    agreement
+  }
 }
 </script>
 
