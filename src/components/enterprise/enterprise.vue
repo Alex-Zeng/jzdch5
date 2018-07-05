@@ -7,7 +7,7 @@
       </div>
       <div style="padding-right: 2rem">&emsp;</div>
     </div>
-    <div v-show="data.status !== 0" class="enterprise-msg">
+    <div v-show="data.status" class="enterprise-msg">
       <div v-if="data.status == 2">
         您的审核信息已通过
       </div>
@@ -50,12 +50,15 @@
         <div class="cells">
           <label for="">注册资本 <span class="text-red">*</span></label>
           <input name="mobile" v-model="data.capital" v-validate="'required'" type="text" placeholder="请按营业执照填写" :disabled="data.status == 1">
-          <span>&emsp;&nbsp;万元</span>
+          <span>万元&emsp;</span>
         </div>
       </li>
-      <li style="height: auto;">
-        <label for="">住所<span class="text-red">*</span></label>
-        <x-textarea placeholder="请按营业执照填写" @on-focus="onEvent('focus')" @on-blur="onEvent('blur')" v-model="data.address" :disabled="data.status == 1"></x-textarea>
+      <li>
+        <i :class="{'is-danger': errors.has('mobile')}"></i>
+        <div class="cells">
+          <label for="">住所 <span class="text-red">*</span>&emsp;&emsp;</label>
+          <input name="address" v-model="data.address" v-validate="'required'" @on-focus="onEvent('focus')" @on-blur="onEvent('blur')" type="text" placeholder="请按营业执照填写" :disabled="data.status == 1">
+        </div>
       </li>
     </ul>
     <div class="enterprise-title">

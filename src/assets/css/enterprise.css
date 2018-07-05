@@ -16,11 +16,13 @@
   background: #FFFFFF;
   padding: 0;
   padding-left: 1rem;
+  color: #999999;
 }
 .enterprise .form li{
   height: 2.5rem;
   box-sizing: border-box;
   line-height: 2.5rem;
+  overflow: hidden;
   border-bottom: 0.05rem solid #E1E1E1;
 }
 .enterprise .form li label{
@@ -29,16 +31,30 @@
   font-family: 'PingFang SC';
   color: #999999;
 }
+.enterprise .form li .cells{
+  display: flex;
+}
+.enterprise .form li .cells input{
+  flex: 1;
+  padding: 0 0.5rem;
+}
 .enterprise .weui-cell{
   padding-left: 0!important;
 }
 .enterprise-upload-wrap{
   padding:0 0.5rem 0.5rem;
 }
-
+.enterprise-upload-wrap label{
+  font-size: 0.75rem;
+  display: block;
+  padding-bottom: 1rem;
+}
+.enterprise .weui-cell:before{
+  border-top: none;
+}
 .enterprise-upload-list{
   display: flex;
-  height: 6.1rem;
+  min-height: 6rem;
   margin-bottom: 1rem;
 }
 
@@ -47,7 +63,9 @@
   text-align: center;
   padding:0 0.5rem;
 }
-
+.enterprise-upload-item img{
+  width: 100%;
+}
 .enterprise-msg{
   background-color: #1EB9EE;
   font-size: 0.9rem;
