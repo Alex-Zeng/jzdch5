@@ -156,7 +156,6 @@ export default {
       return false
     },
     showCarMethod () {
-      alert(sessionStorage.getItem('groupId'))
       if (sessionStorage.getItem('groupId') === null) {
         let self = this
         this.$vux.confirm.show({
