@@ -52,7 +52,7 @@
               @on-hide="log('hide', $event)" v-model="item.date"></datetime>
           </group>
           <group>
-            <x-textarea :max="75" :rows="1" v-model="item.remark" autosize placeholder="填写备注信息"></x-textarea>
+            <x-textarea :max="200" :rows="1" v-model="item.remark" autosize placeholder="填写备注信息"></x-textarea>
           </group>
         </div>
       </div>

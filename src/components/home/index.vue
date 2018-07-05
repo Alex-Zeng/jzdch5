@@ -12,48 +12,48 @@
           <swiper-item class="black">
             <div class="menu-nav">
               <template v-for="(item, index) in menunListsFirst">
-                <a href="javascript:;" v-if="item.id === 19" @click="financialShow" :key="index">
-                  <img :src="item.img" alt=""/>
-                  <div class="text-truncate">
-                    {{item.name}}
-                  </div>
-                </a>
-                <a href="javascript:;" v-else-if="item.id === 18"  :key="index">
-                  <img :src="item.img" alt=""/>
-                  <div class="text-truncate">
-                    {{item.name}}
-                  </div>
-                </a>
-                <router-link v-else :to="{path: '/goods-class', query: { name: item.name, id: item.id }}" :key="index">
+                <router-link v-if="item.type > 0" :to="{path: '/goods-class', query: {id: item.id }}" :key="index">
                   <img :src="item.img" alt=""/>
                   <div class="text-truncate">
                     {{item.name}}
                   </div>
                 </router-link>
+                <a href="javascript:;" v-else-if="item.flag === 1" @click="financialShow" :key="index">
+                  <img :src="item.img" alt=""/>
+                  <div class="text-truncate">
+                    {{item.name}}
+                  </div>
+                </a>
+                <a href="javascript:;" v-else :key="index">
+                  <img :src="item.img" alt=""/>
+                  <div class="text-truncate">
+                    {{item.name}}
+                  </div>
+                </a>
               </template>
             </div>
           </swiper-item>
           <swiper-item  v-if="menunListsSecond.length > 0" class="black">
             <div class="menu-nav">
               <template v-for="(item, index) in menunListsSecond">
-                <a href="javascript:;" v-if="item.id === 19" @click="financialShow" :key="index">
-                  <img :src="item.img" alt=""/>
-                  <div class="text-truncate">
-                    {{item.name}}
-                  </div>
-                </a>
-                <a href="javascript:;" v-else-if="item.id === 18"  :key="index">
-                  <img :src="item.img" alt=""/>
-                  <div class="text-truncate">
-                    {{item.name}}
-                  </div>
-                </a>
-                <router-link v-else :to="{path: '/goods-class', query: { name: item.name, id: item.id }}" :key="index">
+                <router-link v-if="item.type > 0" :to="{path: '/goods-class', query: {id: item.id }}" :key="index">
                   <img :src="item.img" alt=""/>
                   <div class="text-truncate">
                     {{item.name}}
                   </div>
                 </router-link>
+                <a href="javascript:;" v-else-if="item.flag === 1" @click="financialShow" :key="index">
+                  <img :src="item.img" alt=""/>
+                  <div class="text-truncate">
+                    {{item.name}}
+                  </div>
+                </a>
+                <a href="javascript:;" v-else :key="index">
+                  <img :src="item.img" alt=""/>
+                  <div class="text-truncate">
+                    {{item.name}}
+                  </div>
+                </a>
               </template>
             </div>
           </swiper-item>

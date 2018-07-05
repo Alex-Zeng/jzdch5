@@ -145,5 +145,6 @@
 .other-settings .upload-plus{
   position: absolute;
   right: 1rem;
+  top: 1rem;
   color: #999999;
 }

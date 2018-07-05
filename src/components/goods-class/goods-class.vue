@@ -47,6 +47,7 @@ export default {
           for (let i = 0; i < data.length; i++) {
             this.categoryList.push({'id': data[i].id, 'name': data[i].name})
           }
+          console.log(this.categoryList)
           this.totalData = data
           this.categoryListChildren = this.totalData[0].child
         }
@@ -55,11 +56,27 @@ export default {
     tabsort (index) {
       this.iscur = index
       this.categoryListChildren = this.totalData[index].child
+    },
+    initMethods () {
+      let id = this.$route.query.id
+      let self = this
+      setTimeout(function () {
+        let navData = self.categoryList
+        console.log(navData)
+        for (let i = 0; i < navData.length; i++) {
+          if (navData[i].id === Number(id)) {
+            self.tabsort(i)
+          }
+        }
+      }, 300)
     }
   },
   created () {
     window.scrollTo(0, 0)
     this.getCategoryList()
+  },
+  mounted () {
+    this.initMethods()
   },
   components: {
     headerMessage, FooterNav

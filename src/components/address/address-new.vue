@@ -41,14 +41,16 @@
             <label for="" style="align-self: flex-start;">设置标签</label>
             <div class="address-tag-box">
               <div @click="getTag">
-                <span class="tag" v-for="(item, index) in tag" :key="item.id"  @click="tabsort(index)" :class="{ active: iscur == index }"> {{item.tag}}</span>
+                <span class="tag" v-for="(item, index) in tag" :key="item.id"  @click="tabsort(index)" :class="{ active: iscur == index }"> {{item.tag}} <i class="icon iconfont icon-shanchu1" v-if="deleteShow" @click="deteleTag(index, item.id)"></i></span>
               </div>
-              <div style="padding-top: 0.8rem;">
-                <span class="tag" style="width: 2em;text-align: center;" v-if="!showInput" @click="editor">+</span>
-                <div class="tag-input" v-if="showInput">
-                  <input type="text" name="newTag" maxlength="5" v-model="newTag" v-validate="'required'"><button type="button" @click="editor">确定</button>
+              <div>
+                <div v-if="!showInput">
+                  <span class="tag" style="width: 2em;text-align: center;" @click="editor">+</span>
+                  <span class="tag fr" @click="deleteShow = !deleteShow"><i class="icon iconfont icon-bianji"></i>编辑标签</span>
                 </div>
-                <i class="icon iconfont icon-shanchu1"></i>
+                <div class="tag-input" v-if="showInput">
+                  <input type="text" name="newTag" v-model="newTag" v-validate="'required'"><button type="button" @click="editor">确定</button>
+                </div>
               </div>
             </div>
           </div>
@@ -79,7 +81,8 @@ export default {
       checkedTag: '',
       tag: [],
       newTag: null,
-      iscur: 0
+      iscur: 0,
+      deleteShow: false
     }
   },
   methods: {
@@ -102,12 +105,11 @@ export default {
     editor () {
       this.showInput = !this.showInput
       if (this.newTag !== null) {
-        this.tag.push({'tag': this.newTag})
         axios.post('api/user/addAddressTag', {
-          '_token': sessionStorage.getItem('loginToken'),
           'tag': this.newTag
         }).then((response) => {
           if (response.data.status === 0) {
+            this.getOldTag()
           }
         }).catch((response) => {
           this.errorMsg()
@@ -119,6 +121,40 @@ export default {
     },
     tabsort (index) {
       this.iscur = index
+    },
+    deteleTag (index, id) {
+      let self = this
+      this.$vux.confirm.show({
+        title: '提示',
+        content: '确定删除？',
+        onCancel () {},
+        onConfirm () {
+          axios.post('api/user/removeAddressTag', {
+            'id': id
+          }).then((response) => {
+            const {status} = response.data
+            if (status === 0) {
+              self.getOldTag()
+            } else if (status === -2) {
+              self.$vux.confirm.show({
+                title: '提示',
+                content: '您尚未登录，是否去登录？',
+                onCancel () {},
+                onConfirm () {
+                  self.$router.push('/loginByCode')
+                }
+              })
+            } else {
+              this.$vux.toast.show({
+                type: 'warn',
+                text: response.data.msg
+              })
+            }
+          }).catch(() => {
+            self.errorMsg()
+          })
+        }
+      })
     },
     getAreaMethods () {
       if (localStorage.getItem('addressData') === null) {

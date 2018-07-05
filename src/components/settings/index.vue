@@ -63,6 +63,7 @@ export default {
           if (response.data.data) {
             const {status, agentIdentityCard, role} = response.data.data
             if (status === '1') {
+              this.enterprise = true
               sessionStorage.setItem('userType', role === '采购商' ? 1 : 2)
               sessionStorage.setItem('agent', agentIdentityCard ? 0 : 1)
             }

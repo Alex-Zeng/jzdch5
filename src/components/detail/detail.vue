@@ -39,7 +39,7 @@
     </div>
     <div class="goods-detail" v-html="goodsData.detail">
     </div>
-    <div class="detail-shop-car footer-nav" v-if="shopCard">
+    <div class="detail-shop-car footer-nav" v-if="showCar">
       <div>
         <span class="text-muted" style="vertical-align: top;line-height: 2;">数量&nbsp;</span>
         <inline-x-number :min="1" width="2.6rem" fillable v-model="value"></inline-x-number>
@@ -85,10 +85,10 @@ export default {
       isActive: false,
       active: false,
       badge: false,
-      shopCard: false,
       price: null,
       iscur0: null,
       iscur1: null,
+      showCar: true,
       value: 1,
       optionId: 0,
       colorId: 0,
@@ -156,6 +156,37 @@ export default {
       return false
     },
     showCarMethod () {
+      alert(sessionStorage.getItem('groupId'))
+      if (sessionStorage.getItem('groupId') === null) {
+        let self = this
+        this.$vux.confirm.show({
+          title: '提示',
+          content: '您尚未登录，确定现在去登录？',
+          onCancel () {
+          },
+          onConfirm () {
+            self.$router.push('/loginByCode')
+          }
+        })
+        return false
+      }
+      if (sessionStorage.getItem('groupId') === '6') {
+        let self = this
+        this.$vux.confirm.show({
+          title: '提示',
+          content: '您尚未做企业认证，是否现在去认证？',
+          onCancel () {
+          },
+          onConfirm () {
+            self.$router.push('/select-enterprise')
+          }
+        })
+        return false
+      }
+      if (sessionStorage.getItem('groupId') === '2' || sessionStorage.getItem('groupId') === '3' || sessionStorage.getItem('groupId') === '5') {
+        this.showCar = false
+        return false
+      }
       if (this.goodsData.standard.length === 1) {
         if (this.iscur1 === null) {
           this.shawdow = true
@@ -208,8 +239,7 @@ export default {
       let self = this
       if (this.isActive === false) {
         axios.post('api/goods/addFavorite', {
-          'goodsId': this.$route.params.id,
-          '_token': sessionStorage.getItem('loginToken')
+          'goodsId': this.$route.params.id
         }).then((response) => {
           if (response.data.status === -2) {
             this.$vux.toast.show({
@@ -313,18 +343,26 @@ export default {
   created () {
     window.scrollTo(0, 0)
     let loginToken = sessionStorage.getItem('loginToken')
+    let self = this
     if (loginToken !== null) {
       axios.get('api/mall_cart/getNumber').then((response) => {
-        console.log(response.data.status)
         if (response.data.status === -2) {
           // this.$router.push('/loginByCode')
-          this.shopCard = false
+          // this.shopCard = false
+          this.$vux.confirm.show({
+            title: '提示',
+            content: '您尚未登录，是否去登录？',
+            onCancel () {},
+            onConfirm () {
+              self.$router.push('/loginByCode')
+            }
+          })
           console.log('未登录')
         } else if (response.data.status === 0 && Number(sessionStorage.getItem('groupId')) === 4) {
           this.showCarNum = response.data.data.total
-          this.shopCard = true
+          // this.shopCard = true
         } else {
-          this.shopCard = false
+          // this.shopCard = false
         }
       }).catch((response) => {
       })

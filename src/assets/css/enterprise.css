@@ -37,6 +37,7 @@
 .enterprise .form li .cells input{
   flex: 1;
   padding: 0 0.5rem;
+  background: none;
 }
 .enterprise .weui-cell{
   padding-left: 0!important;
