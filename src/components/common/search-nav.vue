@@ -54,7 +54,8 @@ export default {
       list: [{key: '0', value: '商品'}, {key: '1', value: '供货商'}],
       historyLists: [],
       goodsLists: [],
-      mescroll: null
+      mescroll: null,
+      cateId: ''
     }
   },
   methods: {
@@ -79,6 +80,7 @@ export default {
       this.mescroll.resetUpScroll()
     },
     getResult (val) {
+      /* this.mescroll.destroy() */
       if (val.keyCode === 13 || val === true) {
         if (val.keyCode === 13) {
           let obj = { 'keyword': this.keywords }
@@ -178,11 +180,12 @@ export default {
     },
     searchHistory (index) {
       this.keywords = this.historyLists[index].keyword
-      var self = this
+      this.getResult(true)
+      // var self = this
       // self.mescroll.removeEmpty()
-      self.mescroll = new MeScroll('mescroll', {
+      /* self.mescroll = new MeScroll('mescroll', {
         up: {
-          /* 上拉加载的配置参数 */
+          /!* 上拉加载的配置参数 *!/
           auto: true, // 是否在初始化时以上拉加载的方式自动加载第一页数据; 默认false
           callback: self.upCallback, // 上拉回调
           // 以下参数可删除,不配置
@@ -200,7 +203,7 @@ export default {
             }
           }
         }
-      })
+      }) */
     },
     // 上拉回调 page = {num:1, size:10}; num:当前页 ,默认从1开始; size:每页数据条数,默认10
     upCallback (page) {
@@ -231,9 +234,9 @@ export default {
           'type': self.type,
           'keywords': self.keywords,
           'sort': self.mySort,
-          'id': self.$route.query.id,
           'pageNumber': pageNum,
-          'pageSize': pageSize
+          'pageSize': pageSize,
+          'cateId': self.$route.query.id
         }).then((response) => {
           if (response.data.status === 0) {
             // 响应成功回调
@@ -273,14 +276,11 @@ export default {
   mounted () {
     this.loginToken = sessionStorage.getItem('loginToken')
     // this.getHistory()
-    var keywords = this.$route.query.name
-    console.log(keywords)
-    if (keywords !== undefined) {
-      this.keywords = keywords
+    var cateId = this.$route.query.id
+    if (cateId !== undefined) {
+      this.cateId = cateId
       this.getResult(true)
     }
-    console.log(this.$route.query.name)
-    console.log(this.$route.query.id)
   },
   watch: {
     mySort (val) {
