@@ -34,7 +34,6 @@ export default {
   methods: {
   },
   created () {
-    console.log(sessionStorage.getItem('loginToken'))
     let loginToken = sessionStorage.getItem('loginToken')
     if (loginToken !== null) {
       axios.get('api/user/getGroup').then((response) => {
@@ -42,11 +41,9 @@ export default {
         sessionStorage.setItem('groupId', response.data.data.groupId)
         if (response.data.status === 0 && response.data.data.groupId === 4) {
           axios.get('api/mall_cart/getNumber').then((response) => {
-            console.log(response.data.status)
             if (response.data.status === -2) {
               // this.$router.push('/loginByCode')
               this.shopCard = false
-              console.log('未登录')
             } else if (response.data.status === 0) {
               this.total = response.data.data.total
               this.shopCard = true

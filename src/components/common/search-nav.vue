@@ -53,7 +53,8 @@ export default {
       keywords: '',
       list: [{key: '0', value: '商品'}, {key: '1', value: '供货商'}],
       historyLists: [],
-      goodsLists: []
+      goodsLists: [],
+      mescroll: null
     }
   },
   methods: {
@@ -178,7 +179,7 @@ export default {
     searchHistory (index) {
       this.keywords = this.historyLists[index].keyword
       var self = this
-      self.mescroll.removeEmpty()
+      // self.mescroll.removeEmpty()
       self.mescroll = new MeScroll('mescroll', {
         up: {
           /* 上拉加载的配置参数 */
@@ -207,7 +208,7 @@ export default {
       // 联网加载数据
       var self = this
       this.getListDataFromNet(page.num, page.size, function (curPageData, totalSize) {
-        self.mescroll.destroy()
+        // self.mescroll.destroy()
         // curPageData = [] // 打开本行注释,可演示列表无任何数据empty的配置
         if (page.num === 1) self.goodsLists = []
         // 更新列表数据

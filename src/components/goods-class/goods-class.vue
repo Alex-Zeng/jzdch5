@@ -12,7 +12,7 @@
       <div class="main-nav">
         <ul>
           <li v-for="(item, index) in categoryListChildren" :key="index">
-            <router-link :to="{path: '/search', query: { name: item.name, id: item.id }}">
+            <router-link :to="{path: '/search', query: {id: item.id }}">
               <img :src="item.path" :alt="item.id">
               <h3>{{item.name}}</h3>
             </router-link>
@@ -47,7 +47,6 @@ export default {
           for (let i = 0; i < data.length; i++) {
             this.categoryList.push({'id': data[i].id, 'name': data[i].name})
           }
-          console.log(this.categoryList)
           this.totalData = data
           this.categoryListChildren = this.totalData[0].child
         }
@@ -62,7 +61,6 @@ export default {
       let self = this
       setTimeout(function () {
         let navData = self.categoryList
-        console.log(navData)
         for (let i = 0; i < navData.length; i++) {
           if (navData[i].id === Number(id)) {
             self.tabsort(i)

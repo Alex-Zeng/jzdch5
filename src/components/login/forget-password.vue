@@ -15,7 +15,7 @@
           <li>
             <i :class="{'is-danger': errors.has('mobile')}"></i>
             <div class="cells">
-              <label for="">+86</label>
+              <label>+86</label>
               <input name="mobile" v-model="mobile" v-validate="'required|phone'" placeholder="请输入注册手机号"/>
             </div>
           </li>
@@ -104,25 +104,17 @@ export default {
           axios.post('api/password/checkPhone', {
             'phone': this.mobile
           }).then((response) => {
-            console.log(response)
             if (response.data.status === 0) {
               this.model2Show = true
               this.model1Show = false
               axios.get('api/captcha/img', this.mobile).then((response) => {
-                console.log(response)
                 if (response.data.status === 0) {
                   this.id = response.data.data.id
                   this.imgCodeSrc = response.data.data.src + '?t=' + new Date().getTime()
                 } else {
                   this.$vux.toast.show({
                     type: 'warn',
-                    text: response.data.msg,
-                    onShow () {
-                      console.log('Plugin: I\'m showing')
-                    },
-                    onHide () {
-                      console.log('Plugin: I\'m hiding')
-                    }
+                    text: response.data.msg
                   })
                 }
               }).catch((response) => {
@@ -132,13 +124,7 @@ export default {
             } else {
               this.$vux.toast.show({
                 type: 'warn',
-                text: response.data.msg,
-                onShow () {
-                  console.log('Plugin: I\'m showing')
-                },
-                onHide () {
-                  console.log('Plugin: I\'m hiding')
-                }
+                text: response.data.msg
               })
             }
           }).catch((response) => {
@@ -169,7 +155,6 @@ export default {
             'id': this.id
           }).then((response) => {
             if (response.data.status === 0) {
-              console.log(response)
               this.model1Show = false
               this.model2Show = false
               this.model3Show = true
@@ -242,7 +227,6 @@ export default {
         'confirmPassword': this.confirmPassword
       }).then((response) => {
         if (response.data.status === 0) {
-          console.log(response)
           this.$vux.toast.show({
             type: 'success',
             text: '密码修改成功',

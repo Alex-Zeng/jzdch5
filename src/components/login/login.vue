@@ -72,25 +72,17 @@ export default {
                 type: 'success',
                 text: '登陆成功',
                 onShow () {
-                  console.log('Plugin: I\'m showing')
                   sessionStorage.setItem('loginToken', response.data.data.token)
                   document.cookie = '_token=' + response.data.data.token
                 },
                 onHide () {
-                  console.log('Plugin: I\'m hiding')
                   _sel.$router.push('/')
                 }
               })
             } else {
               this.$vux.toast.show({
                 type: 'warn',
-                text: response.data.msg,
-                onShow () {
-                  console.log('Plugin: I\'m showing')
-                },
-                onHide () {
-                  console.log('Plugin: I\'m hiding')
-                }
+                text: response.data.msg
               })
             }
           }).catch((response) => {
@@ -101,31 +93,18 @@ export default {
         }
         this.$vux.toast.show({
           type: 'warn',
-          text: '请填写用户名和密码',
-          onShow () {
-            console.log('Plugin: I\'m showing')
-          },
-          onHide () {
-            console.log('Plugin: I\'m hiding')
-          }
+          text: '请填写用户名和密码'
         })
       })
     },
     getImgCode () {
       axios.get('api/captcha/img', this.mobile).then((response) => {
-        console.log(response)
         if (response.data.status === 0) {
           this.imgCodeSrc = response.data.data.src + '?t=' + new Date().getTime()
         } else {
           this.$vux.toast.show({
             type: 'warn',
-            text: response.data.msg,
-            onShow () {
-              console.log('Plugin: I\'m showing')
-            },
-            onHide () {
-              console.log('Plugin: I\'m hiding')
-            }
+            text: response.data.msg
           })
         }
       }).catch((response) => {
@@ -136,13 +115,7 @@ export default {
     errorMsg () {
       this.$vux.toast.show({
         type: 'warn',
-        text: '网络可能有点问题',
-        onShow () {
-          console.log('Plugin: I\'m showing')
-        },
-        onHide () {
-          console.log('Plugin: I\'m hiding')
-        }
+        text: '网络可能有点问题'
       })
     }
   },

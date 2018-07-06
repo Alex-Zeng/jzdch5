@@ -116,25 +116,16 @@ export default {
         'type': this.type
       }).then((response) => {
         if (response.data.status === 0) {
-          console.log(this.mobileCode)
           this.banners = response.data.data
           // 响应成功回调
-          console.log('success')
         } else {
           this.$vux.toast.show({
             type: 'warn',
-            text: response.data.msg,
-            onShow () {
-              console.log('Plugin: I\'m showing')
-            },
-            onHide () {
-              console.log('Plugin: I\'m hiding')
-            }
+            text: response.data.msg
           })
         }
       }).catch((response) => {
         // 响应错误回调
-        console.log('error')
         this.errorMsg()
       })
     },
@@ -142,11 +133,8 @@ export default {
       axios.get('api/goods/getCategory').then((response) => {
         if (response.data.status === 0) {
           this.menunLists = response.data.data
-          console.log(this.menunLists)
           // 响应成功回调
-          console.log('success')
           var len = this.menunLists.length
-          console.log(len)
           var pageNo = (len / 8)
           if (pageNo < 1) {
             this.menunListsFirst = this.menunLists
@@ -157,18 +145,11 @@ export default {
         } else {
           this.$vux.toast.show({
             type: 'warn',
-            text: response.data.msg,
-            onShow () {
-              console.log('Plugin: I\'m showing')
-            },
-            onHide () {
-              console.log('Plugin: I\'m hiding')
-            }
+            text: response.data.msg
           })
         }
       }).catch((response) => {
         // 响应错误回调
-        console.log('error')
         this.errorMsg()
       })
     },
@@ -176,12 +157,10 @@ export default {
       this.financial = true
     },
     parentEvent (data) {
-      console.log(data)
       this.financial = data
     },
     // 上拉回调 page = {num:1, size:10}; num:当前页 ,默认从1开始; size:每页数据条数,默认10
     upCallback: function (page) {
-      console.log('联网加载数据')
       // 联网加载数据
       var self = this
       this.getListDataFromNet(page.num, page.size, function (curPageData, totalSize) {
@@ -217,18 +196,11 @@ export default {
           } else {
             this.$vux.toast.show({
               type: 'warn',
-              text: response.data.msg,
-              onShow () {
-                console.log('Plugin: I\'m showing')
-              },
-              onHide () {
-                console.log('Plugin: I\'m hiding')
-              }
+              text: response.data.msg
             })
           }
         }).catch((response) => {
           // 响应错误回调
-          console.log('error')
           self.errorMsg()
           errorCallback && errorCallback()// 失败回调
         })
@@ -237,13 +209,7 @@ export default {
     errorMsg () {
       this.$vux.toast.show({
         type: 'warn',
-        text: '网络可能有点问题',
-        onShow () {
-          console.log('Plugin: I\'m showing')
-        },
-        onHide () {
-          console.log('Plugin: I\'m hiding')
-        }
+        text: '网络可能有点问题'
       })
     }
   },

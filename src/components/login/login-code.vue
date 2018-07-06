@@ -80,20 +80,13 @@ export default {
   methods: {
     getImgCode () {
       axios.get('api/captcha/img', this.mobile).then((response) => {
-        console.log(response)
         if (response.data.status === 0) {
           this.id = response.data.data.id
           this.imgCodeSrc = response.data.data.src + '?t=' + new Date().getTime()
         } else {
           this.$vux.toast.show({
             type: 'warn',
-            text: response.data.msg,
-            onShow () {
-              console.log('Plugin: I\'m showing')
-            },
-            onHide () {
-              console.log('Plugin: I\'m hiding')
-            }
+            text: response.data.msg
           })
         }
       }).catch((response) => {
@@ -111,7 +104,6 @@ export default {
             'codeValid': val
           }).then((response) => {
             if (response.data.status === 0) {
-              console.log(response)
               this.model1Show = false
               this.model2Show = true
               this.time = 60
@@ -119,38 +111,24 @@ export default {
               this.resetCode = false
               this.setTimeMethods()
               // 响应成功回调
-              console.log('success')
               setTimeout(function () {
                 document.getElementById('code1').focus()
               }, 50)
             } else {
               this.$vux.toast.show({
                 type: 'warn',
-                text: response.data.msg,
-                onShow () {
-                  console.log('Plugin: I\'m showing')
-                },
-                onHide () {
-                  console.log('Plugin: I\'m hiding')
-                }
+                text: response.data.msg
               })
             }
           }).catch((response) => {
             // 响应错误回调
-            console.log('error')
             this.errorMsg()
           })
           return
         }
         this.$vux.toast.show({
           type: 'warn',
-          text: '请填写手机号或图片验证码',
-          onShow () {
-            console.log('Plugin: I\'m showing')
-          },
-          onHide () {
-            console.log('Plugin: I\'m hiding')
-          }
+          text: '请填写手机号或图片验证码'
         })
       })
     },
@@ -166,50 +144,32 @@ export default {
               document.cookie = '_token=' + response.data.data.token
               sessionStorage.setItem('loginToken', response.data.token)
               // 响应成功回调
-              console.log('success')
               this.$router.push('/')
             } else if (response.data.status === -3) {
               this.$vux.toast.show({
                 type: 'warn',
                 text: '请输入用户名，提交注册',
                 onShow () {
-                  console.log('Plugin: I\'m showing')
                   self.model1Show = false
                   self.model2Show = false
                   self.model3Show = true
-                },
-                onHide () {
-                  console.log('Plugin: I\'m hiding')
                 }
               })
             } else {
               this.$vux.toast.show({
                 type: 'warn',
-                text: response.data.msg,
-                onShow () {
-                  console.log('Plugin: I\'m showing')
-                },
-                onHide () {
-                  console.log('Plugin: I\'m hiding')
-                }
+                text: response.data.msg
               })
             }
           }).catch((response) => {
             // 响应错误回调
-            console.log('error')
             this.errorMsg()
           })
           return
         }
         this.$vux.toast.show({
           type: 'warn',
-          text: '请填写短信验证码',
-          onShow () {
-            console.log('Plugin: I\'m showing')
-          },
-          onHide () {
-            console.log('Plugin: I\'m hiding')
-          }
+          text: '请填写短信验证码'
         })
       })
     },
@@ -224,50 +184,33 @@ export default {
             'channel': 0
           }).then((response) => {
             if (response.data.status === 0) {
-              console.log(response)
               this.$vux.toast.show({
                 type: 'success',
                 text: '注册成功',
                 onShow () {
-                  console.log('Plugin: I\'m showing')
                   // 响应成功回调
-                  console.log('success')
                   document.cookie = '_token=' + response.data.data.token
                   sessionStorage.setItem('loginToken', response.data.data.token)
                 },
                 onHide () {
-                  console.log('Plugin: I\'m hiding')
                   _sel.$router.push('/')
                 }
               })
             } else {
               this.$vux.toast.show({
                 type: 'warn',
-                text: response.data.msg,
-                onShow () {
-                  console.log('Plugin: I\'m showing')
-                },
-                onHide () {
-                  console.log('Plugin: I\'m hiding')
-                }
+                text: response.data.msg
               })
             }
           }).catch((response) => {
             // 响应错误回调
-            console.log('error')
             this.errorMsg()
           })
           return
         }
         this.$vux.toast.show({
           type: 'warn',
-          text: '请填写用户名',
-          onShow () {
-            console.log('Plugin: I\'m showing')
-          },
-          onHide () {
-            console.log('Plugin: I\'m hiding')
-          }
+          text: '请填写用户名'
         })
       })
     },
@@ -291,7 +234,6 @@ export default {
       }
     },
     clear (event) {
-      console.log(event.keyCode)
       if (event.keyCode === 8) {
         this.code3 = ''
         this.code2 = ''
@@ -321,13 +263,7 @@ export default {
     errorMsg () {
       this.$vux.toast.show({
         type: 'warn',
-        text: '网络可能有点问题',
-        onShow () {
-          console.log('Plugin: I\'m showing')
-        },
-        onHide () {
-          console.log('Plugin: I\'m hiding')
-        }
+        text: '网络可能有点问题'
       })
     }
   },
@@ -338,21 +274,17 @@ export default {
   },
   watch: {
     code1 (val) {
-      console.log(val)
       document.getElementById('code2').focus()
     },
     code2 (val) {
-      console.log(val)
       document.getElementById('code3').focus()
     },
     code3 (val) {
-      console.log(val)
       document.getElementById('code4').focus()
     },
     code4 (val) {
       this.mobileCode = this.code1 + this.code2 + this.code3 + this.code4
       this.checkCode()
-      console.log(val)
     }
   },
   components: {}

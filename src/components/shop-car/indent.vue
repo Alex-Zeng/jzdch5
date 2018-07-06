@@ -144,7 +144,6 @@ export default {
           }
         }
       }).catch((response) => {
-        console.log(response)
         this.errorMsg()
       })
     },
@@ -199,13 +198,7 @@ export default {
     errorMsg () {
       this.$vux.toast.show({
         type: 'warn',
-        text: '网络可能有点问题',
-        onShow () {
-          console.log('Plugin: I\'m showing')
-        },
-        onHide () {
-          console.log('Plugin: I\'m hiding')
-        }
+        text: '网络可能有点问题'
       })
     }
   },

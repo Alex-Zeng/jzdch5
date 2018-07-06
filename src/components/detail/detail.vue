@@ -56,13 +56,13 @@
     <div class="goods-guige" v-if="shawdow">
       <div v-for="i in goodsData.standard.length" :key="i">
         <h3>{{goodsData.standard[i-1].title}}</h3>
-        <ul v-if="goodsData.standard[i-1].title === '颜色'">
+        <ul v-if="goodsData.standard[i-1].title === '规格'">
           <li v-for="(item, index) in goodsData.standard[i-1].list" :key="index">
             <a href="javascript:;" @click="tabsort0(index)" :class="{ active: iscur0 === index}">{{item.color_name}}</a>
             <input type="hidden" class="color" v-model="item.color_id">
           </li>
         </ul>
-        <ul v-if="goodsData.standard[i-1].title !== '颜色'">
+        <ul v-if="goodsData.standard[i-1].title !== '规格'">
           <li v-for="(item, index) in goodsData.standard[i-1].list" :key="index">
             <a href="javascript:;" @click="tabsort1(index)" :class="{ active: iscur1 === index}">{{item.option_name}}</a>
             <input type="hidden" class="option" v-model="item.option_id">

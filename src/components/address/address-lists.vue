@@ -54,7 +54,6 @@ export default {
   methods: {
     getLists () {
       axios.get('api/user/getAddressList').then((response) => {
-        console.log(response)
         this.lists = response.data.data.list
       }).catch((response) => {
         this.errorMsg()
@@ -74,10 +73,8 @@ export default {
         onCancel () {},
         onConfirm () {
           axios.post('api/user/removeAddress', {
-            '_token': sessionStorage.getItem('loginToken'),
             'id': id
           }).then((response) => {
-            console.log(response)
             self.lists.splice(index, 1)
           }).catch((response) => {
             self.errorMsg()

@@ -119,10 +119,10 @@ export default {
     sortMethods () {
       if (this.mySort === 'asc') {
         this.mySort = 'desc'
-        sessionStorage.setItem('searchSort', 'desc')
+        // sessionStorage.setItem('searchSort', 'desc')
       } else {
         this.mySort = 'asc'
-        sessionStorage.setItem('searchSort', 'asc')
+        // sessionStorage.setItem('searchSort', 'asc')
       }
       console.log(this.mySort)
       this.mescroll.resetUpScroll()
