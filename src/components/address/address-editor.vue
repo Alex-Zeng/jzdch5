@@ -81,6 +81,7 @@ export default {
       showInput: false,
       checkedTag: '公司',
       tag: [],
+      activeTag: '',
       newTag: null,
       iscur: 0,
       deleteShow: false
@@ -176,6 +177,9 @@ export default {
       axios.get('api/user/getAddressTag').then((response) => {
         if (response.data.status === 0) {
           this.tag = response.data.data
+          this.tag.forEach(function (index) {
+            console.log(index)
+          })
         }
       }).catch((response) => {
         this.errorMsg()
@@ -252,12 +256,14 @@ export default {
   },
   created () {
     let item = JSON.parse(localStorage.getItem('editorAdd'))
+    console.log(item)
     this.id = item.id
     this.userName = item.name
     this.mobile = item.phone
     this.areaId = item.areaId
     this.value = item.areaIds
     this.addressDetail = item.detail
+    this.activeTag = item.tag
     if (sessionStorage.getItem('loginToken') === null) {
       this.$router.push('/loginByCode')
     }

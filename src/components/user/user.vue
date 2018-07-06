@@ -120,10 +120,40 @@ export default {
     }
   },
   methods: {
+    getInfo () {
+      axios.get('api/user/getProfile').then((response) => {
+        const {status} = response.data
+        if (status === 0) {
+          this.userMsg.name = response.data.data.username
+          this.userMsg.photo = response.data.data.path
+        }
+      }).catch(() => {
+        this.errorMsg()
+      })
+    },
+    getSupplierOrderInfo () {
+      axios.get('api/user/getSupplierOrderInfo').then((response) => {
+        const {status} = response.data
+        if (status === 0) {
+          this.userMsg.name = response.data.data.pending
+          this.userMsg.photo = response.data.data.path
+        }
+      }).catch(() => {
+        this.errorMsg()
+      })
+    },
     loginMethod () {
       let loginToken = sessionStorage.getItem('loginToken')
       if (loginToken === null) {
-        this.$router.push('/loginByCode')
+        let self = this
+        this.$vux.confirm.show({
+          title: '提示',
+          content: '您尚未登录，是否去登录？',
+          onCancel () {},
+          onConfirm () {
+            self.$router.push('/loginByCode')
+          }
+        })
         /* var num = null
         try {
           num = window.jsb.login(window.location.href)
@@ -142,19 +172,36 @@ export default {
         if (response.data.status === 0) {
           this.favoriteNumber = response.data.data.number
         }
-      }).catch()
+      }).catch(() => {
+        this.errorMsg()
+      })
     },
     getNumber () {
       axios.get('api/mall_cart/getNumber').then((response) => {
         if (response.data.status === 0) {
           this.number = response.data.data.total
         }
-      }).catch()
+      }).catch(() => {
+        this.errorMsg()
+      })
+    },
+    errorMsg () {
+      this.$vux.toast.show({
+        type: 'warn',
+        text: '网络可能有点问题',
+        onShow () {
+          console.log('Plugin: I\'m showing')
+        },
+        onHide () {
+          console.log('Plugin: I\'m hiding')
+        }
+      })
     }
   },
   created () {
     this.groupId = Number(sessionStorage.getItem('groupId'))
     this.loginMethod()
+    this.getInfo()
     this.getFavoriteNumber()
     this.getNumber()
   },

@@ -456,10 +456,14 @@ input:-ms-input-placeholder {
   align-items: center;
   border-bottom: 1px solid #E1E1E1;
 }
+.form ul li label{
+  color: #222222;
+  font-size: 0.75rem;
+}
 .form ul li .cells label{
   padding-right: 1rem;
   color: #222222;
-  font-size: 15px;
+  font-size: 0.75rem;
 }
 .form ul li .cells input{
   height: 1.5rem;
