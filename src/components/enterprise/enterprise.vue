@@ -42,7 +42,7 @@
       </li>
       <li>
         <group>
-          <popup-picker title="注册类型 <span class='text-red'>*</span>" :data="list1" v-model="data.property" @on-show="onShow" @on-hide="onHide" @on-change="onChange" v-validate="'required'" placeholder="请按营业执照填写"></popup-picker>
+          <popup-picker title="注册类型 <span class='text-red'>*</span>" :data="list1" v-model="data.property" @on-show="onShow" @on-hide="onHide" @on-change="onChange" v-validate="'required'" placeholder="please select"></popup-picker>
         </group>
       </li>
       <li>
@@ -50,7 +50,7 @@
         <div class="cells">
           <label for="">注册资本 <span class="text-red">*</span></label>
           <input name="mobile" v-model="data.capital" v-validate="'required'" type="text" placeholder="请按营业执照填写" :disabled="data.status == 1">
-          <span style="font-size: 0.7rem;">万元</span>&emsp;
+          <span>万元&emsp;</span>
         </div>
       </li>
       <li>

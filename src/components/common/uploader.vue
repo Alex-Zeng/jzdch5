@@ -3,10 +3,7 @@
     <div v-if="!disabled">
       <input :id="'img'+id" style="visibility: hidden;height: 0; width: 1px;" type="file" @change="upload"/>
       <span>{{title}}</span>
-      <div class="upload-plus" @click="open" v-show="!value" v-if="!disabled">
-        +
-      </div>
-      <div class="upload-plus" style="color: #cccccc;" v-else>
+      <div class="upload-plus" @click="open" v-show="!value">
         +
       </div>
       <div v-show="value" @click="open">
@@ -17,8 +14,11 @@
     <div v-else>
       <input :id="'img'+id" style="visibility: hidden;height: 0; width: 1px;" type="file" @change="upload"/>
       <span>{{title}}</span>
-      <div class="upload-plus" style="color: #cccccc;">
+      <div class="upload-plus" style="color: #cccccc;" v-show="!value">
         +
+      </div>
+      <div v-show="value">
+        <img width="100%" :src="path||defaultPath" alt="">
       </div>
     </div>
   </div>
@@ -34,7 +34,8 @@ export default {
     title: String,
     id: String,
     disabled: Boolean,
-    value: String
+    value: String,
+    type: String
   },
   components: {
     XProgress
@@ -49,7 +50,6 @@ export default {
   updated () {
     if (this.imgurl) {
       this.url = this.imgurl
-      this.showImg = true
     }
   },
   methods: {
@@ -58,7 +58,7 @@ export default {
     },
     async upload () {
       let fd = new FormData()
-      fd.append('type', 'certification')
+      fd.append('type', this.type || 'certification ')
       fd.append('image', document.getElementById(`img${this.id}`).files[0])
       this.isProgress = true
       let config = {

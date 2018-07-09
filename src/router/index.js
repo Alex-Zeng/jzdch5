@@ -30,6 +30,8 @@ import ForgetPassword from '@/components/login/forget-password'
 import Search from '@/components/search/search'
 import GoodsDetail from '@/components/detail/detail'
 import Enterprise from '@/components/enterprise/enterprise'
+import OrderList from '@/components/user/order-list'
+import OrderDetail from '@/components/user/order-detail'
 import myForm from '@/components/form'
 Vue.use(Router)
 export default new Router({
@@ -280,6 +282,22 @@ export default new Router({
         title: '表单验证'
       },
       component: myForm
+    },
+    {
+      path: '/order-list',
+      name: 'Order',
+      meta: {
+        title: '我的订单'
+      },
+      component: OrderList
+    },
+    {
+      path: '/order-detail/:no',
+      name: 'OrderDetail',
+      meta: {
+        title: '订单详情'
+      },
+      component: OrderDetail
     }
   ]
 })
