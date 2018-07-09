@@ -86,7 +86,7 @@
       </div>
     </template>
     <template v-if="groupId === 6">
-      <div class="visitor-box" @click="$router.push('/select-enterprise')">
+      <div class="visitor-box" @click="$router.push('/settings')">
         <img src="@/assets/images/qurenzheng.png" alt="去认证">
         <p class="text-muted">还没有进行企业验证，快去进行企业验证吧~</p>
         <button class="btn">去认证</button>
