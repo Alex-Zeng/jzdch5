@@ -61,6 +61,7 @@ export default {
       this.$router.replace('/user')
     },
     getCertification () {
+      let self = this
       axios.get('api/user/getCertification').then((response) => {
         if (response.data.status === 0) {
           if (response.data.data) {
