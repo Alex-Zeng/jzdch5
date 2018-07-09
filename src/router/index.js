@@ -265,7 +265,7 @@ export default new Router({
       component: OrderList
     },
     {
-      path: '/order-detail',
+      path: '/order-detail/:no',
       name: 'OrderDetail',
       meta: {
         title: '订单详情'

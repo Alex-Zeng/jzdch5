@@ -46,15 +46,25 @@
         <div class="item">
           <span class="label">备注</span><span class="value">{{data.remark}}</span>
         </div>
+        <div class="line"></div>
+        <div class="item"><b style="color: #222222;">填写发货信息</b></div>
+        <Group>
+          <XInput title="运单号"></XInput>
+          <XInput title="物流公司"></XInput>
+          <XInput title="发货日期"></XInput>
+          <XInput title="预计到达"></XInput>
+        </Group>
+        <div class="item">
+          <button type="button" class="btn btn-primary">提交</button>
+        </div>
       </div>
-
     </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-import { Swipeout, SwipeoutItem, SwipeoutButton, Group, Datetime, XButton } from 'vux'
+import { Swipeout, SwipeoutItem, SwipeoutButton, Group, Datetime, XButton, XInput } from 'vux'
 import '@/assets/css/order.css'
 export default {
   name: 'notice-detail',
@@ -94,7 +104,8 @@ export default {
     SwipeoutButton,
     Group,
     Datetime,
-    XButton
+    XButton,
+    XInput
   }
 }
 </script>
