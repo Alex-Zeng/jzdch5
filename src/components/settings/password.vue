@@ -3,7 +3,7 @@
     <div class="header-nav">
       <i class="icon iconfont icon-back" style="padding-right: 1rem;" onclick="history.go(-1)"></i>
       <div>
-        设置邮箱
+        设置密码
       </div>
       <div style="padding-right: 2rem">&emsp;</div>
     </div>
@@ -14,16 +14,16 @@
             <input :type="typePassword" name="password" v-validate="'required|verificationPassword'" v-model="password" minlength="6" maxlength="20" placeholder="密码为6-20位字母及数字的组合"/>
             <i :class="[isTure1 ? 'icon-mimabukejian': 'icon-mimakejian', 'icon iconfont']" @click="togglePassword(1)"></i>
           </div>
-          <i v-show="errors.has('password')" class="fa fa-warning"></i>
-          <span v-show="errors.has('password')" class="help is-danger">{{ errors.first('password') }}</span>
+          <i v-show="errors.has('密码')" class="fa fa-warning"></i>
+          <span v-show="errors.has('密码')" class="help is-danger">{{ errors.first('密码') }}</span>
         </li>
         <li>
           <div>
             <input :type="typeConfirmPassword" name="confirmPassword" v-validate="'required|verificationPassword|confirmed:password'" v-model="confirmPassword" minlength="6" maxlength="20" placeholder="请再次输入"/>
             <i :class="[isTure2 ? 'icon-mimabukejian': 'icon-mimakejian', 'icon iconfont']" @click="togglePassword(2)"></i>
           </div>
-          <i v-show="errors.has('confirmPassword')" class="fa fa-warning"></i>
-          <span v-show="errors.has('confirmPassword')" class="help is-danger">{{ errors.first('confirmPassword') }}</span>
+          <i v-show="errors.has('确认密码')" class="fa fa-warning"></i>
+          <span v-show="errors.has('确认密码')" class="help is-danger">{{ errors.first('确认密码') }}</span>
         </li>
       </ul>
       <button type="button" class="btn btn-primary" @click="submit">下一步</button>
@@ -35,16 +35,16 @@
             <input :type="typePassword" name="oldPassword" v-model="oldPassword" v-validate="'required'" minlength="6" maxlength="20" placeholder="请输入旧密码"/>
             <i :class="[isTure1 ? 'icon-mimabukejian': 'icon-mimakejian', 'icon iconfont']" @click="togglePassword(1)"></i>
           </div>
-          <i v-show="errors.has('oldPassword')" class="fa fa-warning"></i>
-          <span v-show="errors.has('oldPassword')" class="help is-danger">{{ errors.first('oldPassword') }}</span>
+          <i v-show="errors.has('旧密码')" class="fa fa-warning"></i>
+          <span v-show="errors.has('旧密码')" class="help is-danger">{{ errors.first('旧密码') }}</span>
         </li>
         <li>
           <div>
             <input :type="typeConfirmPassword" name="newPassword" v-validate="'required|verificationPassword'" minlength="6" maxlength="20" placeholder="密码为6-20位字母及数字的组合"/>
             <i :class="[isTure2 ? 'icon-mimabukejian': 'icon-mimakejian', 'icon iconfont']" @click="togglePassword(2)"></i>
           </div>
-          <i v-show="errors.has('newPassword')" class="fa fa-warning"></i>
-          <span v-show="errors.has('newPassword')" class="help is-danger">{{ errors.first('newPassword') }}</span>
+          <i v-show="errors.has('新密码')" class="fa fa-warning"></i>
+          <span v-show="errors.has('新密码')" class="help is-danger">{{ errors.first('新密码') }}</span>
         </li>
       </ul>
       <button type="button" class="btn btn-primary" @click="submitNewpassword">下一步</button>
@@ -98,9 +98,9 @@ export default {
       })
     },
     submit () {
-      this.$validator.attach('password', 'required|verificationPassword')
-      this.$validator.attach('confirmPassword', 'required|verificationPassword|confirmed:password')
-      this.$validator.validateAll({'password': this.password, 'confirmPassword': this.confirmPassword}).then((result) => {
+      this.$validator.attach('密码', 'required|verificationPassword')
+      this.$validator.attach('确认密码', 'required|verificationPassword|confirmed:password')
+      this.$validator.validateAll({'密码': this.password, '确认密码': this.confirmPassword}).then((result) => {
         if (result) {
           axios.post('api/user/initPasswordd', {
             'password': this.password,
@@ -121,9 +121,9 @@ export default {
       })
     },
     submitNewpassword () {
-      this.$validator.attach('oldPassword', 'required')
-      this.$validator.attach('newPassword', 'required|verificationPassword')
-      this.$validator.validateAll({'oldPassword': this.oldPassword, 'newPassword': this.newPassword}).then((result) => {
+      this.$validator.attach('旧密码', 'required')
+      this.$validator.attach('新密码', 'required|verificationPassword')
+      this.$validator.validateAll({'旧密码': this.oldPassword, '新密码': this.newPassword}).then((result) => {
         if (result) {
           axios.post('api/user/updatePassword', {
             'oldPassword': this.oldPassword,

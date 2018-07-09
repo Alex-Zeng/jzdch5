@@ -9,33 +9,29 @@
       <div class="user-msg">
         <group>
           <cell is-link link="/goods-collect">
-            <i class="icon iconfont icon-xingxing text-blue"></i>
+            <i slot="icon" class="icon iconfont icon-shoucang1 text-blue"></i>
             <span slot="title"><span style="vertical-align:middle;">收藏夹</span>({{favoriteNumber}})</span>
           </cell>
         </group>
       </div>
       <div class="user-grid">
         <div class="item">
-          <i class="icon iconfont icon-daifukuan">
-            <badge text="9"></badge>
-          </i>
-          <div>代付款</div>
+          <div>昨日成交（笔）</div>
+          <span class="text-blue">4545</span>
         </div>
         <div class="item">
-          <i class="icon iconfont icon-daishouhuo">
-            <badge text="9"></badge>
-          </i>
-          <div>待收货</div>
+          <div>累计成交（笔）</div>
+          <span class="text-blue">4545</span>
         </div>
         <div class="item">
           <i class="icon iconfont icon-daifahuo">
-            <badge text="9"></badge>
+            <badge v-if="supplier.pending !== '0'" v-text="supplier.pending"></badge>
           </i>
           <div>待发货</div>
         </div>
         <div class="item">
           <i class="icon iconfont icon-shouhou">
-            <badge text="9"></badge>
+            <badge v-if="supplier.service !== '0'" v-text="supplier.service"></badge>
           </i>
           <div>售后处理</div>
         </div>
@@ -61,32 +57,32 @@
       <div class="user-grid">
         <div class="item">
           <i class="icon iconfont icon-daifukuan">
-            <badge text="9"></badge>
+            <badge v-if="buyerOrder.pay !== '0'" v-text="buyerOrder.pay"></badge>
           </i>
           <div>代付款</div>
         </div>
         <div class="item">
           <i class="icon iconfont icon-daishouhuo">
-            <badge text="9"></badge>
+            <badge v-if="buyerOrder.recieve !== '0'" v-text="buyerOrder.recieve"></badge>
           </i>
           <div>待收货</div>
         </div>
         <div class="item">
           <i class="icon iconfont icon-daifahuo">
-            <badge text="9"></badge>
+            <badge v-if="buyerOrder.deliver !== '0'" v-text="buyerOrder.deliver"></badge>
           </i>
           <div>待发货</div>
         </div>
         <div class="item">
           <i class="icon iconfont icon-shouhou">
-            <badge text="9"></badge>
+            <badge v-if="buyerOrder.service !== '0'" v-text="buyerOrder.service"></badge>
           </i>
           <div>售后处理</div>
         </div>
       </div>
     </template>
     <template v-if="groupId === 6">
-      <div class="visitor-box" @click="$router.push('/select-enterprise')">
+      <div class="visitor-box" @click="$router.push('/settings')">
         <img src="@/assets/images/qurenzheng.png" alt="去认证">
         <p class="text-muted">还没有进行企业验证，快去进行企业验证吧~</p>
         <button class="btn">去认证</button>
@@ -113,6 +109,18 @@ export default {
       groupId: null,
       favoriteNumber: '',
       number: '',
+      supplier: {
+        'yesterday': '0',
+        'total': '0',
+        'pending': '0',
+        'service': '0'
+      },
+      buyerOrder: {
+        'pay': '0',
+        'recieve': '0',
+        'deliver': '0',
+        'service': '0'
+      },
       userMsg: {
         'name': '广东律晶电器有限责任公司',
         'photo': require('../../assets/images/bingxiang-icon.png')
@@ -135,8 +143,23 @@ export default {
       axios.get('api/user/getSupplierOrderInfo').then((response) => {
         const {status} = response.data
         if (status === 0) {
-          this.userMsg.name = response.data.data.pending
-          this.userMsg.photo = response.data.data.path
+          this.supplier.yesterday = response.data.data.yesterday
+          this.supplier.total = response.data.data.total
+          this.supplier.pending = response.data.data.pending
+          this.supplier.service = response.data.data.service
+        }
+      }).catch(() => {
+        this.errorMsg()
+      })
+    },
+    getBuyerOrderInfo () {
+      axios.get('api/user/getBuyerOrderInfo').then((response) => {
+        const {status} = response.data
+        if (status === 0) {
+          this.buyerOrder.pay = response.data.data.pay
+          this.buyerOrder.recieve = response.data.data.recieve
+          this.buyerOrder.deliver = response.data.data.deliver
+          this.buyerOrder.service = response.data.data.service
         }
       }).catch(() => {
         this.errorMsg()
@@ -202,6 +225,12 @@ export default {
     this.groupId = Number(sessionStorage.getItem('groupId'))
     this.loginMethod()
     this.getInfo()
+    if (this.groupId === 4) {
+      this.getBuyerOrderInfo()
+    }
+    if (this.groupId === 5) {
+      this.getSupplierOrderInfo()
+    }
     this.getFavoriteNumber()
     this.getNumber()
   },

@@ -35,14 +35,20 @@
 }
 .user-grid .item{
   color: #999999;
-    padding-top: 1.8rem;
-    width: 50%;
-    height: 6.25rem;
-    background: #FFFFFF;
-    margin-top: -1px;
+  padding-top: 1.8rem;
+  width: 50%;
+  height: 6.25rem;
+  background: #FFFFFF;
+  margin-top: -1px;
   font-size: 0.8rem;
-    border: 0.05rem solid #E1E1E1;
-    box-sizing: border-box;
+  border: 0.05rem solid #E1E1E1;
+  box-sizing: border-box;
+}
+.user-grid .item .text-blue{
+  display: inline-block;
+  padding-top: 1rem;
+  font-size: 0.9rem;
+  font-weight: bold;
 }
 .user-grid .item i{
   position: relative;

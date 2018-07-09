@@ -12,7 +12,7 @@
         <ul>
           <li>
             <div>
-              <input type="text" name="邮箱" v-model="email" v-validate="'required|email'" placeholder="请填写邮箱账号"/>
+              <input type="text" name="email" v-model="email" v-validate="'required|email'" placeholder="请填写邮箱账号"/>
             </div>
             <i v-show="errors.has('邮箱')" class="fa fa-warning"></i>
             <span v-show="errors.has('邮箱')" class="help is-danger">{{ errors.first('邮箱') }}</span>
@@ -23,8 +23,8 @@
               <button v-if="!disabled1" @click="getCode(hasEmail? 0:1)">获取</button>
               <button v-if="disabled1" class="disabled">{{time}}s后重新发送</button>
             </div>
-            <i v-show="errors.has('code')" class="fa fa-warning"></i>
-            <span v-show="errors.has('code')" class="help is-danger">请填写验证码</span>
+            <i v-show="errors.has('验证码')" class="fa fa-warning"></i>
+            <span v-show="errors.has('验证码')" class="help is-danger">请填写验证码</span>
           </li>
         </ul>
         <button type="button" class="btn btn-primary" @click="submitInit">提交</button>
@@ -33,7 +33,7 @@
       <ul>
         <li>
           <div>
-            <input type="text" name="oldCode" v-validate="'required'" v-model="oldCode" class="has-button" placeholder="请输入短信验证码"/>
+            <input type="text" name="oldCode" v-validate="'required'" v-model="oldCode" class="has-button" placeholder="请输入短信验证码b"/>
             <button v-if="!disabled1" @click="sendCode()">获取</button>
             <button v-if="disabled1" class="disabled">{{time}}s后重新发送</button>
           </div>
@@ -173,7 +173,9 @@ export default {
       })
     },
     submitInit () {
-      this.$validator.validateAll().then((result) => {
+      this.$validator.attach('邮箱', 'required|email')
+      this.$validator.attach('验证码', 'required')
+      this.$validator.validateAll({'邮箱': this.email, '验证码': this.code}).then((result) => {
         if (result) {
           let self = this
           axios.post('api/user/initEmail', {

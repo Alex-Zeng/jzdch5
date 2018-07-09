@@ -54,6 +54,7 @@
     </div>
     <div class="shadow-box" v-if="shawdow" @click="shawdowMethod"></div>
     <div class="goods-guige" v-if="shawdow">
+      <i class="icon iconfont icon-guanbi" @click="shawdowMethod"></i>
       <div v-for="i in goodsData.standard.length" :key="i">
         <h3>{{goodsData.standard[i-1].title}}</h3>
         <ul v-if="goodsData.standard[i-1].title === '规格'">
@@ -98,6 +99,10 @@ export default {
   },
   methods: {
     showDetai () {
+      if (sessionStorage.getItem('groupId') === '2' || sessionStorage.getItem('groupId') === '3' || sessionStorage.getItem('groupId') === '5') {
+        this.showCar = false
+        return false
+      }
       var self = this
       axios.get('api/goods/get&id=' + this.$route.params.id).then((response) => {
         if (response.data.status === 0) {
@@ -180,10 +185,6 @@ export default {
             self.$router.push('/select-enterprise')
           }
         })
-        return false
-      }
-      if (sessionStorage.getItem('groupId') === '2' || sessionStorage.getItem('groupId') === '3' || sessionStorage.getItem('groupId') === '5') {
-        this.showCar = false
         return false
       }
       if (this.goodsData.standard.length === 1) {

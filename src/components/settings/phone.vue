@@ -11,7 +11,7 @@
         <ul>
           <li>
             <div>
-              <input type="text" name="oldCode" v-validate="'required'" v-model="oldCode" class="has-button" placeholder="请输入短信验证码"/>
+              <input type="text" name="oldCode" v-validate="'required'" minlength="4" maxlength="4" v-model="oldCode" class="has-button" placeholder="请输入短信验证码"/>
               <button v-if="!disabled1" @click="getCode('api/code/oldPhoneSend',1)">获取</button>
               <button v-if="disabled1" class="disabled">{{time}}s后重新发送</button>
             </div>
@@ -95,12 +95,12 @@ export default {
       this.$validator.attach('oldCode', 'required')
       this.$validator.validate('oldCode', this.oldCode).then((result) => {
         if (result) {
-          this.showModel0 = false
-          this.showModel1 = true
           axios.post('api/code/oldPhoneValid', {
             'code': this.oldCode
           }).then((response) => {
             if (response.data.status === 0) {
+              this.showModel0 = false
+              this.showModel1 = true
             } else {
               this.$vux.toast.show({
                 type: 'warn',
