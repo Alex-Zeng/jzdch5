@@ -5,12 +5,32 @@
       <div>
         我的订单
       </div>
-      <div>&emsp;</div>
+      <div @click="showSelect">全部<i class="icon iconfont icon-xiala-" style="padding-right: 1rem;font-size: 0.45rem !important;">
+      </i></div>
     </div>
-    <div class="order-wrap">
+    <div v-show="show" class="menu-wrap">
+      <ul class="menu-list">
+        <li class="item" @click="state=-1">全部</li>
+        <li class="item" @click="state=0">待核价</li>
+      </ul>
+      <ul class="menu-list">
+        <li class="item" @click="state=1">待签约</li>
+        <li class="item" @click="state=3">待发货</li>
+      </ul>
+      <ul class="menu-list">
+        <li class="item" @click="state=6">待收货</li>
+        <li class="item" @click="state=9">账期中</li>
+      </ul>
+      <ul class="menu-list">
+        <li class="item" @click="state=13">交易完成</li>
+        <li class="item" @click="state=8">售后处理</li>
+      </ul>
+    </div>
+
+    <div class="order-wrap" v-show="!show">
       <div class="order-card" v-for="i in list" :key="i.id">
         <div class="indent-title">
-          {{i.supplier}}
+          {{i.companyName}}
         </div>
         <swipeout>
           <swipeout-item transition-mode="follow" class="order-item" v-for="(good, key) in i.goods" :key="key">
@@ -36,31 +56,34 @@
         </div>
       </div>
     </div>
-    <FooterNav></FooterNav>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 import { Swipeout, SwipeoutItem, SwipeoutButton, Group, Datetime, XTextarea, XButton } from 'vux'
-import FooterNav from '../common/footer-nav'
 import '@/assets/css/order.css'
 export default {
   name: 'notice-detail',
   data () {
     return {
-      list: []
+      list: [],
+      show: false,
+      state: -1
     }
   },
   mounted () {
     this.getList()
   },
   methods: {
+    showSelect () {
+      this.show = true
+    },
     gotoDetail (no) {
       this.$router.push('/order-detail/' + no)
     },
     getList () {
-      axios.post('api/order/getList').then((response) => {
+      axios.post('api/order/getList', {state: this.state}).then((response) => {
         this.list = response.data.data.list
       }).catch((response) => {
         this.errorMsg()
@@ -86,12 +109,30 @@ export default {
     Group,
     Datetime,
     XTextarea,
-    XButton,
-    FooterNav
+    XButton
   }
 }
 </script>
 
 <style scoped>
+.menu-wrap{
+  margin-top: 4.8rem;
+}
 
+.menu-list{
+  display: flex;
+  width: 100%;
+}
+.menu-list .item{
+  flex: 1;
+  flex-basis: 50%;
+  text-align: center;
+  margin: .8rem 1.2rem;
+  padding: 0.2rem 0;
+  line-height: 1.8;
+  background-color: #5fcaed;
+  color: #ffffff;
+  border-radius: 0.28rem;
+  font-size: 0.8rem;
+}
 </style>

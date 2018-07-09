@@ -30,6 +30,13 @@
   float: right;
 }
 
+.order-tips{
+  text-align: center;
+  font-size: 1.2rem;
+  color: #999;
+  padding: 3rem 0;
+}
+
 .order-card .icon-bianji {
   font-size: 1.5rem !important;
 }

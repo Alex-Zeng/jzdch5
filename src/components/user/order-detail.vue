@@ -48,7 +48,7 @@
           <span class="label">备注</span><span class="value">{{data.remark}}</span>
         </div>
         <div class="line"></div>
-        <div v-if="data.groupId === 5">
+        <div v-if="data.groupId === 5 && data.state === 3">
           <div class="item"><b style="color: #222222;">填写发货信息</b></div>
           <Group>
             <XInput title="运单号"></XInput>
@@ -60,7 +60,10 @@
             <button type="button" class="btn btn-primary">提交</button>
           </div>
         </div>
-        <div>
+        <div v-if="data.state !== 3">
+          <div class="order-tips">
+            暂无物流信息
+          </div>
         </div>
       </div>
     </div>
