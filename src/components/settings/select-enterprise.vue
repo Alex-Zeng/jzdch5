@@ -62,6 +62,12 @@ export default {
       show: false
     }
   },
+  mounted () {
+    let certStatus = sessionStorage.getItem('certStatus')
+    if (certStatus === '1') {
+      this.$router.push('/enterprise')
+    }
+  },
   methods: {
     selectMethods (val) {
       sessionStorage.setItem('agent', val)

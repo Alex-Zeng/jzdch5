@@ -1,7 +1,7 @@
 <template>
     <div>
       <div class="header-nav">
-        <i class="icon iconfont icon-back" style="padding-right: 1rem;" onclick="history.go(-1)"></i>
+        <i class="icon iconfont icon-back" style="padding-right: 1rem;" @click="back"></i>
         <div>
           设置中心
         </div>
@@ -57,6 +57,9 @@ export default {
       sessionStorage.clear()
       this.$router.push('/')
     },
+    back () {
+      this.$router.replace('/user')
+    },
     getCertification () {
       axios.get('api/user/getCertification').then((response) => {
         if (response.data.status === 0) {
@@ -66,6 +69,7 @@ export default {
               this.enterprise = true
               sessionStorage.setItem('userType', role === '采购商' ? 1 : 2)
               sessionStorage.setItem('agent', agentIdentityCard ? 0 : 1)
+              sessionStorage.setItem('certStatus', 1)
             }
           }
         } else if (response.data.status === -2) {

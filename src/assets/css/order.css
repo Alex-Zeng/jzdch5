@@ -1,62 +1,45 @@
-.address{
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #FFFFFF;
-  min-height: 3rem;
-  font-size: 0.7rem;
-  margin: 0.5rem 0;
-  padding: 0.75rem 0.5rem;
-  border-top: 0.05rem solid #e1e1e1;
-  border-bottom: 0.05rem solid #e1e1e1;
+.order-wrap {
+  padding: .45rem;
+  box-sizing: border-box;
+  margin-bottom: 2.5rem;
 }
-.address .tag{
-  height: 1rem;
-  line-height: 1rem;
-  font-weight: normal;
-  color: #1EB9EE;
-  border: 1px solid #1EB9EE;
-  padding: 0 0.6rem;
-  border-radius: 0.2rem;
-}
-.address h3{
-  padding-bottom: 0.5rem;
-}
-.address .name{
-  font-size: 0.9rem;
-  padding-right: 0.5rem;
-}
-.indent-list{
-  padding-bottom: 4rem;
-}
-.indent-list > div{
+
+.order-card {
+  /*padding-bottom: 0.2rem;*/
+  border-radius: 0.4rem;
+  overflow: hidden;
+  border: 0.05rem solid #E1E1E1;
   margin-bottom: 0.5rem;
 }
-.indent-list .weui-cells {
-  margin-top: 0.5rem!important;
+
+.order-card .weui-cells {
+  margin-top: 0.5rem !important;
 }
-.indent-list .icon-bianji{
-  font-size: 1.5rem!important;
+
+.order-card .icon-bianji {
+  font-size: 1.5rem !important;
 }
-.indent-title{
+
+.order-title {
   height: 1.5rem;
   line-height: 1.5rem;
   padding: 0 0.5rem;
   padding-left: 2rem;
-  /*border-top: 0.05rem solid #E1E1E1;*/
+  border-top: 0.05rem solid #E1E1E1;
   border-bottom: 0.05rem solid #E1E1E1;
   background: #FFFFFF url("../images/sho-car-title.png") no-repeat 0.5rem center;
   background-size: 1.1rem;
   color: #222222;
   padding-right: 7rem;
   overflow: hidden;
-  text-overflow:ellipsis;
+  text-overflow: ellipsis;
   white-space: nowrap;
   font-size: 0.6rem;
   font-weight: bold;
   position: relative;
 }
-.indent-title > span:last-child{
+
+.order-title > span:last-child {
   font-weight: normal;
   color: #1EB9EE;
   transform: scale(0.8);
@@ -65,30 +48,36 @@
   top: 0;
   bottom: 0;
 }
-.indent-content{
+
+.order-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0.5rem;
   background: #fff;
 }
-.indent-content img{
+
+.order-content img {
   width: 4.5rem;
   height: 4.5rem;
 }
-.indent-content .indent-info{
+
+.order-content .order-info {
   flex: 1;
   font-size: 0.6rem;
   line-height: 1.5;
   padding-left: 0.5rem;
 }
-.indent-content .indent-info h3{
+
+.order-content .order-info h3 {
   font-size: 0.8rem;
 }
-.indent-content .indent-info h3 a{
+
+.order-content .order-info h3 a {
   color: #222222;
 }
-.editor-container{
+
+.editor-container {
   position: fixed;
   left: 0;
   right: 0;
@@ -96,25 +85,31 @@
   bottom: 0;
   background: #F5F5F5;
 }
-.editor{
+
+.editor {
 }
-.editor li{
+
+.editor li {
   display: flex;
   padding: 0.5rem;
   background: #FFFFFF;
   margin-bottom: 0.5rem;
 }
-.editor li:last-child{
+
+.editor li:last-child {
   background: none;
 }
-.editor li label{
+
+.editor li label {
   font-size: 0.7rem;
   font-weight: bold;
 }
-.editor li input{
+
+.editor li input {
   flex: 1;
 }
-.success-info{
+
+.success-info {
   background: #1EB9EE;
   text-align: center;
   line-height: 1.5;
@@ -123,11 +118,13 @@
   color: #FFFFFF;
   padding-bottom: 0.5rem;
 }
-.success-info i{
-  font-size: 1.5rem!important;
+
+.success-info i {
+  font-size: 1.5rem !important;
   color: #FFFFFF;
 }
-.indent-detail{
+
+.order-detail {
   margin: 0.8rem 0.5rem;
   border-radius: 0.25rem;
   background: #FFFFFF;
@@ -135,19 +132,23 @@
   border: 0.05rem solid #E1E1E1;
   margin-bottom: 4rem;
 }
-.indent-detail ul li{
+
+.order-detail ul li {
 }
-.indent-detail-order{
+
+.order-detail-order {
   line-height: 2;
   padding: 0 0.5rem;
   color: #999999;
   font-size: 0.7rem;
   padding-bottom: 0.5rem;
 }
-.indent-detail-order span{
+
+.order-detail-order span {
   margin-right: 1.8rem;
 }
-.indent-detail-seller{
+
+.order-detail-seller {
   height: 2.5rem;
   line-height: 2.5rem;
   padding-left: 2.5rem;
@@ -155,22 +156,87 @@
   border-bottom: 0.05rem solid #E1E1E1;
   background-size: 1.5rem;
 }
-.indent-detail .indent-content{
+
+.order-detail .order-content {
   border-bottom: 0.05rem solid #E1E1E1;
 }
-.indent-remark{
+
+.order-remark {
   display: flex;
   padding: 0.5rem;
   font-size: 0.75rem;
   color: #999999;
   border-bottom: 0.05rem solid #E1E1E1;
 }
-ul li:last-child .indent-remark{
+
+ul li:last-child .order-remark {
   border: none;
 }
-.indent-remark span{
+
+.order-remark span {
   width: 3.5rem;
 }
-.indent-remark > div{
+
+.order-remark > div {
   flex: 1;
+}
+
+.order-action {
+  padding: 0.4rem 1rem 0.4rem 0;
+  display: flex;
+  flex-direction: row-reverse;
+  background-color: #fff;
+  border-top: 0.05rem solid #E1E1E1;
+}
+
+.order-button {
+  font-size: 0.6rem;
+  padding: 0.14rem 0.26rem;
+  color: #5FCAED;
+  border: 1px solid #5FCAED;
+  border-radius: 0.8rem;
+}
+
+.order-button {
+  margin-left: 0.3rem;
+}
+
+.order-item + .order-item {
+  border-top: 0.05rem solid #E1E1E1;
+}
+
+.addr {
+  font-size: 0.8rem;
+  padding: 0.6rem 0.45rem;
+  background: #fff;
+}
+
+.addr .detail {
+  font-size: 0.6rem;
+  color: #999999;
+  margin-top: 0.6rem;
+}
+
+.info {
+  font-size: 0.8rem;
+  background: #fff;
+  color: #999999;
+  padding-bottom: 0.6rem;
+}
+
+.item{
+  padding: 0 0.45rem;
+  margin-top: 0.6rem;
+}
+
+.item .label{
+  width: 3.2rem;
+  margin-right: 0.8rem;
+}
+
+.info .line {
+  border-bottom: 1px solid #ccc;
+  margin-top: 0.6rem;
+  margin-bottom: 0.6rem;
+  width: 100%;
 }

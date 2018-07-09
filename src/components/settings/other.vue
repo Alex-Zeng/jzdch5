@@ -14,7 +14,7 @@
       <x-input title='公司固话' text-align="right" v-model="phone" @on-blur="updateInfo ('tel', phone)" placeholder="未设置"></x-input>
     </group>
     <group>
-      <uploader title="公司LOGO" id="1" v-model="logo" :defaultPath="logo" @change="changeTest"></uploader>
+      <uploader title="公司LOGO" id="1" v-model="logo" type="user_icon" :defaultPath="logo" @change="changeTest"></uploader>
     </group>
   </div>
 </template>

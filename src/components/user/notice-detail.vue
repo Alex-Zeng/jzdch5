@@ -23,11 +23,9 @@ export default {
   name: 'notice-detail',
   data () {
     return {
-      detail: {}
     }
   },
   mounted () {
-    sessionStorage.setItem('selectedDeafult', '公告')
   },
   created () {
     axios.get('api/user/getNoticeInfo&id=' + this.$route.params.id).then((response) => {
