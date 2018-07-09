@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="user-header">
-      <img :src="userMsg.photo" alt="头像">
+      <img :src="userMsg.photo" alt="">
       <div>{{userMsg.name}}</div>
       <i class="icon iconfont icon-shezhi" @click="$router.push('/settings')"></i>
     </div>
@@ -92,11 +92,13 @@
         <button class="btn">去认证</button>
       </div>
     </template>
-    <div class="all-indent" v-if="groupId !== 6">查看全部订单<i class="icon iconfont icon-youjiantou"></i></div>
-    <div class="footer-ad" v-if="groupId !== 6">
-      <div>集众金融 急你所需</div>
-      <div><a href="javascript:;">申请融资</a></div>
-    </div>
+    <template v-if="groupId !== 0">
+      <div class="all-indent" v-if="groupId !== 6">查看全部订单<i class="icon iconfont icon-youjiantou"></i></div>
+      <div class="footer-ad" v-if="groupId !== 6">
+        <div>集众金融 急你所需</div>
+        <div><a href="javascript:;">申请融资</a></div>
+      </div>
+    </template>
     <FooterNav></FooterNav>
   </div>
 </template>
@@ -127,7 +129,9 @@ export default {
         this.$vux.confirm.show({
           title: '提示',
           content: '您尚未登录，是否去登录？',
-          onCancel () {},
+          onCancel () {
+            self.$router.go(-1)
+          },
           onConfirm () {
             self.$router.push('/loginByCode')
           }

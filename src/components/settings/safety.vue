@@ -46,6 +46,7 @@ export default {
   },
   methods: {
     getInfo () {
+      let self = this
       axios.get('api/user/getProfile').then((response) => {
         if (response.data.status === 0) {
           this.phone = response.data.data.phone
