@@ -1,7 +1,7 @@
 <template>
   <div class="enterprise">
     <div class="header-nav">
-      <i class="icon iconfont icon-back" style="padding-right: 1rem;" onclick="history.go(-1)"></i>
+      <i class="icon iconfont icon-back" style="padding-right: 1rem;" @click="back"></i>
       <div>
         企业认证
       </div>
@@ -162,7 +162,12 @@ export default {
       console.log('on', event)
     },
     back () {
-      window.history.go(-1)
+      const status = this.data
+      if (status === '1') {
+        this.$router.replace('settings')
+      } else {
+        this.$router.go(-1)
+      }
     },
     async check () {
       // 检查审核状态
