@@ -11,7 +11,7 @@
       <ul>
         <li>
           <div>
-            <input type="text" name="oldCode" v-validate="'required'" v-model="oldCode" maxlength="4" class="has-button" placeholder="请输入短信验证码"/>
+            <input type="text" name="oldCode" v-validate="'required'" v-model="oldCode" maxlength="4" class="has-button" placeholder="请输入邮箱验证码"/>
             <button v-if="!disabled1" @click="sendCode()">获取</button>
             <button v-if="disabled1" class="disabled">{{time1}}s后重新发送</button>
           </div>
