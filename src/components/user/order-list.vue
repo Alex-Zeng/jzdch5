@@ -31,7 +31,7 @@
           </swipeout-item>
         </swipeout>
         <div class="order-action">
-          <div class="order-button">查看详情</div>
+          <div class="order-button" @click="gotoDetail(i.out_id)">查看详情</div>
           <div class="order-button">取消交易</div>
         </div>
       </div>
@@ -56,6 +56,9 @@ export default {
     this.getList()
   },
   methods: {
+    gotoDetail (no) {
+      this.$router.push('/order-detail/' + no)
+    },
     getList () {
       axios.post('api/order/getList').then((response) => {
         this.list = response.data.data.list
