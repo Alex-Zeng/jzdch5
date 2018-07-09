@@ -18,7 +18,7 @@
         </li>
         <li>
           <div>
-            <input type="text" name="验证码" v-validate="'required'" v-model="code" class="has-button" placeholder="请输入短信验证码"/>
+            <input type="text" name="验证码" v-validate="'required'" v-model="code" class="has-button" placeholder="请输入邮箱验证码"/>
             <button v-if="!disabled1" @click="getCode()">获取</button>
             <button v-if="disabled1" class="disabled">{{time}}s后重新发送</button>
           </div>

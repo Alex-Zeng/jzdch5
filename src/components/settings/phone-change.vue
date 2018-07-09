@@ -12,7 +12,7 @@
           <li>
             <div>
               <input type="text" name="oldCode" v-validate="'required'" maxlength="4" v-model="oldCode" class="has-button" placeholder="请输入短信验证码"/>
-              <button v-if="!disabled1" @click="getCode('api/code/oldPhoneSend',1)">获取</button>
+              <button v-if="!disabled1" @click="oldPhoneSend(1)">获取</button>
               <button v-if="disabled1" class="disabled">{{time1}}s后重新发送</button>
             </div>
             <i v-show="errors.has('oldCode')" class="fa fa-warning"></i>
@@ -40,12 +40,12 @@
           </li>
           <li>
             <div>
-              <input type="text" name="newCode" v-model="newCode" v-validate="'required'" maxlength="4" class="has-button" placeholder="请输入短信验证码"/>
+              <input type="text" name="短信验证码" v-model="newCode" v-validate="'required'" maxlength="4" class="has-button" placeholder="请输入短信验证码"/>
               <button v-if="!disabled2" @click="getCode('api/code/newPhoneSend',2)">获取</button>
               <button v-if="disabled2" class="disabled">{{time2}}s后重新发送</button>
             </div>
-            <i v-show="errors.has('newCode')" class="fa fa-warning"></i>
-            <span v-show="errors.has('newCode')" class="help is-danger">请填写验证码</span>
+            <i v-show="errors.has('短信验证码')" class="fa fa-warning"></i>
+            <span v-show="errors.has('短信验证码')" class="help is-danger">{{ errors.first('短信验证码') }}</span>
           </li>
         </ul>
         <button type="button" class="btn btn-primary" @click="submit">下一步</button>
@@ -77,10 +77,39 @@ export default {
     }
   },
   methods: {
-    getCode (url, i) {
-      this.setTimeMethods(i)
-      axios.get(url).then((response) => {
+    oldPhoneSend (i) {
+      axios.get('api/code/oldPhoneSend').then((response) => {
         if (response.data.status === 0) {
+          this.$vux.toast.show({
+            type: 'success',
+            text: response.data.msg
+          })
+          this.setTimeMethods(i)
+        } else {
+          this.$vux.toast.show({
+            type: 'warn',
+            text: response.data.msg
+          })
+        }
+      }).catch((resposne) => {
+        this.errorMsg()
+      })
+    },
+    getCode (url, i) {
+      axios.post(url, {
+        'phone': this.phone
+      }).then((response) => {
+        if (response.data.status === 0) {
+          this.$vux.toast.show({
+            type: 'success',
+            text: response.data.msg
+          })
+          this.setTimeMethods(i)
+        } else {
+          this.$vux.toast.show({
+            type: 'warn',
+            text: response.data.msg
+          })
         }
       }).catch((resposne) => {
         this.errorMsg()
@@ -99,13 +128,7 @@ export default {
             } else {
               this.$vux.toast.show({
                 type: 'warn',
-                text: response.data.msg,
-                onShow () {
-                  console.log('Plugin: I\'m showing')
-                },
-                onHide () {
-                  console.log('Plugin: I\'m hiding')
-                }
+                text: response.data.msg
               })
             }
           }).catch((resposne) => {
@@ -139,7 +162,14 @@ export default {
       })
     },
     submit () {
-      this.$validator.validateAll().then((result) => {
+      this.$validator.attach('手机号', 'required|phone')
+      this.$validator.attach('验证码', 'required')
+      this.$validator.attach('短信验证码', 'required')
+      this.$validator.validateAll({
+        '手机号': this.phone,
+        '验证码': this.verificationCode,
+        '短信验证码': this.newCode
+      }).then((result) => {
         if (result) {
           axios.post('api/user/bind', {
             'phone': this.phone,
@@ -151,26 +181,16 @@ export default {
             let self = this
             if (response.data.status === 0) {
               this.$vux.toast.show({
-                type: 'warn',
+                type: 'success',
                 text: '修改成功',
-                onShow () {
-                  console.log('Plugin: I\'m showing')
-                },
                 onHide () {
                   self.$router.push('/safety')
-                  console.log('Plugin: I\'m hiding')
                 }
               })
             } else {
               this.$vux.toast.show({
                 type: 'warn',
-                text: response.data.msg,
-                onShow () {
-                  console.log('Plugin: I\'m showing')
-                },
-                onHide () {
-                  console.log('Plugin: I\'m hiding')
-                }
+                text: response.data.msg
               })
             }
           }).catch((resposne) => {

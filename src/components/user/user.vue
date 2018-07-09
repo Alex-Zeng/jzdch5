@@ -114,8 +114,8 @@ export default {
       favoriteNumber: '',
       number: '',
       userMsg: {
-        'name': '广东律晶电器有限责任公司',
-        'photo': require('../../assets/images/bingxiang-icon.png')
+        'name': '',
+        'photo': ''
       }
     }
   },
@@ -123,7 +123,15 @@ export default {
     loginMethod () {
       let loginToken = sessionStorage.getItem('loginToken')
       if (loginToken === null) {
-        this.$router.push('/loginByCode')
+        let self = this
+        this.$vux.confirm.show({
+          title: '提示',
+          content: '您尚未登录，是否去登录？',
+          onCancel () {},
+          onConfirm () {
+            self.$router.push('/loginByCode')
+          }
+        })
         /* var num = null
         try {
           num = window.jsb.login(window.location.href)
