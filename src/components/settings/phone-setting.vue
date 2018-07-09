@@ -3,7 +3,7 @@
       <div class="header-nav">
         <i class="icon iconfont icon-back" style="padding-right: 1rem;" onclick="history.go(-1)"></i>
         <div>
-          修改绑定手机
+          设置绑定手机
         </div>
         <div style="padding-right: 2rem">&emsp;</div>
       </div>
@@ -56,7 +56,7 @@
 <script>
 import axios from 'axios'
 export default {
-  name: 'phone',
+  name: 'phone-setting',
   data () {
     return {
       mobileCode: '',

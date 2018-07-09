@@ -6,9 +6,12 @@ import User from '@/components/user/user'
 import Settings from '@/components/settings/index'
 import selectEnterprise from '@/components/settings/select-enterprise'
 import Safety from '@/components/settings/safety'
-import changePhone from '@/components/settings/phone'
-import changeEmail from '@/components/settings/email'
-import changePassword from '@/components/settings/password'
+import settingPhone from '@/components/settings/phone-setting'
+import changePhone from '@/components/settings/phone-change'
+import settingEmail from '@/components/settings/email-setting'
+import changeEmail from '@/components/settings/email-change'
+import settingPassword from '@/components/settings/password-setting'
+import changePassword from '@/components/settings/password-change'
 import Other from '@/components/settings/other'
 import GoodsCollect from '@/components/user/goods-collect'
 import Message from '@/components/user/message'
@@ -80,26 +83,50 @@ export default new Router({
       component: Safety
     },
     {
-      path: '/safety/phone',
-      name: 'phone',
+      path: '/safety/phone-setting',
+      name: 'phone-setting',
+      meta: {
+        title: '设置绑定手机'
+      },
+      component: settingPhone
+    },
+    {
+      path: '/safety/phone-change',
+      name: 'phone-change',
       meta: {
         title: '修改绑定手机'
       },
       component: changePhone
     },
     {
-      path: '/safety/email',
-      name: 'email',
+      path: '/safety/email-setting',
+      name: 'email-setting',
       meta: {
         title: '设置邮箱'
+      },
+      component: settingEmail
+    },
+    {
+      path: '/safety/email-change',
+      name: 'email-change',
+      meta: {
+        title: '修改邮箱'
       },
       component: changeEmail
     },
     {
-      path: '/safety/password',
-      name: 'password',
+      path: '/safety/password-setting',
+      name: 'password-setting',
       meta: {
         title: '设置密码'
+      },
+      component: settingPassword
+    },
+    {
+      path: '/safety/password-change',
+      name: 'password-change',
+      meta: {
+        title: '修改密码'
       },
       component: changePassword
     },

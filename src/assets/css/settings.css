@@ -107,10 +107,8 @@
   width: 1rem;
   height: 1rem;
   position: absolute;
-  top: 0;
-  bottom: 0;
+  top: 0.9rem;
   right: 0.5rem;
-  margin: auto;
 }
 .settings-form .btn{
   line-height: 2.5rem;
@@ -135,6 +133,7 @@
   border-radius: 0!important;
   height: 3.5rem!important;
   padding: 0.75rem;
+  padding-left: 0.5rem;
   display: flex;
   align-items: center;
 }
