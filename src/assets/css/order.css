@@ -16,6 +16,20 @@
   margin-top: 0.5rem !important;
 }
 
+.order-card .orderNo {
+  background-color: #ffffff;
+  padding: 0.5rem;
+  border-bottom: 1px solid #E1E1E1;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.orderNo span{
+  color: #999999;
+  font-weight: 500;
+  float: right;
+}
+
 .order-card .icon-bianji {
   font-size: 1.5rem !important;
 }

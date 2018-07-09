@@ -10,8 +10,9 @@
     <div class="order-wrap" v-cloak>
       <div class="order-card">
         <div class="indent-title">
-          {{data.supplier}}
+          {{data.companyName}}
         </div>
+        <div class="orderNo">订单号：{{data.orderNo}} <span>状态：{{getState(data.state)}}</span></div>
         <div slot="content" class="indent-content" v-for="(good, key) in data.goods" :key="key">
           <img :src="good.icon" alt="">
           <div class="indent-info">
@@ -47,15 +48,19 @@
           <span class="label">备注</span><span class="value">{{data.remark}}</span>
         </div>
         <div class="line"></div>
-        <div class="item"><b style="color: #222222;">填写发货信息</b></div>
-        <Group>
-          <XInput title="运单号"></XInput>
-          <XInput title="物流公司"></XInput>
-          <XInput title="发货日期"></XInput>
-          <XInput title="预计到达"></XInput>
-        </Group>
-        <div class="item">
-          <button type="button" class="btn btn-primary">提交</button>
+        <div v-if="data.groupId === 5">
+          <div class="item"><b style="color: #222222;">填写发货信息</b></div>
+          <Group>
+            <XInput title="运单号"></XInput>
+            <XInput title="物流公司"></XInput>
+            <XInput title="发货日期"></XInput>
+            <XInput title="预计到达"></XInput>
+          </Group>
+          <div class="item">
+            <button type="button" class="btn btn-primary">提交</button>
+          </div>
+        </div>
+        <div>
         </div>
       </div>
     </div>
@@ -78,8 +83,37 @@ export default {
     this.getDetail()
   },
   methods: {
+    getState (state) {
+      switch (state) {
+        case 0:
+          return '待核价'
+        case 1:
+          return '待签约'
+        case 2:
+          return '待采购商打款'
+        case 3:
+          return '待发货'
+        case 4:
+          return '订单关闭'
+        case 6:
+          return '待收货'
+        case 7:
+          return '待质检'
+        case 8:
+          return '问题确认中'
+        case 9:
+          return '账期中'
+        case 10:
+          return '逾期中'
+        case 11:
+          return '待打款至供应商'
+        case 13:
+          return '交易完成'
+      }
+    },
     getDetail () {
-      axios.post('api/order/detail', {no: '201806281514224934'}).then((response) => {
+      const {params: { no }} = this.$route
+      axios.post('api/order/detail', {no}).then((response) => {
         this.data = response.data.data
       }).catch((response) => {
         this.errorMsg()

@@ -68,23 +68,23 @@
       <label for="">必填项 <span class="text-red">*</span></label>
       <div class="enterprise-upload-list">
         <div class="enterprise-upload-item">
-          <uploader title="工商营业执照" id="1" v-model="data.business" :defaultPath="data.businessPath" :disabled="data.status == 1"></uploader>
+          <uploader title="工商营业执照" id="1" v-model="data.business" type="certification" :defaultPath="data.businessPath" :disabled="data.status == 1"></uploader>
         </div>
         <div class="enterprise-upload-item">
-          <uploader title="开户许可证" id="2" v-model="data.permitsAccount" :defaultPath="data.permitsAccountPath" :disabled="data.status == 1"></uploader>
+          <uploader title="开户许可证" id="2" v-model="data.permitsAccount" type="certification" :defaultPath="data.permitsAccountPath" :disabled="data.status == 1"></uploader>
         </div>
       </div>
       <div class="enterprise-upload-list">
         <div class="enterprise-upload-item">
-          <uploader title="企业法人身份证" id="4" v-model="data.legalIdentityCard" :defaultPath="data.legalIdentityCardPath" :disabled="data.status == 1"></uploader>
+          <uploader title="企业法人身份证" id="4" v-model="data.legalIdentityCard" type="certification" :defaultPath="data.legalIdentityCardPath" :disabled="data.status == 1"></uploader>
         </div>
         <div class="enterprise-upload-item">
-          <uploader title="代办人身份证" id="5" v-model="data.agentIdentityCard" :defaultPath="data.agentIdentityCardPath" v-show="data.agent == 1" :disabled="data.status == 1"></uploader>
+          <uploader title="代办人身份证" id="5" v-model="data.agentIdentityCard" type="certification" :defaultPath="data.agentIdentityCardPath" v-show="data.agent == 1" :disabled="data.status == 1"></uploader>
         </div>
       </div>
       <div class="enterprise-upload-list" style="width: 50%;" v-show="data.agent == 1">
         <div class="enterprise-upload-item">
-          <uploader title="授权委托书" id="6" v-model="data.attorney" :defaultPath="data.attorneyPath" :disabled="data.status == 1"></uploader>
+          <uploader title="授权委托书" id="6" v-model="data.attorney" type="certification" :defaultPath="data.attorneyPath" :disabled="data.status == 1"></uploader>
         </div>
       </div>
     </div>
@@ -92,10 +92,10 @@
       <label for="">可选项</label>
       <div class="enterprise-upload-list">
         <div class="enterprise-upload-item">
-          <uploader title="组织机构代码证" id="7" v-model="data.orgStructureCode" :defaultPath="data.orgStructureCodePath" :disabled="data.status == 1"></uploader>
+          <uploader title="组织机构代码证" id="7" v-model="data.orgStructureCode" type="certification" :defaultPath="data.orgStructureCodePath" :disabled="data.status == 1"></uploader>
         </div>
         <div class="enterprise-upload-item">
-          <uploader title="税务登记证" id="8" v-model="data.taxRegistrationCert" :defaultPath="data.taxRegistrationCertPath" :disabled="data.status == 1"></uploader>
+          <uploader title="税务登记证" id="8" v-model="data.taxRegistrationCert" type="certification" :defaultPath="data.taxRegistrationCertPath" :disabled="data.status == 1"></uploader>
         </div>
       </div>
     </div>
