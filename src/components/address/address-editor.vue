@@ -41,7 +41,7 @@
             <label for="" style="align-self: flex-start;">设置标签</label>
             <div class="address-tag-box">
               <div>
-                <span class="tag" v-for="(item, index) in tag" :key="item.id"  @click="tabsort(index)" :class="{ active: iscur == index }"> {{item.tag}} <i class="icon iconfont icon-shanchu1" v-if="deleteShow" @click="deteleTag(index, item.id)"></i></span>
+                <span class="tag" v-for="(item, index) in tag" :key="item.id"  @click="tabsort(index)" :class="{ active: iscur == index }"> {{item.tag}} <i class="icon iconfont icon-Qqingchu" v-if="deleteShow" @click="deteleTag(index, item.id)"></i></span>
               </div>
               <div>
                 <div v-if="!showInput">

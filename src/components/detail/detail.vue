@@ -187,14 +187,22 @@ export default {
         return false
       }
       if (this.goodsData.standard.length === 1) {
-        if (this.iscur1 === null) {
+        if (this.iscur0 === null && this.iscur1 === null) {
           this.shawdow = true
+          this.$vux.toast.show({
+            type: 'success',
+            text: '请选择规格'
+          })
           return false
         }
       }
       if (this.goodsData.standard.length === 2) {
         if (this.iscur0 === null | this.iscur1 === null) {
           this.shawdow = true
+          this.$vux.toast.show({
+            type: 'success',
+            text: '请选择规格'
+          })
           return false
         }
       }

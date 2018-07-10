@@ -72,7 +72,7 @@ export default new Router({
       path: '/select-enterprise',
       name: 'select-enterprise',
       meta: {
-        title: '设置中心'
+        title: '认证中心'
       },
       component: selectEnterprise
     },
