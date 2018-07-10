@@ -77,6 +77,7 @@ export default {
         'channel': 1
       }).then((response) => {
         if (response.data.status === 0) {
+          this.setTimeMethods(2)
           this.$vux.toast.show({
             type: 'success',
             text: response.data.msg
@@ -119,7 +120,6 @@ export default {
             if (response.data.status === 0) {
               this.showModel0 = false
               this.showModel1 = true
-              this.setTimeMethods(2)
             } else {
               this.$vux.toast.show({
                 type: 'warn',
