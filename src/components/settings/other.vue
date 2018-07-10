@@ -48,7 +48,9 @@ export default {
           this.$vux.confirm.show({
             title: '提示',
             content: '您尚未登录，是否去登录？',
-            onCancel () {},
+            onCancel () {
+              self.$router.go(-1)
+            },
             onConfirm () {
               self.$router.push('/loginByCode')
             }
