@@ -140,6 +140,8 @@ export default {
                   self.$router.go(-1)
                 },
                 onConfirm () {
+                  sessionStorage.removeItem('oldUrl')
+                  sessionStorage.setItem('oldUrl', self.$route.path)
                   self.$router.push('/loginByCode')
                 }
               })

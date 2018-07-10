@@ -59,13 +59,13 @@
         <h3>{{goodsData.standard[i-1].title}}</h3>
         <ul v-if="goodsData.standard[i-1].title === '规格'">
           <li v-for="(item, index) in goodsData.standard[i-1].list" :key="index">
-            <a href="javascript:;" @click="tabsort0(index)" :class="{ active: iscur0 === index}">{{item.color_name}}</a>
+            <a href="javascript:;" @click="tabsort0(index)" :class="{ active: iscur0 === index}">{{item.color_name}}Q</a>
             <input type="hidden" class="color" v-model="item.color_id">
           </li>
         </ul>
         <ul v-if="goodsData.standard[i-1].title !== '规格'">
           <li v-for="(item, index) in goodsData.standard[i-1].list" :key="index">
-            <a href="javascript:;" @click="tabsort1(index)" :class="{ active: iscur1 === index}">{{item.option_name}}</a>
+            <a href="javascript:;" @click="tabsort1(index)" :class="{ active: iscur1 === index}">{{item.option_name}}W</a>
             <input type="hidden" class="option" v-model="item.option_id">
           </li>
         </ul>
@@ -160,87 +160,78 @@ export default {
       return false
     },
     showCarMethod () {
-      if (sessionStorage.getItem('groupId') === null) {
-        let self = this
-        this.$vux.confirm.show({
-          title: '提示',
-          content: '您尚未登录，确定现在去登录？',
-          onCancel () {
-          },
-          onConfirm () {
-            self.$router.push('/loginByCode')
-          }
-        })
-        return false
-      }
-      if (sessionStorage.getItem('groupId') === '6') {
-        let self = this
-        this.$vux.confirm.show({
-          title: '提示',
-          content: '您尚未做企业认证，是否现在去认证？',
-          onCancel () {
-          },
-          onConfirm () {
-            self.$router.push('/settings')
-          }
-        })
-        return false
-      }
-      if (this.goodsData.standard.length === 1) {
-        if (this.iscur0 === null && this.iscur1 === null) {
-          this.shawdow = true
-          this.$vux.toast.show({
-            type: 'success',
-            text: '请选择规格'
-          })
-          return false
-        }
-      }
-      if (this.goodsData.standard.length === 2) {
-        if (this.iscur0 === null | this.iscur1 === null) {
-          this.shawdow = true
-          this.$vux.toast.show({
-            type: 'success',
-            text: '请选择规格'
-          })
-          return false
-        }
-      }
-      axios.post('api/mall_cart/add', {
-        'id': this.$route.params.id,
-        'number': this.value,
-        'colorId': this.colorId,
-        'optionId': this.optionId
-      }).then((response) => {
+      axios.get('api/user/getGroup').then((response) => {
         if (response.data.status === 0) {
-          axios.get('api/mall_cart/getNumber').then((response) => {
-            if (response.data.status === 0) {
-              this.showCarNum = response.data.data.total
-            }
-          }).catch((response) => {
-          })
-          this.$vux.toast.show({
-            type: 'success',
-            text: '添加成功',
-            onShow () {
-              console.log('Plugin: I\'m showing')
-            },
-            onHide () {
-            }
-          })
-        } else if (response.data.status === -2) {
-          let self = this
-          this.$vux.confirm.show({
-            title: '提示',
-            content: '您尚未登录，确定现在去登录？',
-            onCancel () {
-            },
-            onConfirm () {
-              self.$router.push('/loginByCode')
-            }
-          })
+          sessionStorage.removeItem('groupId')
+          sessionStorage.setItem('groupId', response.data.data.groupId)
+          if (sessionStorage.getItem('groupId') === '0') {
+            let self = this
+            this.$vux.confirm.show({
+              title: '提示',
+              content: '您尚未登录，确定现在去登录？',
+              onConfirm () {
+                sessionStorage.removeItem('oldUrl')
+                sessionStorage.setItem('oldUrl', self.$route.path)
+                self.$router.push('/loginByCode')
+              }
+            })
+            return false
+          } else if (sessionStorage.getItem('groupId') === '6') {
+            let self = this
+            this.$vux.confirm.show({
+              title: '提示',
+              content: '您尚未做企业认证，是否现在去认证？',
+              onConfirm () {
+                self.$router.push('/settings')
+              }
+            })
+            return false
+          } else {
+            axios.post('api/mall_cart/add', {
+              'id': this.$route.params.id,
+              'number': this.value,
+              'colorId': this.colorId,
+              'optionId': this.optionId
+            }).then((response) => {
+              if (response.data.status === 0) {
+                if (this.goodsData.standard.length === 1) {
+                  if (this.iscur0 === null && this.iscur1 === null) {
+                    this.shawdow = true
+                    this.$vux.toast.show({
+                      text: '请选择规格'
+                    })
+                    return false
+                  }
+                }
+                if (this.goodsData.standard.length === 2) {
+                  if (this.iscur0 === null | this.iscur1 === null) {
+                    this.shawdow = true
+                    this.$vux.toast.show({
+                      text: '请选择规格'
+                    })
+                    return false
+                  }
+                }
+                axios.get('api/mall_cart/getNumber').then((response) => {
+                  if (response.data.status === 0) {
+                    this.showCarNum = response.data.data.total
+                  }
+                })
+                this.$vux.toast.show({
+                  type: 'success',
+                  text: '添加成功'
+                })
+              } else {
+                this.$vux.toast.show({
+                  type: 'warm',
+                  text: response.data.msg
+                })
+              }
+            }).catch((response) => {})
+          }
         }
-      }).catch((response) => {})
+      }).catch((response) => {
+      })
     },
     collectMethod () {
       let self = this
@@ -249,15 +240,13 @@ export default {
           'goodsId': this.$route.params.id
         }).then((response) => {
           if (response.data.status === -2) {
-            this.$vux.toast.show({
-              type: 'warn',
-              text: '请先登录',
-              onShow () {
-                console.log('Plugin: I\'m showing')
-              },
-              onHide () {
+            this.$vux.confirm.show({
+              title: '提示',
+              content: '您尚未登录，确定现在去登录？',
+              onConfirm () {
+                sessionStorage.removeItem('oldUrl')
+                sessionStorage.setItem('oldUrl', self.$route.path)
                 self.$router.push('/loginByCode')
-                console.log('Plugin: I\'m hiding')
               }
             })
           } else {
@@ -330,9 +319,9 @@ export default {
       // 点击分享按钮
       let title = this.goodsData.title
       let detail = this.goodsData.detail
-      // let img = this.goodsData.imgList[0].img
+      let img = this.goodsData.imgList[0].img
       let url = window.location.href
-      window.jsb.detail(title, detail, 'http://192.168.3.135:8079/web/public/uploads/goods/2018_05/21/1526872303_0_2025.jpg', url)
+      window.jsb.detail(title, detail, img, url)
     },
     errorMsg () {
       this.$vux.toast.show({
@@ -349,29 +338,11 @@ export default {
   },
   created () {
     window.scrollTo(0, 0)
-    let loginToken = sessionStorage.getItem('loginToken')
-    let self = this
-    if (loginToken !== null) {
-      axios.get('api/mall_cart/getNumber').then((response) => {
-        if (response.data.status === -2) {
-          this.$vux.confirm.show({
-            title: '提示',
-            content: '您尚未登录，是否去登录？',
-            onCancel () {},
-            onConfirm () {
-              self.$router.push('/loginByCode')
-            }
-          })
-          console.log('未登录')
-        } else if (response.data.status === 0 && Number(sessionStorage.getItem('groupId')) === 4) {
-          this.showCarNum = response.data.data.total
-          // this.shopCard = true
-        } else {
-          // this.shopCard = false
-        }
-      }).catch((response) => {
-      })
-    }
+    axios.get('api/mall_cart/getNumber').then((response) => {
+      if (response.data.status === 0) {
+        this.showCarNum = response.data.data.total
+      }
+    })
   },
   mounted () {
     this.showDetai()

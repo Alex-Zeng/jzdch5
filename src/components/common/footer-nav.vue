@@ -34,30 +34,26 @@ export default {
   methods: {
   },
   created () {
-    let loginToken = sessionStorage.getItem('loginToken')
-    if (loginToken !== null) {
-      axios.get('api/user/getGroup').then((response) => {
-        sessionStorage.removeItem('groupId')
-        sessionStorage.setItem('groupId', response.data.data.groupId)
-        if (response.data.status === 0 && response.data.data.groupId === 4) {
-          axios.get('api/mall_cart/getNumber').then((response) => {
-            if (response.data.status === -2) {
-              // this.$router.push('/loginByCode')
-              this.shopCard = false
-            } else if (response.data.status === 0) {
-              this.total = response.data.data.total
-              this.shopCard = true
-            } else {
-              this.shopCard = false
-            }
-          }).catch((response) => {
-          })
-        }
-      }).catch((response) => {
-      })
-    } else {
-      this.shopCard = false
-    }
+    axios.get('api/user/getGroup').then((response) => {
+      sessionStorage.removeItem('groupId')
+      sessionStorage.setItem('groupId', response.data.data.groupId)
+      console.log(sessionStorage.getItem('groupId'))
+      if (response.data.status === 0 && response.data.data.groupId === 4) {
+        axios.get('api/mall_cart/getNumber').then((response) => {
+          alert(response.data.status)
+          if (response.data.status === -2) {
+            this.shopCard = false
+          } else if (response.data.status === 0) {
+            this.total = response.data.data.total
+            this.shopCard = true
+          } else {
+            this.shopCard = false
+          }
+        }).catch((response) => {
+        })
+      }
+    }).catch((response) => {
+    })
   }
 }
 </script>

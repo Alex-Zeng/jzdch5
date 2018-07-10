@@ -144,7 +144,13 @@ export default {
               document.cookie = '_token=' + response.data.data.token
               sessionStorage.setItem('loginToken', response.data.token)
               // 响应成功回调
-              this.$router.push('/')
+              let oldUrl = sessionStorage.getItem('oldUrl')
+              console.log(oldUrl)
+              if (oldUrl) {
+                this.$router.push(oldUrl)
+              } else {
+                this.$router.push('/')
+              }
             } else if (response.data.status === -3) {
               this.$vux.toast.show({
                 type: 'warn',
@@ -174,7 +180,7 @@ export default {
       })
     },
     submit () {
-      var _sel = this
+      var self = this
       this.$validator.validateAll().then((result) => {
         if (result) {
           axios.post('api/register/phone', {
@@ -193,7 +199,13 @@ export default {
                   sessionStorage.setItem('loginToken', response.data.data.token)
                 },
                 onHide () {
-                  _sel.$router.push('/')
+                  let oldUrl = sessionStorage.getItem('oldUrl')
+                  console.log(oldUrl)
+                  if (oldUrl) {
+                    self.$router.push('/' + oldUrl)
+                  } else {
+                    self.$router.push('/')
+                  }
                 }
               })
             } else {
@@ -266,6 +278,9 @@ export default {
         text: '网络可能有点问题'
       })
     }
+  },
+  created () {
+    window.scrollTo(0, 0)
   },
   mounted () {
     this.getImgCode()

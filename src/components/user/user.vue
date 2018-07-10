@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="user-header">
-      <img :src="userMsg.photo" alt="头像">
+      <img :src="userMsg.photo" alt="">
       <div>{{userMsg.name}}</div>
       <i class="icon iconfont icon-shezhi" @click="$router.push('/settings')"></i>
     </div>
@@ -83,7 +83,7 @@
     </template>
     <template v-if="groupId === 6">
       <div class="visitor-box" @click="$router.push('/settings')">
-        <img src="@/assets/images/qurenzheng.png" alt="去认证">
+        <i class="icon iconfont icon-renzheng"></i>
         <p class="text-muted">还没有进行企业验证，快去进行企业验证吧~</p>
         <button class="btn">去认证</button>
       </div>
@@ -176,6 +176,8 @@ export default {
             self.$router.go(-1)
           },
           onConfirm () {
+            sessionStorage.removeItem('oldUrl')
+            sessionStorage.setItem('oldUrl', self.$route.path)
             self.$router.push('/loginByCode')
           }
         })
@@ -224,7 +226,11 @@ export default {
     }
   },
   created () {
-    this.groupId = Number(sessionStorage.getItem('groupId'))
+    axios.get('api/user/getGroup').then((response) => {
+      this.groupId = response.data.data.groupId
+    }).catch((response) => {
+      this.errorMsg()
+    })
     this.loginMethod()
     this.getInfo()
     if (this.groupId === 4) {
@@ -235,8 +241,6 @@ export default {
     }
     this.getFavoriteNumber()
     this.getNumber()
-  },
-  mounted () {
   },
   components: {
     FooterNav,

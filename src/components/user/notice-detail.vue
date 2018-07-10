@@ -23,6 +23,7 @@ export default {
   name: 'notice-detail',
   data () {
     return {
+      detail: null
     }
   },
   mounted () {

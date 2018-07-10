@@ -86,7 +86,7 @@
 .detail-shop-car .vux-badge{
 }
 .detail-shop-car .vux-number-selector{
-  border: none;
+  padding: 0.15rem 0.25rem;
 }
 .detail-shop-car> div:last-child{
   width: 5rem;

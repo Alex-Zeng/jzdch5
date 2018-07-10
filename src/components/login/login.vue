@@ -59,7 +59,7 @@ export default {
       this.password2 = md5.digest('hex') // this.pw这就是你加密完的密码，这个往后台传就行了
     },
     login () {
-      var _sel = this
+      var self = this
       this.$validator.validateAll().then((result) => {
         if (result) {
           axios.post('api/login/index', {
@@ -76,7 +76,13 @@ export default {
                   document.cookie = '_token=' + response.data.data.token
                 },
                 onHide () {
-                  _sel.$router.push('/')
+                  let oldUrl = sessionStorage.getItem('oldUrl')
+                  console.log(oldUrl)
+                  if (oldUrl) {
+                    self.$router.push(oldUrl)
+                  } else {
+                    self.$router.push('/')
+                  }
                 }
               })
             } else {
@@ -118,6 +124,9 @@ export default {
         text: '网络可能有点问题'
       })
     }
+  },
+  created () {
+    window.scrollTo(0, 0)
   },
   components: {
     XInput,
