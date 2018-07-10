@@ -116,7 +116,7 @@ export default {
       } else {
         this.mySort = 'asc'
       }
-      // this.mescroll.resetUpScroll()
+      this.mescroll.resetUpScroll()
     },
     setFocus () {
       if (this.select === true) {
@@ -158,7 +158,6 @@ export default {
             // 以下参数可删除,不配置
             isBounce: false, // 此处禁止ios回弹,解析(务必认真阅读,特别是最后一点): http://www.mescroll.com/qa.html#q10
             offset: 500,
-            clearEmptyId: 'dataList',
             empty: { // 配置列表无任何数据的提示
               warpId: 'dataList',
               // icon: '../res/img/mescroll-empty.png'
