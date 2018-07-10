@@ -14,7 +14,7 @@
         <div class="shller-title" :key="'list'+index">
           <div>
             <i class="icon iconfont icon-danxuananniu" v-if="!allList[index]"></i>
-            <i class="icon iconfont icon-danxuananniu-xuanzhong1" v-if="allList[index]" style="color: #1EB9EE;"></i>
+            <i class="icon iconfont icon-xuanzhong" v-if="allList[index]" style="color: #1EB9EE;"></i>
             <input type="checkbox" :value="item.supplierName" @click="selsectAll(index, $event)" v-model="allList[index]">
           </div>
           <div>{{item.supplierName}}</div>
@@ -28,7 +28,7 @@
               <div slot="content" class="shop-car-content">
                 <div>
                   <i class="icon iconfont icon-danxuananniu" v-if="!checkedList[index][k]"></i>
-                  <i class="icon iconfont icon-danxuananniu-xuanzhong1" v-if="checkedList[index][k]" style="color: #1EB9EE;"></i>
+                  <i class="icon iconfont icon-xuanzhong" v-if="checkedList[index][k]" style="color: #1EB9EE;"></i>
                   <input type="checkbox" name="checkbox" class="input" :value="i.cartId" :data-i="checkedList[index][k]" v-model="checkedList[index][k]" @change="select(i.price*i.quantity, checkedList[index][k], index, k)">
                   <input type="hidden" name="price" :value="i.price*i.quantity">
                 </div>
@@ -54,7 +54,7 @@
       </div>
       <div v-if="!manage">
         <i class="icon iconfont icon-danxuananniu" v-if="!all"></i>
-        <i class="icon iconfont icon-danxuananniu-xuanzhong1" v-if="all" style="color: #1EB9EE;"></i>
+        <i class="icon iconfont icon-xuanzhong" v-if="all" style="color: #1EB9EE;"></i>
         <input type="checkbox" value="all" v-model="all" @click="manageAll">全选
       </div>
       <div class="delete-goods" v-if="!manage" @click="deleteMethods">

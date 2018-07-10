@@ -66,7 +66,7 @@ export default {
         if (response.data.status === 0) {
           if (response.data.data) {
             const {status, agentIdentityCard, role} = response.data.data
-            if (status === '1') {
+            if (status === '1' || status === '3' || status === '2') {
               this.enterprise = true
               sessionStorage.setItem('userType', role === '采购商' ? 1 : 2)
               sessionStorage.setItem('agent', agentIdentityCard ? 0 : 1)

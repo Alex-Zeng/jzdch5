@@ -16,7 +16,7 @@
         <div class="address-btn">
           <div>
             <i class="icon iconfont icon-danxuananniu" v-if="!item.is_default"></i>
-            <i class="icon iconfont icon-danxuananniu-xuanzhong1" v-if="item.is_default" style="color: #1EB9EE;"></i>
+            <i class="icon iconfont icon-xuanzhong" v-if="item.is_default" style="color: #1EB9EE;"></i>
             <label class="text-muted">
               <input type="radio" name="is_default" :value="item.id" v-model="item.is_default" @click="setDefault(item.id)">设为默认
             </label>

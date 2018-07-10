@@ -50,7 +50,7 @@
         <div class="cells">
           <label for="">注册资本 <span class="text-red">*</span></label>
           <input name="mobile" v-model="data.capital" v-validate="'required'" type="text" placeholder="请按营业执照填写" :disabled="data.status == 1">
-          <span>万元&emsp;</span>
+          <span style="font-size: 0.7rem;">万元&emsp;</span>
         </div>
       </li>
       <li>
@@ -82,9 +82,17 @@
           <uploader title="代办人身份证" id="5" v-model="data.agentIdentityCard" type="certification" :defaultPath="data.agentIdentityCardPath" v-show="data.agent == 1" :disabled="data.status == 1"></uploader>
         </div>
       </div>
-      <div class="enterprise-upload-list" style="width: 50%;" v-show="data.agent == 1">
+      <div class="enterprise-upload-list" v-show="data.agent == 1">
         <div class="enterprise-upload-item">
           <uploader title="授权委托书" id="6" v-model="data.attorney" type="certification" :defaultPath="data.attorneyPath" :disabled="data.status == 1"></uploader>
+        </div>
+        <div class="enterprise-upload-item">
+          <div class="upload-item-content">
+            <span>委托书模板</span>
+            <a :href="url">
+              <img src="@/assets/images/wtmuban.png" alt="">
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -115,6 +123,7 @@ export default {
   name: 'enterprise',
   data () {
     return {
+      url: null,
       list1: [['有限责任公司', '股份有限公司', '个体工商户', '合伙企业']],
       data: {
         type: sessionStorage.getItem('userType') || 1,
@@ -144,6 +153,7 @@ export default {
   },
   created () {
     window.scrollTo(0, 0)
+    this.getCertificationExt()
   },
   mounted () {
     this.check()
@@ -161,6 +171,20 @@ export default {
     onEvent (event) {
       console.log('on', event)
     },
+    getCertificationExt () {
+      axios.get('api/user/getCertificationExt').then((response) => {
+        console.log(response)
+        if (response.data.status === 0) {
+          this.url = response.data.data.attorney
+          console.log(response)
+        }
+      }).catch(() => {
+        this.$vux.toast.show({
+          type: 'warm',
+          text: '网络可能有点问题'
+        })
+      })
+    },
     back () {
       const status = this.data
       if (status === '1') {
@@ -171,8 +195,11 @@ export default {
     },
     async check () {
       // 检查审核状态
-      const {data: {data}} = await axios.get('api/user/getCertification')
-      this.data = {...data, property: [data.property], type: sessionStorage.getItem('userType') || 1, agent: sessionStorage.getItem('agent') || 0}
+      const {data: {data, msg}} = await axios.get('api/user/getCertification')
+      if (msg !== '用户未提交认证') {
+        this.data = {...data, property: [data.property], type: sessionStorage.getItem('userType') || 1, agent: sessionStorage.getItem('agent') || 0}
+      }
+
     },
     async submit () {
       const token = sessionStorage.getItem('loginToken')

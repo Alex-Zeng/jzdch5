@@ -33,7 +33,7 @@
         <i :class="{'icon iconfont icon-fangge1':isA,'icon iconfont icon-liebiao':!isA}" @click="toggle()"></i>
         <i class="icon iconfont icon-jiagepaixu1" @click="sortMethod"></i>
       </div>
-      <div class="mescroll" id="mescroll">
+      <div class="mescroll" id="mescroll" style="padding-top: 2.2rem">
         <!--展示上拉加载的数据列表-->
         <ul  id="dataList" v-if="showList" class="search-lists"  v-cloak>
           <li v-for="(item, index) in goodsLists" :key="index">
@@ -56,7 +56,7 @@
                 {{item.title}}
               </div>
               <div class="goods-price text-red">
-                ￥ {{item.min_price === '0.00'? item.w_price:item.min_price}}{{item.max_price=item.min_price?'':' ~ ￥'+item.max_price}}
+                ￥ {{item.min_price === '0.00'? item.w_price:item.min_price}}{{item.max_price===item.min_price?'':' ~ ￥'+item.max_price}}
               </div>
             </router-link>
           </li>
@@ -116,7 +116,7 @@ export default {
       } else {
         this.mySort = 'asc'
       }
-      this.mescroll.resetUpScroll()
+      // this.mescroll.resetUpScroll()
     },
     setFocus () {
       if (this.select === true) {
@@ -260,7 +260,6 @@ export default {
       // 联网加载数据
       var self = this
       this.getListDataFromNet(page.num, page.size, function (curPageData, totalSize) {
-        alert('加载数据')
         // self.mescroll.destroy()
         console.log(curPageData)
         console.log(totalSize)
@@ -271,7 +270,6 @@ export default {
         self.mescroll.endBySize(curPageData.length, totalSize) // 必传参数(当前页的数据个数, 总数据量)
         console.log('传值：')
       }, function () {
-        alert('联网失败')
         // 联网失败的回调,隐藏下拉刷新和上拉加载的状态;
         self.mescroll.endErr()
       })
@@ -290,7 +288,6 @@ export default {
           'cateId': self.$route.query.id
         }).then((response) => {
           if (response.data.status === 0) {
-            alert('联网')
             // 响应成功回调
             var data = response.data.data.list
             var total = response.data.data.total
@@ -298,7 +295,6 @@ export default {
             for (var i = 0; i < data.length; i++) {
               if (data[i] !== undefined) {
                 listData.push(data[i])
-                alert(i)
               }
             }
             console.log(listData)

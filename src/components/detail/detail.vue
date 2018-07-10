@@ -101,7 +101,6 @@ export default {
     showDetai () {
       if (sessionStorage.getItem('groupId') === '2' || sessionStorage.getItem('groupId') === '3' || sessionStorage.getItem('groupId') === '5') {
         this.showCar = false
-        return false
       }
       var self = this
       axios.get('api/goods/get&id=' + this.$route.params.id).then((response) => {
@@ -182,7 +181,7 @@ export default {
           onCancel () {
           },
           onConfirm () {
-            self.$router.push('/select-enterprise')
+            self.$router.push('/settings')
           }
         })
         return false
@@ -347,8 +346,6 @@ export default {
     if (loginToken !== null) {
       axios.get('api/mall_cart/getNumber').then((response) => {
         if (response.data.status === -2) {
-          // this.$router.push('/loginByCode')
-          // this.shopCard = false
           this.$vux.confirm.show({
             title: '提示',
             content: '您尚未登录，是否去登录？',

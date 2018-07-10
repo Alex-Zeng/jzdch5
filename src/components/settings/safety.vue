@@ -10,19 +10,19 @@
     <group>
       <cell is-link :value="phone" link="/safety/phone-change">
           <span slot="title">
-              <i class="icon iconfont icon-bianji"></i>
+              <i class="icon iconfont icon-shouji"></i>
               <span style="vertical-align:middle;">绑定手机</span>
           </span>
       </cell>
       <cell is-link :value="password" :link="passwordLink">
         <span slot="title">
-            <i class="icon iconfont icon-bianji"></i>
+            <i class="icon iconfont icon-mima"></i>
             <span style="vertical-align:middle;">登录密码</span>
         </span>
       </cell>
       <cell is-link :value="email" :link="emailLink">
         <span slot="title">
-            <i class="icon iconfont icon-bianji"></i>
+            <i class="icon iconfont icon-youxiang"></i>
             <span style="vertical-align:middle;">电子邮箱</span>
         </span>
       </cell>

@@ -27,14 +27,14 @@
             <div>
               <label>
                 <i class="icon iconfont icon-danxuananniu" v-if="selectItem==2?false:true"></i>
-                <i class="icon iconfont icon-danxuananniu-xuanzhong1" v-if="selectItem==2?true:false" style="color: #1EB9EE;"></i>
+                <i class="icon iconfont icon-xuanzhong" v-if="selectItem==2?true:false" style="color: #1EB9EE;"></i>
                 <input type="radio" name="name" v-show="false" v-model="selectItem" value="2">供应商
               </label>
             </div>
             <div>
               <label>
                 <i class="icon iconfont icon-danxuananniu" v-if="selectItem==1?false:true"></i>
-                <i class="icon iconfont icon-danxuananniu-xuanzhong1" v-if="selectItem==1?true:false" style="color: #1EB9EE;"></i>
+                <i class="icon iconfont icon-xuanzhong" v-if="selectItem==1?true:false" style="color: #1EB9EE;"></i>
                 <input type="radio" name="name" v-show="false" v-model="selectItem" value="1">采购商
               </label>
             </div>

@@ -43,7 +43,7 @@
   padding-left: 0!important;
 }
 .enterprise-upload-wrap{
-  padding:0 0.5rem 0.5rem;
+  padding:0 0.25rem 0.25rem;
 }
 .enterprise-upload-wrap label{
   font-size: 0.75rem;
@@ -56,16 +56,27 @@
 .enterprise-upload-list{
   display: flex;
   min-height: 6rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.25rem;
 }
 
 .enterprise-upload-item{
   flex: 1;
+  height: 8.7rem;
+  box-sizing: border-box;
   text-align: center;
-  padding:0 0.5rem;
+  padding: 0.25rem;
 }
 .enterprise-upload-item img{
-  width: 100%;
+  width: 7rem;
+  height: 4rem;
+}
+.upload-item-content{
+  border: 1px solid #ccc;
+  height: 100%;
+}
+.upload-item-content span{
+  font-size: 0.7rem;
+  line-height: 3;
 }
 .enterprise-msg{
   background-color: #1EB9EE;
@@ -81,4 +92,7 @@
   /*left: 0;*/
   /*right: 0;*/
   padding: 0.5rem;
+}
+.enterprise .vux-popup-picker-value{
+  font-size: 0.7rem;
 }

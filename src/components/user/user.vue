@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="user-header">
-      <img :src="userMsg.photo" alt="">
+      <img :src="userMsg.photo" alt="头像">
       <div>{{userMsg.name}}</div>
       <i class="icon iconfont icon-shezhi" @click="$router.push('/settings')"></i>
     </div>
@@ -16,26 +16,22 @@
       </div>
       <div class="user-grid">
         <div class="item">
-          <i class="icon iconfont icon-daifukuan">
-            <badge text="9"></badge>
-          </i>
-          <div>代付款</div>
+          <div>昨日成交（笔）</div>
+          <span class="text-blue" style="line-height: 2;">4545</span>
         </div>
         <div class="item">
-          <i class="icon iconfont icon-daishouhuo">
-            <badge text="9"></badge>
-          </i>
-          <div>待收货</div>
+          <div>累计成交（笔）</div>
+          <span class="text-blue" style="line-height: 2;">4545</span>
         </div>
         <div class="item">
           <i class="icon iconfont icon-daifahuo">
-            <badge text="9"></badge>
+            <badge v-if="supplier.pending !== '0'" v-text="supplier.pending"></badge>
           </i>
           <div>待发货</div>
         </div>
         <div class="item">
           <i class="icon iconfont icon-shouhou">
-            <badge text="9"></badge>
+            <badge v-if="supplier.service !== '0'" v-text="supplier.service"></badge>
           </i>
           <div>售后处理</div>
         </div>
@@ -61,25 +57,25 @@
       <div class="user-grid">
         <div class="item">
           <i class="icon iconfont icon-daifukuan">
-            <badge text="9"></badge>
+            <badge v-if="buyerOrder.pay !== '0'" v-text="buyerOrder.pay"></badge>
           </i>
           <div>代付款</div>
         </div>
         <div class="item">
           <i class="icon iconfont icon-daishouhuo">
-            <badge text="9"></badge>
+            <badge v-if="buyerOrder.recieve !== '0'" v-text="buyerOrder.recieve"></badge>
           </i>
           <div>待收货</div>
         </div>
         <div class="item">
           <i class="icon iconfont icon-daifahuo">
-            <badge text="9"></badge>
+            <badge v-if="buyerOrder.deliver !== '0'" v-text="buyerOrder.deliver"></badge>
           </i>
           <div>待发货</div>
         </div>
         <div class="item">
           <i class="icon iconfont icon-shouhou">
-            <badge text="9"></badge>
+            <badge v-if="buyerOrder.service !== '0'" v-text="buyerOrder.service"></badge>
           </i>
           <div>售后处理</div>
         </div>
@@ -92,13 +88,11 @@
         <button class="btn">去认证</button>
       </div>
     </template>
-    <template v-if="groupId !== 0">
-      <div class="all-indent" v-if="groupId !== 6">查看全部订单<i class="icon iconfont icon-youjiantou"></i></div>
-      <div class="footer-ad" v-if="groupId !== 6">
-        <div>集众金融 急你所需</div>
-        <div><a href="javascript:;">申请融资</a></div>
-      </div>
-    </template>
+    <div class="all-indent" v-if="groupId !== 6">查看全部订单<i class="icon iconfont icon-youjiantou"></i></div>
+    <div class="footer-ad" v-if="groupId !== 6">
+      <div>集众金融 急你所需</div>
+      <div><a href="javascript:;">申请融资</a></div>
+    </div>
     <FooterNav></FooterNav>
   </div>
 </template>
@@ -115,13 +109,62 @@ export default {
       groupId: null,
       favoriteNumber: '',
       number: '',
+      supplier: {
+        'yesterday': '0',
+        'total': '0',
+        'pending': '0',
+        'service': '0'
+      },
+      buyerOrder: {
+        'pay': '0',
+        'recieve': '0',
+        'deliver': '0',
+        'service': '0'
+      },
       userMsg: {
-        'name': '',
-        'photo': ''
+        'name': '广东律晶电器有限责任公司',
+        'photo': require('../../assets/images/bingxiang-icon.png')
       }
     }
   },
   methods: {
+    getInfo () {
+      axios.get('api/user/getProfile').then((response) => {
+        const {status} = response.data
+        if (status === 0) {
+          this.userMsg.name = response.data.data.username
+          this.userMsg.photo = response.data.data.path
+        }
+      }).catch(() => {
+        this.errorMsg()
+      })
+    },
+    getSupplierOrderInfo () {
+      axios.get('api/user/getSupplierOrderInfo').then((response) => {
+        const {status} = response.data
+        if (status === 0) {
+          this.supplier.yesterday = response.data.data.yesterday
+          this.supplier.total = response.data.data.total
+          this.supplier.pending = response.data.data.pending
+          this.supplier.service = response.data.data.service
+        }
+      }).catch(() => {
+        this.errorMsg()
+      })
+    },
+    getBuyerOrderInfo () {
+      axios.get('api/user/getBuyerOrderInfo').then((response) => {
+        const {status} = response.data
+        if (status === 0) {
+          this.buyerOrder.pay = response.data.data.pay
+          this.buyerOrder.recieve = response.data.data.recieve
+          this.buyerOrder.deliver = response.data.data.deliver
+          this.buyerOrder.service = response.data.data.service
+        }
+      }).catch(() => {
+        this.errorMsg()
+      })
+    },
     loginMethod () {
       let loginToken = sessionStorage.getItem('loginToken')
       if (loginToken === null) {
@@ -129,22 +172,20 @@ export default {
         this.$vux.confirm.show({
           title: '提示',
           content: '您尚未登录，是否去登录？',
-          onCancel () {
-            self.$router.go(-1)
-          },
+          onCancel () {},
           onConfirm () {
             self.$router.push('/loginByCode')
           }
         })
         /* var num = null
-        try {
-          num = window.jsb.login(window.location.href)
-          alert(num)
-        } catch (err) {
-          if (num === null) {
-            this.$router.push('/loginByCode')
-          }
-        } */
+          try {
+            num = window.jsb.login(window.location.href)
+            alert(num)
+          } catch (err) {
+            if (num === null) {
+              this.$router.push('/loginByCode')
+            }
+          } */
       } else {
         this.getFavoriteNumber()
       }
@@ -154,19 +195,42 @@ export default {
         if (response.data.status === 0) {
           this.favoriteNumber = response.data.data.number
         }
-      }).catch()
+      }).catch(() => {
+        this.errorMsg()
+      })
     },
     getNumber () {
       axios.get('api/mall_cart/getNumber').then((response) => {
         if (response.data.status === 0) {
           this.number = response.data.data.total
         }
-      }).catch()
+      }).catch(() => {
+        this.errorMsg()
+      })
+    },
+    errorMsg () {
+      this.$vux.toast.show({
+        type: 'warn',
+        text: '网络可能有点问题',
+        onShow () {
+          console.log('Plugin: I\'m showing')
+        },
+        onHide () {
+          console.log('Plugin: I\'m hiding')
+        }
+      })
     }
   },
   created () {
     this.groupId = Number(sessionStorage.getItem('groupId'))
     this.loginMethod()
+    this.getInfo()
+    if (this.groupId === 4) {
+      this.getBuyerOrderInfo()
+    }
+    if (this.groupId === 5) {
+      this.getSupplierOrderInfo()
+    }
     this.getFavoriteNumber()
     this.getNumber()
   },
