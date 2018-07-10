@@ -199,7 +199,6 @@ export default {
       if (msg !== '用户未提交认证') {
         this.data = {...data, property: [data.property], type: sessionStorage.getItem('userType') || 1, agent: sessionStorage.getItem('agent') || 0}
       }
-
     },
     async submit () {
       const token = sessionStorage.getItem('loginToken')
@@ -244,9 +243,13 @@ export default {
             text: msg
           })
         } else {
+          let self = this
           this.$vux.toast.show({
             type: 'success',
-            text: msg
+            text: msg,
+            onHide () {
+              self.$router.push('/settings')
+            }
           })
         }
       }

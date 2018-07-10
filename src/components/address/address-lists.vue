@@ -10,7 +10,7 @@
     <ul class="address-lists">
       <li v-for="(item, index) in lists" :key="index">
         <div  @click="selectAddress(index)">
-          <h3><span class="name">{{item.name}}</span>{{item.phone}} <span class="tag"> {{item.tag}}</span></h3>
+          <h3><span class="name">{{item.name}}</span>{{item.phone}} <span class="tag" v-if="item.tag"> {{item.tag}}</span></h3>
           <div class="text-muted">{{item.areaName}} {{item.detail}}</div>
         </div>
         <div class="address-btn">

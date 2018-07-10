@@ -40,13 +40,13 @@
           <div class="cells">
             <label for="" style="align-self: flex-start;">设置标签</label>
             <div class="address-tag-box">
-              <div @click="getTag">
+              <div>
                 <span class="tag" v-for="(item, index) in tag" :key="item.id"  @click="tabsort(index)" :class="{ active: iscur == index }"> {{item.tag}} <i class="icon iconfont icon-shanchu1" v-if="deleteShow" @click="deteleTag(index, item.id)"></i></span>
               </div>
               <div>
                 <div v-if="!showInput">
                   <span class="tag" style="width: 2em;text-align: center;" @click="editor">+</span>
-                  <span class="tag fr" @click="deleteShow = !deleteShow"><i class="icon iconfont icon-bianji"></i>编辑标签</span>
+                  <span class="tag fr" @click="deleteShow = !deleteShow"><i class="icon iconfont icon-bianji"  v-if="tag.length > 0"></i>编辑</span>
                 </div>
                 <div class="tag-input" v-if="showInput">
                   <input type="text" name="newTag" v-model="newTag" v-validate="'required'"><button type="button" @click="editor">确定</button>
@@ -79,11 +79,11 @@ export default {
       areaId: '',
       addressDetail: '',
       showInput: false,
-      checkedTag: '公司',
+      checkedTag: '',
       tag: [],
       activeTag: '',
       newTag: null,
-      iscur: 0,
+      iscur: null,
       deleteShow: false
     }
   },
@@ -95,14 +95,11 @@ export default {
       }, 2000)
     },
     onShadowChange (ids, names) {
-      console.log(ids, names)
       this.areaId = ids.slice(-1).join()
     },
     logHide (str) {
-      console.log('on-hide', str)
     },
     logShow (str) {
-      console.log('on-show', str)
     },
     editor () {
       this.showInput = !this.showInput
@@ -118,11 +115,9 @@ export default {
         })
       }
     },
-    getTag (event) {
-      this.checkedTag = event.target.innerText
-    },
     tabsort (index) {
       this.iscur = index
+      this.checkedTag = this.tag[index].tag
     },
     deteleTag (index, id) {
       let self = this
@@ -167,7 +162,7 @@ export default {
             this.addressData = JSON.parse(localStorage.getItem('addressData'))
           }
         }).catch((response) => {
-          this.errors()
+          this.errorMsg()
         })
       } else {
         this.addressData = JSON.parse(localStorage.getItem('addressData'))
@@ -176,9 +171,12 @@ export default {
     getOldTag () {
       axios.get('api/user/getAddressTag').then((response) => {
         if (response.data.status === 0) {
+          let self = this
           this.tag = response.data.data
-          this.tag.forEach(function (index) {
-            console.log(index)
+          this.tag.forEach(function (currentValue, index, arr) {
+            if (currentValue.tag === self.activeTag) {
+              self.tabsort(index)
+            }
           })
         }
       }).catch((response) => {
@@ -256,7 +254,6 @@ export default {
   },
   created () {
     let item = JSON.parse(localStorage.getItem('editorAdd'))
-    console.log(item)
     this.id = item.id
     this.userName = item.name
     this.mobile = item.phone
