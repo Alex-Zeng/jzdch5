@@ -96,7 +96,8 @@
   bottom: 0;
   background: #F5F5F5;
 }
-.editor{
+.editor-container .editor{
+  margin-top: 0.5rem;
 }
 .editor li{
   display: flex;

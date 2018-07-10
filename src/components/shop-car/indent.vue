@@ -130,8 +130,6 @@ export default {
       this.editorSHow = true
     },
     cancelEditor () {
-      this.editor.no = null
-      this.editor.requirement = null
       this.editorSHow = !this.editorSHow
     },
     getLists (index) {
