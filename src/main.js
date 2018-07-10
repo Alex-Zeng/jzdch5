@@ -3,11 +3,12 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import {Badge, ToastPlugin, ConfirmPlugin} from 'vux'
+import {Badge, ToastPlugin, ConfirmPlugin, LoadingPlugin} from 'vux'
 import '../static/js/validate.js'
 Vue.component('badge', Badge)
 Vue.use(ConfirmPlugin)
 Vue.use(ToastPlugin)
+Vue.use(LoadingPlugin)
 require('./fit.js')
 require('./assets/common/css/common.css')
 Vue.config.productionTip = false
