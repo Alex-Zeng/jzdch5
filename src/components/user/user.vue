@@ -17,21 +17,21 @@
       <div class="user-grid">
         <div class="item">
           <div>昨日成交（笔）</div>
-          <span class="text-blue" style="line-height: 2;">4545</span>
+          <span class="text-blue" style="line-height: 2;">{{yesterday}}</span>
         </div>
         <div class="item">
           <div>累计成交（笔）</div>
-          <span class="text-blue" style="line-height: 2;">4545</span>
+          <span class="text-blue" style="line-height: 2;">{{total}}</span>
         </div>
         <div class="item">
           <i class="icon iconfont icon-daifahuo">
-            <badge v-if="supplier.pending !== '0'" v-text="supplier.pending"></badge>
+            <badge v-if="supplier.pending > 0" v-text="supplier.pending"></badge>
           </i>
           <div>待发货</div>
         </div>
         <div class="item">
           <i class="icon iconfont icon-shouhou">
-            <badge v-if="supplier.service !== '0'" v-text="supplier.service"></badge>
+            <badge v-if="supplier.service > 0" v-text="supplier.service"></badge>
           </i>
           <div>售后处理</div>
         </div>
@@ -57,25 +57,25 @@
       <div class="user-grid">
         <div class="item">
           <i class="icon iconfont icon-daifukuan">
-            <badge v-if="buyerOrder.pay !== '0'" v-text="buyerOrder.pay"></badge>
+            <badge v-if="buyerOrder.pay > 0" v-text="buyerOrder.pay"></badge>
           </i>
           <div>代付款</div>
         </div>
         <div class="item">
           <i class="icon iconfont icon-daishouhuo">
-            <badge v-if="buyerOrder.recieve !== '0'" v-text="buyerOrder.recieve"></badge>
+            <badge v-if="buyerOrder.recieve > 0" v-text="buyerOrder.recieve"></badge>
           </i>
           <div>待收货</div>
         </div>
         <div class="item">
           <i class="icon iconfont icon-daifahuo">
-            <badge v-if="buyerOrder.deliver !== '0'" v-text="buyerOrder.deliver"></badge>
+            <badge v-if="buyerOrder.deliver > 0" v-text="buyerOrder.deliver"></badge>
           </i>
           <div>待发货</div>
         </div>
         <div class="item">
           <i class="icon iconfont icon-shouhou">
-            <badge v-if="buyerOrder.service !== '0'" v-text="buyerOrder.service"></badge>
+            <badge v-if="buyerOrder.service > 0" v-text="buyerOrder.service"></badge>
           </i>
           <div>售后处理</div>
         </div>
@@ -232,17 +232,17 @@ export default {
   created () {
     axios.get('api/user/getGroup').then((response) => {
       this.groupId = response.data.data.groupId
+      if (this.groupId === 4) {
+        this.getBuyerOrderInfo()
+      }
+      if (this.groupId === 5) {
+        this.getSupplierOrderInfo()
+      }
     }).catch((response) => {
       this.errorMsg()
     })
     this.loginMethod()
     this.getInfo()
-    if (this.groupId === 4) {
-      this.getBuyerOrderInfo()
-    }
-    if (this.groupId === 5) {
-      this.getSupplierOrderInfo()
-    }
     this.getFavoriteNumber()
     this.getNumber()
   },

@@ -192,7 +192,6 @@ export default {
           if (t) {
             const {price, quantity} = (this.proData)[index].list[k]
             this.total += (price * quantity)
-            console.log(this.total)
           }
         })
       })
@@ -209,7 +208,6 @@ export default {
           if (t) {
             const {price, quantity} = (this.proData)[index].list[k]
             this.total += (price * quantity)
-            console.log(this.total)
           }
         })
       })
