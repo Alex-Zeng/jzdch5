@@ -88,6 +88,7 @@ export default {
   methods: {
     onButtonClick (event) {
       let loginToken = sessionStorage.getItem('loginToken')
+      let self = this
       if (loginToken != null) {
         axios.post('api/mall_cart/delete', {
           'ids': [event].join(','),
@@ -97,9 +98,24 @@ export default {
           if (status === 0) {
             this.$vux.toast.show({
               type: 'success',
-              text: msg
+              text: msg,
+              onShow () {
+                self.getLists()
+              },
+              onHide () {
+                // 计算价格，重新遍历
+                self.total = 0
+                self.checkedList.forEach((v, index) => {
+                  v.forEach((t, k) => {
+                    if (t) {
+                      const {price, quantity} = (self.proData)[index].list[k]
+                      self.total += (price * quantity)
+                      console.log(self.total)
+                    }
+                  })
+                })
+              }
             })
-            this.getLists()
           } else {
             this.$vux.toast.show({
               type: 'warn',

@@ -2,7 +2,7 @@
   <div style="background: #FFFFFF;">
     <div class="login-top">
       <i class="icon iconfont icon-guanbi" onclick="history.go(-1)"></i>
-      <router-link to="/loginByCode">免密登录</router-link>
+      <router-link to="/loginByCode" replace>免密登录</router-link>
     </div>
     <form class="form">
       <ul>
@@ -79,9 +79,9 @@ export default {
                   let oldUrl = sessionStorage.getItem('oldUrl')
                   console.log(oldUrl)
                   if (oldUrl) {
-                    self.$router.push(oldUrl)
+                    self.$router.replace(oldUrl)
                   } else {
-                    self.$router.push('/')
+                    self.$router.replace('/')
                   }
                 }
               })

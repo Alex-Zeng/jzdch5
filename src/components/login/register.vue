@@ -195,9 +195,9 @@ export default {
                   let oldUrl = sessionStorage.getItem('oldUrl')
                   console.log(oldUrl)
                   if (oldUrl) {
-                    self.$router.push(oldUrl)
+                    self.$router.replace(oldUrl)
                   } else {
-                    self.$router.push('/')
+                    self.$router.replace('/')
                   }
                 }
               })
