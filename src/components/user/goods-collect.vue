@@ -1,38 +1,38 @@
 <template>
-   <div>
-     <div class="header-nav header-nav-fixed">
-       <i class="icon iconfont icon-back" style="padding-right: 1rem;" onclick="history.go(-1)"></i>
-       <div>
-         收藏夹
-       </div>
-       <div style="padding-right: 2rem">&emsp;</div>
-     </div>
-     <div class="search-lists-header"><span style="color: #222222;">默认</span> <span @click="sortMethods">价格<i class="icon iconfont icon-jiagepaixu1"></i></span></div>
-     <div  class="mescroll" id="mescroll" style="padding-top: 5.5rem;border-top: 0.05rem solid #E0E0E0;">
-       <div id="favoriteList" v-cloak>
-         <!--展示上拉加载的数据列表-->
-         <div v-for="(item, index) in favoriteList" :key="index">
-           <swipeout>
-             <swipeout-item transition-mode="follow">
-               <div slot="right-menu">
-                 <swipeout-button @click.native="onButtonClick(item.id, index)" type="warn">删除</swipeout-button>
-               </div>
-               <div slot="content" class="shop-car-content"  @click="$router.push('/detail/'+item.id)">
-                 <div>
-                   <img :src="item.icon" alt="图片">
-                   <div>
-                     <h3>{{item.title}}</h3>
-                     <span class="text-red">￥ {{item.w_price}}</span>
-                     <div class="text-muted fr">详情 <i class="icon iconfont icon-youjiantou"></i></div>
-                   </div>
-                 </div>
-               </div>
-             </swipeout-item>
-           </swipeout>
-         </div>
-       </div>
-     </div>
-   </div>
+  <div>
+    <div class="header-nav header-nav-fixed">
+      <i class="icon iconfont icon-back" style="padding-right: 1rem;" onclick="history.go(-1)"></i>
+      <div>
+        收藏夹
+      </div>
+      <div style="padding-right: 2rem">&emsp;</div>
+    </div>
+    <div class="search-lists-header"><span style="color: #222222;" @click="defaultSortMethods">默认</span> <span @click="sortMethods">价格<i class="icon iconfont icon-jiagepaixu1"></i></span></div>
+    <div  class="mescroll" id="mescroll" style="padding-top: 5.5rem;border-top: 0.05rem solid #E0E0E0;">
+      <div id="favoriteList" v-cloak>
+        <!--展示上拉加载的数据列表-->
+        <div v-for="(item, index) in favoriteList" :key="index">
+          <swipeout>
+            <swipeout-item transition-mode="follow">
+              <div slot="right-menu">
+                <swipeout-button @click.native="onButtonClick(item.id, index)" type="warn">删除</swipeout-button>
+              </div>
+              <div slot="content" class="shop-car-content"  @click="$router.push('/detail/'+item.id)">
+                <div>
+                  <img :src="item.icon" alt="图片">
+                  <div>
+                    <h3>{{item.title}}</h3>
+                    <span class="text-red">￥ {{item.w_price}}</span>
+                    <div class="text-muted fr">详情 <i class="icon iconfont icon-youjiantou"></i></div>
+                  </div>
+                </div>
+              </div>
+            </swipeout-item>
+          </swipeout>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -45,13 +45,13 @@ export default {
   data () {
     return {
       favoriteList: [],
+      field: 'time',
       mySort: 'asc'
     }
   },
   methods: {
     onButtonClick (id, index) {
       let self = this
-      console.log('删除')
       axios.post('api/goods/removeFavorite', {
         'goodsId': id
       }).then((response) => {
@@ -65,7 +65,6 @@ export default {
       // 联网加载数据
       var self = this
       this.getListDataFromNet(page.num, page.size, function (curPageData, totalSize) {
-        // curPageData = [] // 打开本行注释,可演示列表无任何数据empty的配置
         if (page.num === 1) self.favoriteList = []
         // 更新列表数据
         self.favoriteList = self.favoriteList.concat(curPageData)
@@ -82,7 +81,7 @@ export default {
         axios.post('api/user/getFavoriteList', {
           'pageNumber': pageNum,
           'pageSize': pageSize,
-          'field': 'price',
+          'field': self.field,
           'sort': self.mySort
         }).then((response) => {
           if (response.data.status === 0) {
@@ -110,33 +109,29 @@ export default {
           }
         }).catch((response) => {
           // 响应错误回调
-          console.log('error')
           self.errorMsg()
           errorCallback && errorCallback()// 失败回调
         })
       }, 1000)
     },
+    defaultSortMethods () {
+      this.field = 'time'
+      this.mySort = 'asc'
+      this.mescroll.resetUpScroll()
+    },
     sortMethods () {
+      this.field = 'price'
       if (this.mySort === 'asc') {
         this.mySort = 'desc'
-        // sessionStorage.setItem('searchSort', 'desc')
       } else {
         this.mySort = 'asc'
-        // sessionStorage.setItem('searchSort', 'asc')
       }
-      console.log(this.mySort)
       this.mescroll.resetUpScroll()
     },
     errorMsg () {
       this.$vux.toast.show({
         type: 'warn',
-        text: '网络可能有点问题',
-        onShow () {
-          console.log('Plugin: I\'m showing')
-        },
-        onHide () {
-          console.log('Plugin: I\'m hiding')
-        }
+        text: '网络可能有点问题'
       })
     }
   },
