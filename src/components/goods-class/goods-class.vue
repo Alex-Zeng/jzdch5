@@ -11,11 +11,9 @@
       </div>
       <div class="main-nav">
         <ul>
-          <li v-for="(item, index) in categoryListChildren" :key="index">
-            <router-link :to="{path: '/search', query: {id: item.id }}">
+          <li v-for="(item, index) in categoryListChildren" :key="index" @click="goSearch(item.id)">
               <img :src="item.path" :alt="item.id">
               <h3>{{item.name}}</h3>
-            </router-link>
           </li>
         </ul>
       </div>
@@ -67,6 +65,10 @@ export default {
           }
         }
       }, 300)
+    },
+    goSearch (id) {
+      sessionStorage.setItem('searchId', id)
+      this.$router.push('/search')
     }
   },
   created () {

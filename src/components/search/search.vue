@@ -269,6 +269,7 @@ export default {
           'cateId': self.cateId
         }).then((response) => {
           if (response.data.status === 0) {
+            self.cateId = ''
             // 响应成功回调
             var data = response.data.data.list
             var total = response.data.data.total
@@ -309,9 +310,11 @@ export default {
   mounted () {
     this.loginToken = sessionStorage.getItem('loginToken')
     // this.getHistory()
-    var cateId = this.$route.query.id
-    if (cateId !== undefined) {
+    console.log(sessionStorage.getItem('searchId'))
+    var cateId = sessionStorage.getItem('searchId')
+    if (cateId !== null) {
       this.cateId = cateId
+      sessionStorage.removeItem('searchId')
       this.getResult(true)
     }
   },
