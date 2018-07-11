@@ -2,7 +2,6 @@
   <!--滑动区域-->
   <div class="mescroll"  id="mescroll">
     <headerMessage></headerMessage>
-    <Financial :childFinancial="financial" @childEvent="parentEvent"></Financial>
     <div class="banner">
       <swiper loop :show-desc-mask="false" dots-position="center" height="9.9rem" :list="banners" :show-dots="banners.length > 1? true:false"></swiper>
     </div>
@@ -87,7 +86,6 @@
 <script>
 import headerMessage from '../common/header-message'
 import FooterNav from '../common/footer-nav'
-import Financial from '../common/financial'
 import {Badge, Swiper, SwiperItem} from 'vux'
 import axios from 'axios'
 import MeScroll from '../../../static/js/mescroll.min.js'
@@ -152,12 +150,6 @@ export default {
         // 响应错误回调
         this.errorMsg()
       })
-    },
-    financialShow () {
-      this.financial = true
-    },
-    parentEvent (data) {
-      this.financial = data
     },
     // 上拉回调 page = {num:1, size:10}; num:当前页 ,默认从1开始; size:每页数据条数,默认10
     upCallback: function (page) {
@@ -243,7 +235,7 @@ export default {
     })
   },
   components: {
-    headerMessage, FooterNav, Financial, Swiper, SwiperItem, Badge
+    headerMessage, FooterNav, Swiper, SwiperItem, Badge
   }
 }
 </script>
