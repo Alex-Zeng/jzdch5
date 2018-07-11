@@ -12,19 +12,19 @@
           <swiper-item class="black">
             <div class="menu-nav">
               <template v-for="(item, index) in menunListsFirst">
-                <router-link v-if="item.type > 0" :to="{path: '/goods-class', query: {id: item.id }}" :key="index">
+                <router-link v-if="item.type > 0 && item.type !== 10" :to="{path: '/goods-class', query: {id: item.id }}" :key="index">
                   <img :src="item.img" alt=""/>
                   <div class="text-truncate">
                     {{item.name}}
                   </div>
                 </router-link>
-                <a href="javascript:;" v-else-if="item.flag === 1" @click="financialShow" :key="index">
+                <a href="http://h5.jizhongdiancai.com/jzdc-services/finance.html" v-else-if="item.flag === 1" :key="index">
                   <img :src="item.img" alt=""/>
                   <div class="text-truncate">
                     {{item.name}}
                   </div>
                 </a>
-                <a href="javascript:;" v-else :key="index">
+                <a href="http://h5.jizhongdiancai.com/jzdc-services/index.html" v-else-if="item.type === 10" :key="index">
                   <img :src="item.img" alt=""/>
                   <div class="text-truncate">
                     {{item.name}}
@@ -36,19 +36,19 @@
           <swiper-item  v-if="menunListsSecond.length > 0" class="black">
             <div class="menu-nav">
               <template v-for="(item, index) in menunListsSecond">
-                <router-link v-if="item.type > 0" :to="{path: '/goods-class', query: {id: item.id }}" :key="index">
+                <router-link v-if="item.type > 0 && item.type !== 10" :to="{path: '/goods-class', query: {id: item.id }}" :key="index">
                   <img :src="item.img" alt=""/>
                   <div class="text-truncate">
                     {{item.name}}
                   </div>
                 </router-link>
-                <a href="javascript:;" v-else-if="item.flag === 1" @click="financialShow" :key="index">
+                <a href="http://h5.jizhongdiancai.com/jzdc-services/finance.html" v-else-if="item.flag === 1" :key="index">
                   <img :src="item.img" alt=""/>
                   <div class="text-truncate">
                     {{item.name}}
                   </div>
                 </a>
-                <a href="javascript:;" v-else :key="index">
+                <a href="http://h5.jizhongdiancai.com/jzdc-services/index.html" v-else-if="item.type === 10" :key="index">
                   <img :src="item.img" alt=""/>
                   <div class="text-truncate">
                     {{item.name}}
