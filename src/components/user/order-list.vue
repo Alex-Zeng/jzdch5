@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="header-nav">
-      <i class="icon iconfont icon-back" style="padding-right: 1rem;" onclick="history.go(-1)"></i>
+      <router-link class="icon iconfont icon-back" style="padding-right: 1rem;" tag="i" to="/user"></router-link>
       <div>
         我的订单
       </div>
@@ -32,20 +32,45 @@
     <div class="mescroll" id="mescroll">
       <div class="order-wrap"  v-show="!show">
         <div class="order-card" v-for="i in list" :key="i.id">
-          <div class="indent-title">
+          <div class="indent-title" style="font-size: 0.75rem;padding: 0.45rem 1.8rem;">
             {{i.companyName}}
           </div>
-          <div class="orderNo">订单号：{{i.out_id}} <span>状态：{{i.service_type === 1? '待售后':getState(i.groupId, i.state)}}</span></div>
+          <div class="orderNo">订单号：{{i.out_id}} <span>{{i.service_type === 1? '待售后':getState(i.groupId, i.state)}}</span></div>
           <div>
             <div class="order-item" v-for="(good, key) in i.goods" :key="key">
               <div slot="content" class="indent-content">
                 <img :src="good.icon" alt="">
                 <div class="indent-info">
-                  <h3><router-link to="/">{{good.title}}</router-link></h3>
-                  <div class="text-muted">商品规格&emsp;{{good.specifications_info}}</div>
-                  <div class="text-muted" >物料编号&emsp;{{good.specifications_no}}</div>
-                  <div class="text-muted" >物料规格&emsp;{{good.specifications_name}}</div>
-                  <div class="text-muted">数量&emsp;{{good.quantity}}&emsp;&emsp;&emsp;&emsp;单价&emsp;<span class="text-red">{{good.price}}元</span></div>
+                  <h3 class="title"><router-link to="/">{{good.title}}</router-link></h3>
+                  <div class="info-item">{{good.s_info}}</div>
+                  <div class="info-item">
+                    <span class="label">
+                      物料编号
+                    </span>
+                    <span class="value">
+                      {{good.specifications_no}}
+                    </span>
+                  </div>
+                  <div class="info-item">
+                    <span class="label">
+                      物料规格
+                    </span>
+                    <span class="value">
+                      {{good.specifications_name}}
+                    </span>
+                  </div>
+                  <div class="info-item">
+                    <div class="info-item" style="margin-right: 0.8rem;">
+                      <span class="sm-label">
+                        数量
+                      </span>
+                      <span class="value">{{good.quantity}}</span>
+                    </div>
+                    <div class="info-item">
+                      <span class="sm-label">单价</span>
+                      <span class="text-red">{{good.price}}元</span></div>
+                    </div>
+
                   <input type="hidden">
                 </div>
               </div>
@@ -76,6 +101,10 @@ export default {
         var self = this
         self.mescroll.resetUpScroll(true)
       }, 300)
+    },
+    $route: function () {
+      const {params: {type}} = this.$route
+      this.state = type
     }
   },
   data () {

@@ -89,7 +89,7 @@
       </div>
     </template>
     <div class="all-indent" v-if="groupId !== 6">
-      <router-link to="/order-list" tag="div">
+      <router-link to="/order-list/-1" tag="div">
         查看全部订单<i class="icon iconfont icon-youjiantou"></i>
       </router-link>
     </div>

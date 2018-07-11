@@ -54,20 +54,47 @@
 
       <div class="order-wrap" v-cloak>
         <div class="order-card">
-          <div class="indent-title">
+          <div class="indent-title" style="font-size: 0.75rem;padding: 0.45rem 1.8rem;">
             {{data.companyName}}
           </div>
-          <div class="orderNo">订单号：{{data.orderNo}} <span>状态：{{data.serviceType === 1? '待售后':getState(data.groupId, data.state)}}</span></div>
-          <div slot="content" class="indent-content" v-for="(good, key) in data.goods" :key="key">
+          <div class="orderNo">订单号：{{data.orderNo}} <span>{{data.serviceType === 1? '待售后':getState(data.groupId, data.state)}}</span></div>
+          <div slot="content" class="indent-content order-item" v-for="(good, key) in data.goods" :key="key">
             <img :src="good.icon" alt="">
             <div class="indent-info">
-              <h3><router-link to="/">{{good.title}}</router-link></h3>
-              <div class="text-muted">商品规格&emsp;{{good.specifications_info}}</div>
-              <div class="text-muted" >物料编号&emsp;{{good.specifications_no}}</div>
-              <div class="text-muted" >物料规格&emsp;{{good.specifications_name}}</div>
-              <div class="text-muted">数量&emsp;{{good.quantity}}&emsp;单价
-                <span class="text-red">{{good.price}}元</span>
-                <div class="order-button" style="float:right;margin-top: -0.12rem;"
+              <b class="title">{{good.title}}</b>
+              <div class="text-muted info-item">
+                <span class="label" style="flex-basis: 100%">
+                  {{good.s_info}}
+                </span>
+              </div>
+              <div class="text-muted info-item" >
+                <span class="label">
+                  物料编号
+                </span>
+                <span class="value">
+                  {{good.specifications_no}}
+                </span>
+              </div>
+              <div class="text-muted info-item" >
+                <span class="label">
+                  物料规格
+                </span>
+                <span class="value">
+                  {{good.specifications_name}}
+                </span>
+              </div>
+              <div class="text-muted info-item">
+                <span class="label">数量</span>
+                <span class="value">{{good.quantity}}</span>
+              </div>
+              <div class="text-muted info-item">
+                <div class="label">
+                  单价
+                </div>
+                <div class="value" style="margin-right:auto;">
+                  <span class="text-red">{{good.price}}元</span>
+                </div>
+                <div class="order-button" style="margin-top: -0.12rem;"
                      v-if="(data.state===6 || data.state === 13 || data.state === 9 || data.state===10  || data.state===11)&&(good.service_type===0 || good.service_type===2)&&(data.groupId===4)"
                      @click="selectShow=true, goodsId = good.goods_id">售后申请</div>
               </div>
