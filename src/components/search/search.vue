@@ -236,8 +236,6 @@ export default {
       // 联网加载数据
       var self = this
       this.getListDataFromNet(page.num, page.size, function (curPageData, totalSize) {
-        // curPageData = [] // 打开本行注释,可演示列表无任何数据empty的配置
-        if (page.num === 1) self.goodsLists = []
         // 更新列表数据
         self.goodsLists = self.goodsLists.concat(curPageData)
         self.mescroll.endBySize(curPageData.length, totalSize) // 必传参数(当前页的数据个数, 总数据量)
@@ -269,26 +267,15 @@ export default {
                 listData.push(data[i])
               }
             }
-            console.log(listData)
-            console.log(total)
             successCallback && successCallback(listData, total)// 成功回调
           } else {
             this.$vux.toast.show({
               type: 'warn',
-              text: response.data.msg,
-              onShow () {
-                console.log('Plugin: I\'m showing')
-              },
-              onHide () {
-                console.log('Plugin: I\'m hiding')
-              }
+              text: response.data.msg
             })
           }
         }).catch((response) => {
-          console.log(response)
           // 响应错误回调
-          console.log('error')
-          // self.errorMsg()
           errorCallback && errorCallback()// 失败回调
         })
       }, 1000)
