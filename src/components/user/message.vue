@@ -226,8 +226,7 @@ export default {
           btnClick: function () { // 点击按钮的回调,默认null
             alert('点击了按钮,具体逻辑自行实现')
           }
-        },
-        clearEmptyId: null // 相当于同时设置了clearId和empty.warpId; 简化写法;默认null
+        }
       }
     })
     self.mescroll1 = new MeScroll('mescroll1', {
@@ -243,8 +242,7 @@ export default {
           btnClick: function () { // 点击按钮的回调,默认null
             alert('点击了按钮,具体逻辑自行实现')
           }
-        },
-        clearEmptyId: null // 相当于同时设置了clearId和empty.warpId; 简化写法;默认null
+        }
       }
     })
   },
