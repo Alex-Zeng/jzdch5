@@ -108,8 +108,6 @@ export default {
       this.isA = !this.isA
       this.showList = !this.showList
     },
-    submit () {
-    },
     sortMethod () {
       if (this.mySort === 'asc') {
         this.mySort = 'desc'
@@ -128,50 +126,6 @@ export default {
         this.isActive = true
       }
     },
-    getResult (val) {
-      if (val.keyCode === 13 || val === true) {
-        if (val.keyCode === 13) {
-          let obj = { 'keyword': this.keywords }
-          let allArr = []
-          let oldArr = this.historyLists
-          oldArr.push(obj)
-          for (let i = 0; i < oldArr.length; i++) {
-            let flag = true
-            for (let j = 0; j < allArr.length; j++) {
-              if (oldArr[i].keyword === allArr[j].keyword) {
-                flag = false
-              }
-            }
-            if (flag) {
-              allArr.push(oldArr[i])
-            }
-          }
-          this.historyLists = allArr
-          sessionStorage.setItem('keyword', JSON.stringify(this.historyLists))
-        }
-        var self = this
-        self.mescroll = new MeScroll('mescroll', {
-          up: {
-            /* 上拉加载的配置参数 */
-            auto: true, // 是否在初始化时以上拉加载的方式自动加载第一页数据; 默认false
-            callback: self.upCallback, // 上拉回调
-            // 以下参数可删除,不配置
-            isBounce: false, // 此处禁止ios回弹,解析(务必认真阅读,特别是最后一点): http://www.mescroll.com/qa.html#q10
-            offset: 500,
-            empty: { // 配置列表无任何数据的提示
-              warpId: 'dataList',
-              // icon: '../res/img/mescroll-empty.png'
-              tip: '亲,暂无相关数据哦~',
-              btntext: '去逛逛 >',
-              btnClick: function () {
-                // alert('点击了去逛逛按钮')
-                self.$router.push('/')
-              }
-            }
-          }
-        })
-      }
-    },
     onBlur () {
       this.showHistory = false
     },
@@ -179,6 +133,7 @@ export default {
       this.keywords = ''
     },
     getHistory () {
+      this.mescroll.destroy()
       if (this.loginToken === null) {
         var localKeywords = sessionStorage.getItem('keyword')
         if (localKeywords !== null) {
@@ -229,29 +184,51 @@ export default {
       this.historyLists[index].isActive = !this.historyLists[index].isActive
       this.keywords = this.historyLists[index].keyword
       this.getResult(true)
-      // var self = this
-      // self.mescroll.removeEmpty()
-      /* self.mescroll = new MeScroll('mescroll', {
-        up: {
-          /!* 上拉加载的配置参数 *!/
-          auto: true, // 是否在初始化时以上拉加载的方式自动加载第一页数据; 默认false
-          callback: self.upCallback, // 上拉回调
-          // 以下参数可删除,不配置
-          isBounce: false, // 此处禁止ios回弹,解析(务必认真阅读,特别是最后一点): http://www.mescroll.com/qa.html#q10
-          // page:{size:8}, //可配置每页8条数据,默认10
-          offset: 500,
-          empty: { // 配置列表无任何数据的提示
-            warpId: 'dataList',
-            // icon: '../res/img/mescroll-empty.png'
-            tip: '亲,暂无相关数据哦~',
-            btntext: '去逛逛 >',
-            btnClick: function () {
-              // alert('点击了去逛逛按钮')
-              self.$router.push('/')
+    },
+    getResult (val) {
+      document.getElementById('dataList').innerHTML = ''
+      if (val.keyCode === 13 || val === true) {
+        if (val.keyCode === 13) {
+          let obj = { 'keyword': this.keywords }
+          let allArr = []
+          let oldArr = this.historyLists
+          oldArr.push(obj)
+          for (let i = 0; i < oldArr.length; i++) {
+            let flag = true
+            for (let j = 0; j < allArr.length; j++) {
+              if (oldArr[i].keyword === allArr[j].keyword) {
+                flag = false
+              }
+            }
+            if (flag) {
+              allArr.push(oldArr[i])
             }
           }
+          this.historyLists = allArr
+          sessionStorage.setItem('keyword', JSON.stringify(this.historyLists))
         }
-      }) */
+        var self = this
+        self.mescroll = new MeScroll('mescroll', {
+          up: {
+            /* 上拉加载的配置参数 */
+            auto: true, // 是否在初始化时以上拉加载的方式自动加载第一页数据; 默认false
+            callback: self.upCallback, // 上拉回调
+            // 以下参数可删除,不配置
+            isBounce: false, // 此处禁止ios回弹,解析(务必认真阅读,特别是最后一点): http://www.mescroll.com/qa.html#q10
+            offset: 500,
+            empty: { // 配置列表无任何数据的提示
+              warpId: 'dataList',
+              // icon: '../res/img/mescroll-empty.png'
+              tip: '亲,暂无相关数据哦~',
+              btntext: '去逛逛 >',
+              btnClick: function () {
+                // alert('点击了去逛逛按钮')
+                self.$router.push('/')
+              }
+            }
+          }
+        })
+      }
     },
     // 上拉回调 page = {num:1, size:10}; num:当前页 ,默认从1开始; size:每页数据条数,默认10
     upCallback (page) {
@@ -259,15 +236,9 @@ export default {
       // 联网加载数据
       var self = this
       this.getListDataFromNet(page.num, page.size, function (curPageData, totalSize) {
-        // self.mescroll.destroy()
-        console.log(curPageData)
-        console.log(totalSize)
-        // curPageData = [] // 打开本行注释,可演示列表无任何数据empty的配置
-        if (page.num === 1) self.goodsLists = []
         // 更新列表数据
         self.goodsLists = self.goodsLists.concat(curPageData)
         self.mescroll.endBySize(curPageData.length, totalSize) // 必传参数(当前页的数据个数, 总数据量)
-        console.log('传值：')
       }, function () {
         // 联网失败的回调,隐藏下拉刷新和上拉加载的状态;
         self.mescroll.endErr()
@@ -284,7 +255,7 @@ export default {
           'sort': self.mySort,
           'pageNumber': pageNum,
           'pageSize': pageSize,
-          'cateId': self.$route.query.id
+          'cateId': self.cateId
         }).then((response) => {
           if (response.data.status === 0) {
             // 响应成功回调
@@ -296,26 +267,15 @@ export default {
                 listData.push(data[i])
               }
             }
-            console.log(listData)
-            console.log(total)
             successCallback && successCallback(listData, total)// 成功回调
           } else {
             this.$vux.toast.show({
               type: 'warn',
-              text: response.data.msg,
-              onShow () {
-                console.log('Plugin: I\'m showing')
-              },
-              onHide () {
-                console.log('Plugin: I\'m hiding')
-              }
+              text: response.data.msg
             })
           }
         }).catch((response) => {
-          console.log(response)
           // 响应错误回调
-          console.log('error')
-          // self.errorMsg()
           errorCallback && errorCallback()// 失败回调
         })
       }, 1000)

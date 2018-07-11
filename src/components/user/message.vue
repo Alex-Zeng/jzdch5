@@ -84,8 +84,6 @@ export default {
       // 联网加载数据
       var self = this
       this.getListDataFromNet(page.num, page.size, function (curPageData, totalSize) {
-        // curPageData = [] // 打开本行注释,可演示列表无任何数据empty的配置
-        if (page.num === 1) self.MessageList = []
         // 更新列表数据
         self.MessageList = self.MessageList.concat(curPageData)
         self.mescroll.endBySize(curPageData.length, totalSize) // 必传参数(当前页的数据个数, 总数据量)
@@ -226,8 +224,7 @@ export default {
           btnClick: function () { // 点击按钮的回调,默认null
             alert('点击了按钮,具体逻辑自行实现')
           }
-        },
-        clearEmptyId: null // 相当于同时设置了clearId和empty.warpId; 简化写法;默认null
+        }
       }
     })
     self.mescroll1 = new MeScroll('mescroll1', {
@@ -243,8 +240,7 @@ export default {
           btnClick: function () { // 点击按钮的回调,默认null
             alert('点击了按钮,具体逻辑自行实现')
           }
-        },
-        clearEmptyId: null // 相当于同时设置了clearId和empty.warpId; 简化写法;默认null
+        }
       }
     })
   },
