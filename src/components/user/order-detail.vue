@@ -57,7 +57,7 @@
           <div class="indent-title">
             {{data.companyName}}
           </div>
-          <div class="orderNo">订单号：{{data.orderNo}} <span>状态：{{data.serviceType === 1? '待售后':getState(data.state)}}</span></div>
+          <div class="orderNo">订单号：{{data.orderNo}} <span>状态：{{data.serviceType === 1? '待售后':getState(data.groupId, data.state)}}</span></div>
           <div slot="content" class="indent-content" v-for="(good, key) in data.goods" :key="key">
             <img :src="good.icon" alt="">
             <div class="indent-info">
@@ -67,7 +67,9 @@
               <div class="text-muted" >物料规格&emsp;{{good.specifications_name}}</div>
               <div class="text-muted">数量&emsp;{{good.quantity}}&emsp;单价
                 <span class="text-red">{{good.price}}元</span>
-                <div class="order-button" style="float:right;margin-top: -0.12rem;" v-if="(data.state===6 || data.state === 13)&&(good.service_type===0 || good.service_type===2)&&(data.groupId===4)" @click="selectShow=true, goodsId = good.goods_id">售后申请</div>
+                <div class="order-button" style="float:right;margin-top: -0.12rem;"
+                     v-if="(data.state===6 || data.state === 13 || data.state === 9 || data.state===10  || data.state===11)&&(good.service_type===0 || good.service_type===2)&&(data.groupId===4)"
+                     @click="selectShow=true, goodsId = good.goods_id">售后申请</div>
               </div>
             </div>
           </div>
@@ -84,6 +86,22 @@
           </div>
           <div class="item">
             <span class="label">支付方式</span><span class="value">{{data.payMethod}}</span>
+          </div>
+          <div v-if="data.payNumber || data.payDate || data.payImg">
+            <div class="line"></div>
+            <div class="item" v-if="data.payNumber">
+              <span class="label">流水号</span>
+              <span class="value">{{data.payNumber}}</span>
+            </div>
+            <div class="item" v-if="data.payDate">
+              <span class="label">汇款日期</span>
+              <span class="value">{{data.payDate}}</span>
+            </div>
+            <div class="item" v-if="data.payImg">
+              <span class="label">汇款凭证</span>
+              <span class="value">{{data.payImg}}</span>
+            </div>
+            <div class="line"></div>
           </div>
           <div class="line">
           </div>
@@ -107,12 +125,13 @@
               <button type="button" class="btn btn-primary" @click="submitExpress">提交</button>
             </div>
           </div>
-          <div v-if="data.groupId === 4 && data.state <= 3">
+          <div v-if="(data.groupId === 4 && data.state <= 3) || (!data.expressCode || !data.express)">
             <div class="order-tips">
-              暂无物流信息
+              <div><img src="../../assets/images/empty_box.png" alt="" style="background-color: #fff;"></div>
+              <div>暂无物流信息</div>
             </div>
           </div>
-          <div v-if="data.state > 3">
+          <div v-if="(data.state > 3) && (data.expressCode && data.express)">
             <div class="item">
               <span class="label">运单号</span><span class="value">{{data.expressCode}}</span>
             </div>
@@ -246,32 +265,92 @@ export default {
         }
       })
     },
-    getState (state) {
-      switch (state) {
-        case 0:
-          return '待核价'
-        case 1:
-          return '待签约'
-        case 2:
-          return '待采购商打款'
-        case 3:
-          return '待发货'
-        case 4:
-          return '订单关闭'
-        case 6:
-          return '待收货'
-        case 7:
-          return '待质检'
-        case 8:
-          return '问题确认中'
-        case 9:
-          return '账期中'
-        case 10:
-          return '逾期中'
-        case 11:
-          return '待打款至供应商'
-        case 13:
-          return '交易完成'
+    getState (group, state) {
+      if (group === 4) {
+        switch (state) {
+          case 0:
+            return '待核价'
+          case 1:
+            return '待签约'
+          case 2:
+            return '待采购商打款'
+          case 3:
+            return '待发货'
+          case 4:
+            return '订单关闭'
+          case 6:
+            return '待收货'
+          case 7:
+            return '待质检'
+          case 8:
+            return '问题确认中'
+          // 4:待打款 5:待采购商打款
+          case 9:
+          case 10:
+            return '待打款'
+          // 4:交易完成 5:待收款
+          case 11:
+            return '交易完成'
+          case 13:
+            return '交易完成'
+        }
+      } else if (group === 5) {
+        switch (state) {
+          case 0:
+            return '待核价'
+          case 1:
+            return '待签约'
+          case 2:
+            return '待采购商打款'
+          case 3:
+            return '待发货'
+          case 4:
+            return '订单关闭'
+          case 6:
+            return '待收货'
+          case 7:
+            return '待质检'
+          case 8:
+            return '问题确认中'
+          // 4:待打款 5:待采购商打款
+          case 9:
+          case 10:
+            return '待采购商打款'
+          // 4:交易完成 5:待收款
+          case 11:
+            return '待收款'
+          case 13:
+            return '交易完成'
+        }
+      } else {
+        switch (state) {
+          case -1:
+            return '全部'
+          case 0:
+            return '待核价'
+          case 1:
+            return '待签约'
+          case 2:
+            return '待采购商打款'
+          case 3:
+            return '待发货'
+          case 4:
+            return '订单关闭'
+          case 6:
+            return '待收货'
+          case 7:
+            return '待质检'
+          case 8:
+            return '问题确认中'
+          case 9:
+            return '账期中'
+          case 10:
+            return '逾期中'
+          case 11:
+            return '待打款至供应商'
+          case 13:
+            return '交易完成'
+        }
       }
     },
     getDetail () {

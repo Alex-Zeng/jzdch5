@@ -35,7 +35,7 @@
           <div class="indent-title">
             {{i.companyName}}
           </div>
-          <div class="orderNo">订单号：{{i.out_id}} <span>状态：{{i.service_type === 1? '待售后':getState(i.state)}}</span></div>
+          <div class="orderNo">订单号：{{i.out_id}} <span>状态：{{i.service_type === 1? '待售后':getState(i.groupId, i.state)}}</span></div>
           <div>
             <div class="order-item" v-for="(good, key) in i.goods" :key="key">
               <div slot="content" class="indent-content">
@@ -54,6 +54,7 @@
           <div class="order-action">
             <div class="order-button" @click="gotoDetail(i.out_id)">查看详情</div>
             <div class="order-button" v-if="(i.state ===1 || i.state === 0)&&i.groupId===4" @click="cancle(i.out_id)">取消交易</div>
+            <div class="order-button" v-if="(i.state ===6 && (i.service_type ===0 || i.service_type ===2))&&i.groupId===4" @click="receipt(i.out_id)">确定收货</div>
           </div>
         </div>
       </div>
@@ -124,6 +125,42 @@ export default {
       }, function () {
         // 联网失败的回调,隐藏下拉刷新和上拉加载的状态;
         self.mescroll.endErr()
+      })
+    },
+    receipt (no) {
+      this.$vux.confirm.show({
+        title: '提示',
+        content: '请确认是否收到货物',
+        onCancel: () => {},
+        onConfirm: () => {
+          this.$vux.loading.show(
+            {
+              text: '提交中...'
+            }
+          )
+          axios.post('api/order/receipt', {no}).then((response) => {
+            this.$vux.loading.hide()
+            const {msg, status} = response.data
+            if (status !== 0) {
+              this.$vux.toast.show({
+                type: 'warn',
+                text: msg
+              })
+            } else {
+              this.$vux.toast.show({
+                type: 'success',
+                text: msg
+              })
+              setTimeout(() => {
+                var self = this
+                self.mescroll.resetUpScroll(true)
+              }, 300)
+            }
+          }).catch((response) => {
+            this.errorMsg()
+            this.$vux.loading.hide()
+          })
+        }
       })
     },
     cancle (no) {
@@ -201,34 +238,92 @@ export default {
     gotoDetail (no) {
       this.$router.push('/order-detail/' + no)
     },
-    getState (state) {
-      switch (state) {
-        case -1:
-          return '全部'
-        case 0:
-          return '待核价'
-        case 1:
-          return '待签约'
-        case 2:
-          return '待采购商打款'
-        case 3:
-          return '待发货'
-        case 4:
-          return '订单关闭'
-        case 6:
-          return '待收货'
-        case 7:
-          return '待质检'
-        case 8:
-          return '问题确认中'
-        case 9:
-          return '账期中'
-        case 10:
-          return '逾期中'
-        case 11:
-          return '待打款至供应商'
-        case 13:
-          return '交易完成'
+    getState (group, state) {
+      if (group === 4) {
+        switch (state) {
+          case 0:
+            return '待核价'
+          case 1:
+            return '待签约'
+          case 2:
+            return '待采购商打款'
+          case 3:
+            return '待发货'
+          case 4:
+            return '订单关闭'
+          case 6:
+            return '待收货'
+          case 7:
+            return '待质检'
+          case 8:
+            return '问题确认中'
+          // 4:待打款 5:待采购商打款
+          case 9:
+          case 10:
+            return '待打款'
+          // 4:交易完成 5:待收款
+          case 11:
+            return '交易完成'
+          case 13:
+            return '交易完成'
+        }
+      } else if (group === 5) {
+        switch (state) {
+          case 0:
+            return '待核价'
+          case 1:
+            return '待签约'
+          case 2:
+            return '待采购商打款'
+          case 3:
+            return '待发货'
+          case 4:
+            return '订单关闭'
+          case 6:
+            return '待收货'
+          case 7:
+            return '待质检'
+          case 8:
+            return '问题确认中'
+          // 4:待打款 5:待采购商打款
+          case 9:
+          case 10:
+            return '待采购商打款'
+          // 4:交易完成 5:待收款
+          case 11:
+            return '待收款'
+          case 13:
+            return '交易完成'
+        }
+      } else {
+        switch (state) {
+          case -1:
+            return '全部'
+          case 0:
+            return '待核价'
+          case 1:
+            return '待签约'
+          case 2:
+            return '待采购商打款'
+          case 3:
+            return '待发货'
+          case 4:
+            return '订单关闭'
+          case 6:
+            return '待收货'
+          case 7:
+            return '待质检'
+          case 8:
+            return '问题确认中'
+          case 9:
+            return '账期中'
+          case 10:
+            return '逾期中'
+          case 11:
+            return '待打款至供应商'
+          case 13:
+            return '交易完成'
+        }
       }
     },
     errorMsg () {
