@@ -162,9 +162,10 @@ export default {
     showCarMethod () {
       axios.get('api/user/getGroup').then((response) => {
         if (response.data.status === 0) {
+          console.log(response.data.data.groupId)
           sessionStorage.removeItem('groupId')
           sessionStorage.setItem('groupId', response.data.data.groupId)
-          if (sessionStorage.getItem('groupId') === '0') {
+          if (response.data.data.groupId === '0') {
             let self = this
             this.$vux.confirm.show({
               title: '提示',
@@ -176,7 +177,7 @@ export default {
               }
             })
             return false
-          } else if (sessionStorage.getItem('groupId') === '6') {
+          } else if (response.data.data.groupId === '6') {
             let self = this
             this.$vux.confirm.show({
               title: '提示',
@@ -187,6 +188,23 @@ export default {
             })
             return false
           } else {
+            if (this.goodsData.standard.length === 1) {
+              if (this.iscur0 === null && this.iscur1 === null) {
+                this.shawdow = true
+                this.$vux.toast.show({
+                  text: '请选择规格'
+                })
+                return false
+              }
+            } else if (this.goodsData.standard.length === 2) {
+              if (this.iscur0 === null | this.iscur1 === null) {
+                this.shawdow = true
+                this.$vux.toast.show({
+                  text: '请选择规格'
+                })
+                return false
+              }
+            }
             axios.post('api/mall_cart/add', {
               'id': this.$route.params.id,
               'number': this.value,
@@ -194,32 +212,14 @@ export default {
               'optionId': this.optionId
             }).then((response) => {
               if (response.data.status === 0) {
-                if (this.goodsData.standard.length === 1) {
-                  if (this.iscur0 === null && this.iscur1 === null) {
-                    this.shawdow = true
-                    this.$vux.toast.show({
-                      text: '请选择规格'
-                    })
-                    return false
-                  }
-                }
-                if (this.goodsData.standard.length === 2) {
-                  if (this.iscur0 === null | this.iscur1 === null) {
-                    this.shawdow = true
-                    this.$vux.toast.show({
-                      text: '请选择规格'
-                    })
-                    return false
-                  }
-                }
+                this.$vux.toast.show({
+                  type: 'success',
+                  text: '添加成功'
+                })
                 axios.get('api/mall_cart/getNumber').then((response) => {
                   if (response.data.status === 0) {
                     this.showCarNum = response.data.data.total
                   }
-                })
-                this.$vux.toast.show({
-                  type: 'success',
-                  text: '添加成功'
                 })
               } else {
                 this.$vux.toast.show({
@@ -227,10 +227,14 @@ export default {
                   text: response.data.msg
                 })
               }
-            }).catch((response) => {})
+            }).catch((response) => {
+              this.errorMsg()
+            })
           }
         }
       }).catch((response) => {
+        alert(555)
+        this.errorMsg()
       })
     },
     collectMethod () {

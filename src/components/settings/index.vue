@@ -53,9 +53,17 @@ export default {
   },
   methods: {
     loginOut () {
-      document.cookie = '_token='
-      sessionStorage.clear()
-      this.$router.push('/')
+      let self = this
+      this.$vux.confirm.show({
+        title: '提示',
+        content: '确定退出？',
+        onCancel () {},
+        onConfirm () {
+          document.cookie = '_token='
+          sessionStorage.clear()
+          self.$router.push('/')
+        }
+      })
     },
     back () {
       this.$router.replace('/user')

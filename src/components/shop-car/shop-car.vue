@@ -98,6 +98,7 @@ export default {
           if (status === 0) {
             this.$vux.toast.show({
               type: 'success',
+              isShowMask: true,
               text: msg,
               onShow () {
                 self.getLists()

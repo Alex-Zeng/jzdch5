@@ -34,6 +34,14 @@
   font-size: 0.7rem;
   color: #222222;
   background: #FFFFFF;
+  padding-top: 1rem;
+}
+.aggreement-content i{
+  background: #FFFFFF;
+  padding: 0.25rem;
+  position: fixed;
+  top: 0.25rem;
+  left: 0.25rem;
 }
 .aggreement-content h3{
   text-align: center;
