@@ -88,7 +88,11 @@
         <button class="btn">去认证</button>
       </div>
     </template>
-    <div class="all-indent" v-if="groupId !== 6">查看全部订单<i class="icon iconfont icon-youjiantou"></i></div>
+    <div class="all-indent" v-if="groupId !== 6">
+      <router-link to="/order-list" tag="div">
+        查看全部订单<i class="icon iconfont icon-youjiantou"></i>
+      </router-link>
+    </div>
     <div class="footer-ad" v-if="groupId !== 6">
       <div>集众金融 急你所需</div>
       <div><a href="javascript:;">申请融资</a></div>

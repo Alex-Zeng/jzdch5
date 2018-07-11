@@ -7,62 +7,124 @@
       </div>
       <div>&emsp;</div>
     </div>
-    <div class="order-wrap" v-cloak>
-      <div class="order-card">
-        <div class="indent-title">
-          {{data.companyName}}
-        </div>
-        <div class="orderNo">订单号：{{data.orderNo}} <span>状态：{{getState(data.state)}}</span></div>
-        <div slot="content" class="indent-content" v-for="(good, key) in data.goods" :key="key">
-          <img :src="good.icon" alt="">
-          <div class="indent-info">
-            <h3><router-link to="/">{{good.title}}</router-link></h3>
-            <div class="text-muted">商品规格&emsp;{{good.specifications_info}}</div>
-            <div class="text-muted" >物料编号&emsp;{{good.specifications_no}}</div>
-            <div class="text-muted" >物料规格&emsp;{{good.specifications_name}}</div>
-            <div class="text-muted">数量&emsp;{{good.quantity}}&emsp;&emsp;&emsp;&emsp;单价&emsp;<span class="text-red">{{good.price}}元</span></div>
-            <input type="hidden">
+    <div class="service-result" v-show="showResult">
+      <div>
+        <div>尊敬的用户</div>
+        <div>您的售后申请（订单号:{{$route.params.no}}）</div>
+        <span>已经提交成功；我们将尽快为您处理，请耐心等待。</span>
+        <button type="button" class="btn btn-primary" @click="showResult=false">返回订单</button>
+      </div>
+    </div>
+    <div v-show="!showResult">
+
+      <div class="select-confirm" v-if="selectShow" style="z-index: 99">
+        <div class="select-confirm-content">
+          <div>
+            <div class="select-confirm-title">请选择您需要服务的类型：</div>
+            <div class="select-confirm-checkbox">
+              <div>
+                <label>
+                  <i class="icon iconfont icon-danxuananniu" v-if="selectItem!=1"></i>
+                  <i class="icon iconfont icon-xuanzhong" v-if="selectItem==1" style="color: #1EB9EE;"></i>
+                  <input type="radio" name="name" v-show="false" v-model="selectItem" value="1">退货
+                </label>
+              </div>
+              <div>
+                <label>
+                  <i class="icon iconfont icon-danxuananniu" v-if="selectItem!=2"></i>
+                  <i class="icon iconfont icon-xuanzhong" v-if="selectItem==2" style="color: #1EB9EE;"></i>
+                  <input type="radio" name="name" v-show="false" v-model="selectItem" value="2">换货
+                </label>
+              </div>
+              <div>
+                <label>
+                  <i class="icon iconfont icon-danxuananniu" v-if="selectItem!=3"></i>
+                  <i class="icon iconfont icon-xuanzhong" v-if="selectItem==3" style="color: #1EB9EE;"></i>
+                  <input type="radio" name="name" v-show="false" v-model="selectItem" value="3">维修
+                </label>
+              </div>
+            </div>
+            <div class="select-confirm-button">
+              <button @click="submitService">确定</button>
+              <button @click="cancelSelect">取消</button>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="order-card addr">
-        <b style="margin-right: 0.25rem;">{{data.name}}</b><b>{{data.phone}}</b>
-        <div class="detail">{{data.address}}</div>
-      </div>
+      <div class="order-wrap" v-cloak>
+        <div class="order-card">
+          <div class="indent-title">
+            {{data.companyName}}
+          </div>
+          <div class="orderNo">订单号：{{data.orderNo}} <span>状态：{{data.serviceType === 1? '待售后':getState(data.state)}}</span></div>
+          <div slot="content" class="indent-content" v-for="(good, key) in data.goods" :key="key">
+            <img :src="good.icon" alt="">
+            <div class="indent-info">
+              <h3><router-link to="/">{{good.title}}</router-link></h3>
+              <div class="text-muted">商品规格&emsp;{{good.specifications_info}}</div>
+              <div class="text-muted" >物料编号&emsp;{{good.specifications_no}}</div>
+              <div class="text-muted" >物料规格&emsp;{{good.specifications_name}}</div>
+              <div class="text-muted">数量&emsp;{{good.quantity}}&emsp;单价
+                <span class="text-red">{{good.price}}元</span>
+                <div class="order-button" style="float:right;margin-top: -0.12rem;" v-if="(data.state===6 || data.state === 13)&&(good.service_type===0 || good.service_type===2)&&(data.groupId===4)" @click="selectShow=true, goodsId = good.goods_id">售后申请</div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-      <div class="order-card info">
-        <div class="item">
-          <span class="label">下单时间</span><span class="value">{{data.time}}</span>
-        </div>
-        <div class="item">
-          <span class="label">支付方式</span><span class="value">{{data.payMethod}}</span>
-        </div>
-        <div class="line">
-        </div>
-        <div class="item">
-          <span class="label">交货期</span><span class="value">{{data.date}}</span>
+        <div class="order-card addr">
+          <b style="margin-right: 0.25rem;">{{data.name}}</b><b>{{data.phone}}</b>
+          <div class="detail">{{data.address}}</div>
         </div>
 
-        <div class="item">
-          <span class="label">备注</span><span class="value">{{data.remark}}</span>
-        </div>
-        <div class="line"></div>
-        <div v-if="data.groupId === 5 && data.state === 3">
-          <div class="item"><b style="color: #222222;">填写发货信息</b></div>
-          <Group>
-            <XInput title="运单号"></XInput>
-            <XInput title="物流公司"></XInput>
-            <XInput title="发货日期"></XInput>
-            <XInput title="预计到达"></XInput>
-          </Group>
+        <div class="order-card info">
           <div class="item">
-            <button type="button" class="btn btn-primary">提交</button>
+            <span class="label">下单时间</span><span class="value">{{data.time}}</span>
           </div>
-        </div>
-        <div v-if="data.state !== 3">
-          <div class="order-tips">
-            暂无物流信息
+          <div class="item">
+            <span class="label">支付方式</span><span class="value">{{data.payMethod}}</span>
+          </div>
+          <div class="line">
+          </div>
+          <div class="item">
+            <span class="label">交货期</span><span class="value">{{data.date}}</span>
+          </div>
+
+          <div class="item">
+            <span class="label">备注</span><span class="value">{{data.remark}}</span>
+          </div>
+          <div class="line"></div>
+          <div v-if="data.groupId === 5 && data.state === 3">
+            <div class="item"><b style="color: #222222;">填写发货信息</b></div>
+            <Group>
+              <XInput title="运单号" v-model="expressForm.expressCode" text-align="right"></XInput>
+              <XInput title="物流公司" v-model="expressForm.express" text-align="right"></XInput>
+              <datetime v-model="expressForm.sendDate" title="发货日期"></datetime>
+              <datetime title="预计到达" v-model="expressForm.estimatedDate"></datetime>
+            </Group>
+            <div class="item">
+              <button type="button" class="btn btn-primary" @click="submitExpress">提交</button>
+            </div>
+          </div>
+          <div v-if="data.groupId === 4 && data.state <= 3">
+            <div class="order-tips">
+              暂无物流信息
+            </div>
+          </div>
+          <div v-if="data.state > 3">
+            <div class="item">
+              <span class="label">运单号</span><span class="value">{{data.expressCode}}</span>
+            </div>
+            <div class="item">
+              <span class="label">物流公司</span><span class="value">{{data.express}}</span>
+            </div>
+            <div class="item">
+              <span class="label">发货日期</span><span class="value">{{data.sendDate}}</span>
+            </div>
+            <div class="item">
+              <span class="label">预计到达</span><span class="value">{{data.estimatedDate}}</span>
+            </div>
           </div>
         </div>
       </div>
@@ -79,13 +141,111 @@ export default {
   data () {
     return {
       data: {},
-      infoBody: []
+      infoBody: [],
+      expressForm: {
+        express: '',
+        expressCode: '',
+        sendDate: '',
+        estimatedDate: ''
+      },
+      selectItem: '3',
+      selectShow: false,
+      showResult: false,
+      goodsId: -1
     }
   },
   mounted () {
     this.getDetail()
   },
   methods: {
+
+    cancelSelect () {
+      this.selectShow = false
+    },
+    submitService () {
+      this.selectShow = false
+      this.$vux.loading.show(
+        {
+          text: '提交中...'
+        }
+      )
+      const {params: { no }} = this.$route
+      axios.post('api/order/service', {no, type: this.selectItem, goodsId: this.goodsId}).then((response) => {
+        this.$vux.loading.hide()
+        const {msg, status} = response.data
+        if (status !== 0) {
+          this.$vux.toast.show({
+            type: 'warn',
+            text: msg
+          })
+        } else {
+          this.getDetail()
+          this.showResult = true
+          this.$vux.toast.show({
+            type: 'success',
+            text: msg
+          })
+        }
+      }).catch((response) => {
+        this.errorMsg()
+        this.$vux.loading.hide()
+      })
+    },
+    submitExpress () {
+      if (!this.expressForm.express || !this.expressForm.expressCode) {
+        this.$vux.toast.show({
+          type: 'warn',
+          text: '请填写物流信息'
+        })
+        return
+      }
+      if (!this.expressForm.sendDate) {
+        this.$vux.toast.show({
+          type: 'warn',
+          text: '请确定发货日期'
+        })
+        return
+      }
+      if (!this.expressForm.estimatedDate) {
+        this.$vux.toast.show({
+          type: 'warn',
+          text: '请确定预计到达时间'
+        })
+        return
+      }
+      this.$vux.confirm.show({
+        title: '提示',
+        content: '是否仔细核对物流信息后？',
+        onCancel () {},
+        onConfirm: () => {
+          this.$vux.loading.show(
+            {
+              text: '提交中...'
+            }
+          )
+          const {params: { no }} = this.$route
+          axios.post('api/order/delivery', {...this.expressForm, no}).then((response) => {
+            this.$vux.loading.hide()
+            const {msg, status} = response.data
+            if (status !== 0) {
+              this.$vux.toast.show({
+                type: 'warn',
+                text: msg
+              })
+            } else {
+              this.getDetail()
+              this.$vux.toast.show({
+                type: 'success',
+                text: msg
+              })
+            }
+          }).catch((response) => {
+            this.errorMsg()
+            this.$vux.loading.hide()
+          })
+        }
+      })
+    },
     getState (state) {
       switch (state) {
         case 0:
@@ -118,6 +278,10 @@ export default {
       const {params: { no }} = this.$route
       axios.post('api/order/detail', {no}).then((response) => {
         this.data = response.data.data
+        // 备注75字数限制
+        if (this.data.remark.length > 75) {
+          this.data.remark = this.data.remark.substring(0, 72) + '...'
+        }
       }).catch((response) => {
         this.errorMsg()
       })
