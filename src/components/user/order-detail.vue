@@ -15,6 +15,9 @@
         <button type="button" class="btn btn-primary" @click="showResult=false">返回订单</button>
       </div>
     </div>
+    <div class="orderImgWrap" v-show="showImgWrap" @click="showImgWrap=false">
+      <img :src="data.payImg" alt="">
+    </div>
     <div v-show="!showResult">
 
       <div class="select-confirm" v-if="selectShow" style="z-index: 99">
@@ -58,7 +61,7 @@
             {{data.companyName}}
           </div>
           <div class="orderNo">订单号：{{data.orderNo}} <span>{{data.serviceType === 1? '待售后':getState(data.groupId, data.state)}}</span></div>
-          <div slot="content" class="indent-content order-item" v-for="(good, key) in data.goods" :key="key">
+          <div class="indent-content order-item" v-for="(good, key) in data.goods" :key="key">
             <img :src="good.icon" alt="">
             <div class="indent-info">
               <b class="title">{{good.title}}</b>
@@ -100,6 +103,7 @@
               </div>
             </div>
           </div>
+          <div class="detail-money"><span>总价：<span class="text-red">{{data.money}}元</span></span></div>
         </div>
 
         <div class="order-card addr">
@@ -124,10 +128,10 @@
               <span class="label">汇款日期</span>
               <span class="value">{{data.payDate}}</span>
             </div>
-            <div class="item" v-if="data.payImg">
+            <div class="item" v-if="data.payImg" @click="showImgWrap=true">
               <span class="label">汇款凭证</span>
-              <div class="value" style="width: 100%;">
-                <img style="width: 100%;" :src="data.payImg" alt="">
+              <div class="value">
+                <img style="width: 4.5rem" :src="data.payImg" alt="">
               </div>
             </div>
           </div>
@@ -138,7 +142,7 @@
           </div>
 
           <div class="item">
-            <span class="label">备注</span><span class="value">{{data.remark}}</span>
+            <span class="label">备注</span><div class="value">{{data.remark}}</div>
           </div>
           <div class="line"></div>
           <div v-if="data.groupId === 5 && data.state === 3">
@@ -198,7 +202,8 @@ export default {
       selectItem: '3',
       selectShow: false,
       showResult: false,
-      goodsId: -1
+      goodsId: -1,
+      showImgWrap: false
     }
   },
   mounted () {
