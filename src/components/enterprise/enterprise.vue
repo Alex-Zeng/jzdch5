@@ -131,7 +131,7 @@ export default {
         companyName: '',
         address: '',
         representative: '',
-        capital: 0,
+        capital: null,
         property: ['有限责任公司'],
         business: '',
         permitsAccount: '',
