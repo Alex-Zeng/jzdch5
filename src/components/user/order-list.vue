@@ -97,6 +97,7 @@ import { Swipeout, SwipeoutItem, SwipeoutButton, Group, Datetime, XTextarea, XBu
 import '@/assets/css/order.css'
 import MeScroll from '../../../static/js/mescroll.min.js'
 import 'mescroll.js/mescroll.min.css'
+
 export default {
   name: 'order-list',
   watch: {

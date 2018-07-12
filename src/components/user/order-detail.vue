@@ -126,9 +126,10 @@
             </div>
             <div class="item" v-if="data.payImg">
               <span class="label">汇款凭证</span>
-              <span class="value">{{data.payImg}}</span>
+              <div class="value" style="width: 100%;">
+                <img style="width: 100%;" :src="data.payImg" alt="">
+              </div>
             </div>
-            <div class="line"></div>
           </div>
           <div class="line">
           </div>
