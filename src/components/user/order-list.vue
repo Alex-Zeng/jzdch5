@@ -37,7 +37,8 @@
     <div class="mescroll" id="mescroll">
       <div class="order-wrap"  v-show="!show">
         <div class="order-card" v-for="i in list" :key="i.id">
-          <div class="indent-title" style="font-size: 0.75rem;padding: 0.45rem 1.8rem;">
+          <div class="indent-title" style="font-size: 0.75rem;">
+            <i class="icon iconfont icon-shangdian text-blue"></i>
             {{i.companyName}}
           </div>
           <div class="orderNo">订单号：{{i.out_id}} <span>{{i.service_type === 1? '待售后':getState(i.groupId, i.state)}}</span></div>

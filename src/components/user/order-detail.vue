@@ -57,7 +57,8 @@
 
       <div class="order-wrap" v-cloak>
         <div class="order-card">
-          <div class="indent-title" style="font-size: 0.75rem;padding: 0.45rem 1.8rem;">
+          <div class="indent-title" style="font-size: 0.75rem;">
+            <i class="icon iconfont icon-shangdian text-blue"></i>
             {{data.companyName}}
           </div>
           <div class="orderNo">订单号：{{data.orderNo}} <span>{{data.serviceType === 1? '待售后':getState(data.groupId, data.state)}}</span></div>
