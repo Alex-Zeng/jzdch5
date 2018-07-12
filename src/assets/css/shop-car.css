@@ -47,7 +47,8 @@
 .shller-title{
   display: flex;
   margin-top: 0.5rem;
-  padding: 0.5rem;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
   background: #FFFFFF;
   border-top: 0.05rem solid #E1E1E1;
   border-bottom: 0.05rem solid #E1E1E1;
@@ -55,9 +56,15 @@
   font-size: 0.6rem;
 }
 .shller-title > div:first-child{
-  width: 3rem;
+  /*width: 3rem;
   background: #FFFFFF url("../images/sho-car-title.png") no-repeat 1.6rem center;
-  background-size: 1.1rem;
+  background-size: 1.1rem;*/
+}
+.shller-title i.text-blue{
+  font-size: 0.6rem!important;
+  padding: 0.2rem;
+  background: #E5F9FF;
+  border-radius: 50%;
 }
 .shller-title input{
   position: absolute;

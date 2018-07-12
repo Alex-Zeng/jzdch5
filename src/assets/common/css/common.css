@@ -16,7 +16,8 @@ a:active, a:visited{
 	outline: none;
 }
 img{
-  background: #E0E0E0;
+  background: #FFFFFF url("../../images/temp-img.png") no-repeat center;
+  background-size: 100%;
 }
 body{
   background: #F5F5F5;

@@ -18,6 +18,7 @@
             <i class="icon iconfont icon-xuanzhong" v-if="allList[index]" style="color: #1EB9EE;"></i>
             <input type="checkbox" :value="item.supplierName" @click="selsectAll(index, $event)" v-model="allList[index]">
           </div>
+          &emsp;<i class="icon iconfont icon-shangdian text-blue"></i>&emsp;
           <div>{{item.supplierName}}</div>
         </div>
         <div :id="'box'+index">
