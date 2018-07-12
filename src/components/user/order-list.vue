@@ -5,31 +5,31 @@
       <div>
         我的订单
       </div>
-      <div @click="showSelect">
-        <span>{{getState(-1, this.state)}}</span>
+      <div @click="showSelect" v-cloak>
+        {{getState(999, this.state)}}
         <i class="icon iconfont icon-xiala" :class="{'icon-order-active': show}" style="font-size: 0.4rem !important;">
       </i>
       </div>
     </div>
     <div v-show="show" class="menu-wrap">
-      <ul class="menu-list">
-        <li class="menu-item" @click="state=-1,show=false">全部</li>
-        <li class="menu-item" @click="state=0,show=false">待核价</li>
+      <ul class="menu-list" @click="show=false">
+        <router-link to="/order-list/-1"  class="menu-item" tag="li">全部</router-link>
+        <router-link to="/order-list/0" class="menu-item" tag="li">待核价</router-link>
       </ul>
-      <ul class="menu-list">
-        <li class="menu-item" @click="state=1,show=false">待签约</li>
-        <li class="menu-item" @click="state=3,show=false">待发货</li>
+      <ul class="menu-list" @click="show=false">
+        <router-link to="/order-list/1" class="menu-item" tag="li">待签约</router-link>
+        <router-link to="/order-list/3" class="menu-item" tag="li">待发货</router-link>
       </ul>
-      <ul class="menu-list">
-        <li class="menu-item" @click="state=6,show=false">待收货</li>
-        <li class="menu-item" @click="state=9,show=false">账期中</li>
+      <ul class="menu-list" @click="show=false">
+        <router-link to="/order-list/6" class="menu-item" tag="li">待收货</router-link>
+        <router-link to="/order-list/9" class="menu-item" tag="li">账期中</router-link>
       </ul>
-      <ul class="menu-list">
-        <li class="menu-item" @click="state=13,show=false">交易完成</li>
-        <li class="menu-item" @click="state=8,show=false">售后处理</li>
+      <ul class="menu-list" @click="show=false">
+        <router-link to="/order-list/13" class="menu-item" tag="li">交易完成</router-link>
+        <router-link to="/order-list/8" class="menu-item" tag="li">售后处理</router-link>
       </ul>
-      <ul class="menu-list">
-        <li class="menu-item" @click="state=9,show=false">待付款</li>
+      <ul class="menu-list" @click="show=false">
+        <router-link to="/order-list/9" class="menu-item" @click="state=9,show=false">待付款</router-link>
         <li class="menu-item-empty"></li>
       </ul>
     </div>
@@ -108,7 +108,7 @@ export default {
     },
     $route: function () {
       const {params: {type}} = this.$route
-      console.log(type)
+      this.show = false
       this.state = type
     }
   },
@@ -124,6 +124,8 @@ export default {
     window.scrollTo(0, 0)
   },
   mounted () {
+    const {params: {type}} = this.$route
+    this.state = type
     var _sel = this
     _sel.mescroll = new MeScroll('mescroll', {
       up: {
