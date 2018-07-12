@@ -22,6 +22,7 @@
       <div class="indent-list">
         <div v-for="(item, index) in lists" :key="index">
           <div class="indent-title">
+            <i class="icon iconfont icon-shangdian text-blue"></i>&emsp;
             {{item.supplierName}}
             <span class="fr">（左滑商品编辑对应物料信息）</span>
           </div>
@@ -59,7 +60,7 @@
       <div class="shop-car-total">
         <div>
           总金额：
-          <span class="text-red">{{total}}</span>
+          <span class="text-red">{{total}}元</span>
         </div>
         <div @click="submit">
           提交订单

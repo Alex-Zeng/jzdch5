@@ -42,10 +42,9 @@
   height: 1.5rem;
   line-height: 1.5rem;
   padding: 0 0.5rem;
-  padding-left: 2rem;
-  /*border-top: 0.05rem solid #E1E1E1;*/
+  border-top: 0.05rem solid #E1E1E1;
   border-bottom: 0.05rem solid #E1E1E1;
-  background: #FFFFFF url("../images/sho-car-title.png") no-repeat 0.5rem center;
+  background: #FFFFFF;
   background-size: 1.1rem;
   color: #222222;
   padding-right: 7rem;
@@ -55,6 +54,13 @@
   font-size: 0.6rem;
   font-weight: bold;
   position: relative;
+  box-sizing: border-box;
+}
+.indent-title i.text-blue{
+  font-size: 0.6rem!important;
+  padding: 0.2rem;
+  background: #E5F9FF;
+  border-radius: 50%;
 }
 .indent-title > span:last-child{
   font-weight: normal;

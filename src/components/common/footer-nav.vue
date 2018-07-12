@@ -52,7 +52,8 @@ export default {
       }
     }).catch((response) => {
     })
-  }
+  },
+  mounted () {}
 }
 </script>
 

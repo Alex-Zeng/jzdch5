@@ -5,7 +5,8 @@
       <div>
         采购清单
       </div>
-      <div @click="manageMethods" style="padding-right: 0.5rem">
+      <div v-if="proData.length === 0">&emsp;&emsp;&emsp;</div>
+      <div @click="manageMethods" v-if="proData.length > 0" style="padding-right: 0.5rem">
         {{manage?'管理':'完成'}}
       </div>
     </div>
@@ -17,6 +18,7 @@
             <i class="icon iconfont icon-xuanzhong" v-if="allList[index]" style="color: #1EB9EE;"></i>
             <input type="checkbox" :value="item.supplierName" @click="selsectAll(index, $event)" v-model="allList[index]">
           </div>
+          &emsp;<i class="icon iconfont icon-shangdian text-blue"></i>&emsp;
           <div>{{item.supplierName}}</div>
         </div>
         <div :id="'box'+index">
@@ -47,10 +49,10 @@
         </div>
       </div>
     </div>
-    <div class="shop-car-total">
+    <div class="shop-car-total"  v-if="proData.length > 0">
       <div v-if="manage">
         合计：
-        <span class="text-red">{{total.toFixed(2)}}</span>
+        <span class="text-red">{{total.toFixed(2)}}元</span>
       </div>
       <div v-if="!manage">
         <i class="icon iconfont icon-danxuananniu" v-if="!all"></i>

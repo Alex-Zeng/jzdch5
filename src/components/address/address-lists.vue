@@ -34,7 +34,7 @@
         </div>
       </li>
     </ul>
-    <router-link class="address-footer" to="/address-new">
+    <router-link class="address-footer" to="/address-new" replace>
       新增地址
     </router-link>
   </div>

@@ -162,7 +162,7 @@ export default {
                   console.log('Plugin: I\'m showing')
                 },
                 onHide () {
-                  self.$router.push('/safety')
+                  self.$router.replace('/safety')
                   console.log('Plugin: I\'m hiding')
                 }
               })

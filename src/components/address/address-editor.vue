@@ -192,7 +192,6 @@ export default {
         if (result) {
           axios.post('api/user/editAddress', {
             'id': this.id,
-            '_token': sessionStorage.getItem('loginToken'),
             'name': this.userName,
             'phone': this.mobile,
             'areaId': this.areaId,
@@ -204,24 +203,14 @@ export default {
               this.$vux.toast.show({
                 type: 'success',
                 text: response.data.msg,
-                onShow () {
-                  console.log('Plugin: I\'m showing')
-                },
                 onHide () {
-                  self.$router.push('/address-lists')
-                  console.log('Plugin: I\'m hiding')
+                  self.$router.replace('/address-lists')
                 }
               })
             } else {
               this.$vux.toast.show({
                 type: 'warn',
-                text: response.data.msg,
-                onShow () {
-                  console.log('Plugin: I\'m showing')
-                },
-                onHide () {
-                  console.log('Plugin: I\'m hiding')
-                }
+                text: response.data.msg
               })
             }
           }).catch((response) => {
@@ -233,13 +222,7 @@ export default {
         }
         this.$vux.toast.show({
           type: 'warn',
-          text: '请填写相关信息',
-          onShow () {
-            console.log('Plugin: I\'m showing')
-          },
-          onHide () {
-            console.log('Plugin: I\'m hiding')
-          }
+          text: '请填写相关信息'
         })
       })
     },
@@ -278,5 +261,7 @@ export default {
 </script>
 
 <style scoped>
-
+.address-new{
+  background: #FFFFFF;
+}
 </style>

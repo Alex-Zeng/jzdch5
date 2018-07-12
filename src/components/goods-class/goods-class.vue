@@ -12,7 +12,7 @@
       <div class="main-nav">
         <ul>
           <li v-for="(item, index) in categoryListChildren" :key="index" @click="goSearch(item.id)">
-              <img :src="item.path" :alt="item.id">
+              <img :src="item.path" alt="">
               <h3>{{item.name}}</h3>
           </li>
         </ul>

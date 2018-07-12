@@ -31,8 +31,8 @@
       <button type="button" class="btn btn-primary" @click="login">登录</button>
     </form>
     <div class="user-agreement">
-      <router-link to="/register" class="text-muted fl">免费注册</router-link>
-      <router-link to="/forget-password" class="text-muted fr">忘记密码</router-link>
+      <router-link to="/register" replace class="text-muted fl">免费注册</router-link>
+      <router-link to="/forget-password" replace class="text-muted fr">忘记密码</router-link>
     </div>
   </div>
 </template>

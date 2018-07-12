@@ -162,10 +162,8 @@ export default {
     showCarMethod () {
       axios.get('api/user/getGroup').then((response) => {
         if (response.data.status === 0) {
-          console.log(response.data.data.groupId)
-          sessionStorage.removeItem('groupId')
           sessionStorage.setItem('groupId', response.data.data.groupId)
-          if (response.data.data.groupId === '0') {
+          if (response.data.data.groupId === 0) {
             let self = this
             this.$vux.confirm.show({
               title: '提示',
@@ -177,7 +175,7 @@ export default {
               }
             })
             return false
-          } else if (response.data.data.groupId === '6') {
+          } else if (response.data.data.groupId === 6) {
             let self = this
             this.$vux.confirm.show({
               title: '提示',
