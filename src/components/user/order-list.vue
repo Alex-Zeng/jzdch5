@@ -6,7 +6,7 @@
         我的订单
       </div>
       <div @click="showSelect">
-        {{list[0]?getState(list[0].groupId, state): '' }}
+        {{getState(-8, state)}}
         <i class="icon iconfont icon-xiala" :class="{'icon-order-active': show}" style="font-size: 0.4rem !important;">
       </i>
       </div>
@@ -99,17 +99,11 @@ import MeScroll from '../../../static/js/mescroll.min.js'
 import 'mescroll.js/mescroll.min.css'
 export default {
   name: 'order-list',
-  computed: {
-    stateTitle: function () {
-      console.log('v' + this.getState(4, this.state))
-      return this.getState(-99, this.state)
-    }
-  },
   watch: {
     $route: function (val) {
       const {params: {type}} = val
       this.show = false
-      this.state = type
+      this.state = type * 1
       this.mescroll.resetUpScroll(true)
     }
   },
@@ -126,7 +120,7 @@ export default {
   },
   mounted () {
     const {params: {type}} = this.$route
-    this.state = type
+    this.state = type * 1
     var _sel = this
     _sel.mescroll = new MeScroll('mescroll', {
       up: {
