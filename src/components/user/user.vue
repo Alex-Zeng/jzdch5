@@ -95,7 +95,7 @@
     </div>
     <div class="footer-ad" v-if="groupId !== 6">
       <div>集众金融 急你所需</div>
-      <div><a href="javascript:;">申请融资</a></div>
+      <div><a href="http://h5.jizhongdiancai.com/jzdc-services/finance.html">申请融资</a></div>
     </div>
     <FooterNav></FooterNav>
   </div>

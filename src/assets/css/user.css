@@ -40,10 +40,12 @@
   width: 50%;
   height: 6.25rem;
   background: #FFFFFF;
-  margin-top: -1px;
   font-size: 0.8rem;
-  border: 0.05rem solid #E1E1E1;
   box-sizing: border-box;
+  border-bottom: 0.05rem solid #E1E1E1;
+}
+.user-grid .item:nth-child(2n+1){
+  border-right: 0.05rem solid #E1E1E1;
 }
 .user-grid .item .text-blue{
   display: inline-block;

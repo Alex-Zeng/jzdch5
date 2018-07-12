@@ -1,6 +1,6 @@
 <template>
   <div style="padding-bottom: 2.3rem;">
-    <div class="search-nav">
+    <div class="search-nav" style="border-bottom: 0.4rem solid #F5F5F5;">
       <div :class="[selectBox ,isActive ? activeClass : '']">
         <span  @click="setFocus" v-text="value"></span>
         <ul v-if="select">
