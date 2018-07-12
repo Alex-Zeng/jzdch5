@@ -5,8 +5,8 @@
       <div>
         我的订单
       </div>
-      <div @click="showSelect" v-cloak>
-        {{getState(999, this.state)}}
+      <div @click="showSelect">
+        {{list[0]?getState(list[0].groupId, state): '' }}
         <i class="icon iconfont icon-xiala" :class="{'icon-order-active': show}" style="font-size: 0.4rem !important;">
       </i>
       </div>
@@ -98,25 +98,26 @@ import '@/assets/css/order.css'
 import MeScroll from '../../../static/js/mescroll.min.js'
 import 'mescroll.js/mescroll.min.css'
 export default {
-  name: 'notice-detail',
+  name: 'order-list',
+  computed: {
+    stateTitle: function () {
+      console.log('v' + this.getState(4, this.state))
+      return this.getState(-99, this.state)
+    }
+  },
   watch: {
-    state: function () {
-      setTimeout(() => {
-        var self = this
-        self.mescroll.resetUpScroll(true)
-      }, 300)
-    },
-    $route: function () {
-      const {params: {type}} = this.$route
+    $route: function (val) {
+      const {params: {type}} = val
       this.show = false
       this.state = type
+      this.mescroll.resetUpScroll(true)
     }
   },
   data () {
     return {
       list: [],
       show: false,
-      state: -1,
+      state: 1,
       mescroll: null
     }
   },
@@ -275,92 +276,129 @@ export default {
       this.$router.push('/order-detail/' + no)
     },
     getState (group, state) {
+      var result = ''
       if (group === 4) {
         switch (state) {
           case 0:
-            return '待核价'
+            result = '待核价'
+            break
           case 1:
-            return '待签约'
+            result = '待签约'
+            break
           case 2:
-            return '待采购商打款'
+            result = '待采购商打款'
+            break
           case 3:
-            return '待发货'
+            result = '待发货'
+            break
           case 4:
-            return '订单关闭'
+            result = '订单关闭'
+            break
           case 6:
-            return '待收货'
+            result = '待收货'
+            break
           case 7:
-            return '待质检'
+            result = '待质检'
+            break
           case 8:
-            return '问题确认中'
+            result = '问题确认中'
+            break
           // 4:待打款 5:待采购商打款
           case 9:
           case 10:
-            return '待打款'
+            result = '待打款'
+            break
           // 4:交易完成 5:待收款
           case 11:
-            return '交易完成'
+            result = '交易完成'
+            break
           case 13:
-            return '交易完成'
+            result = '交易完成'
+            break
         }
       } else if (group === 5) {
         switch (state) {
           case 0:
-            return '待核价'
+            result = '待核价'
+            break
           case 1:
-            return '待签约'
+            result = '待签约'
+            break
           case 2:
-            return '待采购商打款'
+            result = '待采购商打款'
+            break
           case 3:
-            return '待发货'
+            result = '待发货'
+            break
           case 4:
-            return '订单关闭'
+            result = '订单关闭'
+            break
           case 6:
-            return '待收货'
+            result = '待收货'
+            break
           case 7:
-            return '待质检'
+            result = '待质检'
+            break
           case 8:
-            return '问题确认中'
+            result = '问题确认中'
+            break
           // 4:待打款 5:待采购商打款
           case 9:
           case 10:
-            return '待采购商打款'
+            result = '待采购商打款'
+            break
           // 4:交易完成 5:待收款
           case 11:
-            return '待收款'
+            result = '待收款'
+            break
           case 13:
-            return '交易完成'
+            result = '交易完成'
+            break
         }
       } else {
         switch (state) {
           case -1:
-            return '全部'
+            result = '全部'
+            break
           case 0:
-            return '待核价'
+            result = '待核价'
+            break
           case 1:
-            return '待签约'
+            result = '待签约'
+            break
           case 2:
-            return '待采购商打款'
+            result = '待采购商打款'
+            break
           case 3:
-            return '待发货'
+            result = '待发货'
+            break
           case 4:
-            return '订单关闭'
+            result = '订单关闭'
+            break
           case 6:
-            return '待收货'
+            result = '待收货'
+            break
           case 7:
-            return '待质检'
+            result = '待质检'
+            break
           case 8:
-            return '问题确认中'
+            result = '问题确认中'
+            break
           case 9:
-            return '账期中'
+            result = '账期中'
+            break
           case 10:
-            return '逾期中'
+            result = '逾期中'
+            break
           case 11:
-            return '待打款至供应商'
+            result = '待打款至供应商'
+            break
           case 13:
-            return '交易完成'
+            result = '交易完成'
+            break
         }
       }
+      return result
     },
     errorMsg () {
       this.$vux.toast.show({

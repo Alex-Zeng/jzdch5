@@ -183,7 +183,7 @@ import axios from 'axios'
 import { Swipeout, SwipeoutItem, SwipeoutButton, Group, Datetime, XButton, XInput } from 'vux'
 import '@/assets/css/order.css'
 export default {
-  name: 'notice-detail',
+  name: 'order-detail',
   data () {
     return {
       data: {},
