@@ -284,7 +284,7 @@ export default new Router({
       component: myForm
     },
     {
-      path: '/order-list',
+      path: '/order-list/:type',
       name: 'Order',
       meta: {
         title: '我的订单'
