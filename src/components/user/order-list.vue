@@ -5,8 +5,9 @@
       <div>
         我的订单
       </div>
-      <div @click="showSelect">{{getState(this.state)}}
-        <i class="icon iconfont icon-xiala" style="padding-right: 1rem;font-size: 0.4rem !important;">
+      <div @click="showSelect">
+        <span>{{getState(-1, this.state)}}</span>
+        <i class="icon iconfont icon-xiala" :class="{'icon-order-active': show}" style="font-size: 0.4rem !important;">
       </i>
       </div>
     </div>
@@ -26,6 +27,10 @@
       <ul class="menu-list">
         <li class="menu-item" @click="state=13,show=false">交易完成</li>
         <li class="menu-item" @click="state=8,show=false">售后处理</li>
+      </ul>
+      <ul class="menu-list">
+        <li class="menu-item" @click="state=9,show=false">待付款</li>
+        <li class="menu-item-empty"></li>
       </ul>
     </div>
 
@@ -70,7 +75,6 @@
                       <span class="sm-label">单价</span>
                       <span class="text-red">{{good.price}}元</span></div>
                     </div>
-
                   <input type="hidden">
                 </div>
               </div>
@@ -104,6 +108,7 @@ export default {
     },
     $route: function () {
       const {params: {type}} = this.$route
+      console.log(type)
       this.state = type
     }
   },
@@ -262,7 +267,7 @@ export default {
       }, 200)
     },
     showSelect () {
-      this.show = true
+      this.show = !this.show
     },
     gotoDetail (no) {
       this.$router.push('/order-detail/' + no)
@@ -400,5 +405,11 @@ export default {
   color: #ffffff;
   border-radius: 0.28rem;
   font-size: 0.8rem;
+}
+.menu-list .menu-item-empty{
+  flext: 1;
+  flex-basis: 50%;
+  margin: .8rem 1.2rem;
+  padding: 0.2rem 0;
 }
 </style>

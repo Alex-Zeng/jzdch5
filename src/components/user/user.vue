@@ -54,32 +54,32 @@
           </cell>
         </group>
       </div>
-      <div class="user-grid">
+      <router-link to="/order-list/9" tag="div" class="user-grid">
         <div class="item">
           <i class="icon iconfont icon-daifukuan">
             <badge v-if="buyerOrder.pay > 0" v-text="buyerOrder.pay"></badge>
           </i>
-          <div>代付款</div>
+          <div>待付款</div>
         </div>
-        <div class="item">
+        <router-link to="/order-list/6" tag="div" class="item">
           <i class="icon iconfont icon-daishouhuo">
             <badge v-if="buyerOrder.recieve > 0" v-text="buyerOrder.recieve"></badge>
           </i>
           <div>待收货</div>
-        </div>
-        <div class="item">
+        </router-link>
+        <router-link to="/order-list/3" tag="div" class="item">
           <i class="icon iconfont icon-daifahuo">
             <badge v-if="buyerOrder.deliver > 0" v-text="buyerOrder.deliver"></badge>
           </i>
           <div>待发货</div>
-        </div>
-        <div class="item">
+        </router-link>
+        <router-link class="item" to="/order-list/8" tag="div">
           <i class="icon iconfont icon-shouhou">
             <badge v-if="buyerOrder.service > 0" v-text="buyerOrder.service"></badge>
           </i>
           <div>售后处理</div>
-        </div>
-      </div>
+        </router-link>
+      </router-link>
     </template>
     <template v-if="groupId === 6">
       <div class="visitor-box" @click="$router.push('/settings')">
