@@ -184,7 +184,7 @@ export default {
                 type: 'success',
                 text: '修改成功',
                 onHide () {
-                  self.$router.push('/safety')
+                  self.$router.replace('/safety')
                 }
               })
             } else {

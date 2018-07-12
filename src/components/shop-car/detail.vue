@@ -45,7 +45,7 @@
       <div class="shop-car-total">
         <div>
           总金额：
-          <span class="text-red">{{total}}</span>
+          <span class="text-red">{{total}}元</span>
         </div>
         <div @click="$router.push('/')">
           返回首页

@@ -59,7 +59,7 @@
       <div class="shop-car-total">
         <div>
           总金额：
-          <span class="text-red">{{total}}</span>
+          <span class="text-red">{{total}}元</span>
         </div>
         <div @click="submit">
           提交订单

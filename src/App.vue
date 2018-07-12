@@ -10,6 +10,9 @@ export default {
   watch: {
     $route: {
       handler: function (val, oldVal) {
+        if (sessionStorage.getItem('loginToken') === null) {
+          document.cookie = '_token='
+        }
       },
       // 深度观察监听
       deep: true

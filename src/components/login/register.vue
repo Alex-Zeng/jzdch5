@@ -3,7 +3,7 @@
     <template v-if="model1Show">
       <div class="login-top">
         <i class="icon iconfont icon-guanbi" onclick="history.go(-1)"></i>
-        <router-link to="/login">账号密码登录</router-link>
+        <router-link to="/login" replace>账号密码登录</router-link>
       </div>
       <form class="form" @submit.prevent="getMobileCode(1)">
         <ul>

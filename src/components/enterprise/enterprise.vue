@@ -248,7 +248,7 @@ export default {
             type: 'success',
             text: msg,
             onHide () {
-              self.$router.push('/settings')
+              self.$router.replace('/settings')
             }
           })
         }

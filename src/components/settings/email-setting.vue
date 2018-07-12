@@ -79,7 +79,7 @@ export default {
                 type: 'success',
                 text: response.data.msg,
                 onHide () {
-                  self.$router.push('/safety')
+                  self.$router.replace('/safety')
                 }
               })
             } else {
