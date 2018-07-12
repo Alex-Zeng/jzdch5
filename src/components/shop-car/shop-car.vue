@@ -11,6 +11,12 @@
       </div>
     </div>
     <div class="shop-car-container">
+      <div v-if="proData.length === 0" class="temp-box">
+        <img class="temp-img" src="@/assets/images/temp-img-2.png" alt="">
+        <h3>您还没有采购的商品</h3>
+        <p class="text-muted">去添加试试吧</p>
+        <button @click="$router.replace('/')">快速采购</button>
+      </div>
       <div v-for="(item, index) in proData" :key="index">
         <div class="shller-title" :key="'list'+index">
           <div>
@@ -93,8 +99,7 @@ export default {
       let self = this
       if (loginToken != null) {
         axios.post('api/mall_cart/delete', {
-          'ids': [event].join(','),
-          '_token': loginToken
+          'ids': [event].join(',')
         }).then((response) => {
           const {data: {status, msg}} = response
           if (status === 0) {

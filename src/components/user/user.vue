@@ -126,8 +126,8 @@ export default {
         'service': '0'
       },
       userMsg: {
-        'name': '广东律晶电器有限责任公司',
-        'photo': require('../../assets/images/bingxiang-icon.png')
+        'name': '',
+        'photo': ''
       }
     }
   },
