@@ -7,7 +7,7 @@
         </div>
         <div style="padding-right: 2rem">&emsp;</div>
       </div>
-      <div class="address" @click="$router.push('/address-lists')">
+      <div class="address" @click="toAddr()">
         <div>
           <template v-if="address">
           <h3><span class="name">{{address.name}}</span>{{address.phone}} <span class="tag"> {{address.tag}}</span></h3>
@@ -122,6 +122,9 @@ export default {
     }
   },
   methods: {
+    toAddr () {
+      this.$router.push('/address-lists')
+    },
     onButtonClick (k, index) {
       let editor = this.lists
       this.editor = editor[index].list[k]
@@ -146,6 +149,8 @@ export default {
       })
     },
     next () {
+      sessionStorage.setItem('havaLists', true)
+      sessionStorage.setItem('indentLists', JSON.stringify(this.lists))
       this.editorSHow = !this.editorSHow
     },
     submit () {
