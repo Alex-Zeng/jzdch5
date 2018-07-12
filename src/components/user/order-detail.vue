@@ -57,7 +57,7 @@
 
       <div class="order-wrap" v-cloak>
         <div class="order-card">
-          <div class="indent-title" style="font-size: 0.75rem;">
+          <div class="indent-title" style="font-size: 0.75rem; padding: 0.28rem 0.5rem; height: auto;border-top: 0;">
             <i class="icon iconfont icon-shangdian text-blue"></i>
             {{data.companyName}}
           </div>
