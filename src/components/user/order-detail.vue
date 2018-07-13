@@ -345,7 +345,7 @@ export default {
           case 7:
             return '待质检'
           case 8:
-            return '问题确认中'
+            return '售后处理'
           // 4:待打款 5:待采购商打款
           case 9:
           case 10:
@@ -375,7 +375,7 @@ export default {
           case 7:
             return '待质检'
           case 8:
-            return '问题确认中'
+            return '售后处理'
           case 9:
             return '账期中'
           case 10:
