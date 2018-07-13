@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="message-box">
     <div class="header-nav">
       <i class="icon iconfont icon-back" style="padding-right: 1rem;" onclick="history.go(-1)"></i>
       <div>

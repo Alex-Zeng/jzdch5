@@ -64,9 +64,7 @@
   .goods-lists{
   	display: flex;
   	flex-wrap: wrap;
-  	padding: 0.25rem;
-    padding-bottom: 0.5rem;
-
+  	padding: 0.5rem 0.25rem;
   }
   .goods-lists li{
     width: 50%;
