@@ -81,13 +81,13 @@
               </div>
             </div>
           </div>
+          <div class="detail-money"><span>总价：<span class="text-red">{{i.money}}元</span></span><span v-if="i.money !== i.goods_money">（原价:{{i.goods_money}}元）</span></div>
           <div class="order-action">
             <div style="margin-right: auto;"></div>
             <div class="order-button" v-if="(i.state ===1 || i.state === 0)&&i.groupId===4" @click="cancle(i.out_id)">取消交易</div>
             <div class="order-button" v-if="(i.state ===6 && (i.service_type ===0 || i.service_type ===2))&&i.groupId===4" @click="receipt(i.out_id)">确定收货</div>
             <div class="order-button" @click="gotoDetail(i.out_id)">查看详情</div>
           </div>
-          <div class="detail-money"><span>总价：<span class="text-red">{{i.money}}元</span></span>（原价:{{i.goods_money}}元）</div>
         </div>
       </div>
     </div>
@@ -95,7 +95,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import service from '@/service'
 import { Swipeout, SwipeoutItem, SwipeoutButton, Group, Datetime, XTextarea, XButton } from 'vux'
 import '@/assets/css/order.css'
 import MeScroll from '../../../static/js/mescroll.min.js'
@@ -166,34 +166,28 @@ export default {
         title: '提示',
         content: '请确认是否收到货物',
         onCancel: () => {},
-        onConfirm: () => {
+        onConfirm: async () => {
           this.$vux.loading.show(
             {
               text: '提交中...'
             }
           )
-          axios.post('api/order/receipt', {no}).then((response) => {
-            this.$vux.loading.hide()
-            const {msg, status} = response.data
-            if (status !== 0) {
-              this.$vux.toast.show({
-                type: 'warn',
-                text: msg
-              })
-            } else {
-              this.$vux.toast.show({
-                type: 'success',
-                text: msg
-              })
-              setTimeout(() => {
-                var self = this
-                self.mescroll.resetUpScroll(true)
-              }, 300)
-            }
-          }).catch((response) => {
-            this.errorMsg()
-            this.$vux.loading.hide()
-          })
+          const {msg, status} = await service.post('api/order/receipt', {no})
+          this.$vux.loading.hide()
+          if (status !== 0) {
+            this.$vux.toast.show({
+              type: 'warn',
+              text: msg
+            })
+          } else {
+            this.$vux.toast.show({
+              type: 'success',
+              text: msg
+            })
+            setTimeout(() => {
+              this.mescroll.resetUpScroll(true)
+            }, 300)
+          }
         }
       })
     },
@@ -202,69 +196,46 @@ export default {
         title: '提示',
         content: '此操作会取消当前订单，请确定',
         onCancel: () => {},
-        onConfirm: () => {
+        onConfirm: async () => {
           this.$vux.loading.show(
             {
               text: '提交中...'
             }
           )
-          axios.post('api/order/cancel', {no}).then((response) => {
-            this.$vux.loading.hide()
-            const {msg, status} = response.data
-            if (status !== 0) {
-              this.$vux.toast.show({
-                type: 'warn',
-                text: msg
-              })
-            } else {
-              this.$vux.toast.show({
-                type: 'success',
-                text: msg
-              })
-              setTimeout(() => {
-                var self = this
-                self.mescroll.resetUpScroll(true)
-              }, 300)
-            }
-          }).catch((response) => {
-            this.errorMsg()
-            this.$vux.loading.hide()
-          })
+          const {msg, status} = await service.post('api/order/cancel', {no})
+          this.$vux.loading.hide()
+          if (status !== 0) {
+            this.$vux.toast.show({
+              type: 'warn',
+              text: msg
+            })
+          } else {
+            this.$vux.toast.show({
+              type: 'success',
+              text: msg
+            })
+            setTimeout(() => {
+              this.mescroll.resetUpScroll(true)
+            }, 300)
+          }
         }
       })
     },
-    getListDataFromNet (pageNum, pageSize, state, successCallback, errorCallback) {
-      let self = this
-      // 延时一秒,模拟联网
-      setTimeout(function () {
-        axios.post('api/order/getList', {
-          'pageNumber': pageNum,
-          'pageSize': pageSize,
-          'status': state
-        }).then((response) => {
-          if (response.data.status === 0) {
-            // 响应成功回调
-            var data = response.data.data.list
-            var total = response.data.data.total
-            var listData = []// 模拟分页数据
-            for (var i = 0; i < data.length; i++) {
-              if (data[i] !== undefined) {
-                listData.push(data[i])
-              }
-            }
-            successCallback && successCallback(listData, total)// 成功回调
-          } else {
-            this.$vux.toast.show({
-              type: 'warn',
-              text: response.data.msg
-            })
-          }
-        }).catch((response) => {
-          // 响应错误回调
-          self.errorMsg()
-          errorCallback && errorCallback()// 失败回调
+    async getListDataFromNet (pageNum, pageSize, state, successCallback, errorCallback) {
+      const {data: {list, total}, status, msg} = await service.post('api/order/getList', {
+        'pageNumber': pageNum,
+        'pageSize': pageSize,
+        'status': state
+      })
+      if (status === 0) {
+        successCallback && successCallback(list, total)
+      } else {
+        this.$vux.toast.show({
+          type: 'warn',
+          text: msg
         })
-      }, 200)
+        errorCallback && errorCallback()
+      }
     },
     showSelect () {
       this.show = !this.show
