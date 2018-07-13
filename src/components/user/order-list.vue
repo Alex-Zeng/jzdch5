@@ -82,11 +82,12 @@
             </div>
           </div>
           <div class="order-action">
-            <div class="money">总价：<span class="text-red">{{i.money}}元</span></div>
+            <div style="margin-right: auto;"></div>
             <div class="order-button" v-if="(i.state ===1 || i.state === 0)&&i.groupId===4" @click="cancle(i.out_id)">取消交易</div>
             <div class="order-button" v-if="(i.state ===6 && (i.service_type ===0 || i.service_type ===2))&&i.groupId===4" @click="receipt(i.out_id)">确定收货</div>
             <div class="order-button" @click="gotoDetail(i.out_id)">查看详情</div>
           </div>
+          <div class="detail-money"><span>总价：<span class="text-red">{{i.money}}元</span></span>（原价:{{i.goods_money}}元）</div>
         </div>
       </div>
     </div>
@@ -298,7 +299,7 @@ export default {
             result = '待质检'
             break
           case 8:
-            result = '问题确认中'
+            result = '售后处理'
             break
           // 4:待打款 5:待采购商打款
           case 9:

@@ -23,18 +23,18 @@
           <div>累计成交（笔）</div>
           <span class="text-blue" style="line-height: 2;">{{total}}</span>
         </div>
-        <div class="item">
+        <router-link to="/order-list/3" tag="div" class="item">
           <i class="icon iconfont icon-daifahuo">
             <badge v-if="supplier.pending > 0" v-text="supplier.pending"></badge>
           </i>
           <div>待发货</div>
-        </div>
-        <div class="item">
+        </router-link>
+        <router-link to="/order-list/8" tag="div" class="item">
           <i class="icon iconfont icon-shouhou">
             <badge v-if="supplier.service > 0" v-text="supplier.service"></badge>
           </i>
           <div>售后处理</div>
-        </div>
+        </router-link>
       </div>
     </template>
     <template v-if="groupId === 4">

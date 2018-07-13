@@ -104,7 +104,7 @@
               </div>
             </div>
           </div>
-          <div class="detail-money"><span>总价：<span class="text-red">{{data.money}}元</span></span></div>
+          <div class="detail-money"><span>总价：<span class="text-red">{{data.money}}元</span></span>（原价:{{data.goods_money}}）</div>
         </div>
 
         <div class="order-card addr">
@@ -317,7 +317,7 @@ export default {
           case 7:
             return '待质检'
           case 8:
-            return '问题确认中'
+            return '售后处理'
           // 4:待打款 5:待采购商打款
           case 9:
           case 10:
