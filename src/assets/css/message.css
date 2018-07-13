@@ -1,3 +1,9 @@
+.message-box .vux-tab-container{
+  position: fixed;
+  top: 2.2rem;
+  left: 0;
+  z-index: 99;
+}
 .release-time{
   font-size: 0.6rem;
   padding: 0.5rem;

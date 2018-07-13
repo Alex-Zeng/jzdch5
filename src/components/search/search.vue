@@ -48,7 +48,7 @@
             </router-link>
           </li>
         </ul>
-        <ul v-if="!showList" class="goods-lists" style="padding-top: 2.8rem;" v-cloak>
+        <ul v-if="!showList" class="goods-lists" v-cloak>
           <li v-for="(item, index) in goodsLists" :key="index">
             <router-link :to="'/detail/'+item.id">
               <img :src="item.url" alt=""/>
