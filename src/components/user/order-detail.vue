@@ -100,7 +100,7 @@
                 </div>
                 <div class="order-button" style="margin-top: -0.12rem;"
                      v-if="(data.state===6 || data.state === 13 || data.state === 9 || data.state===10  || data.state===11)&&(good.service_type===0 || good.service_type===2)&&(data.groupId===4)"
-                     @click="selectShow=true, goodsId = good.goods_id">售后申请</div>
+                     @click="selectShow=true, goodsId = good.id">售后申请</div>
               </div>
             </div>
           </div>
