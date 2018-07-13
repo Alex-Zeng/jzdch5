@@ -338,7 +338,7 @@ export default {
             result = '待质检'
             break
           case 8:
-            result = '问题确认中'
+            result = '售后处理'
             break
           // 4:待打款 5:待采购商打款
           case 9:
@@ -380,7 +380,7 @@ export default {
             result = '待质检'
             break
           case 8:
-            result = '问题确认中'
+            result = '售后处理'
             break
           case 9:
             result = '账期中'
