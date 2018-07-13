@@ -20,6 +20,7 @@
               <p><span>交货期</span>{{item.date}}</p>
             </div>
             <div class="indent-detail-seller indent-title">
+              <i class="icon iconfont icon-shangdian text-blue"></i>
               {{item.supplierName}}
             </div>
             <div class="indent-content" v-for="i in item.goods" :key="i.goods_id">
