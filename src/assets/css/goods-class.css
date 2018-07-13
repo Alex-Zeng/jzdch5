@@ -35,11 +35,12 @@
 .main-nav ul{
   display: flex;
   flex-wrap: wrap;
-  padding: 0.5rem;
+  padding: 0.5rem 0.25rem;
   text-align: center;
 }
 .main-nav ul li{
   width: 33.333333333333%;
+  padding-bottom: 0.5rem;
   overflow: hidden;
 }
 .main-nav a{
@@ -48,7 +49,8 @@
 }
 .main-nav img{
   display: block;
-  width: 3.7rem;
-  height: 3.7rem;
+  width: 3.9rem;
+  height: 3.9rem;
+  margin: auto;
   margin-bottom: 0.3rem;
 }

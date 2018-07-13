@@ -109,7 +109,6 @@ export default {
       this.showList = !this.showList
     },
     sortMethod () {
-      this.goodsLists = []
       if (this.mySort === 'asc') {
         this.mySort = 'desc'
       } else {
@@ -242,13 +241,10 @@ export default {
       this.getListDataFromNet(page.num, page.size, function (curPageData, totalSize) {
         // curPageData = [] // 打开本行注释,可演示列表无任何数据empty的配置
         if (page.num === 1) {
-          self.goodsLists = self.goodsLists.concat(curPageData)
-        } else {
-          console.log('更新列表数据')
-          // 更新列表数据
-          self.goodsLists = self.goodsLists.concat(curPageData)
-          console.log('更新列表数据')
+          self.goodsLists = []
         }
+        // 更新列表数据
+        self.goodsLists = self.goodsLists.concat(curPageData)
         self.mescroll.endBySize(curPageData.length, totalSize) // 必传参数(当前页的数据个数, 总数据量)
       }, function () {
         // 联网失败的回调,隐藏下拉刷新和上拉加载的状态;
