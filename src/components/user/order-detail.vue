@@ -104,7 +104,7 @@
               </div>
             </div>
           </div>
-          <div class="detail-money"><span>总价：<span class="text-red">{{data.money}}元</span></span>（原价:{{data.goods_money}}）</div>
+          <div class="detail-money"><span>总价：<span class="text-red">{{data.money}}元</span></span><span v-if="data.money !== data.goods_money">（原价:{{data.goods_money}}元）</span></div>
         </div>
 
         <div class="order-card addr">
@@ -185,7 +185,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import service from '@/service'
 import { Swipeout, SwipeoutItem, SwipeoutButton, Group, Datetime, XButton, XInput } from 'vux'
 import '@/assets/css/order.css'
 export default {
@@ -215,7 +215,7 @@ export default {
     cancelSelect () {
       this.selectShow = false
     },
-    submitService () {
+    async submitService () {
       this.selectShow = false
       this.$vux.loading.show(
         {
@@ -223,26 +223,21 @@ export default {
         }
       )
       const {params: { no }} = this.$route
-      axios.post('api/order/service', {no, type: this.selectItem, goodsId: this.goodsId}).then((response) => {
-        this.$vux.loading.hide()
-        const {msg, status} = response.data
-        if (status !== 0) {
-          this.$vux.toast.show({
-            type: 'warn',
-            text: msg
-          })
-        } else {
-          this.getDetail()
-          this.showResult = true
-          this.$vux.toast.show({
-            type: 'success',
-            text: msg
-          })
-        }
-      }).catch((response) => {
-        this.errorMsg()
-        this.$vux.loading.hide()
-      })
+      const {msg, status} = await service.post('api/order/service', {no, type: this.selectItem, goodsId: this.goodsId})
+      this.$vux.loading.hide()
+      if (status !== 0) {
+        this.$vux.toast.show({
+          type: 'warn',
+          text: msg
+        })
+      } else {
+        this.getDetail()
+        this.showResult = true
+        this.$vux.toast.show({
+          type: 'success',
+          text: msg
+        })
+      }
     },
     submitExpress () {
       if (!this.expressForm.express || !this.expressForm.expressCode) {
@@ -277,10 +272,10 @@ export default {
             }
           )
           const {params: { no }} = this.$route
-          axios.post('api/order/delivery', {...this.expressForm, no}).then((response) => {
+          try {
+            const {msg, stauts} = service.psot('api/order/delivery', {...this.expressForm, no})
             this.$vux.loading.hide()
-            const {msg, status} = response.data
-            if (status !== 0) {
+            if (stauts !== 0) {
               this.$vux.toast.show({
                 type: 'warn',
                 text: msg
@@ -292,10 +287,11 @@ export default {
                 text: msg
               })
             }
-          }).catch((response) => {
+          } catch (e) {
             this.errorMsg()
+          } finally {
             this.$vux.loading.hide()
-          })
+          }
         }
       })
     },
@@ -387,17 +383,17 @@ export default {
         }
       }
     },
-    getDetail () {
+    async getDetail () {
       const {params: { no }} = this.$route
-      axios.post('api/order/detail', {no}).then((response) => {
-        this.data = response.data.data
-        // 备注75字数限制
+      try {
+        const {data} = await service.post('api/order/detail', {no})
+        this.data = data
         if (this.data.remark.length > 75) {
           this.data.remark = this.data.remark.substring(0, 72) + '...'
         }
-      }).catch((response) => {
+      } catch (e) {
         this.errorMsg()
-      })
+      }
     },
     errorMsg () {
       this.$vux.toast.show({
