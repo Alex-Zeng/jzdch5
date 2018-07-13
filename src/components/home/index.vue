@@ -156,8 +156,9 @@ export default {
       // 联网加载数据
       var self = this
       this.getListDataFromNet(page.num, page.size, function (curPageData, totalSize) {
-        // curPageData = [] // 打开本行注释,可演示列表无任何数据empty的配置
-        if (page.num === 1) self.goodsLists = []
+        if (page.num === 1) {
+          self.goodsLists = []
+        }
         // 更新列表数据
         self.goodsLists = self.goodsLists.concat(curPageData)
         self.mescroll.endBySize(curPageData.length, totalSize) // 必传参数(当前页的数据个数, 总数据量)
@@ -212,12 +213,12 @@ export default {
     this.menunListsCouter()
   },
   mounted () {
-    var _sel = this
-    _sel.mescroll = new MeScroll('mescroll', {
+    var self = this
+    self.mescroll = new MeScroll('mescroll', {
       up: {
         /* 上拉加载的配置参数 */
         auto: true, // 是否在初始化时以上拉加载的方式自动加载第一页数据; 默认false
-        callback: _sel.upCallback, // 上拉回调
+        callback: self.upCallback, // 上拉回调
         // 以下参数可删除,不配置
         isBounce: false, // 此处禁止ios回弹,解析(务必认真阅读,特别是最后一点): http://www.mescroll.com/qa.html#q10
         // page:{size:8}, //可配置每页8条数据,默认10
