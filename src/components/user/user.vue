@@ -17,11 +17,11 @@
       <div class="user-grid">
         <div class="item">
           <div>昨日成交（笔）</div>
-          <span class="text-blue" style="line-height: 2;">{{yesterday}}</span>
+          <span class="text-blue" style="line-height: 2;">{{supplier.yesterday}}</span>
         </div>
         <div class="item">
           <div>累计成交（笔）</div>
-          <span class="text-blue" style="line-height: 2;">{{total}}</span>
+          <span class="text-blue" style="line-height: 2;">{{supplier.total}}</span>
         </div>
         <router-link to="/order-list/3" tag="div" class="item">
           <i class="icon iconfont icon-daifahuo">
