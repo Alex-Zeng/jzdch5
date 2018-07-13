@@ -34,7 +34,6 @@ export default {
   },
   methods: {
     changeTest (s) {
-      console.log(s)
       this.updateInfo('icon', s)
     },
     getInfo () {
@@ -68,13 +67,11 @@ export default {
       })
     },
     updateInfo (field, value) {
-      console.log(2222222222)
       axios.post('api/user/profile', {
         'field': field,
         'value': value
       }).then((response) => {
         if (response.data.status === 0) {
-          console.log('更新成功')
         } else if (response.data.status === -2) {
           this.$vux.confirm.show({
             title: '提示',
@@ -98,32 +95,12 @@ export default {
     errorMsg () {
       this.$vux.toast.show({
         type: 'warn',
-        text: '网络可能有点问题',
-        onShow () {
-          console.log('Plugin: I\'m showing')
-        },
-        onHide () {
-          console.log('Plugin: I\'m hiding')
-        }
+        text: '网络可能有点问题'
       })
     }
   },
   created () {
     this.getInfo()
-  },
-  watch: {
-    /* name (val, oldval) {
-      console.log(val, oldval)
-      this.updateInfo('name', val)
-    },
-    phone (val, oldval) {
-      console.log(val, oldval)
-      this.updateInfo('tel', val)
-    },
-    logo (val, oldval) {
-      console.log(val, oldval)
-      this.updateInfo('icon', val)
-    } */
   },
   components: {
     Cell,

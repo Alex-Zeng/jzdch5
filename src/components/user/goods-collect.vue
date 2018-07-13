@@ -55,17 +55,17 @@ export default {
       axios.post('api/goods/removeFavorite', {
         'goodsId': id
       }).then((response) => {
-        console.log(index)
         self.favoriteList.splice(index, 1)
       }).catch((response) => {})
     },
     // 上拉回调 page = {num:1, size:10}; num:当前页 ,默认从1开始; size:每页数据条数,默认10
     upCallback: function (page) {
-      console.log('联网加载数据')
       // 联网加载数据
       var self = this
       this.getListDataFromNet(page.num, page.size, function (curPageData, totalSize) {
-        if (page.num === 1) self.favoriteList = []
+        if (page.num === 1) {
+          self.favoriteList = []
+        }
         // 更新列表数据
         self.favoriteList = self.favoriteList.concat(curPageData)
         self.mescroll.endBySize(curPageData.length, totalSize) // 必传参数(当前页的数据个数, 总数据量)
@@ -98,13 +98,7 @@ export default {
           } else {
             self.$vux.toast.show({
               type: 'warn',
-              text: response.data.msg,
-              onShow () {
-                console.log('Plugin: I\'m showing')
-              },
-              onHide () {
-                console.log('Plugin: I\'m hiding')
-              }
+              text: response.data.msg
             })
           }
         }).catch((response) => {

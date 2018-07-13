@@ -167,11 +167,7 @@ export default {
               type: 'success',
               text: '删除成功',
               onShow () {
-                console.log('Plugin: I\'m showing')
                 self.showHistory = false
-              },
-              onHide () {
-                console.log('Plugin: I\'m hiding')
               }
             })
           }).catch((response) => {})
@@ -266,7 +262,6 @@ export default {
         }).catch((response) => {
           console.log(response)
           // 响应错误回调
-          console.log('error')
           // self.errorMsg()
           errorCallback && errorCallback()// 失败回调
         })

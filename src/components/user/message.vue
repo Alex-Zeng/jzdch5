@@ -72,7 +72,6 @@ export default {
       }).catch((response) => {})
     },
     onItemClick (index) {
-      console.log('on item click:', index)
       sessionStorage.setItem('indexTag', index)
     },
     noticeDetail (id) {
@@ -80,7 +79,6 @@ export default {
     },
     // 上拉回调 page = {num:1, size:10}; num:当前页 ,默认从1开始; size:每页数据条数,默认10
     upCallback: function (page) {
-      console.log('联网加载数据')
       // 联网加载数据
       var self = this
       this.getListDataFromNet(page.num, page.size, function (curPageData, totalSize) {
@@ -125,25 +123,17 @@ export default {
         } else {
           this.$vux.toast.show({
             type: 'warn',
-            text: response.data.msg,
-            onShow () {
-              console.log('Plugin: I\'m showing')
-            },
-            onHide () {
-              console.log('Plugin: I\'m hiding')
-            }
+            text: response.data.msg
           })
         }
       }).catch((response) => {
         // 响应错误回调
-        console.log('error')
         self.errorMsg()
         errorCallback && errorCallback()// 失败回调
       })
     },
     // 上拉回调 page = {num:1, size:10}; num:当前页 ,默认从1开始; size:每页数据条数,默认10
     upCallback1: function (page) {
-      console.log('联网加载数据')
       // 联网加载数据
       var self = this
       this.getListDataFromNet1(page.num, page.size, function (curPageData, totalSize) {
@@ -179,18 +169,11 @@ export default {
           } else {
             this.$vux.toast.show({
               type: 'warn',
-              text: response.data.msg,
-              onShow () {
-                console.log('Plugin: I\'m showing')
-              },
-              onHide () {
-                console.log('Plugin: I\'m hiding')
-              }
+              text: response.data.msg
             })
           }
         }).catch((response) => {
           // 响应错误回调
-          console.log('error')
           self.errorMsg()
           errorCallback && errorCallback()// 失败回调
         })
@@ -199,13 +182,7 @@ export default {
     errorMsg () {
       this.$vux.toast.show({
         type: 'warn',
-        text: '网络可能有点问题',
-        onShow () {
-          console.log('Plugin: I\'m showing')
-        },
-        onHide () {
-          console.log('Plugin: I\'m hiding')
-        }
+        text: '网络可能有点问题'
       })
     }
   },
@@ -224,7 +201,6 @@ export default {
           tip: '暂无相关数据~', // 提示
           btntext: '去逛逛 >', // 按钮,默认""
           btnClick: function () { // 点击按钮的回调,默认null
-            alert('点击了按钮,具体逻辑自行实现')
           }
         }
       }
@@ -240,7 +216,6 @@ export default {
           tip: '暂无相关数据~', // 提示
           btntext: '去逛逛 >', // 按钮,默认""
           btnClick: function () { // 点击按钮的回调,默认null
-            alert('点击了按钮,具体逻辑自行实现')
           }
         }
       }

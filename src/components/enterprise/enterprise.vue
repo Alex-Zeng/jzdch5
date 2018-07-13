@@ -160,23 +160,17 @@ export default {
   },
   methods: {
     onChange (val) {
-      console.log('val change', val)
     },
     onShow () {
-      console.log('on show')
     },
     onHide (type) {
-      console.log('on hide', type)
     },
     onEvent (event) {
-      console.log('on', event)
     },
     getCertificationExt () {
       axios.get('api/user/getCertificationExt').then((response) => {
-        console.log(response)
         if (response.data.status === 0) {
           this.url = response.data.data.attorney
-          console.log(response)
         }
       }).catch(() => {
         this.$vux.toast.show({

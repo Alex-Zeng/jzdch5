@@ -135,13 +135,7 @@ export default {
         }
         this.$vux.toast.show({
           type: 'warn',
-          text: '请填写注册手机号',
-          onShow () {
-            console.log('Plugin: I\'m showing')
-          },
-          onHide () {
-            console.log('Plugin: I\'m hiding')
-          }
+          text: '请填写注册手机号'
         })
       })
     },
@@ -163,25 +157,17 @@ export default {
               this.resetCode = false
               this.setTimeMethods()
               // 响应成功回调
-              console.log('success')
               setTimeout(function () {
                 document.getElementById('code1').focus()
               }, 50)
             } else {
               this.$vux.toast.show({
                 type: 'warn',
-                text: response.data.msg,
-                onShow () {
-                  console.log('Plugin: I\'m showing')
-                },
-                onHide () {
-                  console.log('Plugin: I\'m hiding')
-                }
+                text: response.data.msg
               })
             }
           }).catch((response) => {
             // 响应错误回调
-            console.log('error')
             this.errorMsg()
           })
         }
@@ -193,33 +179,24 @@ export default {
         'code': this.mobileCode
       }).then((response) => {
         if (response.data.status === 0) {
-          console.log(this.mobileCode)
           this.model1Show = false
           this.model2Show = false
           this.model3Show = false
           this.model4Show = true
           // 响应成功回调
-          console.log('success')
         } else {
           this.$vux.toast.show({
             type: 'warn',
-            text: response.data.msg,
-            onShow () {
-              console.log('Plugin: I\'m showing')
-            },
-            onHide () {
-              console.log('Plugin: I\'m hiding')
-            }
+            text: response.data.msg
           })
         }
       }).catch((response) => {
         // 响应错误回调
-        console.log('error')
         this.errorMsg()
       })
     },
     submit () {
-      var _sel = this
+      var self = this
       axios.post('api/password/update', {
         'phone': this.mobile,
         'code': this.mobileCode,
@@ -231,32 +208,22 @@ export default {
             type: 'success',
             text: '密码修改成功',
             onShow () {
-              console.log('Plugin: I\'m showing')
               // 响应成功回调
-              console.log('success')
               document.cookie = '_token='
               sessionStorage.clear()
             },
             onHide () {
-              console.log('Plugin: I\'m hiding')
-              _sel.$router.replace('/login')
+              self.$router.replace('/login')
             }
           })
         } else {
           this.$vux.toast.show({
             type: 'warn',
-            text: response.data.msg,
-            onShow () {
-              console.log('Plugin: I\'m showing')
-            },
-            onHide () {
-              console.log('Plugin: I\'m hiding')
-            }
+            text: response.data.msg
           })
         }
       }).catch((response) => {
         // 响应错误回调
-        console.log('error')
         this.errorMsg()
       })
     },
@@ -280,7 +247,6 @@ export default {
       }
     },
     clear (event) {
-      console.log(event.keyCode)
       if (event.keyCode === 8) {
         this.code3 = ''
         this.code2 = ''
@@ -312,19 +278,9 @@ export default {
     errorMsg () {
       this.$vux.toast.show({
         type: 'warn',
-        text: '网络可能有点问题',
-        onShow () {
-          console.log('Plugin: I\'m showing')
-        },
-        onHide () {
-          console.log('Plugin: I\'m hiding')
-        }
+        text: '网络可能有点问题'
       })
     }
-  },
-  mounted () {
-  },
-  updated: function () {
   },
   watch: {
     code1 () {
@@ -345,7 +301,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   body {
     background: #FFFFFF;
   }

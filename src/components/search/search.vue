@@ -172,11 +172,7 @@ export default {
               type: 'success',
               text: '删除成功',
               onShow () {
-                console.log('Plugin: I\'m showing')
                 self.showHistory = false
-              },
-              onHide () {
-                console.log('Plugin: I\'m hiding')
               }
             })
           }).catch((response) => {})
@@ -235,7 +231,6 @@ export default {
     },
     // 上拉回调 page = {num:1, size:10}; num:当前页 ,默认从1开始; size:每页数据条数,默认10
     upCallback (page) {
-      console.log('联网加载数据')
       // 联网加载数据
       var self = this
       this.getListDataFromNet(page.num, page.size, function (curPageData, totalSize) {
@@ -275,26 +270,15 @@ export default {
                 listData.push(data[i])
               }
             }
-            console.log(listData)
-            console.log(total)
             successCallback && successCallback(listData, total)// 成功回调
           } else {
             this.$vux.toast.show({
               type: 'warn',
-              text: response.data.msg,
-              onShow () {
-                console.log('Plugin: I\'m showing')
-              },
-              onHide () {
-                console.log('Plugin: I\'m hiding')
-              }
+              text: response.data.msg
             })
           }
         }).catch((response) => {
-          console.log(response)
           // 响应错误回调
-          console.log('error')
-          // self.errorMsg()
           errorCallback && errorCallback()// 失败回调
         })
       }, 1000)
@@ -305,8 +289,6 @@ export default {
   },
   mounted () {
     this.loginToken = sessionStorage.getItem('loginToken')
-    // this.getHistory()
-    console.log(sessionStorage.getItem('searchId'))
     var cateId = sessionStorage.getItem('searchId')
     if (cateId !== null) {
       this.cateId = cateId
@@ -315,9 +297,6 @@ export default {
     }
   },
   watch: {
-    mySort (val) {
-      console.log(val)
-    },
     keywords (val) {
       if (val !== '') {
         this.clear = true

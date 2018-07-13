@@ -118,7 +118,6 @@ export default {
                     if (t) {
                       const {price, quantity} = (self.proData)[index].list[k]
                       self.total += (price * quantity)
-                      console.log(self.total)
                     }
                   })
                 })
@@ -274,8 +273,6 @@ export default {
       if (loginToken !== null) {
         let ids = []
         this.checkedList.forEach((v, k) => {
-          console.log(v)
-          console.log(k)
           if (v) {
             v.forEach((t, d) => {
               if (t) {
@@ -287,13 +284,7 @@ export default {
         if (this.allList.length === 0) {
           this.$vux.toast.show({
             type: 'warn',
-            text: '购物清单为空<br>请先添加商品',
-            onShow () {
-              console.log('Plugin: I\'m showing')
-            },
-            onHide () {
-              console.log('Plugin: I\'m hiding')
-            }
+            text: '购物清单为空<br>请先添加商品'
           })
           return false
         }
@@ -308,13 +299,7 @@ export default {
         } else {
           this.$vux.toast.show({
             type: 'warn',
-            text: '请选择商品',
-            onShow () {
-              console.log('Plugin: I\'m showing')
-            },
-            onHide () {
-              console.log('Plugin: I\'m hiding')
-            }
+            text: '请选择商品'
           })
         }
       }
@@ -322,13 +307,7 @@ export default {
     errorMsg () {
       this.$vux.toast.show({
         type: 'warn',
-        text: '网络可能有点问题',
-        onShow () {
-          console.log('Plugin: I\'m showing')
-        },
-        onHide () {
-          console.log('Plugin: I\'m hiding')
-        }
+        text: '网络可能有点问题'
       })
     }
   },

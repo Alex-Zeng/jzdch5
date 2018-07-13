@@ -68,31 +68,18 @@ export default {
             } else {
               this.$vux.toast.show({
                 type: 'warn',
-                text: response.data.msg,
-                onShow () {
-                  console.log('Plugin: I\'m showing')
-                },
-                onHide () {
-                  console.log('Plugin: I\'m hiding')
-                }
+                text: response.data.msg
               })
             }
           }).catch((response) => {
             // 响应错误回调
-            console.log('error')
             this.errorMsg()
           })
           return
         }
         this.$vux.toast.show({
           type: 'warn',
-          text: '请填写手机号或姓名',
-          onShow () {
-            console.log('Plugin: I\'m showing')
-          },
-          onHide () {
-            console.log('Plugin: I\'m hiding')
-          }
+          text: '请填写手机号或姓名'
         })
       })
     },
@@ -105,7 +92,6 @@ export default {
   created () {
     this.$watch('childFinancial', function (newValue, oldValue) {
       this.financial = this.childFinancial
-      console.log('childFinancial:' + this.childFinancial)
     })
   },
   components: {

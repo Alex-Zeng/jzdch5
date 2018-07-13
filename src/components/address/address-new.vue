@@ -96,10 +96,8 @@ export default {
       this.areaId = ids.slice(-1).join()
     },
     logHide (str) {
-      console.log('on-hide', str)
     },
     logShow (str) {
-      console.log('on-show', str)
     },
     editor () {
       this.showInput = !this.showInput
@@ -201,55 +199,32 @@ export default {
               this.$vux.toast.show({
                 type: 'success',
                 text: response.data.msg,
-                onShow () {
-                  console.log('Plugin: I\'m showing')
-                },
                 onHide () {
                   self.$router.push('/address-lists')
-                  console.log('Plugin: I\'m hiding')
                 }
               })
             } else {
               this.$vux.toast.show({
                 type: 'warn',
-                text: response.data.msg,
-                onShow () {
-                  console.log('Plugin: I\'m showing')
-                },
-                onHide () {
-                  console.log('Plugin: I\'m hiding')
-                }
+                text: response.data.msg
               })
             }
           }).catch((response) => {
             // 响应错误回调
-            console.log('error')
             this.errorMsg()
           })
           return
         }
         this.$vux.toast.show({
           type: 'warn',
-          text: '请填写相关信息',
-          onShow () {
-            console.log('Plugin: I\'m showing')
-          },
-          onHide () {
-            console.log('Plugin: I\'m hiding')
-          }
+          text: '请填写相关信息'
         })
       })
     },
     errorMsg () {
       this.$vux.toast.show({
         type: 'warn',
-        text: '网络可能有点问题',
-        onShow () {
-          console.log('Plugin: I\'m showing')
-        },
-        onHide () {
-          console.log('Plugin: I\'m hiding')
-        }
+        text: '网络可能有点问题'
       })
     }
   },

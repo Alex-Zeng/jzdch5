@@ -231,7 +231,6 @@ export default {
           }
         }
       }).catch((response) => {
-        alert(555)
         this.errorMsg()
       })
     },
@@ -258,24 +257,13 @@ export default {
                 text: '收藏成功',
                 isShowMask: true,
                 onShow () {
-                  console.log('Plugin: I\'m showing')
                   self.isActive = true
-                },
-                onHide () {
-                  console.log('Plugin: I\'m hiding')
                 }
               })
             } else {
               this.$vux.toast.show({
                 type: 'warn',
-                text: response.data.msg,
-                onShow () {
-                  console.log('Plugin: I\'m showing')
-                  self.isActive = false
-                },
-                onHide () {
-                  console.log('Plugin: I\'m hiding')
-                }
+                text: response.data.msg
               })
             }
           }
@@ -284,8 +272,7 @@ export default {
         })
       } else {
         axios.post('api/goods/removeFavorite', {
-          'goodsId': this.$route.params.id,
-          '_token': sessionStorage.getItem('loginToken')
+          'goodsId': this.$route.params.id
         }).then((response) => {
           if (response.data.status === 0) {
             this.$vux.toast.show({
@@ -294,22 +281,12 @@ export default {
               isShowMask: true,
               onShow () {
                 self.isActive = false
-                console.log('Plugin: I\'m showing')
-              },
-              onHide () {
-                console.log('Plugin: I\'m hiding')
               }
             })
           } else {
             this.$vux.toast.show({
               type: 'warn',
-              text: response.data.msg,
-              onShow () {
-                console.log('Plugin: I\'m showing')
-              },
-              onHide () {
-                console.log('Plugin: I\'m hiding')
-              }
+              text: response.data.msg
             })
           }
         }).catch((response) => {
@@ -328,13 +305,7 @@ export default {
     errorMsg () {
       this.$vux.toast.show({
         type: 'warn',
-        text: '网络可能有点问题',
-        onShow () {
-          console.log('Plugin: I\'m showing')
-        },
-        onHide () {
-          console.log('Plugin: I\'m hiding')
-        }
+        text: '网络可能有点问题'
       })
     }
   },
@@ -356,7 +327,6 @@ export default {
       } else {
         this.badge = false
       }
-      console.log(val)
     }
   },
   components: {

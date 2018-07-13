@@ -145,7 +145,6 @@ export default {
               sessionStorage.setItem('loginToken', response.data.token)
               // 响应成功回调
               let oldUrl = sessionStorage.getItem('oldUrl')
-              console.log(oldUrl)
               if (oldUrl) {
                 this.$router.push(oldUrl)
               } else {
@@ -200,7 +199,6 @@ export default {
                 },
                 onHide () {
                   let oldUrl = sessionStorage.getItem('oldUrl')
-                  console.log(oldUrl)
                   if (oldUrl) {
                     self.$router.replace(oldUrl)
                   } else {

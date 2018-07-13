@@ -141,7 +141,6 @@ export default {
           tip: '亲,暂无相关数据哦~',
           btntext: '去逛逛 >',
           btnClick: function () {
-            alert('点击了去逛逛按钮')
           }
         }
       }
@@ -401,13 +400,7 @@ export default {
     errorMsg () {
       this.$vux.toast.show({
         type: 'warn',
-        text: '网络可能有点问题',
-        onShow () {
-          console.log('Plugin: I\'m showing')
-        },
-        onHide () {
-          console.log('Plugin: I\'m hiding')
-        }
+        text: '网络可能有点问题'
       })
     }
   },

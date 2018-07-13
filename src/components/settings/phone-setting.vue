@@ -104,13 +104,7 @@ export default {
             } else {
               this.$vux.toast.show({
                 type: 'warn',
-                text: response.data.msg,
-                onShow () {
-                  console.log('Plugin: I\'m showing')
-                },
-                onHide () {
-                  console.log('Plugin: I\'m hiding')
-                }
+                text: response.data.msg
               })
             }
           }).catch((resposne) => {
@@ -129,13 +123,7 @@ export default {
         } else {
           this.$vux.toast.show({
             type: 'warn',
-            text: response.data.msg,
-            onShow () {
-              console.log('Plugin: I\'m showing')
-            },
-            onHide () {
-              console.log('Plugin: I\'m hiding')
-            }
+            text: response.data.msg
           })
         }
       }).catch((response) => {
@@ -158,24 +146,14 @@ export default {
               this.$vux.toast.show({
                 type: 'warn',
                 text: '修改成功',
-                onShow () {
-                  console.log('Plugin: I\'m showing')
-                },
                 onHide () {
                   self.$router.replace('/safety')
-                  console.log('Plugin: I\'m hiding')
                 }
               })
             } else {
               this.$vux.toast.show({
                 type: 'warn',
-                text: response.data.msg,
-                onShow () {
-                  console.log('Plugin: I\'m showing')
-                },
-                onHide () {
-                  console.log('Plugin: I\'m hiding')
-                }
+                text: response.data.msg
               })
             }
           }).catch((resposne) => {
@@ -209,13 +187,7 @@ export default {
     errorMsg () {
       this.$vux.toast.show({
         type: 'warn',
-        text: '网络可能有点问题',
-        onShow () {
-          console.log('Plugin: I\'m showing')
-        },
-        onHide () {
-          console.log('Plugin: I\'m hiding')
-        }
+        text: '网络可能有点问题'
       })
     }
   },

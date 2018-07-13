@@ -180,24 +180,15 @@ export default {
       } else {
         this.$vux.toast.show({
           type: 'warn',
-          text: '请添加收货地址',
-          onShow () {
-            console.log('Plugin: I\'m showing')
-          },
-          onHide () {
-            console.log('Plugin: I\'m hiding')
-          }
+          text: '请添加收货地址'
         })
       }
     },
     log (str1, str2 = '') {
-      console.log(str1, str2)
     },
     onConfirm (val) {
-      console.log('on-confirm arg', val)
     },
     change (value, index) {
-      console.log('change', value, index)
     },
     errorMsg () {
       this.$vux.toast.show({
