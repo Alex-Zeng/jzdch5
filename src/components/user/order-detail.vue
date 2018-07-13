@@ -265,7 +265,7 @@ export default {
         title: '提示',
         content: '是否仔细核对物流信息后？',
         onCancel () {},
-        onConfirm: () => {
+        onConfirm: async () => {
           this.$vux.loading.show(
             {
               text: '提交中...'
@@ -273,10 +273,10 @@ export default {
           )
           const {params: { no }} = this.$route
           try {
-            const {msg, stauts} = service.psot('api/order/delivery', {...this.expressForm, no})
-            this.$vux.loading.hide()
+            const {msg, stauts} = await service.psot('api/order/delivery', {...this.expressForm, no})
             if (stauts !== 0) {
               this.$vux.toast.show({
+
                 type: 'warn',
                 text: msg
               })
