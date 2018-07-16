@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import service from '@/service'
 import { XProgress } from 'vux'
 export default {
   name: 'uploader',
@@ -67,8 +67,7 @@ export default {
           this.count = complete
         }
       }
-      const { data } = await axios.post('api/image_upload/index', fd, config)
-      const {data: { filename }, status, path} = data
+      const {data: { filename }, status, path} = await service.post('api/image_upload/index', fd, config)
       setTimeout(() => {
         this.isProgress = false
       }, 200)
