@@ -1,86 +1,87 @@
 <template>
   <!--滑动区域-->
-  <div class="mescroll"  id="mescroll">
-    <headerMessage></headerMessage>
-    <div class="banner">
-      <swiper loop :show-desc-mask="false" dots-position="center" height="9.9rem" :list="banners" :show-dots="banners.length > 1? true:false"></swiper>
-    </div>
-    <div class="main-body">
-      <div class="menu-nav-box">
-        <swiper :show-desc-mask="false" height="10.5rem" :show-dots="false">
-          <swiper-item class="black">
-            <div class="menu-nav">
-              <template v-for="(item, index) in menunListsFirst">
-                <router-link v-if="item.type > 0 && item.type !== 10" :to="{path: '/goods-class', query: {id: item.id }}" :key="index">
-                  <img :src="item.img" alt=""/>
-                  <div class="text-truncate">
-                    {{item.name}}
-                  </div>
-                </router-link>
-                <a href="http://h5.jizhongdiancai.com/jzdc-services/finance.html" v-else-if="item.flag === 1" :key="index">
-                  <img :src="item.img" alt=""/>
-                  <div class="text-truncate">
-                    {{item.name}}
-                  </div>
-                </a>
-                <a href="http://h5.jizhongdiancai.com/jzdc-services/index.html" v-else-if="item.type === 10" :key="index">
-                  <img :src="item.img" alt=""/>
-                  <div class="text-truncate">
-                    {{item.name}}
-                  </div>
-                </a>
-              </template>
-            </div>
-          </swiper-item>
-          <swiper-item  v-if="menunListsSecond.length > 0" class="black">
-            <div class="menu-nav">
-              <template v-for="(item, index) in menunListsSecond">
-                <router-link v-if="item.type > 0 && item.type !== 10" :to="{path: '/goods-class', query: {id: item.id }}" :key="index">
-                  <img :src="item.img" alt=""/>
-                  <div class="text-truncate">
-                    {{item.name}}
-                  </div>
-                </router-link>
-                <a href="http://h5.jizhongdiancai.com/jzdc-services/finance.html" v-else-if="item.flag === 1" :key="index">
-                  <img :src="item.img" alt=""/>
-                  <div class="text-truncate">
-                    {{item.name}}
-                  </div>
-                </a>
-                <a href="http://h5.jizhongdiancai.com/jzdc-services/index.html" v-else-if="item.type === 10" :key="index">
-                  <img :src="item.img" alt=""/>
-                  <div class="text-truncate">
-                    {{item.name}}
-                  </div>
-                </a>
-              </template>
-            </div>
-          </swiper-item>
-        </swiper>
+  <span>
+    <div class="mescroll"  id="mescroll">
+      <headerMessage></headerMessage>
+      <div class="banner">
+        <swiper loop :show-desc-mask="false" dots-position="center" height="9.9rem" :list="banners" :show-dots="banners.length > 1? true:false"></swiper>
       </div>
-      <div class="floor floor-recommend">
-        <span>商品推荐</span>
-        <router-link to="/goods-class" class="text-muted">
-          更多&nbsp;<i class="icon iconfont icon-youjiantou"></i>
-        </router-link >
+      <div class="main-body">
+        <div class="menu-nav-box">
+          <swiper :show-desc-mask="false" height="10.5rem" :show-dots="false">
+            <swiper-item class="black">
+              <div class="menu-nav">
+                <template v-for="(item, index) in menunListsFirst">
+                  <router-link v-if="item.type > 0 && item.type !== 10" :to="{path: '/goods-class', query: {id: item.id }}" :key="index">
+                    <img :src="item.img" alt=""/>
+                    <div class="text-truncate">
+                      {{item.name}}
+                    </div>
+                  </router-link>
+                  <a href="http://h5.jizhongdiancai.com/jzdc-services/finance.html" v-else-if="item.flag === 1" :key="index">
+                    <img :src="item.img" alt=""/>
+                    <div class="text-truncate">
+                      {{item.name}}
+                    </div>
+                  </a>
+                  <a href="http://h5.jizhongdiancai.com/jzdc-services/index.html" v-else-if="item.type === 10" :key="index">
+                    <img :src="item.img" alt=""/>
+                    <div class="text-truncate">
+                      {{item.name}}
+                    </div>
+                  </a>
+                </template>
+              </div>
+            </swiper-item>
+            <swiper-item  v-if="menunListsSecond.length > 0" class="black">
+              <div class="menu-nav">
+                <template v-for="(item, index) in menunListsSecond">
+                  <router-link v-if="item.type > 0 && item.type !== 10" :to="{path: '/goods-class', query: {id: item.id }}" :key="index">
+                    <img :src="item.img" alt=""/>
+                    <div class="text-truncate">
+                      {{item.name}}
+                    </div>
+                  </router-link>
+                  <a href="http://h5.jizhongdiancai.com/jzdc-services/finance.html" v-else-if="item.flag === 1" :key="index">
+                    <img :src="item.img" alt=""/>
+                    <div class="text-truncate">
+                      {{item.name}}
+                    </div>
+                  </a>
+                  <a href="http://h5.jizhongdiancai.com/jzdc-services/index.html" v-else-if="item.type === 10" :key="index">
+                    <img :src="item.img" alt=""/>
+                    <div class="text-truncate">
+                      {{item.name}}
+                    </div>
+                  </a>
+                </template>
+              </div>
+            </swiper-item>
+          </swiper>
+        </div>
+        <div class="floor floor-recommend">
+          <span>商品推荐</span>
+          <router-link to="/goods-class" class="text-muted">
+            更多&nbsp;<i class="icon iconfont icon-youjiantou"></i>
+          </router-link >
+        </div>
       </div>
+      <ul id="dataList" class="goods-lists data-list" v-cloak>
+        <li v-for="(item, index) in goodsLists" :key="index">
+          <router-link :to="'/detail/'+ item.id">
+            <img :src="item.url" alt=""/>
+            <div class="goods-title">
+              {{item.title}}
+            </div>
+            <div class="goods-price text-red">
+              ￥ {{item.min_price === '0.00'? item.w_price:item.min_price}}{{item.max_price===item.min_price?'':' ~ ￥'+item.max_price}}
+            </div>
+          </router-link>
+        </li>
+      </ul>
     </div>
-    <!--展示上拉加载的数据列表-->
-    <ul id="dataList" class="goods-lists data-list" v-cloak>
-      <li v-for="(item, index) in goodsLists" :key="index">
-        <router-link :to="'/detail/'+ item.id">
-          <img :src="item.url" alt=""/>
-          <div class="goods-title">
-            {{item.title}}
-          </div>
-          <div class="goods-price text-red">
-            ￥ {{item.min_price === '0.00'? item.w_price:item.min_price}}{{item.max_price===item.min_price?'':' ~ ￥'+item.max_price}}
-          </div>
-        </router-link>
-      </li>
-    </ul>
     <FooterNav></FooterNav>
-  </div>
+  </span>
 </template>
 
 <script>
