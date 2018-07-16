@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import service from '@/service'
 import headerMessage from '../common/header-message'
 import FooterNav from '../common/footer-nav'
 import '@/assets/css/goods-class.css'
@@ -38,17 +38,15 @@ export default {
     }
   },
   methods: {
-    getCategoryList () {
-      axios.get('api/goods/getCategoryList').then((response) => {
-        if (response.data.status === 0) {
-          let data = response.data.data
-          for (let i = 0; i < data.length; i++) {
-            this.categoryList.push({'id': data[i].id, 'name': data[i].name})
-          }
-          this.totalData = data
-          this.categoryListChildren = this.totalData[0].child
+    async getCategoryList () {
+      const {status, data} = await service.get('api/goods/getCategoryList')
+      if (status === 0) {
+        for (let i = 0; i < data.length; i++) {
+          this.categoryList.push({'id': data[i].id, 'name': data[i].name})
         }
-      }).catch((response) => {})
+        this.totalData = data
+        this.categoryListChildren = this.totalData[0].child
+      }
     },
     tabsort (index) {
       this.iscur = index

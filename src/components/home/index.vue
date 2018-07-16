@@ -1,7 +1,7 @@
 <template>
   <!--滑动区域-->
   <span>
-    <div class="mescroll"  id="mescroll">
+    <div class="mescroll"  id="mescroll" style="padding-top: 2.2rem;">
       <headerMessage></headerMessage>
       <div class="banner">
         <swiper loop :show-desc-mask="false" dots-position="center" height="9.9rem" :list="banners" :show-dots="banners.length > 1? true:false"></swiper>
@@ -88,7 +88,7 @@
 import headerMessage from '../common/header-message'
 import FooterNav from '../common/footer-nav'
 import {Badge, Swiper, SwiperItem} from 'vux'
-import axios from 'axios'
+import service from '@/service'
 import MeScroll from '../../../static/js/mescroll.min.js'
 import 'mescroll.js/mescroll.min.css'
 
@@ -110,47 +110,43 @@ export default {
   },
   methods: {
     menunListsCouter () {},
-    getBanner () {
-      axios.post('api/img/banner', {
-        'type': this.type
-      }).then((response) => {
-        if (response.data.status === 0) {
-          this.banners = response.data.data
-          // 响应成功回调
+    async getBanner () {
+      try {
+        const {status, msg, data} = await service.post('api/img/banner', {type: this.type})
+        if (status === 0) {
+          this.banners = data
         } else {
           this.$vux.toast.show({
             type: 'warn',
-            text: response.data.msg
+            text: msg
           })
         }
-      }).catch((response) => {
-        // 响应错误回调
+      } catch (e) {
         this.errorMsg()
-      })
+      }
     },
-    getMenunLists () {
-      axios.get('api/goods/getCategory').then((response) => {
-        if (response.data.status === 0) {
-          this.menunLists = response.data.data
-          // 响应成功回调
-          var len = this.menunLists.length
-          var pageNo = (len / 8)
+    async getMenunLists () {
+      try {
+        const {status, data, msg} = await service.get('api/goods/getCategory')
+        if (status === 0) {
+          this.menunLists = data
+          let len = this.menunLists.length
+          let pageNo = (len / 8)
           if (pageNo < 1) {
             this.menunListsFirst = this.menunLists
-          } else if (pageNo >= 1 && pageNo <= 2) {
+          } else {
             this.menunListsFirst = this.menunLists.slice(0, 8)
             this.menunListsSecond = this.menunLists.slice(8, 16)
           }
         } else {
           this.$vux.toast.show({
             type: 'warn',
-            text: response.data.msg
+            text: msg
           })
         }
-      }).catch((response) => {
-        // 响应错误回调
+      } catch (e) {
         this.errorMsg()
-      })
+      }
     },
     // 上拉回调 page = {num:1, size:10}; num:当前页 ,默认从1开始; size:每页数据条数,默认10
     upCallback: function (page) {
@@ -171,33 +167,26 @@ export default {
     getListDataFromNet (pageNum, pageSize, successCallback, errorCallback) {
       let self = this
       // 延时一秒,模拟联网
-      setTimeout(function () {
-        axios.post('api/goods/getRecommend', {
-          'pageNumber': pageNum,
-          'pageSize': pageSize
-        }).then((response) => {
-          if (response.data.status === 0) {
-            // 响应成功回调
-            var data = response.data.data.list
-            var total = response.data.data.total
-            var listData = []// 模拟分页数据
-            for (var i = 0; i < data.length; i++) {
-              if (data[i] !== undefined) {
-                listData.push(data[i])
+      setTimeout(async function () {
+        try {
+          const {status, data: {list, total}, msg} = await service.post('api/goods/getRecommend', {pageNumber: pageNum, pageSize})
+          if (status === 0) {
+            let listData = []
+            for (let i = 0; i < list.length; i++) {
+              if (list[i] !== undefined) {
+                listData.push(list[i])
               }
+              successCallback && successCallback(listData, total)
             }
-            successCallback && successCallback(listData, total)// 成功回调
           } else {
             this.$vux.toast.show({
               type: 'warn',
-              text: response.data.msg
+              text: msg
             })
           }
-        }).catch((response) => {
-          // 响应错误回调
+        } catch (e) {
           self.errorMsg()
-          errorCallback && errorCallback()// 失败回调
-        })
+        }
       }, 1000)
     },
     errorMsg () {
