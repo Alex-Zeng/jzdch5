@@ -158,7 +158,7 @@
               <button type="button" class="btn btn-primary" @click="submitExpress">提交</button>
             </div>
           </div>
-          <div v-if="(data.groupId === 4 && data.state <= 3) || (!data.expressCode || !data.express)">
+          <div v-if="(data.groupId === 4 && data.state <= 3) && (!data.expressCode || !data.express)">
             <div class="order-tips">
               <div><img src="../../assets/images/empty_box.png" alt="" style="background-color: #fff;"></div>
               <div>暂无物流信息</div>
@@ -273,8 +273,8 @@ export default {
           )
           const {params: { no }} = this.$route
           try {
-            const {msg, stauts} = await service.psot('api/order/delivery', {...this.expressForm, no})
-            if (stauts !== 0) {
+            const {msg, status} = await service.post('api/order/delivery', {...this.expressForm, no})
+            if (status !== 0) {
               this.$vux.toast.show({
 
                 type: 'warn',

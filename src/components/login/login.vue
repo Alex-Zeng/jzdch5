@@ -102,7 +102,7 @@ export default {
         })
       })
     },
-    getImgCode () {
+    async getImgCode () {
       axios.get('api/captcha/img', this.mobile).then((response) => {
         if (response.data.status === 0) {
           this.imgCodeSrc = response.data.data.src + '?t=' + new Date().getTime()

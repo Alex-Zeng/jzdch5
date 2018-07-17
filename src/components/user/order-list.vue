@@ -316,12 +316,10 @@ export default {
           case 8:
             result = '售后处理'
             break
-          // 4:待打款 5:待采购商打款
           case 9:
           case 10:
             result = '待采购商打款'
             break
-          // 4:交易完成 5:待收款
           case 11:
             result = '待收款'
             break
