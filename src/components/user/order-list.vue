@@ -6,7 +6,7 @@
         我的订单
       </div>
       <div @click="showSelect">
-        {{getState(-8, state)}}
+        {{getState(state, -8)}}
         <i class="icon iconfont icon-xiala" :class="{'icon-order-active': show}" style="font-size: 0.4rem !important;">
       </i>
       </div>
@@ -25,7 +25,7 @@
             <i class="icon iconfont icon-shangdian text-blue"></i>
             {{i.companyName}}
           </div>
-          <div class="orderNo">订单号：{{i.out_id}} <span>{{i.service_type === 1? '售后处理中': i.service_type === 2? '售后完成': getState(i.state)}}</span></div>
+          <div class="orderNo">订单号：{{i.out_id}} <span>{{i.service_type === 1? '售后处理中': i.service_type === 2? '售后完成': getState(i.state, i.groupId)}}</span></div>
           <div>
             <div class="order-item" v-for="(good, key) in i.goods" :key="wkey+key">
               <div slot="content" class="indent-content">
@@ -235,7 +235,7 @@ export default {
     gotoDetail (no) {
       this.$router.push('/order-detail/' + no)
     },
-    getState (state) {
+    getState (state, group) {
       let result = ''
       switch (state) {
         case -1:
@@ -272,7 +272,7 @@ export default {
           result = '逾期中'
           break
         case 11:
-          result = '待打款至供应商'
+          result = (group === 4 ? '交易完成' : '待结算')
           break
         case 13:
           result = '交易完成'
