@@ -12,40 +12,24 @@
       </div>
     </div>
     <div v-show="show" class="menu-wrap">
-      <ul class="menu-list" @click="show=false">
-        <router-link to="/order-list/-1"  class="menu-item" tag="li">全部</router-link>
-        <router-link to="/order-list/0" class="menu-item" tag="li">待核价</router-link>
-      </ul>
-      <ul class="menu-list" @click="show=false">
-        <router-link to="/order-list/1" class="menu-item" tag="li">待签约</router-link>
-        <router-link to="/order-list/3" class="menu-item" tag="li">待发货</router-link>
-      </ul>
-      <ul class="menu-list" @click="show=false">
-        <router-link to="/order-list/6" class="menu-item" tag="li">待收货</router-link>
-        <router-link to="/order-list/9" class="menu-item" tag="li">账期中</router-link>
-      </ul>
-      <ul class="menu-list" @click="show=false">
-        <router-link to="/order-list/13" class="menu-item" tag="li">交易完成</router-link>
-        <router-link to="/order-list/8" class="menu-item" tag="li">售后处理</router-link>
-      </ul>
-      <ul class="menu-list" @click="show=false">
-        <router-link to="/order-list/9" class="menu-item" @click="state=9,show=false">待付款</router-link>
-        <li class="menu-item-empty"></li>
+      <ul class="menu-list" @click="show=false" v-for="(item, key) in menu" :key="'menu'+key">
+        <router-link :to="`/order-list/${link.key}`"  class="menu-item" tag="li" v-for="(link, childkey) in item" :key="'menu'+key+childkey">{{link.value}}</router-link>
+        <li class="menu-item-empty" v-if="item.length < 2"></li>
       </ul>
     </div>
 
-    <div class="mescroll" id="mescroll">
-      <div class="order-wrap"  v-show="!show">
-        <div class="order-card" v-for="i in list" :key="i.id">
+    <div class="mescroll"  id="order-mescroll" v-show="!show">
+      <div class="order-wrap">
+        <div class="order-card" v-for="(i, wkey) in list" :key="wkey">
           <div class="indent-title" style="font-size: 0.75rem; padding: 0.28rem 0.5rem; height: auto;border-top: 0;">
             <i class="icon iconfont icon-shangdian text-blue"></i>
             {{i.companyName}}
           </div>
-          <div class="orderNo">订单号：{{i.out_id}} <span>{{i.service_type === 1? '待售后':getState(i.groupId, i.state)}}</span></div>
+          <div class="orderNo">订单号：{{i.out_id}} <span>{{data.serviceType === 1? '售后处理中': data.serviceType === 2? '售后完成': getState(data.groupId, data.state)}}</span></div>
           <div>
-            <div class="order-item" v-for="(good, key) in i.goods" :key="key">
+            <div class="order-item" v-for="(good, key) in i.goods" :key="wkey+key">
               <div slot="content" class="indent-content">
-                <img :src="good.icon" alt="" onerror="this.src='./static/images/temp-img.png'">
+                <!--<img :src="good.icon" alt="">-->
                 <div class="indent-info">
                   <h3 class="title"><router-link to="/">{{good.title}}</router-link></h3>
                   <div class="info-item">{{good.s_info}}</div>
@@ -116,7 +100,8 @@ export default {
       list: [],
       show: false,
       state: 1,
-      mescroll: null
+      mescroll: null,
+      menu: []
     }
   },
   created () {
@@ -125,12 +110,13 @@ export default {
   mounted () {
     const {params: {type}} = this.$route
     this.state = type * 1
-    var _sel = this
-    _sel.mescroll = new MeScroll('mescroll', {
+    var self = this
+    self.mescroll = new MeScroll('order-mescroll', {
       up: {
         /* 上拉加载的配置参数 */
+        use: true,
         auto: true, // 是否在初始化时以上拉加载的方式自动加载第一页数据; 默认false
-        callback: _sel.upCallback, // 上拉回调
+        callback: self.upCallback, // 上拉回调
         // 以下参数可删除,不配置
         isBounce: false, // 此处禁止ios回弹,解析(务必认真阅读,特别是最后一点): http://www.mescroll.com/qa.html#q10
         // page:{size:8}, //可配置每页8条数据,默认10
@@ -145,19 +131,17 @@ export default {
         }
       }
     })
+    this.showStatusList()
   },
   methods: {
     upCallback: function (page) {
-      // 联网加载数据
       var self = this
       this.getListDataFromNet(page.num, page.size, self.state, function (curPageData, totalSize) {
-        // curPageData = [] // 打开本行注释,可演示列表无任何数据empty的配置
         if (page.num === 1) self.list = []
         // 更新列表数据
         self.list = self.list.concat(curPageData)
-        self.mescroll.endBySize(curPageData.length, totalSize) // 必传参数(当前页的数据个数, 总数据量)
+        self.mescroll.endBySize(curPageData.length, totalSize)
       }, function () {
-        // 联网失败的回调,隐藏下拉刷新和上拉加载的状态;
         self.mescroll.endErr()
       })
     },
@@ -221,21 +205,29 @@ export default {
         }
       })
     },
-    async getListDataFromNet (pageNum, pageSize, state, successCallback, errorCallback) {
-      const {data: {list, total}, status, msg} = await service.post('api/order/getList', {
-        'pageNumber': pageNum,
-        'pageSize': pageSize,
-        'status': state
-      })
-      if (status === 0) {
-        successCallback && successCallback(list, total)
-      } else {
-        this.$vux.toast.show({
-          type: 'warn',
-          text: msg
+    getListDataFromNet (pageNum, pageSize, state, successCallback, errorCallback) {
+      setTimeout(async () => {
+        const {data: {list, total}, status, msg} = await service.post('api/order/getList', {
+          'pageNumber': pageNum,
+          'pageSize': pageSize,
+          'status': state
         })
-        errorCallback && errorCallback()
-      }
+        if (status === 0) {
+          let listData = []// 模拟分页数据
+          for (let i = 0; i < list.length; i++) {
+            if (list[i] !== undefined) {
+              listData.push(list[i])
+            }
+          }
+          successCallback && successCallback(listData, total)
+        } else {
+          this.$vux.toast.show({
+            type: 'warn',
+            text: msg
+          })
+          errorCallback && errorCallback()
+        }
+      }, 200)
     },
     showSelect () {
       this.show = !this.show
@@ -244,127 +236,47 @@ export default {
       this.$router.push('/order-detail/' + no)
     },
     getState (group, state) {
-      var result = ''
-      if (group === 4) {
-        switch (state) {
-          case 0:
-            result = '待核价'
-            break
-          case 1:
-            result = '待签约'
-            break
-          case 2:
-            result = '待采购商打款'
-            break
-          case 3:
-            result = '待发货'
-            break
-          case 4:
-            result = '订单关闭'
-            break
-          case 6:
-            result = '待收货'
-            break
-          case 7:
-            result = '待质检'
-            break
-          case 8:
-            result = '售后处理'
-            break
-          // 4:待打款 5:待采购商打款
-          case 9:
-          case 10:
-            result = '待打款'
-            break
-          // 4:交易完成 5:待收款
-          case 11:
-            result = '交易完成'
-            break
-          case 13:
-            result = '交易完成'
-            break
-        }
-      } else if (group === 5) {
-        switch (state) {
-          case 0:
-            result = '待核价'
-            break
-          case 1:
-            result = '待签约'
-            break
-          case 2:
-            result = '待采购商打款'
-            break
-          case 3:
-            result = '待发货'
-            break
-          case 4:
-            result = '订单关闭'
-            break
-          case 6:
-            result = '待收货'
-            break
-          case 7:
-            result = '待质检'
-            break
-          case 8:
-            result = '售后处理'
-            break
-          // 4:待打款 5:待采购商打款
-          case 9:
-          case 10:
-            result = '待采购商打款'
-            break
-          // 4:交易完成 5:待收款
-          case 11:
-            result = '待收款'
-            break
-          case 13:
-            result = '交易完成'
-            break
-        }
-      } else {
-        switch (state) {
-          case -1:
-            result = '全部'
-            break
-          case 0:
-            result = '待核价'
-            break
-          case 1:
-            result = '待签约'
-            break
-          case 2:
-            result = '待采购商打款'
-            break
-          case 3:
-            result = '待发货'
-            break
-          case 4:
-            result = '订单关闭'
-            break
-          case 6:
-            result = '待收货'
-            break
-          case 7:
-            result = '待质检'
-            break
-          case 8:
-            result = '售后处理'
-            break
-          case 9:
-            result = '账期中'
-            break
-          case 10:
-            result = '逾期中'
-            break
-          case 11:
-            result = '待打款至供应商'
-            break
-          case 13:
-            result = '交易完成'
-            break
-        }
+      let result = ''
+      switch (state) {
+        case -1:
+          result = '全部'
+          break
+        case 0:
+          result = '待确定'
+          break
+        case 1:
+          result = '待确定'
+          break
+        case 2:
+          result = '待付款'
+          break
+        case 3:
+          result = '待发货'
+          break
+        case 4:
+          result = '订单关闭'
+          break
+        case 6:
+          result = '待收货'
+          break
+        case 7:
+          result = '待质检'
+          break
+        case 8:
+          result = '售后处理'
+          break
+        case 9:
+          result = '待付款'
+          break
+        case 10:
+          result = '待付款'
+          break
+        case 11:
+          result = '待打款至供应商'
+          break
+        case 13:
+          result = '交易完成'
+          break
       }
       return result
     },
@@ -373,6 +285,27 @@ export default {
         type: 'warn',
         text: '网络可能有点问题'
       })
+    },
+    async showStatusList () {
+      try {
+        const {status, data, msg} = await service.get('api/order/showStatusList')
+        if (status === 0) {
+          let keys = Object.keys(data)
+          let values = Object.values(data)
+          for (let i = 0; i < keys.length; i += 2) {
+            let temp = []
+            temp.push({key: keys[i], value: values[i]}, {key: keys[i + 1], value: values[i + 1]})
+            this.menu.push(temp)
+          }
+        } else {
+          this.$vux.toast.show({
+            type: 'warn',
+            text: msg
+          })
+        }
+      } catch (e) {
+        this.errorMsg()
+      }
     }
   },
   components: {

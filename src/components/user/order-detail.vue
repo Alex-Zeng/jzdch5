@@ -61,7 +61,7 @@
             <i class="icon iconfont icon-shangdian text-blue"></i>
             {{data.companyName}}
           </div>
-          <div class="orderNo">订单号：{{data.orderNo}} <span>{{data.serviceType === 1? '待售后':getState(data.groupId, data.state)}}</span></div>
+          <div class="orderNo">订单号：{{data.orderNo}} <span>{{data.serviceType === 1? '售后处理中': data.serviceType === 2? '售后完成': getState(data.groupId, data.state)}}</span></div>
           <div class="indent-content order-item" v-for="(good, key) in data.goods" :key="key">
             <img :src="good.icon" alt="" onerror="this.src='./static/images/temp-img.png'">
             <div class="indent-info">
@@ -295,93 +295,50 @@ export default {
         }
       })
     },
-    getState (group, state) {
-      if (group === 4) {
-        switch (state) {
-          case 0:
-            return '待核价'
-          case 1:
-            return '待签约'
-          case 2:
-            return '待采购商打款'
-          case 3:
-            return '待发货'
-          case 4:
-            return '订单关闭'
-          case 6:
-            return '待收货'
-          case 7:
-            return '待质检'
-          case 8:
-            return '售后处理'
-          // 4:待打款 5:待采购商打款
-          case 9:
-          case 10:
-            return '待打款'
-          // 4:交易完成 5:待收款
-          case 11:
-            return '交易完成'
-          case 13:
-            return '交易完成'
-        }
-      } else if (group === 5) {
-        switch (state) {
-          case 0:
-            return '待核价'
-          case 1:
-            return '待签约'
-          case 2:
-            return '待采购商打款'
-          case 3:
-            return '待发货'
-          case 4:
-            return '订单关闭'
-          case 6:
-            return '待收货'
-          case 7:
-            return '待质检'
-          case 8:
-            return '售后处理'
-          // 4:待打款 5:待采购商打款
-          case 9:
-          case 10:
-            return '待采购商打款'
-          // 4:交易完成 5:待收款
-          case 11:
-            return '待收款'
-          case 13:
-            return '交易完成'
-        }
-      } else {
-        switch (state) {
-          case -1:
-            return '全部'
-          case 0:
-            return '待核价'
-          case 1:
-            return '待签约'
-          case 2:
-            return '待采购商打款'
-          case 3:
-            return '待发货'
-          case 4:
-            return '订单关闭'
-          case 6:
-            return '待收货'
-          case 7:
-            return '待质检'
-          case 8:
-            return '售后处理'
-          case 9:
-            return '账期中'
-          case 10:
-            return '逾期中'
-          case 11:
-            return '待打款至供应商'
-          case 13:
-            return '交易完成'
-        }
+    getState (state) {
+      let result = ''
+      switch (state) {
+        case -1:
+          result = '全部'
+          break
+        case 0:
+          result = '待确定'
+          break
+        case 1:
+          result = '待确定'
+          break
+        case 2:
+          result = '待付款'
+          break
+        case 3:
+          result = '待发货'
+          break
+        case 4:
+          result = '订单关闭'
+          break
+        case 6:
+          result = '待收货'
+          break
+        case 7:
+          result = '待质检'
+          break
+        case 8:
+          result = '售后处理'
+          break
+        case 9:
+          result = '待付款'
+          break
+        case 10:
+          result = '待付款'
+          break
+        case 11:
+          result = '待打款至供应商'
+          break
+        case 13:
+          result = '交易完成'
+          break
       }
+      return result
     },
     async getDetail () {
       const {params: { no }} = this.$route
