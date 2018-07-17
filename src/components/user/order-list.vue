@@ -6,7 +6,7 @@
         我的订单
       </div>
       <div @click="showSelect">
-        {{getState(-8, state)}}
+        {{state || '全部'}}
         <i class="icon iconfont icon-xiala" :class="{'icon-order-active': show}" style="font-size: 0.4rem !important;">
       </i>
       </div>
@@ -91,7 +91,7 @@ export default {
     $route: function (val) {
       const {params: {type}} = val
       this.show = false
-      this.state = type * 1
+      this.state = this.menuRaw[type]
       this.mescroll.resetUpScroll(true)
     }
   },
@@ -101,7 +101,8 @@ export default {
       show: false,
       state: 1,
       mescroll: null,
-      menu: []
+      menu: [],
+      menuRaw: {}
     }
   },
   created () {
@@ -109,7 +110,7 @@ export default {
   },
   mounted () {
     const {params: {type}} = this.$route
-    this.state = type * 1
+    this.state = this.menuRaw[type]
     var self = this
     self.mescroll = new MeScroll('order-mescroll', {
       up: {
@@ -292,6 +293,7 @@ export default {
         if (status === 0) {
           let keys = Object.keys(data)
           let values = Object.values(data)
+          this.menuRaw = data
           for (let i = 0; i < keys.length; i += 2) {
             let temp = []
             if (i + 1 >= keys.length) {
