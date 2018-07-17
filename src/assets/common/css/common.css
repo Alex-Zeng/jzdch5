@@ -475,9 +475,6 @@ input:-ms-input-placeholder {
 #app .weui-cell__ft{
   font-size: 0.7rem;
 }
-#app .vux-slider > .vux-swiper > .vux-swiper-item > a > .vux-img{
-  background-image: url('../../../../static/images/temp-img.png')
-}
 /*修改插件样式*/
 
 /*表单*/
