@@ -11,7 +11,7 @@
       </div>
       <div class="main-nav">
         <ul>
-          <li v-for="(item, index) in categoryListChildren" :key="index" @click="goSearch(item.id)">
+          <li v-for="(item, index) in categoryListChildren" :key="index">
               <!--<img :src="item.path" alt="" onerror="this.src='./static/images/temp-img.png'">-->
               <h3>{{item.name}}</h3>
             <div v-for="i in item.child" :key="i.id" @click="goSearch(i.id)">
