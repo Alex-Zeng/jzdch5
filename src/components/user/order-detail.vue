@@ -61,7 +61,7 @@
             <i class="icon iconfont icon-shangdian text-blue"></i>
             {{data.companyName}}
           </div>
-          <div class="orderNo">订单号：{{data.orderNo}} <span>{{data.serviceType === 1? '售后处理中': data.serviceType === 2? '售后完成': getState(data.groupId, data.state)}}</span></div>
+          <div class="orderNo">订单号：{{data.orderNo}} <span>{{data.service_type === 1? '售后处理中': data.service_type === 2? '售后完成': getState(data.state)}}</span></div>
           <div class="indent-content order-item" v-for="(good, key) in data.goods" :key="key">
             <img :src="good.icon" alt="" onerror="this.src='./static/images/temp-img.png'">
             <div class="indent-info">
