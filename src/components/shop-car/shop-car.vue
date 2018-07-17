@@ -159,7 +159,7 @@ export default {
       var price = 0
       document.getElementsByName('checkbox').forEach(function (item, index) {
         if (item.checked) {
-          price += parseInt(document.getElementsByName('price')[index].value)
+          price += parseFloat(document.getElementsByName('price')[index].value)
         }
       })
       this.total = price

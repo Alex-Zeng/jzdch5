@@ -1,6 +1,6 @@
 <template>
   <!--滑动区域-->
-  <div class="mescroll"  id="mescroll">
+  <div class="mescroll"  id="mescroll" style="padding-bottom: 2rem">
     <headerMessage></headerMessage>
     <div class="banner">
       <swiper loop :show-desc-mask="false" dots-position="center" height="9.9rem" :list="banners" :show-dots="banners.length > 1? true:false"></swiper>
