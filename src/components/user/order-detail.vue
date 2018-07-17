@@ -273,8 +273,8 @@ export default {
           )
           const {params: { no }} = this.$route
           try {
-            const {msg, stauts} = await service.psot('api/order/delivery', {...this.expressForm, no})
-            if (stauts !== 0) {
+            const {msg, status} = await service.post('api/order/delivery', {...this.expressForm, no})
+            if (status !== 0) {
               this.$vux.toast.show({
 
                 type: 'warn',
