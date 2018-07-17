@@ -12,8 +12,12 @@
       <div class="main-nav">
         <ul>
           <li v-for="(item, index) in categoryListChildren" :key="index" @click="goSearch(item.id)">
-              <img :src="item.path" alt="">
+              <!--<img :src="item.path" alt="" onerror="this.src='./static/images/temp-img.png'">-->
               <h3>{{item.name}}</h3>
+            <div v-for="i in item.child" :key="i.id" @click="goSearch(i.id)">
+                <img :src="i.path" alt="" onerror="this.src='./static/images/temp-img.png'">
+                <h3>{{i.name}}</h3>
+            </div>
           </li>
         </ul>
       </div>
@@ -23,7 +27,7 @@
 </template>
 
 <script>
-import service from '@/service'
+import axios from 'axios'
 import headerMessage from '../common/header-message'
 import FooterNav from '../common/footer-nav'
 import '@/assets/css/goods-class.css'
@@ -38,19 +42,22 @@ export default {
     }
   },
   methods: {
-    async getCategoryList () {
-      const {status, data} = await service.get('api/goods/getCategoryList')
-      if (status === 0) {
-        for (let i = 0; i < data.length; i++) {
-          this.categoryList.push({'id': data[i].id, 'name': data[i].name})
+    getCategoryList () {
+      axios.get('api/goods/getCategoryList').then((response) => {
+        if (response.data.status === 0) {
+          let data = response.data.data
+          for (let i = 0; i < data.length; i++) {
+            this.categoryList.push({'id': data[i].id, 'name': data[i].name})
+          }
+          this.totalData = data
+          this.categoryListChildren = this.totalData[0].child
         }
-        this.totalData = data
-        this.categoryListChildren = this.totalData[0].child
-      }
+      }).catch((response) => {})
     },
     tabsort (index) {
       this.iscur = index
       this.categoryListChildren = this.totalData[index].child
+      console.log(this.categoryListChildren)
     },
     initMethods () {
       let id = this.$route.query.id

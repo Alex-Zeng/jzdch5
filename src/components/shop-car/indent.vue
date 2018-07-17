@@ -32,7 +32,7 @@
                 <swipeout-button @click.native="onButtonClick(k, index)" type="warn"><i class="icon iconfont icon-bianji"></i></swipeout-button>
               </div>
               <div slot="content" class="indent-content">
-                <img :src="i.icon" alt="">
+                <img :src="i.icon" alt="" onerror="this.src='./static/images/temp-img.png'">
                 <div class="indent-info">
                   <h3><router-link :to="'/detail/'+i.goodsId">{{i.title}}</router-link></h3>
                   <div class="text-muted" v-if="i.specificationsInfo">商品规格 {{i.specificationsInfo}}</div>
@@ -75,7 +75,7 @@
           <div style="padding-right: 2rem">&emsp;</div>
         </div>
         <div class="indent-content" style="margin-top: 0.5rem;">
-          <img :src="editor.icon" alt="图片">
+          <img :src="editor.icon" alt="图片" onerror="this.src='./static/images/temp-img.png'">
           <div class="indent-info">
             <h3>{{editor.title}}</h3>
             <div class="text-muted">{{editor.specificationsInfo}}</div>
@@ -112,6 +112,7 @@ export default {
       value1: '',
       value2: '',
       address: null,
+      type: 2,
       editor: {},
       k: null,
       editorIndex: null,
@@ -155,6 +156,11 @@ export default {
       this.editorSHow = !this.editorSHow
     },
     submit () {
+      if (/MicroMessenger/i.test(navigator.userAgent)) {
+        this.type = 3
+      } else {
+        this.type = 2
+      }
       if (this.address !== null) {
         let self = this
         this.$vux.confirm.show({
@@ -165,7 +171,8 @@ export default {
             axios.post('api/order/make', {
               '_token': sessionStorage.getItem('loginToken'),
               'receiverId': self.receiverId,
-              'detail': JSON.stringify(self.lists)
+              'detail': JSON.stringify(self.lists),
+              'channel': self.type
             }).then((response) => {
               if (response.data.status === 0) {
                 sessionStorage.setItem('indent-detail', JSON.stringify(response.data.data))

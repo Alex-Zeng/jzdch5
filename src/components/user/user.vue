@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="user-header">
-      <img :src="userMsg.photo" alt="">
+      <img :src="userMsg.photo" alt="" onerror="this.src='./static/images/shop-car-title.png'">
       <div>{{userMsg.name}}</div>
       <i class="icon iconfont icon-shezhi" @click="$router.push('/settings')"></i>
     </div>

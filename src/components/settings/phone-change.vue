@@ -33,7 +33,7 @@
           <li>
             <div>
               <input title="验证码" name="验证码" v-model="verificationCode" v-validate="'required|verificationCode'" type="text" maxlength="4" class="has-button" placeholder="请输入右侧验证码"/>
-              <img class="img-code" @click="getImgCode" :src="imgCodeSrc">
+              <img class="img-code" @click="getImgCode" :src="imgCodeSrc" onerror="this.src='./static/images/temp-img.png'">
             </div>
             <i v-show="errors.has('验证码')" class="fa fa-warning"></i>
             <span v-show="errors.has('验证码')" class="help is-danger">{{ errors.first('验证码') }}</span>

@@ -60,7 +60,6 @@
   padding-left: 2rem;
   border-top: 0.05rem solid #E1E1E1;
   border-bottom: 0.05rem solid #E1E1E1;
-  background: #FFFFFF url("../images/sho-car-title.png") no-repeat 0.5rem center;
   background-size: 1.1rem;
   color: #222222;
   padding-right: 7rem;
@@ -219,7 +218,7 @@ ul li:last-child .order-remark {
 }
 
 .order-action {
-  padding: 0.4rem 1rem 0.4rem 0;
+  padding: 0.4rem 0.4rem 0.4rem 0;
   display: flex;
   /*flex-direction: row-reverse;*/
   background-color: #fff;

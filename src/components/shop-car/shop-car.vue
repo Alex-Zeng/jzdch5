@@ -41,7 +41,7 @@
                   <input type="hidden" name="price" :value="i.price*i.quantity">
                 </div>
                 <div>
-                  <img :src="i.icon" alt="">
+                  <img :src="i.icon" alt="" onerror="this.src='./static/images/temp-img.png'">
                   <div>
                     <h3><router-link :to="'/detail/'+i.goodsId">{{i.title}}</router-link></h3>
                     <div class="text-muted">{{i.specificationsInfo}}</div>
@@ -159,7 +159,7 @@ export default {
       var price = 0
       document.getElementsByName('checkbox').forEach(function (item, index) {
         if (item.checked) {
-          price += parseFloat(document.getElementsByName('price')[index].value)
+          price += parseInt(document.getElementsByName('price')[index].value)
         }
       })
       this.total = price

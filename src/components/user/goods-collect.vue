@@ -8,7 +8,7 @@
       <div style="padding-right: 2rem">&emsp;</div>
     </div>
     <div class="search-lists-header"><span style="color: #222222;" @click="defaultSortMethods">默认</span> <span @click="sortMethods">价格<i class="icon iconfont icon-jiagepaixu1"></i></span></div>
-    <div  class="mescroll" id="mescroll" style="padding-top: 5.5rem;border-top: 0.05rem solid #E0E0E0;">
+    <div  class="mescroll" id="mescroll" style="padding-top: 3rem;border-top: 0.05rem solid #E0E0E0;">
       <div id="favoriteList" v-cloak>
         <!--展示上拉加载的数据列表-->
         <div v-for="(item, index) in favoriteList" :key="index">
@@ -19,7 +19,7 @@
               </div>
               <div slot="content" class="shop-car-content"  @click="$router.push('/detail/'+item.id)">
                 <div>
-                  <img :src="item.icon" alt="图片">
+                  <img :src="item.icon" alt="图片" onerror="this.src='./static/images/temp-img.png'">
                   <div>
                     <h3>{{item.title}}</h3>
                     <span class="text-red">￥ {{item.w_price}}</span>

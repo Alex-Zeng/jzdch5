@@ -15,8 +15,6 @@ a{
 a:active, a:visited{
 	outline: none;
 }
-img{
-}
 .temp-box{
   margin-top: 9rem;
   text-align: center;
@@ -310,7 +308,7 @@ input:-ms-input-placeholder {
   position: fixed;
   bottom: 0;
   background: #fff;
-  z-index: 999;
+  z-index: 999999;
   border-top: 1px solid #e1e1e1;
 }
 .footer-nav a{
@@ -321,7 +319,6 @@ input:-ms-input-placeholder {
   padding: 0.3rem 0;
   text-align: center;
   position: relative;
-  z-index: 9997;
 
 }
 .footer-nav i{
@@ -329,15 +326,12 @@ input:-ms-input-placeholder {
   margin: 0.2rem;
   background-size: 1rem;
   position: relative;
-  z-index: 9998;
 }
 .footer-nav a.active{
 	color: #1EB9EE;
-  z-index: 9998;
 }
 .footer-nav .router-link-exact-active{
 	color: #1EB9EE;
-  z-index: 9998;
 }
 .footer-nav .vux-badge{
   background: #FFFFFF;
