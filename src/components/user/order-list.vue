@@ -12,25 +12,9 @@
       </div>
     </div>
     <div v-show="show" class="menu-wrap">
-      <ul class="menu-list" @click="show=false">
-        <router-link to="/order-list/-1"  class="menu-item" tag="li">全部</router-link>
-        <router-link to="/order-list/0" class="menu-item" tag="li">待核价</router-link>
-      </ul>
-      <ul class="menu-list" @click="show=false">
-        <router-link to="/order-list/1" class="menu-item" tag="li">待签约</router-link>
-        <router-link to="/order-list/3" class="menu-item" tag="li">待发货</router-link>
-      </ul>
-      <ul class="menu-list" @click="show=false">
-        <router-link to="/order-list/6" class="menu-item" tag="li">待收货</router-link>
-        <router-link to="/order-list/9" class="menu-item" tag="li">账期中</router-link>
-      </ul>
-      <ul class="menu-list" @click="show=false">
-        <router-link to="/order-list/13" class="menu-item" tag="li">交易完成</router-link>
-        <router-link to="/order-list/8" class="menu-item" tag="li">售后处理</router-link>
-      </ul>
-      <ul class="menu-list" @click="show=false">
-        <router-link to="/order-list/9" class="menu-item" @click="state=9,show=false">待付款</router-link>
-        <li class="menu-item-empty"></li>
+      <ul class="menu-list" @click="show=false" v-for="(item, key) in menu" :key="'menu'+key">
+        <router-link :to="`/order-list/${link.key}`"  class="menu-item" tag="li" v-for="(link, childkey) in item" :key="'menu'+key+childkey">{{link.value}}</router-link>
+        <li class="menu-item-empty" v-if="item.length < 2"></li>
       </ul>
     </div>
 
@@ -116,7 +100,8 @@ export default {
       list: [],
       show: false,
       state: 1,
-      mescroll: null
+      mescroll: null,
+      menu: []
     }
   },
   created () {
@@ -146,6 +131,7 @@ export default {
         }
       }
     })
+    this.showStatusList()
   },
   methods: {
     upCallback: function (page) {
@@ -250,125 +236,47 @@ export default {
       this.$router.push('/order-detail/' + no)
     },
     getState (group, state) {
-      var result = ''
-      if (group === 4) {
-        switch (state) {
-          case 0:
-            result = '待核价'
-            break
-          case 1:
-            result = '待签约'
-            break
-          case 2:
-            result = '待采购商打款'
-            break
-          case 3:
-            result = '待发货'
-            break
-          case 4:
-            result = '订单关闭'
-            break
-          case 6:
-            result = '待收货'
-            break
-          case 7:
-            result = '待质检'
-            break
-          case 8:
-            result = '售后处理'
-            break
-          // 4:待打款 5:待采购商打款
-          case 9:
-          case 10:
-            result = '待打款'
-            break
-          // 4:交易完成 5:待收款
-          case 11:
-            result = '交易完成'
-            break
-          case 13:
-            result = '交易完成'
-            break
-        }
-      } else if (group === 5) {
-        switch (state) {
-          case 0:
-            result = '待核价'
-            break
-          case 1:
-            result = '待签约'
-            break
-          case 2:
-            result = '待采购商打款'
-            break
-          case 3:
-            result = '待发货'
-            break
-          case 4:
-            result = '订单关闭'
-            break
-          case 6:
-            result = '待收货'
-            break
-          case 7:
-            result = '待质检'
-            break
-          case 8:
-            result = '售后处理'
-            break
-          case 9:
-          case 10:
-            result = '待采购商打款'
-            break
-          case 11:
-            result = '待收款'
-            break
-          case 13:
-            result = '交易完成'
-            break
-        }
-      } else {
-        switch (state) {
-          case -1:
-            result = '全部'
-            break
-          case 0:
-            result = '待核价'
-            break
-          case 1:
-            result = '待签约'
-            break
-          case 2:
-            result = '待采购商打款'
-            break
-          case 3:
-            result = '待发货'
-            break
-          case 4:
-            result = '订单关闭'
-            break
-          case 6:
-            result = '待收货'
-            break
-          case 7:
-            result = '待质检'
-            break
-          case 8:
-            result = '售后处理'
-            break
-          case 9:
-            result = '账期中'
-            break
-          case 10:
-            result = '逾期中'
-            break
-          case 11:
-            result = '待打款至供应商'
-            break
-          case 13:
-            result = '交易完成'
-            break
-        }
+      let result = ''
+      switch (state) {
+        case -1:
+          result = '全部'
+          break
+        case 0:
+          result = '待确定'
+          break
+        case 1:
+          result = '待确定'
+          break
+        case 2:
+          result = '待付款'
+          break
+        case 3:
+          result = '待发货'
+          break
+        case 4:
+          result = '订单关闭'
+          break
+        case 6:
+          result = '待收货'
+          break
+        case 7:
+          result = '待质检'
+          break
+        case 8:
+          result = '售后处理'
+          break
+        case 9:
+          result = '待付款'
+          break
+        case 10:
+          result = '待付款'
+          break
+        case 11:
+          result = '待打款至供应商'
+          break
+        case 13:
+          result = '交易完成'
+          break
       }
       return result
     },
@@ -377,6 +285,27 @@ export default {
         type: 'warn',
         text: '网络可能有点问题'
       })
+    },
+    async showStatusList () {
+      try {
+        const {status, data, msg} = await service.get('api/order/showStatusList')
+        if (status === 0) {
+          let keys = Object.keys(data)
+          let values = Object.values(data)
+          for (let i = 0; i < keys.length; i += 2) {
+            let temp = []
+            temp.push({key: keys[i], value: values[i]}, {key: keys[i + 1], value: values[i + 1]})
+            this.menu.push(temp)
+          }
+        } else {
+          this.$vux.toast.show({
+            type: 'warn',
+            text: msg
+          })
+        }
+      } catch (e) {
+        this.errorMsg()
+      }
     }
   },
   components: {
