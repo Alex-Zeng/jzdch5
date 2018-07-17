@@ -294,7 +294,11 @@ export default {
           let values = Object.values(data)
           for (let i = 0; i < keys.length; i += 2) {
             let temp = []
-            temp.push({key: keys[i], value: values[i]}, {key: keys[i + 1], value: values[i + 1]})
+            if (i + 1 >= keys.length) {
+              temp.push({key: keys[i], value: values[i]})
+            } else {
+              temp.push({key: keys[i], value: values[i]}, {key: keys[i + 1], value: values[i + 1]})
+            }
             this.menu.push(temp)
           }
         } else {
