@@ -33,6 +33,8 @@ export default {
   box-sizing: border-box;
 }
 #app > div{
+  height: 100%;
+  box-sizing: border-box;
   padding-top: 2.2rem;
 }
 </style>

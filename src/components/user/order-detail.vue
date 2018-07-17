@@ -16,7 +16,7 @@
       </div>
     </div>
     <div class="orderImgWrap" v-show="showImgWrap" @click="showImgWrap=false">
-      <img :src="data.payImg" alt="">
+      <img :src="data.payImg" alt="" onerror="this.src='./static/images/temp-img.png'">
     </div>
     <div v-show="!showResult">
 
@@ -63,7 +63,7 @@
           </div>
           <div class="orderNo">订单号：{{data.orderNo}} <span>{{data.serviceType === 1? '待售后':getState(data.groupId, data.state)}}</span></div>
           <div class="indent-content order-item" v-for="(good, key) in data.goods" :key="key">
-            <img :src="good.icon" alt="">
+            <img :src="good.icon" alt="" onerror="this.src='./static/images/temp-img.png'">
             <div class="indent-info">
               <b class="title">{{good.title}}</b>
               <div class="text-muted info-item">
@@ -132,7 +132,7 @@
             <div class="item" v-if="data.payImg" @click="showImgWrap=true">
               <span class="label">汇款凭证</span>
               <div class="value">
-                <img style="width: 4.5rem" :src="data.payImg" alt="">
+                <img style="width: 4.5rem" :src="data.payImg" alt="" onerror="this.src='./static/images/temp-img.png'">
               </div>
             </div>
           </div>
@@ -158,7 +158,7 @@
               <button type="button" class="btn btn-primary" @click="submitExpress">提交</button>
             </div>
           </div>
-          <div v-if="(data.groupId === 4 && data.state <= 3) && (!data.expressCode || !data.express)">
+          <div v-if="(data.groupId === 4 && data.state <= 3) || (!data.expressCode || !data.express)">
             <div class="order-tips">
               <div><img src="../../assets/images/empty_box.png" alt="" style="background-color: #fff;"></div>
               <div>暂无物流信息</div>
@@ -273,8 +273,8 @@ export default {
           )
           const {params: { no }} = this.$route
           try {
-            const {msg, status} = await service.post('api/order/delivery', {...this.expressForm, no})
-            if (status !== 0) {
+            const {msg, stauts} = await service.psot('api/order/delivery', {...this.expressForm, no})
+            if (stauts !== 0) {
               this.$vux.toast.show({
 
                 type: 'warn',
