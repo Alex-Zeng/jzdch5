@@ -37,7 +37,7 @@
             <div class="cells">
               <input title="验证码" name="code" required maxlength="5" v-model="verificationCode" placeholder="请输入右侧验证码"/>
             </div>
-            <img class="img-code" @click="getImgCode" :src="imgCodeSrc">
+            <img class="img-code" @click="getImgCode" :src="imgCodeSrc" onerror="this.src='./static/images/temp-img.png'">
           </li>
         </ul>
         <button type="button" class="btn btn-primary" @click="getMobileCode(1)">下一步</button>

@@ -25,7 +25,7 @@
           <div class="cells">
             <input type="text" name="verificationCode" required maxlength="5" v-model="verificationCode" placeholder="请输入右侧验证码"/>
           </div>
-          <img class="img-code" @click="getImgCode" :src="imgCodeSrc">
+          <img class="img-code" @click="getImgCode" :src="imgCodeSrc" onerror="this.src='./static/images/temp-img.png'">
         </li>
       </ul>
       <button type="button" class="btn btn-primary" @click="login">登录</button>
@@ -102,7 +102,7 @@ export default {
         })
       })
     },
-    async getImgCode () {
+    getImgCode () {
       axios.get('api/captcha/img', this.mobile).then((response) => {
         if (response.data.status === 0) {
           this.imgCodeSrc = response.data.data.src + '?t=' + new Date().getTime()

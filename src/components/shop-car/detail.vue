@@ -24,7 +24,7 @@
               {{item.supplierName}}
             </div>
             <div class="indent-content" v-for="i in item.goods" :key="i.goods_id">
-              <img :src="i.icon" alt="">
+              <img :src="i.icon" alt="" onerror="this.src='./static/images/temp-img.png'">
               <div class="indent-info">
                 <h3><router-link :to="'/detail/'+i.goods_id">{{i.title}}</router-link></h3>
                 <div class="text-muted" v-if="i.specificationsInfo">商品规格 {{i.specificationsInfo}}</div>

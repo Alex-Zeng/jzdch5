@@ -1,94 +1,93 @@
 <template>
   <!--滑动区域-->
-  <span>
-    <div class="mescroll"  id="mescroll" style="padding-top: 2.2rem;">
-      <headerMessage></headerMessage>
-      <div class="banner">
-        <swiper loop :show-desc-mask="false" dots-position="center" height="9.9rem" :list="banners" :show-dots="banners.length > 1? true:false"></swiper>
-      </div>
-      <div class="main-body">
-        <div class="menu-nav-box">
-          <swiper :show-desc-mask="false" height="10.5rem" :show-dots="false">
-            <swiper-item class="black">
-              <div class="menu-nav">
-                <template v-for="(item, index) in menunListsFirst">
-                  <router-link v-if="item.type > 0 && item.type !== 10" :to="{path: '/goods-class', query: {id: item.id }}" :key="index">
-                    <img :src="item.img" alt=""/>
-                    <div class="text-truncate">
-                      {{item.name}}
-                    </div>
-                  </router-link>
-                  <a href="http://h5.jizhongdiancai.com/jzdc-services/finance.html" v-else-if="item.flag === 1" :key="index">
-                    <img :src="item.img" alt=""/>
-                    <div class="text-truncate">
-                      {{item.name}}
-                    </div>
-                  </a>
-                  <a href="http://h5.jizhongdiancai.com/jzdc-services/index.html" v-else-if="item.type === 10" :key="index">
-                    <img :src="item.img" alt=""/>
-                    <div class="text-truncate">
-                      {{item.name}}
-                    </div>
-                  </a>
-                </template>
-              </div>
-            </swiper-item>
-            <swiper-item  v-if="menunListsSecond.length > 0" class="black">
-              <div class="menu-nav">
-                <template v-for="(item, index) in menunListsSecond">
-                  <router-link v-if="item.type > 0 && item.type !== 10" :to="{path: '/goods-class', query: {id: item.id }}" :key="index">
-                    <img :src="item.img" alt=""/>
-                    <div class="text-truncate">
-                      {{item.name}}
-                    </div>
-                  </router-link>
-                  <a href="http://h5.jizhongdiancai.com/jzdc-services/finance.html" v-else-if="item.flag === 1" :key="index">
-                    <img :src="item.img" alt=""/>
-                    <div class="text-truncate">
-                      {{item.name}}
-                    </div>
-                  </a>
-                  <a href="http://h5.jizhongdiancai.com/jzdc-services/index.html" v-else-if="item.type === 10" :key="index">
-                    <img :src="item.img" alt=""/>
-                    <div class="text-truncate">
-                      {{item.name}}
-                    </div>
-                  </a>
-                </template>
-              </div>
-            </swiper-item>
-          </swiper>
-        </div>
-        <div class="floor floor-recommend">
-          <span>商品推荐</span>
-          <router-link to="/goods-class" class="text-muted">
-            更多&nbsp;<i class="icon iconfont icon-youjiantou"></i>
-          </router-link >
-        </div>
-      </div>
-      <ul id="dataList" class="goods-lists data-list" v-cloak>
-        <li v-for="(item, index) in goodsLists" :key="index">
-          <router-link :to="'/detail/'+ item.id">
-            <img :src="item.url" alt=""/>
-            <div class="goods-title">
-              {{item.title}}
-            </div>
-            <div class="goods-price text-red">
-              ￥ {{item.min_price === '0.00'? item.w_price:item.min_price}}{{item.max_price===item.min_price?'':' ~ ￥'+item.max_price}}
-            </div>
-          </router-link>
-        </li>
-      </ul>
+  <div class="mescroll"  id="mescroll">
+    <headerMessage></headerMessage>
+    <div class="banner">
+      <swiper loop :show-desc-mask="false" dots-position="center" height="9.9rem" :list="banners" :show-dots="banners.length > 1? true:false"></swiper>
     </div>
+    <div class="main-body">
+      <div class="menu-nav-box">
+        <swiper :show-desc-mask="false" height="10.5rem" :show-dots="false">
+          <swiper-item class="black">
+            <div class="menu-nav">
+              <template v-for="(item, index) in menunListsFirst">
+                <router-link v-if="item.type > 0" :to="{path: '/goods-class', query: {id: item.type }}" :key="index">
+                  <img :src="item.img" alt="" onerror="this.src='./static/images/temp-img.png'"/>
+                  <div class="text-truncate">
+                    {{item.name}}
+                  </div>
+                </router-link>
+                <a href="http://h5.jizhongdiancai.com/jzdc-services/finance.html" v-else-if="item.flag === 1" :key="index">
+                  <img :src="item.img" alt="" onerror="this.src='./static/images/temp-img.png'"/>
+                  <div class="text-truncate">
+                    {{item.name}}
+                  </div>
+                </a>
+                <a href="http://h5.jizhongdiancai.com/jzdc-services/index.html" v-else-if="item.flag === 2" :key="index">
+                  <img :src="item.img" alt="" onerror="this.src='./static/images/temp-img.png'"/>
+                  <div class="text-truncate">
+                    {{item.name}}
+                  </div>
+                </a>
+              </template>
+            </div>
+          </swiper-item>
+          <swiper-item  v-if="menunListsSecond.length > 0" class="black">
+            <div class="menu-nav">
+              <template v-for="(item, index) in menunListsSecond">
+                <router-link v-if="item.type > 0" :to="{path: '/goods-class', query: {id: item.type }}" :key="index">
+                  <img :src="item.img" alt="" onerror="this.src='./static/images/temp-img.png'"/>
+                  <div class="text-truncate">
+                    {{item.name}}
+                  </div>
+                </router-link>
+                <a href="http://h5.jizhongdiancai.com/jzdc-services/finance.html" v-else-if="item.flag === 1" :key="index">
+                  <img :src="item.img" alt="" onerror="this.src='./static/images/temp-img.png'"/>
+                  <div class="text-truncate">
+                    {{item.name}}
+                  </div>
+                </a>
+                <a href="http://h5.jizhongdiancai.com/jzdc-services/index.html" v-else-if="item.flag === 2" :key="index">
+                  <img :src="item.img" alt="" onerror="this.src='./static/images/temp-img.png'"/>
+                  <div class="text-truncate">
+                    {{item.name}}
+                  </div>
+                </a>
+              </template>
+            </div>
+          </swiper-item>
+        </swiper>
+      </div>
+      <div class="floor floor-recommend">
+        <span>商品推荐</span>
+        <router-link to="/goods-class" class="text-muted">
+          更多&nbsp;<i class="icon iconfont icon-youjiantou"></i>
+        </router-link >
+      </div>
+    </div>
+    <!--展示上拉加载的数据列表-->
+    <ul id="dataList" class="goods-lists data-list" v-cloak>
+      <li v-for="(item, index) in goodsLists" :key="index">
+        <router-link :to="'/detail/'+ item.id">
+          <img :src="item.url" onerror="this.src='./static/images/temp-img.png'" alt=""/>
+          <div class="goods-title">
+            {{item.title}}
+          </div>
+          <div class="goods-price text-red">
+            ￥ {{item.min_price === '0.00'? item.w_price:item.min_price}}{{item.max_price===item.min_price?'':' ~ ￥'+item.max_price}}
+          </div>
+        </router-link>
+      </li>
+    </ul>
     <FooterNav></FooterNav>
-  </span>
+  </div>
 </template>
 
 <script>
 import headerMessage from '../common/header-message'
 import FooterNav from '../common/footer-nav'
 import {Badge, Swiper, SwiperItem} from 'vux'
-import service from '@/service'
+import axios from 'axios'
 import MeScroll from '../../../static/js/mescroll.min.js'
 import 'mescroll.js/mescroll.min.css'
 
@@ -110,43 +109,52 @@ export default {
   },
   methods: {
     menunListsCouter () {},
-    async getBanner () {
-      try {
-        const {status, msg, data} = await service.post('api/img/banner', {type: this.type})
-        if (status === 0) {
-          this.banners = data
+    getBanner () {
+      if (/MicroMessenger/i.test(navigator.userAgent)) {
+        this.type = 3
+      } else {
+        this.type = 2
+      }
+      axios.post('api/img/banner', {
+        'type': this.type
+      }).then((response) => {
+        if (response.data.status === 0) {
+          this.banners = response.data.data
+          // 响应成功回调
         } else {
           this.$vux.toast.show({
             type: 'warn',
-            text: msg
+            text: response.data.msg
           })
         }
-      } catch (e) {
+      }).catch((response) => {
+        // 响应错误回调
         this.errorMsg()
-      }
+      })
     },
-    async getMenunLists () {
-      try {
-        const {status, data, msg} = await service.get('api/goods/getCategory')
-        if (status === 0) {
-          this.menunLists = data
-          let len = this.menunLists.length
-          let pageNo = (len / 8)
+    getMenunLists () {
+      axios.get('api/goods/getCategory').then((response) => {
+        if (response.data.status === 0) {
+          this.menunLists = response.data.data
+          // 响应成功回调
+          var len = this.menunLists.length
+          var pageNo = (len / 8)
           if (pageNo < 1) {
             this.menunListsFirst = this.menunLists
-          } else {
+          } else if (pageNo >= 1 && pageNo <= 2) {
             this.menunListsFirst = this.menunLists.slice(0, 8)
             this.menunListsSecond = this.menunLists.slice(8, 16)
           }
         } else {
           this.$vux.toast.show({
             type: 'warn',
-            text: msg
+            text: response.data.msg
           })
         }
-      } catch (e) {
+      }).catch((response) => {
+        // 响应错误回调
         this.errorMsg()
-      }
+      })
     },
     // 上拉回调 page = {num:1, size:10}; num:当前页 ,默认从1开始; size:每页数据条数,默认10
     upCallback: function (page) {
@@ -167,26 +175,33 @@ export default {
     getListDataFromNet (pageNum, pageSize, successCallback, errorCallback) {
       let self = this
       // 延时一秒,模拟联网
-      setTimeout(async function () {
-        try {
-          const {status, data: {list, total}, msg} = await service.post('api/goods/getRecommend', {pageNumber: pageNum, pageSize})
-          if (status === 0) {
-            let listData = []
-            for (let i = 0; i < list.length; i++) {
-              if (list[i] !== undefined) {
-                listData.push(list[i])
+      setTimeout(function () {
+        axios.post('api/goods/getRecommend', {
+          'pageNumber': pageNum,
+          'pageSize': pageSize
+        }).then((response) => {
+          if (response.data.status === 0) {
+            // 响应成功回调
+            var data = response.data.data.list
+            var total = response.data.data.total
+            var listData = []// 模拟分页数据
+            for (var i = 0; i < data.length; i++) {
+              if (data[i] !== undefined) {
+                listData.push(data[i])
               }
-              successCallback && successCallback(listData, total)
             }
+            successCallback && successCallback(listData, total)// 成功回调
           } else {
             this.$vux.toast.show({
               type: 'warn',
-              text: msg
+              text: response.data.msg
             })
           }
-        } catch (e) {
+        }).catch((response) => {
+          // 响应错误回调
           self.errorMsg()
-        }
+          errorCallback && errorCallback()// 失败回调
+        })
       }, 1000)
     },
     errorMsg () {
@@ -232,5 +247,4 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  /*@import url("../../assets/css/index.css");*/
 </style>

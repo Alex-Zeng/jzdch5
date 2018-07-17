@@ -23,6 +23,7 @@
   font-size: 0.75rem;
   font-weight: bold;
   border-left: 0.2rem solid transparent;
+  word-break: keep-all;
 }
 .sub-nav a.active{
   color: #1EB9EE;
@@ -39,9 +40,21 @@
   text-align: center;
 }
 .main-nav ul li{
-  width: 33.333333333333%;
+  width: 100%;
+  min-height: 4rem;
+  text-align: left;
+  padding-bottom: 0.5rem;
+}
+.main-nav ul li > h3{
+  padding-left: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+.main-nav ul li > div{
+  display: inline-block;
+  width: 33.3333333%;
   padding-bottom: 0.5rem;
   overflow: hidden;
+  text-align: center;
 }
 .main-nav a{
   color: #222222;

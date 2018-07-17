@@ -18,7 +18,7 @@
             <swipeout-button @click.native="onButtonClick(item.id, index)" type="warn"><i class="icon iconfont icon-shanchu1"></i></swipeout-button>
           </div>
           <div slot="content" class="indent-content">
-            <img :src="item.icon" alt="">
+            <img :src="item.icon" alt="" onerror="this.src='./static/images/temp-img.png'">
             <div class="indent-info">
               <h3>{{item.title}}</h3>
               <div class="text-muted">{{item.content}}</div>

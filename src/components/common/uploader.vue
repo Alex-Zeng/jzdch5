@@ -7,7 +7,7 @@
         +
       </div>
       <div v-show="value" @click="open">
-        <img width="100%" :src="path||defaultPath" alt="">
+        <img width="100%" :src="path||defaultPath" alt="" onerror="this.src='./static/images/temp-img.png'">
       </div>
       <XProgress :percent="count" :show-cancel="false" v-show="isProgress"></XProgress>
     </div>
@@ -18,14 +18,14 @@
         +
       </div>
       <div v-show="value">
-        <img width="100%" :src="path||defaultPath" alt="">
+        <img width="100%" :src="path||defaultPath" alt="" onerror="this.src='./static/images/temp-img.png'">
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import service from '@/service'
+import axios from 'axios'
 import { XProgress } from 'vux'
 export default {
   name: 'uploader',
@@ -67,7 +67,8 @@ export default {
           this.count = complete
         }
       }
-      const {data: { filename }, status, path} = await service.post('api/image_upload/index', fd, config)
+      const { data } = await axios.post('api/image_upload/index', fd, config)
+      const {data: { filename }, status, path} = data
       setTimeout(() => {
         this.isProgress = false
       }, 200)

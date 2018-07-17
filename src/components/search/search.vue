@@ -38,7 +38,7 @@
         <ul  id="dataList" v-if="showList" class="search-lists"  v-cloak>
           <li v-for="(item, index) in goodsLists" :key="index">
             <router-link :to="'/detail/'+item.id">
-              <img :src="item.url" alt="">
+              <img :src="item.url" alt="" onerror="this.src='./static/images/temp-img.png'">
               <div>
                 <h3>{{item.title}}</h3>
                 <div class="text-red">
@@ -51,7 +51,7 @@
         <ul v-if="!showList" class="goods-lists" v-cloak>
           <li v-for="(item, index) in goodsLists" :key="index">
             <router-link :to="'/detail/'+item.id">
-              <img :src="item.url" alt=""/>
+              <img :src="item.url" alt="" onerror="this.src='./static/images/temp-img.png'"/>
               <div class="goods-title">
                 {{item.title}}
               </div>

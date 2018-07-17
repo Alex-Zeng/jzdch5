@@ -25,7 +25,7 @@
     </div>
     <div class="goods-seller">
       <div class="text-blue">
-        <img :src="goodsData.supplierLogo" alt="Logo">
+        <img :src="goodsData.supplierLogo" alt="Logo" onerror="this.src='./static/images/temp-img.png'">
         {{goodsData.supplier}}
       </div>
       <div style="border-right: none;" :class="{ 'text-blue': isActive }" @click="collectMethod"><i class="icon iconfont icon-shoucang1"></i>&nbsp;收藏</div>
