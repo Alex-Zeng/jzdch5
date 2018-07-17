@@ -29,7 +29,7 @@
           <div>
             <div class="order-item" v-for="(good, key) in i.goods" :key="wkey+key">
               <div slot="content" class="indent-content">
-                <!--<img :src="good.icon" alt="">-->
+                <img :src="good.icon" alt="">
                 <div class="indent-info">
                   <h3 class="title"><router-link to="/">{{good.title}}</router-link></h3>
                   <div class="info-item">{{good.s_info}}</div>
@@ -242,13 +242,13 @@ export default {
           result = '全部'
           break
         case 0:
-          result = '待确定'
+          result = '待核价'
           break
         case 1:
-          result = '待确定'
+          result = '待签约'
           break
         case 2:
-          result = '待付款'
+          result = '待采购商打款'
           break
         case 3:
           result = '待发货'
@@ -266,10 +266,10 @@ export default {
           result = '售后处理'
           break
         case 9:
-          result = '待付款'
+          result = '账期中'
           break
         case 10:
-          result = '待付款'
+          result = '逾期中'
           break
         case 11:
           result = '待打款至供应商'
