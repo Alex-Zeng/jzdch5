@@ -18,16 +18,11 @@ service.interceptors.request.use(
 // 返回状态判断
 service.interceptors.response.use(
   res => {
-    // const {status} = res.data
+    const {status} = res.data
 
-    // if (status === -2) {
-    //   window.$nuxt.$message({
-    //     showClose: true,
-    //     message: '用户未登录或登录已失效，请登录后继续操作',
-    //     type: 'error'
-    //   })
-    //   window.$nuxt.$router.replace('/auth')
-    // }
+    if (status === -2) {
+      window.location = '/#/loginByCode'
+    }
     return res.data
   },
   error => {
@@ -37,7 +32,6 @@ service.interceptors.response.use(
 
 export default {
   post (url, data) {
-    console.log('post request url', url)
     return service({
       method: 'post',
       url,
@@ -45,7 +39,6 @@ export default {
     })
   },
   get (url, data) {
-    console.log('get request url', url)
     return service({
       method: 'get',
       url,
@@ -53,7 +46,6 @@ export default {
     })
   },
   delete (url, data) {
-    console.log('delete request url', url)
     return service({
       methods: 'delete',
       url,
