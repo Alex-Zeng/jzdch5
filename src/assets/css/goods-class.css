@@ -50,11 +50,20 @@
   padding-bottom: 0.5rem;
 }
 .main-nav ul li > div{
-  display: inline-block;
+  /* display: inline-block;
   width: 33.3333333%;
   padding-bottom: 0.5rem;
   overflow: hidden;
+  text-align: center; */
+  display: inline-block;
+  width: 33.3333333%;
+  line-height: 2rem;
+  overflow: hidden;
   text-align: center;
+  background: #ccc;
+  border: 0.05rem solid #e0e0e0;
+  box-sizing: border-box;
+  border-radius: 0.2rem;
 }
 .main-nav a{
   color: #222222;

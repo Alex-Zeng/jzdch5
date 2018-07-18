@@ -15,8 +15,9 @@
               <!--<img :src="item.path" alt="" onerror="this.src='./static/images/temp-img.png'">-->
               <h3>{{item.name}}</h3>
             <div v-for="i in item.child" :key="i.id" @click="goSearch(i.id)">
-                <img :src="i.path" alt="" onerror="this.src='./static/images/temp-img.png'">
-                <h3>{{i.name}}</h3>
+                <!--<img :src="i.path" alt="" onerror="this.src='./static/images/temp-img.png'">
+                <h3>{{i.name}}</h3>-->
+              {{i.name}}
             </div>
           </li>
         </ul>
