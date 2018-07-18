@@ -47,9 +47,11 @@
   text-align: center;
   padding-bottom: 1rem;
 }
+.notice-detail img{
+  max-width: 100%;
+}
 .notice-detail > div{
   color: #222222;
-  text-indent: 2rem;
   padding-bottom: 2.1rem;
 }
 .notice-detail p.footer{
