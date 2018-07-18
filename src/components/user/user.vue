@@ -23,13 +23,13 @@
           <div>累计成交（笔）</div>
           <span class="text-blue" style="line-height: 2;">{{supplier.total}}</span>
         </div>
-        <router-link to="/order-list/3" tag="div" class="item">
+        <router-link to="/order-list/4" tag="div" class="item">
           <i class="icon iconfont icon-daifahuo">
             <badge v-if="supplier.pending > 0" v-text="supplier.pending"></badge>
           </i>
           <div>待发货</div>
         </router-link>
-        <router-link to="/order-list/8" tag="div" class="item">
+        <router-link to="/order-list/6" tag="div" class="item">
           <i class="icon iconfont icon-shouhou">
             <badge v-if="supplier.service > 0" v-text="supplier.service"></badge>
           </i>
@@ -54,26 +54,26 @@
           </cell>
         </group>
       </div>
-      <router-link to="/order-list/9" tag="div" class="user-grid">
+      <router-link to="/order-list/3" tag="div" class="user-grid">
         <div class="item">
           <i class="icon iconfont icon-daifukuan">
             <badge v-if="buyerOrder.pay > 0" v-text="buyerOrder.pay"></badge>
           </i>
           <div>待付款</div>
         </div>
-        <router-link to="/order-list/6" tag="div" class="item">
+        <router-link to="/order-list/5" tag="div" class="item">
           <i class="icon iconfont icon-daishouhuo">
             <badge v-if="buyerOrder.recieve > 0" v-text="buyerOrder.recieve"></badge>
           </i>
           <div>待收货</div>
         </router-link>
-        <router-link to="/order-list/3" tag="div" class="item">
+        <router-link to="/order-list/4" tag="div" class="item">
           <i class="icon iconfont icon-daifahuo">
             <badge v-if="buyerOrder.deliver > 0" v-text="buyerOrder.deliver"></badge>
           </i>
           <div>待发货</div>
         </router-link>
-        <router-link class="item" to="/order-list/8" tag="div">
+        <router-link class="item" to="/order-list/6" tag="div">
           <i class="icon iconfont icon-shouhou">
             <badge v-if="buyerOrder.service > 0" v-text="buyerOrder.service"></badge>
           </i>
