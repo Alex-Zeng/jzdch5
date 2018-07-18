@@ -10,7 +10,7 @@
       <div class="address" @click="toAddr()">
         <div>
           <template v-if="address">
-          <h3><span class="name">{{address.name}}</span>{{address.phone}} <span class="tag"> {{address.tag}}</span></h3>
+          <h3><span class="name">{{address.name}}</span>{{address.phone}} <span class="tag" v-if="address.tag"> {{address.tag}}</span></h3>
           <div class="text-muted">
             {{address.areaName}} {{address.detail}}
           </div>
