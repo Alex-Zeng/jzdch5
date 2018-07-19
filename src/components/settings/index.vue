@@ -8,7 +8,7 @@
         <div style="padding-right: 2rem">&emsp;</div>
       </div>
       <group>
-        <cell is-link link="/address-lists" v-if="sessionStorage['userType']===1">
+        <cell is-link link="/address-lists" v-if="sessionStorage.getItem('userType') === 1">
           <span slot="title">
                 <span style="vertical-align:middle;">收货地址管理</span>
             </span>
