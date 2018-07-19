@@ -8,7 +8,7 @@
         <div style="padding-right: 2rem">&emsp;</div>
       </div>
       <group>
-        <cell is-link link="/address-lists" v-if="sessionStorage.getItem('userType') === 1">
+        <cell is-link link="/address-lists" v-if="roleType===1">
           <span slot="title">
                 <span style="vertical-align:middle;">收货地址管理</span>
             </span>
@@ -46,9 +46,11 @@ import {Cell, CellBox, Group} from 'vux'
 import '@/assets/css/settings.css'
 export default {
   name: 'index',
-  data () {
+  data: function () {
     return {
-      enterprise: false
+      enterprise: false,
+      roleType: sessionStorage.getItem('userType')
+
     }
   },
   methods: {
