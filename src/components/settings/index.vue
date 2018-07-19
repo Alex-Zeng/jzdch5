@@ -8,7 +8,7 @@
         <div style="padding-right: 2rem">&emsp;</div>
       </div>
       <group>
-        <cell is-link link="/address-lists" v-if="roleType===1">
+        <cell is-link link="/address-lists" v-if="roleType==='1'">
           <span slot="title">
                 <span style="vertical-align:middle;">收货地址管理</span>
             </span>
@@ -82,6 +82,7 @@ export default {
               sessionStorage.setItem('agent', agentIdentityCard ? 0 : 1)
               sessionStorage.setItem('certStatus', 1)
               this.roleType = sessionStorage.getItem('userType')
+              console.log(this.roleType)
             }
           }
         } else if (response.data.status === -2) {
