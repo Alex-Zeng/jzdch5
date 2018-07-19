@@ -82,7 +82,6 @@ export default {
               sessionStorage.setItem('agent', agentIdentityCard ? 0 : 1)
               sessionStorage.setItem('certStatus', 1)
               this.roleType = sessionStorage.getItem('userType')
-              console.log(this.roleType)
             }
           }
         } else if (response.data.status === -2) {
