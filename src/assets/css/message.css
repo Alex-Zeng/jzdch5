@@ -58,7 +58,7 @@
   text-align: right;
   font-weight: bold;
 }
-.message-lists .mescroll-upwarp:last-child{
+.message-lists .mescroll-upwarp{
   display: none!important;;
   visibility: hidden!important;
 }
