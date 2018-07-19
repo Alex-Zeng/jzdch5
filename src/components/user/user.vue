@@ -23,7 +23,7 @@
           <div>累计成交（笔）</div>
           <span class="text-blue" style="line-height: 2;">{{supplier.total}}</span>
         </div>
-        <router-link to="/order-list/4" tag="div" class="item">
+        <router-link to="/order-list/3" tag="div" class="item">
           <i class="icon iconfont icon-daifahuo">
             <badge v-if="supplier.pending > 0" v-text="supplier.pending"></badge>
           </i>
@@ -54,20 +54,20 @@
           </cell>
         </group>
       </div>
-      <router-link to="/order-list/3" tag="div" class="user-grid">
+      <router-link to="/order-list/2" tag="div" class="user-grid">
         <div class="item">
           <i class="icon iconfont icon-daifukuan">
             <badge v-if="buyerOrder.pay > 0" v-text="buyerOrder.pay"></badge>
           </i>
           <div>待付款</div>
         </div>
-        <router-link to="/order-list/5" tag="div" class="item">
+        <router-link to="/order-list/4" tag="div" class="item">
           <i class="icon iconfont icon-daishouhuo">
             <badge v-if="buyerOrder.recieve > 0" v-text="buyerOrder.recieve"></badge>
           </i>
           <div>待收货</div>
         </router-link>
-        <router-link to="/order-list/4" tag="div" class="item">
+        <router-link to="/order-list/3" tag="div" class="item">
           <i class="icon iconfont icon-daifahuo">
             <badge v-if="buyerOrder.deliver > 0" v-text="buyerOrder.deliver"></badge>
           </i>
