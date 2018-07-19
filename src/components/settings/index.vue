@@ -49,7 +49,7 @@ export default {
   data: function () {
     return {
       enterprise: false,
-      roleType: sessionStorage.getItem('userType')
+      roleType: ''
 
     }
   },
@@ -81,6 +81,7 @@ export default {
               sessionStorage.setItem('userType', role === '采购商' ? 1 : 2)
               sessionStorage.setItem('agent', agentIdentityCard ? 0 : 1)
               sessionStorage.setItem('certStatus', 1)
+              this.roleType = sessionStorage.getItem('userType')
             }
           }
         } else if (response.data.status === -2) {
