@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="header-nav" style="position: fixed;top: 0;left: 0;width: 100%;z-index: 999;">
-      <i class="icon iconfont icon-back" style="padding-right: 1rem;" onclick="history.go(-1)"></i>
+      <i class="icon iconfont icon-back" style="padding-right: 1rem;" @click="$router.push('/')"></i>
       <div>
         <a href="javascript:;" @click.prevent="custormAnchor('goods-detail')" style="margin-right: 1rem;">图片</a>
         <a href="javascript:;" @click.prevent="custormAnchor('goods-img')">详情</a>
