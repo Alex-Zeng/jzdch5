@@ -119,7 +119,10 @@
           <div class="item">
             <span class="label">支付方式</span><span class="value">{{data.payMethod}}</span>
           </div>
-          <div v-if="data.payNumber || data.payDate || data.payImg">
+          <div class="item" v-if="data.overDate">
+            <span class="label">账期时间</span><span class="value">{{data.overDate}}</span>
+          </div>
+          <div v-if="(data.payNumber || data.payDate || data.payImg) && data.groupId !== 4">
             <div class="line"></div>
             <div class="item" v-if="data.payNumber">
               <span class="label">流水号</span>

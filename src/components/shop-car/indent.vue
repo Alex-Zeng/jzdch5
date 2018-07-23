@@ -112,7 +112,7 @@ export default {
       value1: '',
       value2: '',
       address: null,
-      type: 2,
+      type: 1,
       editor: {},
       k: null,
       editorIndex: null,
@@ -157,9 +157,9 @@ export default {
     },
     submit () {
       if (/MicroMessenger/i.test(navigator.userAgent)) {
-        this.type = 3
+        this.type = 1
       } else {
-        this.type = 2
+        this.type = 1
       }
       if (this.address !== null) {
         let self = this
