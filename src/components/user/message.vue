@@ -184,42 +184,49 @@ export default {
         type: 'warn',
         text: '网络可能有点问题'
       })
+    },
+    initMescroll () {
+      let self = this
+      /* 创建MeScroll对象 */
+      // 创建MeScroll对象,内部已默认开启下拉刷新,自动执行up.callback,刷新列表数据;
+      this.mescroll = new MeScroll('mescroll', {
+        // 上拉加载的配置项
+        up: {
+          callback: self.upCallback, // 上拉回调,此处可简写; 相当于 callback: function (page) { getListData(page); }
+          isBounce: false, // 此处禁止ios回弹,解析(务必认真阅读,特别是最后一点): http://www.mescroll.com/qa.html#q10
+          empty: {
+            warpId: null,
+            // icon: '../res/img/mescroll-empty.png', // 图标,默认null
+            tip: '暂无相关数据~', // 提示
+            btntext: '去逛逛 >', // 按钮,默认""
+            btnClick: function () { // 点击按钮的回调,默认null
+            }
+          }
+        }
+      })
+    },
+    initMescroll1 () {
+      let self = this
+      this.mescroll1 = new MeScroll('mescroll1', {
+        // 上拉加载的配置项
+        up: {
+          callback: self.upCallback1, // 上拉回调,此处可简写; 相当于 callback: function (page) { getListData(page); }
+          isBounce: false, // 此处禁止ios回弹,解析(务必认真阅读,特别是最后一点): http://www.mescroll.com/qa.html#q10
+          empty: {
+            warpId: null,
+            // icon: '../res/img/mescroll-empty.png', // 图标,默认null
+            tip: '暂无相关数据~', // 提示
+            btntext: '去逛逛 >', // 按钮,默认""
+            btnClick: function () { // 点击按钮的回调,默认null
+            }
+          }
+        }
+      })
     }
   },
   mounted () {
-    let self = this
-    /* 创建MeScroll对象 */
-    // 创建MeScroll对象,内部已默认开启下拉刷新,自动执行up.callback,刷新列表数据;
-    self.mescroll = new MeScroll('mescroll', {
-      // 上拉加载的配置项
-      up: {
-        callback: self.upCallback, // 上拉回调,此处可简写; 相当于 callback: function (page) { getListData(page); }
-        isBounce: false, // 此处禁止ios回弹,解析(务必认真阅读,特别是最后一点): http://www.mescroll.com/qa.html#q10
-        empty: {
-          warpId: null,
-          // icon: '../res/img/mescroll-empty.png', // 图标,默认null
-          tip: '暂无相关数据~', // 提示
-          btntext: '去逛逛 >', // 按钮,默认""
-          btnClick: function () { // 点击按钮的回调,默认null
-          }
-        }
-      }
-    })
-    self.mescroll1 = new MeScroll('mescroll1', {
-      // 上拉加载的配置项
-      up: {
-        callback: self.upCallback1, // 上拉回调,此处可简写; 相当于 callback: function (page) { getListData(page); }
-        isBounce: false, // 此处禁止ios回弹,解析(务必认真阅读,特别是最后一点): http://www.mescroll.com/qa.html#q10
-        empty: {
-          warpId: null,
-          // icon: '../res/img/mescroll-empty.png', // 图标,默认null
-          tip: '暂无相关数据~', // 提示
-          btntext: '去逛逛 >', // 按钮,默认""
-          btnClick: function () { // 点击按钮的回调,默认null
-          }
-        }
-      }
-    })
+    this.initMescroll()
+    this.initMescroll1()
   },
   created () {
     this.selectedDeafult = sessionStorage.getItem('selectedDeafult')
