@@ -36,8 +36,8 @@ export default {
   created () {
     axios.get('api/user/getGroup').then((response) => {
       sessionStorage.removeItem('groupId')
-      sessionStorage.setItem('groupId', response.data.data.groupId)
-      if (response.data.status === 0 && response.data.data.groupId === 4) {
+      sessionStorage.setItem('groupId', parseInt(response.data.data.groupId))
+      if (response.data.status === 0 && parseInt(response.data.data.groupId) === 4) {
         axios.get('api/mall_cart/getNumber').then((response) => {
           if (response.data.status === -2) {
             this.shopCard = false
