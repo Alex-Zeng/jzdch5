@@ -254,7 +254,8 @@ export default {
       }
     },
     back () {
-      this.modelShow = true
+      this.model1Show = true
+      this.model2Show = false
     },
     setTimeMethods () {
       var _sel = this
