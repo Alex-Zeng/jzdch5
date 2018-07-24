@@ -308,7 +308,7 @@ input:-ms-input-placeholder {
   position: fixed;
   bottom: 0;
   background: #fff;
-  z-index: 999999;
+  z-index: 999;
   border-top: 1px solid #e1e1e1;
 }
 .footer-nav a{
