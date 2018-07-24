@@ -79,7 +79,7 @@ export default {
             if (status === '1' || status === '3' || status === '2') {
               this.enterprise = true
               sessionStorage.setItem('userType', role === '采购商' ? 1 : 2)
-              sessionStorage.setItem('agent', agentIdentityCard ? 0 : 1)
+              sessionStorage.setItem('agent', !agentIdentityCard ? 0 : 1)
               sessionStorage.setItem('certStatus', 1)
               this.roleType = sessionStorage.getItem('userType')
             }
