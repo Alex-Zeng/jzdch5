@@ -201,7 +201,7 @@ export default {
     getFavoriteNumber () {
       axios.get('api/user/getFavoriteNumber').then((response) => {
         if (response.data.status === 0) {
-          this.favoriteNumber = response.data.data.number
+          this.favoriteNumber = parseInt(response.data.data.number)
         }
       }).catch(() => {
         this.errorMsg()
@@ -210,7 +210,7 @@ export default {
     getNumber () {
       axios.get('api/mall_cart/getNumber').then((response) => {
         if (response.data.status === 0) {
-          this.number = response.data.data.total
+          this.number = parseInt(response.data.data.total)
         }
       }).catch(() => {
         this.errorMsg()
@@ -225,7 +225,7 @@ export default {
   },
   created () {
     axios.get('api/user/getGroup').then((response) => {
-      this.groupId = response.data.data.groupId
+      this.groupId = parseInt(response.data.data.groupId)
       if (this.groupId === 4) {
         this.getBuyerOrderInfo()
       }
