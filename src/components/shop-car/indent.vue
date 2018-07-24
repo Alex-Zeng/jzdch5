@@ -87,11 +87,11 @@
         <ul class="editor">
           <li>
             <label>物料编号&emsp;</label>
-            <input name="" type="text" v-model="editor.no" placeholder="点击设置物料编号，最多30个字">
+            <input name="" type="text" v-model="editor.no" placeholder="点击设置物料编号，最多30个字" maxlength="30">
           </li>
           <li>
             <label>规格要求&emsp;</label>
-            <input name="" type="text" v-model="editor.requirement" placeholder="点击设置规格要求，最多40个字">
+            <input name="" type="text" v-model="editor.requirement" placeholder="点击设置规格要求，最多30个字" maxlength="30">
           </li>
           <li style="padding: 0 1rem;">
             <button type="submit" class="btn btn-primary" @click="next">下一步</button>
