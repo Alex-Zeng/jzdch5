@@ -10,20 +10,20 @@
     <group title="订单信息">
       <!--<popup-picker title="订单号" :data="list1" v-model="value1" @on-show="onShow" @on-hide="onHide" @on-change="onChange" v-validate="'required'" placeholder="please select"></popup-picker>-->
       <popup-picker title="订单号" :data="list1" @on-change="onChange"  v-model="value1"></popup-picker>
-      <x-input title="订单金额" disabled v-model="account" text-align="right" placeholder-align="right"></x-input>
+      <x-input title="订单金额（元）" disabled v-model="account" text-align="right" placeholder-align="right"></x-input>
     </group>
     <group title="联系方式">
       <x-input title="联系人" v-model="contactUsername" text-align="right" placeholder-align="right" placeholder="请填写联系人姓名或称呼"></x-input>
       <x-input title="联系电话" v-model="contactPhone" text-align="right" placeholder-align="right" placeholder="请填区号+固话/手机号码"></x-input>
     </group>
     <group title="融资信息">
-      <x-input title="融资金额" v-model="needAccount" text-align="right" placeholder-align="right" placeholder="请填写融资金额（单位：元）"></x-input>
+      <x-input title="融资金额（元）" v-model="needAccount" text-align="right" placeholder-align="right" placeholder="请填写融资金额"></x-input>
       <x-input title="户名" v-model="name" text-align="right" placeholder-align="right" placeholder="请填写户名"></x-input>
       <x-input title="对公账号" v-model="bankCorporate" text-align="right" placeholder-align="right" placeholder="请填写对公账号，用于收款"></x-input>
       <x-input title="再次输入" v-model="bankCorporateConfirm" text-align="right" placeholder-align="right" placeholder="再次填写对公账号"></x-input>
       <x-input title="开户支行" v-model="bankAddress"  text-align="right" placeholder-align="right" placeholder="请填写开户支行"></x-input>
     </group>
-    <div style="margin: 1rem 0.5rem">
+    <div style="margin: 1rem 0.5rem; padding-bottom: 4rem;">
       <button type="button" class="btn btn-primary" @click="submit">提交</button>
     </div>
   </div>
