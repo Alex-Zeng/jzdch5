@@ -5,7 +5,7 @@
       <div>
         保理业务申请
       </div>
-      <div style="padding-right: 1rem">申请记录</div>
+      <div style="padding-right: 1rem" @click="$router.push('/factoring-lists')">申请记录</div>
     </div>
     <group title="订单信息">
       <!--<popup-picker title="订单号" :data="list1" v-model="value1" @on-show="onShow" @on-hide="onHide" @on-change="onChange" v-validate="'required'" placeholder="please select"></popup-picker>-->
@@ -107,10 +107,8 @@ export default {
               type: 'success',
               text: '实际融资金额请以最终放款金额为准',
               onShow () {
-                console.log('Plugin: I\'m showing')
               },
               onHide () {
-                console.log('Plugin: I\'m hiding')
                 self.$router.replace('factoring-lists')
               }
             })
@@ -165,7 +163,6 @@ export default {
           })
           return false
         } else {
-          console.log(555555555555)
           this.getOrderInfo()
           this.getName()
         }
