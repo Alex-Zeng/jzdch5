@@ -41,7 +41,7 @@
 .main-nav ul{
   display: flex;
   flex-wrap: wrap;
-  padding: 0.5rem 0.25rem;
+  padding: 0.5rem 0.25rem 3rem 0.25rem;
   text-align: center;
 }
 .main-nav ul li{
