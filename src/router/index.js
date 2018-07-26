@@ -32,6 +32,8 @@ import GoodsDetail from '@/components/detail/detail'
 import Enterprise from '@/components/enterprise/enterprise'
 import OrderList from '@/components/user/order-list'
 import OrderDetail from '@/components/user/order-detail'
+import Factoring from '@/components/factoring/factoring'
+import FactoringLists from '@/components/factoring/factoring-lists'
 import myForm from '@/components/form'
 Vue.use(Router)
 export default new Router({
@@ -298,6 +300,22 @@ export default new Router({
         title: '订单详情'
       },
       component: OrderDetail
+    },
+    {
+      path: '/factoring',
+      name: 'factoring',
+      meta: {
+        title: '集众保理'
+      },
+      component: Factoring
+    },
+    {
+      path: '/factoring-lists',
+      name: 'factoring-lists',
+      meta: {
+        title: '申请记录'
+      },
+      component: FactoringLists
     }
   ]
 })

@@ -17,18 +17,24 @@
                     {{item.name}}
                   </div>
                 </router-link>
-                <a href="http://h5.jizhongdiancai.com/jzdc-services/finance.html" v-else-if="item.flag === 1" :key="index">
+                <a href="http://h5.jizhongdiancai.com/jzdc-services/finance.html" v-else-if="item.flag.toString() === '1'" :key="index">
                   <img :src="item.img" alt="" onerror="this.src='./static/images/temp-img.png'"/>
                   <div class="text-truncate">
                     {{item.name}}
                   </div>
                 </a>
-                <a href="http://h5.jizhongdiancai.com/jzdc-services/index.html" v-else-if="item.flag === 2" :key="index">
+                <a href="http://h5.jizhongdiancai.com/jzdc-services/index.html" v-else-if="item.flag.toString() === '2'" :key="index">
                   <img :src="item.img" alt="" onerror="this.src='./static/images/temp-img.png'"/>
                   <div class="text-truncate">
                     {{item.name}}
                   </div>
                 </a>
+                <router-link v-else-if="item.flag.toString() === '3'" :to="{path: '/factoring'}" :key="index">
+                  <img :src="item.img" alt="" onerror="this.src='./static/images/temp-img.png'"/>
+                  <div class="text-truncate">
+                    {{item.name}}
+                  </div>
+                </router-link>
               </template>
             </div>
           </swiper-item>
@@ -41,18 +47,24 @@
                     {{item.name}}
                   </div>
                 </router-link>
-                <a href="http://h5.jizhongdiancai.com/jzdc-services/finance.html" v-else-if="item.flag === '1'" :key="index">
+                <a href="http://h5.jizhongdiancai.com/jzdc-services/finance.html" v-else-if="item.flag.toString() === '1'" :key="index">
                   <img :src="item.img" alt="" onerror="this.src='./static/images/temp-img.png'"/>
                   <div class="text-truncate">
                     {{item.name}}
                   </div>
                 </a>
-                <a href="http://h5.jizhongdiancai.com/jzdc-services/index.html" v-else-if="item.flag === '2'" :key="index">
+                <a href="http://h5.jizhongdiancai.com/jzdc-services/index.html" v-else-if="item.flag.toString() === '2'" :key="index">
                   <img :src="item.img" alt="" onerror="this.src='./static/images/temp-img.png'"/>
                   <div class="text-truncate">
                     {{item.name}}
                   </div>
                 </a>
+                <router-link v-else-if="item.flag.toString() === '3'" :to="{path: '/factoring'}" :key="index">
+                  <img :src="item.img" alt="" onerror="this.src='./static/images/temp-img.png'"/>
+                  <div class="text-truncate">
+                    {{item.name}}
+                  </div>
+                </router-link>
               </template>
             </div>
           </swiper-item>
