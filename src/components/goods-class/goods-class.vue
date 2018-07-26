@@ -48,7 +48,7 @@ export default {
         if (response.data.status === 0) {
           let data = response.data.data
           for (let i = 0; i < data.length; i++) {
-            this.categoryList.push({'id': data[i].id, 'name': data[i].name})
+            this.categoryList.push({'id': parseInt(data[i].id), 'name': data[i].name})
           }
           this.totalData = data
           this.categoryListChildren = this.totalData[0].child
