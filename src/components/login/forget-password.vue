@@ -2,7 +2,7 @@
   <div style="background: #FFFFFF;">
     <template v-if="model1Show">
       <div class="login-top">
-        <router-link  class="icon iconfont icon-guanbi" to="/login"></router-link>
+        <router-link  class="icon iconfont icon-guanbi" to="/login" replace></router-link>
       </div>
       <form class="form" action="">
         <ul>
