@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="header-nav">
-      <i class="icon iconfont icon-back" style="padding-right: 1rem;" onclick="history.go(-1)"></i>
+      <i class="icon iconfont icon-back" style="padding-right: 1rem;" @click="$router.push('/')"></i>
       <div>
         保理业务申请
       </div>
