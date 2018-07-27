@@ -105,6 +105,7 @@ export default {
             this.$vux.toast.show({
               title: '提交成功',
               type: 'success',
+              isShowMask: true,
               text: '实际融资金额请以最终放款金额为准',
               onShow () {
               },
