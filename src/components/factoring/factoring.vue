@@ -17,7 +17,7 @@
       <x-input title="联系电话" v-model="contactPhone" text-align="right" placeholder-align="right" placeholder="请填区号+固话/手机号码"></x-input>
     </group>
     <group title="融资信息">
-      <x-input title="融资金额（元）" v-model="needAccount" text-align="right" placeholder-align="right" placeholder="请填写融资金额"></x-input>
+      <x-input title="融资金额（元）" v-model="needAccount" text-align="right" @on-blur="onBlur" placeholder-align="right" placeholder="请填写融资金额"></x-input>
       <x-input title="户名" v-model="name" text-align="right" placeholder-align="right" placeholder="请填写户名"></x-input>
       <x-input title="对公账号" v-model="bankCorporate" text-align="right" placeholder-align="right" placeholder="请填写对公账号，用于收款"></x-input>
       <x-input title="再次输入" v-model="bankCorporateConfirm" text-align="right" placeholder-align="right" placeholder="再次填写对公账号"></x-input>
@@ -64,6 +64,11 @@ export default {
     onHide (type) {
     },
     onEvent (event) {
+    },
+    onBlur (val) {
+      if (val >= this.account) {
+        this.needAccount = this.account
+      }
     },
     getOrderInfo () {
       axios.post('api/Factoring/getOrderInfo').then((response) => {
@@ -171,6 +176,10 @@ export default {
     }).catch((response) => {
       this.errorMsg()
     })
+  },
+  watch: {
+    needAccount (val) {
+    }
   },
   components: {
     PopupPicker,
