@@ -10,7 +10,7 @@ export default {
   name: 'shop-car-template',
   created () {
     window.scrollTo(0, 0)
-    if (sessionStorage.getItem('loginToken') === null) {
+    if (localStorage.getItem('loginToken') === null) {
       this.$router.push('/loginByCode')
     }
   }

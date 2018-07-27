@@ -99,7 +99,7 @@ export default {
             }
           }
           this.historyLists = allArr
-          sessionStorage.setItem('keyword', JSON.stringify(this.historyLists))
+          localStorage.setItem('keyword', JSON.stringify(this.historyLists))
         }
         var self = this
         self.mescroll = new MeScroll('mescroll', {
@@ -133,7 +133,7 @@ export default {
     },
     getHistory () {
       if (this.loginToken === null) {
-        var localKeywords = sessionStorage.getItem('keyword')
+        var localKeywords = localStorage.getItem('keyword')
         if (localKeywords !== null) {
           this.showHistory = true
           this.historyLists = JSON.parse(localKeywords)
@@ -160,7 +160,7 @@ export default {
         onCancel () {
         },
         onConfirm () {
-          sessionStorage.removeItem('keyword')
+          localStorage.removeItem('keyword')
           self.historyLists = null
           axios.get('api/record/removeSearch').then((response) => {
             self.$vux.toast.show({
@@ -269,7 +269,7 @@ export default {
     }
   },
   mounted () {
-    this.loginToken = sessionStorage.getItem('loginToken')
+    this.loginToken = localStorage.getItem('loginToken')
     // this.getHistory()
     var cateId = this.$route.query.id
     if (cateId !== undefined) {

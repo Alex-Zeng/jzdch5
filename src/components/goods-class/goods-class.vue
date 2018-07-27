@@ -73,7 +73,7 @@ export default {
       }, 300)
     },
     goSearch (id) {
-      sessionStorage.setItem('searchId', id)
+      localStorage.setItem('searchId', id)
       this.$router.push('/search')
     }
   },

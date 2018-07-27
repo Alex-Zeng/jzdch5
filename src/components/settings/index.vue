@@ -62,7 +62,7 @@ export default {
         onCancel () {},
         onConfirm () {
           document.cookie = '_token='
-          sessionStorage.clear()
+          localStorage.clear()
           self.$router.push('/')
         }
       })
@@ -78,10 +78,10 @@ export default {
             const {status, agentIdentityCard, role} = response.data.data
             if (status === '1' || status === '3' || status === '2') {
               this.enterprise = true
-              sessionStorage.setItem('userType', role === '采购商' ? 1 : 2)
-              sessionStorage.setItem('agent', !agentIdentityCard ? 0 : 1)
-              sessionStorage.setItem('certStatus', 1)
-              this.roleType = sessionStorage.getItem('userType')
+              localStorage.setItem('userType', role === '采购商' ? 1 : 2)
+              localStorage.setItem('agent', !agentIdentityCard ? 0 : 1)
+              localStorage.setItem('certStatus', 1)
+              this.roleType = localStorage.getItem('userType')
             }
           }
         } else if (response.data.status === -2) {
@@ -90,8 +90,8 @@ export default {
             content: '您尚未登录，是否去登录？',
             onCancel () {},
             onConfirm () {
-              sessionStorage.removeItem('oldUrl')
-              sessionStorage.setItem('oldUrl', self.$route.path)
+              localStorage.removeItem('oldUrl')
+              localStorage.setItem('oldUrl', self.$route.path)
               self.$router.push('/loginByCode')
             }
           })

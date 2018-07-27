@@ -63,18 +63,18 @@ export default {
     }
   },
   mounted () {
-    let certStatus = sessionStorage.getItem('certStatus')
+    let certStatus = localStorage.getItem('certStatus')
     if (certStatus === '1') {
       this.$router.push('/enterprise')
     }
   },
   methods: {
     selectMethods (val) {
-      sessionStorage.setItem('agent', val)
+      localStorage.setItem('agent', val)
       this.show = true
     },
     confirm () {
-      sessionStorage.setItem('userType', this.selectItem)
+      localStorage.setItem('userType', this.selectItem)
       this.$router.push('/enterprise')
     },
     cancel () {

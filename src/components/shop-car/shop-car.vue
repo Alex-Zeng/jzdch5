@@ -95,7 +95,7 @@ export default {
   },
   methods: {
     onButtonClick (event) {
-      let loginToken = sessionStorage.getItem('loginToken')
+      let loginToken = localStorage.getItem('loginToken')
       let self = this
       if (loginToken != null) {
         axios.post('api/mall_cart/delete', {
@@ -135,7 +135,7 @@ export default {
       }
     },
     getLists () {
-      let loginToken = sessionStorage.getItem('loginToken')
+      let loginToken = localStorage.getItem('loginToken')
       if (loginToken !== null) {
         axios.get('api/mall_cart/index').then((response) => {
           if (response.data.status === 0) {
@@ -164,12 +164,12 @@ export default {
       })
       this.total = price
       axios.post('api/mall_cart/update', {
-        '_token': sessionStorage.getItem('loginToken'),
+        '_token': localStorage.getItem('loginToken'),
         'id': id,
         'number': number
       }).then((response) => {
-        sessionStorage.removeItem('total')
-        sessionStorage.setItem('total', this.total)
+        localStorage.removeItem('total')
+        localStorage.setItem('total', this.total)
       }).catch((response) => {})
     },
     select (val, isChecked, index, k) {
@@ -225,7 +225,7 @@ export default {
     },
     deleteMethods () {
       let self = this
-      let loginToken = sessionStorage.getItem('loginToken')
+      let loginToken = localStorage.getItem('loginToken')
       let ids = []
       self.checkedList.forEach((v, k) => {
         v.forEach((t, d) => {
@@ -271,7 +271,7 @@ export default {
       }
     },
     goMethods () {
-      let loginToken = sessionStorage.getItem('loginToken')
+      let loginToken = localStorage.getItem('loginToken')
       if (loginToken !== null) {
         let ids = []
         this.checkedList.forEach((v, k) => {
@@ -292,10 +292,10 @@ export default {
         }
         if (ids.length > 0) {
           axios.get('api/mall_cart/index&ids=' + ids).then((response) => {
-            sessionStorage.removeItem('indentLists')
-            sessionStorage.setItem('indentLists', JSON.stringify(response.data.data))
-            sessionStorage.removeItem('total')
-            sessionStorage.setItem('total', this.total)
+            localStorage.removeItem('indentLists')
+            localStorage.setItem('indentLists', JSON.stringify(response.data.data))
+            localStorage.removeItem('total')
+            localStorage.setItem('total', this.total)
             this.$router.push('/shop-car/indent')
           }).catch((response) => {})
         } else {
@@ -315,7 +315,7 @@ export default {
   },
   created () {
     window.scrollTo(0, 0)
-    sessionStorage.removeItem('indentLists')
+    localStorage.removeItem('indentLists')
     this.getLists()
   },
   components: {

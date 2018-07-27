@@ -99,7 +99,7 @@ export default {
   },
   methods: {
     showDetai () {
-      if (sessionStorage.getItem('groupId') === '2' || sessionStorage.getItem('groupId') === '3' || sessionStorage.getItem('groupId') === '5') {
+      if (localStorage.getItem('groupId') === '2' || localStorage.getItem('groupId') === '3' || localStorage.getItem('groupId') === '5') {
         this.showCar = false
       }
       var self = this
@@ -162,15 +162,15 @@ export default {
     showCarMethod () {
       axios.get('api/user/getGroup').then((response) => {
         if (response.data.status === 0) {
-          sessionStorage.setItem('groupId', response.data.data.groupId)
+          localStorage.setItem('groupId', response.data.data.groupId)
           if (response.data.data.groupId === 0) {
             let self = this
             this.$vux.confirm.show({
               title: '提示',
               content: '您尚未登录，确定现在去登录？',
               onConfirm () {
-                sessionStorage.removeItem('oldUrl')
-                sessionStorage.setItem('oldUrl', self.$route.path)
+                localStorage.removeItem('oldUrl')
+                localStorage.setItem('oldUrl', self.$route.path)
                 self.$router.push('/loginByCode')
               }
             })
@@ -245,8 +245,8 @@ export default {
               title: '提示',
               content: '您尚未登录，确定现在去登录？',
               onConfirm () {
-                sessionStorage.removeItem('oldUrl')
-                sessionStorage.setItem('oldUrl', self.$route.path)
+                localStorage.removeItem('oldUrl')
+                localStorage.setItem('oldUrl', self.$route.path)
                 self.$router.push('/loginByCode')
               }
             })

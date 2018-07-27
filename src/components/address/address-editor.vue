@@ -140,8 +140,8 @@ export default {
                   self.$router.go(-1)
                 },
                 onConfirm () {
-                  sessionStorage.removeItem('oldUrl')
-                  sessionStorage.setItem('oldUrl', self.$route.path)
+                  localStorage.removeItem('oldUrl')
+                  localStorage.setItem('oldUrl', self.$route.path)
                   self.$router.push('/loginByCode')
                 }
               })
@@ -241,7 +241,7 @@ export default {
     this.value = item.areaIds
     this.addressDetail = item.detail
     this.activeTag = item.tag
-    if (sessionStorage.getItem('loginToken') === null) {
+    if (localStorage.getItem('loginToken') === null) {
       this.$router.push('/loginByCode')
     }
     this.getAreaMethods()

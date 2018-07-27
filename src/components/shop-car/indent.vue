@@ -151,8 +151,8 @@ export default {
       })
     },
     next () {
-      sessionStorage.setItem('havaLists', true)
-      sessionStorage.setItem('indentLists', JSON.stringify(this.lists))
+      localStorage.setItem('havaLists', true)
+      localStorage.setItem('indentLists', JSON.stringify(this.lists))
       this.editorSHow = !this.editorSHow
     },
     submit () {
@@ -169,14 +169,14 @@ export default {
           onCancel () {},
           onConfirm () {
             axios.post('api/order/make', {
-              '_token': sessionStorage.getItem('loginToken'),
+              '_token': localStorage.getItem('loginToken'),
               'receiverId': self.receiverId,
               'detail': JSON.stringify(self.lists),
               'channel': self.type
             }).then((response) => {
               if (response.data.status === 0) {
-                sessionStorage.setItem('indent-detail', JSON.stringify(response.data.data))
-                sessionStorage.removeItem('indentLists')
+                localStorage.setItem('indent-detail', JSON.stringify(response.data.data))
+                localStorage.removeItem('indentLists')
                 self.$router.push('/shop-car/detail')
               }
             }).catch((response) => {
@@ -206,16 +206,16 @@ export default {
   },
   created () {
     window.scrollTo(0, 0)
-    sessionStorage.removeItem('indent-detail')
-    let index = sessionStorage.getItem('selectAddressIndex')
+    localStorage.removeItem('indent-detail')
+    let index = localStorage.getItem('selectAddressIndex')
     if (index === null) {
       this.getLists(0)
     } else {
       this.getLists(index)
     }
-    this.total = Number(sessionStorage.getItem('total')).toFixed(2)
-    this.lists = JSON.parse(sessionStorage.getItem('indentLists'))
-    if (sessionStorage.getItem('indentLists') === null) {
+    this.total = Number(localStorage.getItem('total')).toFixed(2)
+    this.lists = JSON.parse(localStorage.getItem('indentLists'))
+    if (localStorage.getItem('indentLists') === null) {
       this.$router.push('/')
     } else {
       this.lists.forEach((v) => {

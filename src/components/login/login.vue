@@ -67,16 +67,18 @@ export default {
             'password': this.password
           }).then((response) => {
             if (response.data.status === 0) {
-              sessionStorage.removeItem('loginToken')
+              localStorage.removeItem('loginToken')
               this.$vux.toast.show({
                 type: 'success',
                 text: '登陆成功',
                 onShow () {
-                  sessionStorage.setItem('loginToken', response.data.data.token)
-                  document.cookie = '_token=' + response.data.data.token
+                  localStorage.setItem('loginToken', response.data.data.token)
+                  let d = new Date()
+                  d.setHours(d.getHours() + (24 * 30)) // 保存一个月
+                  document.cookie = '_token=' + response.data.data.token + '; expires=' + d.toGMTString() // 将date赋值给expires
                 },
                 onHide () {
-                  let oldUrl = sessionStorage.getItem('oldUrl')
+                  let oldUrl = localStorage.getItem('oldUrl')
                   if (oldUrl) {
                     self.$router.replace(oldUrl)
                   } else {

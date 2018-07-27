@@ -59,8 +59,8 @@ export default {
               self.$router.go(-1)
             },
             onConfirm () {
-              sessionStorage.removeItem('oldUrl')
-              sessionStorage.setItem('oldUrl', self.$route.path)
+              localStorage.removeItem('oldUrl')
+              localStorage.setItem('oldUrl', self.$route.path)
               self.$router.push('/loginByCode')
             }
           })
@@ -88,7 +88,7 @@ export default {
             content: '您尚未登录，是否去登录？',
             onCancel () {},
             onConfirm () {
-              sessionStorage.setItem('oldUrl', self.$route.path)
+              localStorage.setItem('oldUrl', self.$route.path)
               self.$router.push('/loginByCode')
             }
           })
