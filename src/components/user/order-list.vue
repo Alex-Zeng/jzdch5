@@ -25,7 +25,7 @@
             <i class="icon iconfont icon-shangdian text-blue"></i>
             {{i.companyName}}
           </div>
-          <div class="orderNo">订单号：{{i.out_id}} <span>{{i.service_type === 1? '售后处理中': i.service_type === 2 && state === 6? '售后完成': getState(i.state, i.groupId)}}</span></div>
+          <div class="orderNo">订单号：{{i.out_id}} <span>{{parseInt(i.service_type) === 1? '售后处理中': parseInt(i.service_type) === 2 && parseInt(state) === 6? '售后完成': getState(i.state, parseInt(i.groupId))}}</span></div>
           <div>
             <div class="order-item" v-for="(good, key) in i.goods" :key="wkey+key">
               <div slot="content" class="indent-content">
@@ -68,8 +68,8 @@
           <div class="detail-money"><span>总价：<span class="text-red">{{i.money}}元</span></span><span v-if="i.money !== i.goods_money">（原价:{{i.goods_money}}元）</span></div>
           <div class="order-action">
             <div style="margin-right: auto;"></div>
-            <div class="order-button" v-if="(i.state ===1 || i.state === 0)&&i.groupId===4" @click="cancle(i.out_id)">取消交易</div>
-            <div class="order-button" v-if="(i.state ===6 && (i.service_type ===0 || i.service_type ===2))&&i.groupId===4" @click="receipt(i.out_id)">确定收货</div>
+            <div class="order-button" v-if="(parseInt(i.state) ===1 || parseInt(i.state) === 0)&&parseInt(i.groupId)===4" @click="cancle(i.out_id)">取消交易</div>
+            <div class="order-button" v-if="(parseInt(i.state) ===6 && (parseInt(i.service_type) ===0 || i.service_type ===2))&&parseInt(i.groupId)===4" @click="receipt(i.out_id)">确定收货</div>
             <div class="order-button" @click="gotoDetail(i.out_id)">查看详情</div>
           </div>
         </div>
