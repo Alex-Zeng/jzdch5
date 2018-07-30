@@ -170,7 +170,7 @@ export default {
       })
     },
     loginMethod () {
-      let loginToken = sessionStorage.getItem('loginToken')
+      let loginToken = localStorage.getItem('loginToken')
       if (loginToken === null) {
         let self = this
         this.$vux.confirm.show({
@@ -180,8 +180,8 @@ export default {
             self.$router.go(-1)
           },
           onConfirm () {
-            sessionStorage.removeItem('oldUrl')
-            sessionStorage.setItem('oldUrl', self.$route.path)
+            localStorage.removeItem('oldUrl')
+            localStorage.setItem('oldUrl', self.$route.path)
             self.$router.push('/loginByCode')
           }
         })

@@ -209,7 +209,7 @@ export default {
             onShow () {
               // 响应成功回调
               document.cookie = '_token='
-              sessionStorage.clear()
+              localStorage.clear()
             },
             onHide () {
               self.$router.replace('/login')

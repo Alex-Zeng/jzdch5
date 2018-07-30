@@ -72,7 +72,7 @@ export default {
       }).catch((response) => {})
     },
     onItemClick (index) {
-      sessionStorage.setItem('indexTag', index)
+      localStorage.setItem('indexTag', index)
     },
     noticeDetail (id) {
       this.$router.push('/message/notice-detail/' + id)
@@ -115,8 +115,8 @@ export default {
             content: '您尚未登录，是否去登录？',
             onCancel () {},
             onConfirm () {
-              sessionStorage.removeItem('oldUrl')
-              sessionStorage.setItem('oldUrl', self.$route.path)
+              localStorage.removeItem('oldUrl')
+              localStorage.setItem('oldUrl', self.$route.path)
               self.$router.push('/loginByCode')
             }
           })
@@ -229,8 +229,8 @@ export default {
     this.initMescroll1()
   },
   created () {
-    this.selectedDeafult = sessionStorage.getItem('selectedDeafult')
-    sessionStorage.removeItem('selectedDeafult')
+    this.selectedDeafult = localStorage.getItem('selectedDeafult')
+    localStorage.removeItem('selectedDeafult')
   },
   components: { Tab, TabItem, Sticky, Swiper, SwiperItem, Swipeout, SwipeoutItem, SwipeoutButton }
 }

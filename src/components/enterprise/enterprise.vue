@@ -126,8 +126,8 @@ export default {
       url: null,
       list1: [['有限责任公司', '股份有限公司', '个体工商户', '合伙企业']],
       data: {
-        type: sessionStorage.getItem('userType') || 1,
-        agent: sessionStorage.getItem('agent') || 0,
+        type: localStorage.getItem('userType') || 1,
+        agent: localStorage.getItem('agent') || 0,
         companyName: '',
         address: '',
         representative: '',
@@ -191,11 +191,11 @@ export default {
       // 检查审核状态
       const {data: {data, msg}} = await axios.get('api/user/getCertification')
       if (msg !== '用户未提交认证') {
-        this.data = {...data, property: [data.property], type: sessionStorage.getItem('userType') || 1, agent: sessionStorage.getItem('agent') || 0}
+        this.data = {...data, property: [data.property], type: localStorage.getItem('userType') || 1, agent: localStorage.getItem('agent') || 0}
       }
     },
     async submit () {
-      const token = sessionStorage.getItem('loginToken')
+      const token = localStorage.getItem('loginToken')
       const {companyName, representative, capital, property, business, permitsAccount, legalIdentityCard, address, orgStructureCode, agentIdentityCard, attorney, taxRegistrationCert} = this.data
       if (this.data.agent === 1) {
         if (!agentIdentityCard || !attorney) {

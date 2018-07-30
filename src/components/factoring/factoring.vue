@@ -142,15 +142,15 @@ export default {
   created () {
     axios.get('api/user/getGroup').then((response) => {
       if (response.data.status === 0) {
-        sessionStorage.setItem('groupId', response.data.data.groupId)
+        localStorage.setItem('groupId', response.data.data.groupId)
         if (response.data.data.groupId === 0) {
           let self = this
           this.$vux.confirm.show({
             title: '提示',
             content: '您尚未登录，确定现在去登录？',
             onConfirm () {
-              sessionStorage.removeItem('oldUrl')
-              sessionStorage.setItem('oldUrl', self.$route.path)
+              localStorage.removeItem('oldUrl')
+              localStorage.setItem('oldUrl', self.$route.path)
               self.$router.push('/loginByCode')
             },
             onCancel () {

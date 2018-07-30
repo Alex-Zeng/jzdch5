@@ -136,8 +136,8 @@ export default {
                 content: '您尚未登录，是否去登录？',
                 onCancel () {},
                 onConfirm () {
-                  sessionStorage.removeItem('oldUrl')
-                  sessionStorage.setItem('oldUrl', self.$route.path)
+                  localStorage.removeItem('oldUrl')
+                  localStorage.setItem('oldUrl', self.$route.path)
                   self.$router.push('/loginByCode')
                 }
               })
@@ -187,7 +187,7 @@ export default {
       this.$validator.validateAll().then((result) => {
         if (result) {
           axios.post('api/user/addAddress', {
-            '_token': sessionStorage.getItem('loginToken'),
+            '_token': localStorage.getItem('loginToken'),
             'name': this.userName,
             'phone': this.mobile,
             'areaId': this.areaId,
@@ -229,7 +229,7 @@ export default {
     }
   },
   created () {
-    if (sessionStorage.getItem('loginToken') === null) {
+    if (localStorage.getItem('loginToken') === null) {
       this.$router.push('/loginByCode')
     }
     this.getOldTag()

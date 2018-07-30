@@ -27,7 +27,7 @@ export default {
     }
   },
   mounted () {
-    sessionStorage.setItem('selectedDeafult', '公告')
+    localStorage.setItem('selectedDeafult', '公告')
   },
   created () {
     axios.get('api/user/getNoticeInfo&id=' + this.$route.params.id).then((response) => {

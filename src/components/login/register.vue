@@ -188,11 +188,14 @@ export default {
                 text: '注册成功',
                 onShow () {
                   // 响应成功回调
-                  document.cookie = '_token=' + response.data.data.token
-                  sessionStorage.setItem('loginToken', response.data.data.token)
+                  let d = new Date()
+                  d.setHours(d.getHours() + (24 * 30)) // 保存一个月
+                  document.cookie = '_token=' + response.data.data.token + '; expires=' + d.toGMTString() // 将date赋值给expires
+
+                  localStorage.setItem('loginToken', response.data.data.token)
                 },
                 onHide () {
-                  let oldUrl = sessionStorage.getItem('oldUrl')
+                  let oldUrl = localStorage.getItem('oldUrl')
                   if (oldUrl) {
                     self.$router.replace(oldUrl)
                   } else {

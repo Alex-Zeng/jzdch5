@@ -83,7 +83,7 @@ export default {
       })
     },
     selectAddress (index) {
-      sessionStorage.setItem('selectAddressIndex', index)
+      localStorage.setItem('selectAddressIndex', index)
       this.$router.push('/shop-car/indent')
       return false
     },
@@ -111,7 +111,7 @@ export default {
     }
   },
   created () {
-    if (sessionStorage.getItem('loginToken') === null) {
+    if (localStorage.getItem('loginToken') === null) {
       this.$router.push('/loginByCode')
     }
     this.getLists()

@@ -10,7 +10,7 @@ export default {
   watch: {
     $route: {
       handler: function (val, oldVal) {
-        if (sessionStorage.getItem('loginToken') === null) {
+        if (localStorage.getItem('loginToken') === null) {
           document.cookie = '_token='
         }
       },

@@ -21,6 +21,7 @@ service.interceptors.response.use(
     const {status} = res.data
 
     if (status === -2) {
+      localStorage.clear()
       window.location = '/#/loginByCode'
     }
     return res.data
