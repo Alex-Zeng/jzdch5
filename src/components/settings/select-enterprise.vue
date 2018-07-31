@@ -64,7 +64,7 @@ export default {
   },
   mounted () {
     let certStatus = localStorage.getItem('certStatus')
-    if (certStatus === '1') {
+    if (parseInt(certStatus) === 1) {
       this.$router.push('/enterprise')
     }
   },
