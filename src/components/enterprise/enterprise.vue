@@ -181,7 +181,7 @@ export default {
     },
     back () {
       const status = this.data
-      if (status === '1') {
+      if (parseInt(status) === 1) {
         this.$router.replace('settings')
       } else {
         this.$router.go(-1)
