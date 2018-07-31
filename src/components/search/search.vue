@@ -248,6 +248,10 @@ export default {
     },
     getListDataFromNet (pageNum, pageSize, successCallback, errorCallback) {
       this.onBlur()
+      if (this.keywords !== '') {
+        this.cateId = ''
+        localStorage.removeItem('searchId')
+      }
       var self = this
       // 延时一秒,模拟联网
       setTimeout(function () {
@@ -260,7 +264,6 @@ export default {
           'cateId': self.cateId
         }).then((response) => {
           if (response.data.status === 0) {
-            self.cateId = ''
             // 响应成功回调
             var data = response.data.data.list
             var total = response.data.data.total
@@ -292,7 +295,6 @@ export default {
     var cateId = localStorage.getItem('searchId')
     if (cateId !== null) {
       this.cateId = cateId
-      localStorage.removeItem('searchId')
       this.getResult(true)
     }
   },
