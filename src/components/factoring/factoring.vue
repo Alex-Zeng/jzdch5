@@ -140,21 +140,21 @@ export default {
     }
   },
   created () {
+    let self = this
     axios.get('api/user/getGroup').then((response) => {
       if (response.data.status === 0) {
         localStorage.setItem('groupId', response.data.data.groupId)
         if (response.data.data.groupId === 0) {
-          let self = this
           this.$vux.confirm.show({
             title: '提示',
             content: '您尚未登录，确定现在去登录？',
+            onCancel () {
+              self.$router.go(-1)
+            },
             onConfirm () {
               localStorage.removeItem('oldUrl')
               localStorage.setItem('oldUrl', self.$route.path)
               self.$router.push('/loginByCode')
-            },
-            onCancel () {
-              self.$router.go(-1)
             }
           })
           return false
@@ -163,6 +163,9 @@ export default {
           this.$vux.confirm.show({
             title: '提示',
             content: '您尚未做企业认证，是否现在去认证？',
+            onCancel () {
+              self.$router.go(-1)
+            },
             onConfirm () {
               self.$router.push('/settings')
             }
