@@ -200,7 +200,7 @@ export default {
                 type: 'success',
                 text: response.data.msg,
                 onHide () {
-                  self.$router.push('/address-lists')
+                  self.$router.replace('/address-lists')
                 }
               })
             } else {

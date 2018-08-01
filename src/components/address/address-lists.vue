@@ -34,7 +34,7 @@
         </div>
       </li>
     </ul>
-    <router-link class="address-footer" to="/address-new">
+    <router-link class="address-footer" to="/address-new" replace>
       新增地址
     </router-link>
   </div>
@@ -63,7 +63,7 @@ export default {
       localStorage.removeItem('editorAdd')
       let tagert = this.lists[index]
       localStorage.setItem('editorAdd', JSON.stringify(tagert))
-      this.$router.push('/address-editor')
+      this.$router.replace('/address-editor')
     },
     deleteAddress (id, index) {
       let self = this
