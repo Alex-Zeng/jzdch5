@@ -79,7 +79,7 @@ export default {
   methods: {
     oldPhoneSend (i) {
       axios.get('api/code/oldPhoneSend').then((response) => {
-        if (response.data.status === 0) {
+        if (response.data.status == 0) {
           this.$vux.toast.show({
             type: 'success',
             text: response.data.msg
@@ -99,7 +99,7 @@ export default {
       axios.post(url, {
         'phone': this.phone
       }).then((response) => {
-        if (response.data.status === 0) {
+        if (response.data.status == 0) {
           this.$vux.toast.show({
             type: 'success',
             text: response.data.msg
@@ -122,7 +122,7 @@ export default {
           axios.post('api/code/oldPhoneValid', {
             'code': this.oldCode
           }).then((response) => {
-            if (response.data.status === 0) {
+            if (response.data.status == 0) {
               this.showModel0 = false
               this.showModel1 = true
             } else {
@@ -141,7 +141,7 @@ export default {
     },
     getImgCode () {
       axios.get('api/captcha/img').then((response) => {
-        if (response.data.status === 0) {
+        if (response.data.status == 0) {
           this.id = response.data.data.id
           this.imgCodeSrc = response.data.data.src + '?t=' + new Date().getTime()
         } else {
@@ -173,7 +173,7 @@ export default {
             'newCode': this.newCode
           }).then((response) => {
             let self = this
-            if (response.data.status === 0) {
+            if (response.data.status == 0) {
               this.$vux.toast.show({
                 type: 'success',
                 text: '修改成功',
@@ -197,7 +197,7 @@ export default {
     },
     setTimeMethods (i) {
       var self = this
-      if (i === 1) {
+      if (i == 1) {
         self.time1 = 59
         self.disabled1 = !self.disabled1
         var setTime1 = null
@@ -211,7 +211,7 @@ export default {
           clearInterval(setTime1)
         }
       }
-      if (i === 2) {
+      if (i == 2) {
         self.time2 = 59
         self.disabled2 = !self.disabled2
         var setTime2 = null

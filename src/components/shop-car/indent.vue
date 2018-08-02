@@ -139,7 +139,7 @@ export default {
     },
     getLists (index) {
       axios.get('api/user/getAddressList').then((response) => {
-        if (response.data.status === 0) {
+        if (response.data.status == 0) {
           if (response.data.data.list.length > 0) {
             this.address = response.data.data.list[index]
             this.receiverId = response.data.data.list[index].id
@@ -174,7 +174,7 @@ export default {
               'detail': JSON.stringify(self.lists),
               'channel': self.type
             }).then((response) => {
-              if (response.data.status === 0) {
+              if (response.data.status == 0) {
                 localStorage.setItem('indent-detail', JSON.stringify(response.data.data))
                 localStorage.removeItem('indentLists')
                 self.$router.push('/shop-car/detail')
@@ -208,14 +208,14 @@ export default {
     window.scrollTo(0, 0)
     localStorage.removeItem('indent-detail')
     let index = localStorage.getItem('selectAddressIndex')
-    if (index === null) {
+    if (index == null) {
       this.getLists(0)
     } else {
       this.getLists(index)
     }
     this.total = Number(localStorage.getItem('total')).toFixed(2)
     this.lists = JSON.parse(localStorage.getItem('indentLists'))
-    if (localStorage.getItem('indentLists') === null) {
+    if (localStorage.getItem('indentLists') == null) {
       this.$router.push('/')
     } else {
       this.lists.forEach((v) => {

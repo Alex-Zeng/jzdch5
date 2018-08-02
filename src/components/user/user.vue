@@ -5,7 +5,7 @@
       <div>{{userMsg.name}}</div>
       <i class="icon iconfont icon-shezhi" @click="$router.push('/settings')"></i>
     </div>
-    <template v-if="groupId === 5">
+    <template v-if="groupId == 5">
       <div class="user-msg">
         <group>
           <cell is-link link="/goods-collect">
@@ -37,7 +37,7 @@
         </router-link>
       </div>
     </template>
-    <template v-if="groupId === 4">
+    <template v-if="groupId == 4">
       <div class="user-msg">
         <group>
           <cell is-link link="/goods-collect">
@@ -81,7 +81,7 @@
         </router-link>
       </router-link>
     </template>
-    <template v-if="groupId === 6">
+    <template v-if="groupId == 6">
       <div class="visitor-box" @click="$router.push('/settings')">
         <i class="icon iconfont icon-renzheng"></i>
         <p class="text-muted">还没有进行企业验证，快去进行企业验证吧~</p>
@@ -135,7 +135,7 @@ export default {
     getInfo () {
       axios.get('api/user/getProfile').then((response) => {
         const {status} = response.data
-        if (status === 0) {
+        if (status == 0) {
           this.userMsg.name = response.data.data.username
           this.userMsg.photo = response.data.data.path
         }
@@ -146,7 +146,7 @@ export default {
     getSupplierOrderInfo () {
       axios.get('api/user/getSupplierOrderInfo').then((response) => {
         const {status} = response.data
-        if (status === 0) {
+        if (status == 0) {
           this.supplier.yesterday = response.data.data.yesterday
           this.supplier.total = response.data.data.total
           this.supplier.pending = response.data.data.pending
@@ -159,7 +159,7 @@ export default {
     getBuyerOrderInfo () {
       axios.get('api/user/getBuyerOrderInfo').then((response) => {
         const {status} = response.data
-        if (status === 0) {
+        if (status == 0) {
           this.buyerOrder.pay = response.data.data.pay
           this.buyerOrder.recieve = response.data.data.recieve
           this.buyerOrder.deliver = response.data.data.deliver
@@ -171,7 +171,7 @@ export default {
     },
     loginMethod () {
       let loginToken = localStorage.getItem('loginToken')
-      if (loginToken === null) {
+      if (loginToken == null) {
         let self = this
         this.$vux.confirm.show({
           title: '提示',
@@ -190,7 +190,7 @@ export default {
             num = window.jsb.login(window.location.href)
             alert(num)
           } catch (err) {
-            if (num === null) {
+            if (num == null) {
               this.$router.push('/loginByCode')
             }
           } */
@@ -200,7 +200,7 @@ export default {
     },
     getFavoriteNumber () {
       axios.get('api/user/getFavoriteNumber').then((response) => {
-        if (response.data.status === 0) {
+        if (response.data.status == 0) {
           this.favoriteNumber = parseInt(response.data.data.number)
         }
       }).catch(() => {
@@ -209,7 +209,7 @@ export default {
     },
     getNumber () {
       axios.get('api/mall_cart/getNumber').then((response) => {
-        if (response.data.status === 0) {
+        if (response.data.status == 0) {
           this.number = parseInt(response.data.data.total)
         }
       }).catch(() => {
@@ -226,10 +226,10 @@ export default {
   created () {
     axios.get('api/user/getGroup').then((response) => {
       this.groupId = parseInt(response.data.data.groupId)
-      if (this.groupId === 4) {
+      if (this.groupId == 4) {
         this.getBuyerOrderInfo()
       }
-      if (this.groupId === 5) {
+      if (this.groupId == 5) {
         this.getSupplierOrderInfo()
       }
     }).catch((response) => {

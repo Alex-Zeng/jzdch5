@@ -63,7 +63,7 @@ export default {
       // 联网加载数据
       var self = this
       this.getListDataFromNet(page.num, page.size, function (curPageData, totalSize) {
-        if (page.num === 1) {
+        if (page.num == 1) {
           self.favoriteList = []
         }
         // 更新列表数据
@@ -84,7 +84,7 @@ export default {
           'field': self.field,
           'sort': self.mySort
         }).then((response) => {
-          if (response.data.status === 0) {
+          if (response.data.status == 0) {
             // 响应成功回调
             var data = response.data.data.list
             var total = response.data.data.total
@@ -115,7 +115,7 @@ export default {
     },
     sortMethods () {
       this.field = 'price'
-      if (this.mySort === 'asc') {
+      if (this.mySort == 'asc') {
         this.mySort = 'desc'
       } else {
         this.mySort = 'asc'

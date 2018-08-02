@@ -77,15 +77,15 @@ export default {
   },
   methods: {
     getCode (url, i) {
-      if (i === 1) {
+      if (i == 1) {
         this.disabled1 = !this.disabled1
       }
-      if (i === 2) {
+      if (i == 2) {
         this.disabled2 = !this.disabled2
       }
       this.setTimeMethods(i)
       axios.get(url).then((response) => {
-        if (response.data.status === 0) {
+        if (response.data.status == 0) {
         }
       }).catch((resposne) => {
         this.errorMsg()
@@ -98,7 +98,7 @@ export default {
           axios.post('api/code/oldPhoneValid', {
             'code': this.oldCode
           }).then((response) => {
-            if (response.data.status === 0) {
+            if (response.data.status == 0) {
               this.showModel0 = false
               this.showModel1 = true
             } else {
@@ -117,7 +117,7 @@ export default {
     },
     getImgCode () {
       axios.get('api/captcha/img').then((response) => {
-        if (response.data.status === 0) {
+        if (response.data.status == 0) {
           this.id = response.data.data.id
           this.imgCodeSrc = response.data.data.src + '?t=' + new Date().getTime()
         } else {
@@ -142,7 +142,7 @@ export default {
             'newCode': this.newCode
           }).then((response) => {
             let self = this
-            if (response.data.status === 0) {
+            if (response.data.status == 0) {
               this.$vux.toast.show({
                 type: 'warn',
                 text: '修改成功',
@@ -174,10 +174,10 @@ export default {
         } else {
           // _sel.setTimeOut = false
           // _sel.resetCode = true
-          if (i === 1) {
+          if (i == 1) {
             self.disabled1 = !self.disabled1
           }
-          if (i === 2) {
+          if (i == 2) {
             self.disabled2 = !self.disabled2
           }
           clearInterval(setTime)

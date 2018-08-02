@@ -8,9 +8,9 @@
       <div style="padding-right: 2rem">&emsp;</div>
     </div>
     <tab :line-width=2 active-color='#5FCAED' v-model="index">
-      <tab-item class="vux-center" :selected="selectedDeafult === item" v-for="(item, index) in list2" @click="selectedDeafult = item" @on-item-click="onItemClick" :key="index" :i="index">{{item}}</tab-item>
+      <tab-item class="vux-center" :selected="selectedDeafult == item" v-for="(item, index) in list2" @click="selectedDeafult = item" @on-item-click="onItemClick" :key="index" :i="index">{{item}}</tab-item>
     </tab>
-    <div  v-show="index === 0" id="mescroll" class="mescroll message-lists" style="padding-bottom: 6rem;">
+    <div  v-show="index == 0" id="mescroll" class="mescroll message-lists" style="padding-bottom: 6rem;">
       <swipeout v-for="(item, index) in MessageList" :key="index">
         <p class="text-muted release-time" style="font-size: 0.6rem;">{{item.release_time}}</p>
         <swipeout-item transition-mode="follow">
@@ -28,7 +28,7 @@
         </swipeout-item>
       </swipeout>
     </div>
-    <div  v-show="index === 1" id="mescroll1" class="mescroll" style="padding-bottom: 6rem;">
+    <div  v-show="index == 1" id="mescroll1" class="mescroll" style="padding-bottom: 6rem;">
       <ul class="notice-list">
         <li v-for="(item, index) in NoticeList" :key="index">
           <p class="text-muted release-time" style="font-size: 0.6rem;">{{item.release_time}}</p>
@@ -83,7 +83,7 @@ export default {
       var self = this
       this.getListDataFromNet(page.num, page.size, function (curPageData, totalSize) {
         // curPageData = [] // 打开本行注释,可演示列表无任何数据empty的配置
-        if (page.num === 1) self.MessageList = []
+        if (page.num == 1) self.MessageList = []
         // 更新列表数据
         self.MessageList = self.MessageList.concat(curPageData)
         self.mescroll.endBySize(curPageData.length, totalSize) // 必传参数(当前页的数据个数, 总数据量)
@@ -98,7 +98,7 @@ export default {
         'pageNumber': pageNum,
         'pageSize': pageSize
       }).then((response) => {
-        if (response.data.status === 0) {
+        if (response.data.status == 0) {
           // 响应成功回调
           var data = response.data.data.list
           var total = response.data.data.total
@@ -109,7 +109,7 @@ export default {
             }
           }
           successCallback && successCallback(listData, total)// 成功回调
-        } else if (response.data.status === -2) {
+        } else if (response.data.status == -2) {
           this.$vux.confirm.show({
             title: '提示',
             content: '您尚未登录，是否去登录？',
@@ -138,7 +138,7 @@ export default {
       var self = this
       this.getListDataFromNet1(page.num, page.size, function (curPageData, totalSize) {
         // curPageData = [] // 打开本行注释,可演示列表无任何数据empty的配置
-        if (page.num === 1) self.NoticeList = []
+        if (page.num == 1) self.NoticeList = []
         // 更新列表数据
         self.NoticeList = self.NoticeList.concat(curPageData)
         self.mescroll1.endBySize(curPageData.length, totalSize) // 必传参数(当前页的数据个数, 总数据量)
@@ -155,7 +155,7 @@ export default {
           'pageNumber': pageNum,
           'pageSize': pageSize
         }).then((response) => {
-          if (response.data.status === 0) {
+          if (response.data.status == 0) {
             // 响应成功回调
             var data = response.data.data.list
             var total = response.data.data.total

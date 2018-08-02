@@ -42,7 +42,7 @@
               <div>
                 <h3>{{item.title}}</h3>
                 <div class="text-red">
-                  ￥ {{item.min_price === '0.00'? item.w_price:item.min_price}}{{item.max_price===item.min_price?'':' ~ ￥'+item.max_price}}
+                  ￥ {{item.min_price == '0.00'? item.w_price:item.min_price}}{{item.max_price==item.min_price?'':' ~ ￥'+item.max_price}}
                 </div>
               </div>
             </router-link>
@@ -56,7 +56,7 @@
                 {{item.title}}
               </div>
               <div class="goods-price text-red">
-                ￥ {{item.min_price === '0.00'? item.w_price:item.min_price}}{{item.max_price===item.min_price?'':' ~ ￥'+item.max_price}}
+                ￥ {{item.min_price == '0.00'? item.w_price:item.min_price}}{{item.max_price==item.min_price?'':' ~ ￥'+item.max_price}}
               </div>
             </router-link>
           </li>
@@ -109,7 +109,7 @@ export default {
       this.showList = !this.showList
     },
     sortMethod () {
-      if (this.mySort === 'asc') {
+      if (this.mySort == 'asc') {
         this.mySort = 'desc'
       } else {
         this.mySort = 'asc'
@@ -117,7 +117,7 @@ export default {
       this.mescroll.resetUpScroll()
     },
     setFocus () {
-      if (this.select === true) {
+      if (this.select == true) {
         this.select = false
         this.isActive = false
       } else {
@@ -137,7 +137,7 @@ export default {
         this.mescroll.destroy()
       } catch (err) {
       }
-      if (this.loginToken === null) {
+      if (this.loginToken == null) {
         var localKeywords = localStorage.getItem('keyword')
         if (localKeywords !== null) {
           this.showHistory = true
@@ -147,7 +147,7 @@ export default {
         }
       } else {
         axios.get('api/record/getSearch').then((response) => {
-          if (response.data.status === 0) {
+          if (response.data.status == 0) {
             this.showHistory = true
             this.historyLists = response.data.data
           } else {
@@ -186,8 +186,8 @@ export default {
     },
     getResult (val) {
       document.getElementById('dataList').innerHTML = ''
-      if (val.keyCode === 13 || val === true) {
-        if (val.keyCode === 13) {
+      if (val.keyCode == 13 || val == true) {
+        if (val.keyCode == 13) {
           let obj = { 'keyword': this.keywords }
           let allArr = []
           let oldArr = this.historyLists
@@ -195,7 +195,7 @@ export default {
           for (let i = 0; i < oldArr.length; i++) {
             let flag = true
             for (let j = 0; j < allArr.length; j++) {
-              if (oldArr[i].keyword === allArr[j].keyword) {
+              if (oldArr[i].keyword == allArr[j].keyword) {
                 flag = false
               }
             }
@@ -235,7 +235,7 @@ export default {
       var self = this
       this.getListDataFromNet(page.num, page.size, function (curPageData, totalSize) {
         // curPageData = [] // 打开本行注释,可演示列表无任何数据empty的配置
-        if (page.num === 1) {
+        if (page.num == 1) {
           self.goodsLists = []
         }
         // 更新列表数据
@@ -263,7 +263,7 @@ export default {
           'pageSize': pageSize,
           'cateId': self.cateId
         }).then((response) => {
-          if (response.data.status === 0) {
+          if (response.data.status == 0) {
             // 响应成功回调
             var data = response.data.data.list
             var total = response.data.data.total

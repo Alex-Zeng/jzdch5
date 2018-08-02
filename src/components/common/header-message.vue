@@ -14,7 +14,7 @@ export default {
   methods: {
     messageNumber () {
       axios.get('api/user/messageNumber').then((response) => {
-        if (response.data.status === 0) {
+        if (response.data.status == 0) {
           this.message = response.data.data.total
         }
       }).catch((response) => {

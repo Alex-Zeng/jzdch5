@@ -5,13 +5,13 @@
       <div>
         采购清单
       </div>
-      <div v-if="proData.length === 0">&emsp;&emsp;&emsp;</div>
+      <div v-if="proData.length == 0">&emsp;&emsp;&emsp;</div>
       <div @click="manageMethods" v-if="proData.length > 0" style="padding-right: 0.5rem">
         {{manage?'管理':'完成'}}
       </div>
     </div>
     <div class="shop-car-container">
-      <div v-if="proData.length === 0" class="temp-box">
+      <div v-if="proData.length == 0" class="temp-box">
         <img class="temp-img" src="@/assets/images/temp-img-2.png" alt="">
         <h3>您还没有采购的商品</h3>
         <p class="text-muted">去添加试试吧</p>
@@ -102,7 +102,7 @@ export default {
           'ids': [event].join(',')
         }).then((response) => {
           const {data: {status, msg}} = response
-          if (status === 0) {
+          if (status == 0) {
             this.$vux.toast.show({
               type: 'success',
               isShowMask: true,
@@ -138,7 +138,7 @@ export default {
       let loginToken = localStorage.getItem('loginToken')
       if (loginToken !== null) {
         axios.get('api/mall_cart/index').then((response) => {
-          if (response.data.status === 0) {
+          if (response.data.status == 0) {
             this.proData = response.data.data
             // 动态生成选中数组
             let tempList = []
@@ -246,7 +246,7 @@ export default {
                 '_token': loginToken
               }).then((response) => {
                 const {data: {status, msg}} = response
-                if (status === 0) {
+                if (status == 0) {
                   self.$vux.toast.show({
                     type: 'success',
                     text: msg
@@ -283,7 +283,7 @@ export default {
             })
           }
         })
-        if (this.allList.length === 0) {
+        if (this.allList.length == 0) {
           this.$vux.toast.show({
             type: 'warn',
             text: '购物清单为空<br>请先添加商品'

@@ -41,7 +41,7 @@ export default {
     getLists () {
       axios.post('api/Factoring/getFactoringList').then((response) => {
         const {status, data: {factoringList}} = response.data
-        if (status === 0) {
+        if (status == 0) {
           this.factoringList = factoringList
         }
       })

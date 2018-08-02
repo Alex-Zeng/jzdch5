@@ -53,7 +53,7 @@ export default {
   methods: {
     onChange (val) {
       this.orderList.forEach((item, index) => {
-        if (item.orderSn === val[0]) {
+        if (item.orderSn == val[0]) {
           this.account = item.account
           this.orderId = item.orderId
         }
@@ -74,7 +74,7 @@ export default {
       axios.post('api/Factoring/getOrderInfo').then((response) => {
         console.log(response)
         const {status, data: {orderList}} = response.data
-        if (status === 0) {
+        if (status == 0) {
           this.orderList = orderList
           let selectList = []
           orderList.forEach((item, index) => {
@@ -88,7 +88,7 @@ export default {
       axios.post('api/Factoring/getName').then((response) => {
         console.log(response)
         const {status, data: {name}} = response.data
-        if (status === 0) {
+        if (status == 0) {
           this.name = name
         }
       })
@@ -106,7 +106,7 @@ export default {
           'bankAddress': this.bankAddress
         }).then((response) => {
           console.log(response.data.status)
-          if (response.data.status === 0) {
+          if (response.data.status == 0) {
             this.$vux.toast.show({
               title: '提交成功',
               type: 'success',
@@ -142,9 +142,9 @@ export default {
   created () {
     let self = this
     axios.get('api/user/getGroup').then((response) => {
-      if (response.data.status === 0) {
+      if (response.data.status == 0) {
         localStorage.setItem('groupId', response.data.data.groupId)
-        if (response.data.data.groupId === 0) {
+        if (response.data.data.groupId == 0) {
           this.$vux.confirm.show({
             title: '提示',
             content: '您尚未登录，确定现在去登录？',
@@ -158,7 +158,7 @@ export default {
             }
           })
           return false
-        } else if (response.data.data.groupId === 6) {
+        } else if (response.data.data.groupId == 6) {
           let self = this
           this.$vux.confirm.show({
             title: '提示',

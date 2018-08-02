@@ -20,7 +20,7 @@
         {{price}}
       </span>
       <span v-else class="text-red">
-        ￥ {{goodsData.min_price === '0.00'?goodsData.price:goodsData.min_price}}{{goodsData.max_price===goodsData.min_price?'':' ~ ￥'+goodsData.max_price}}
+        ￥ {{goodsData.min_price == '0.00'?goodsData.price:goodsData.min_price}}{{goodsData.max_price==goodsData.min_price?'':' ~ ￥'+goodsData.max_price}}
       </span>
     </div>
     <div class="goods-seller">
@@ -57,15 +57,15 @@
       <i class="icon iconfont icon-guanbi" @click="shawdowMethod"></i>
       <div v-for="i in goodsData.standard.length" :key="i">
         <h3>{{goodsData.standard[i-1].title}}</h3>
-        <ul v-if="goodsData.standard[i-1].title === '规格'">
+        <ul v-if="goodsData.standard[i-1].title == '规格'">
           <li v-for="(item, index) in goodsData.standard[i-1].list" :key="index">
-            <a href="javascript:;" @click="tabsort0(index)" :class="{ active: iscur0 === index}">{{item.color_name}}</a>
+            <a href="javascript:;" @click="tabsort0(index)" :class="{ active: iscur0 == index}">{{item.color_name}}</a>
             <input type="hidden" class="color" v-model="item.color_id">
           </li>
         </ul>
         <ul v-if="goodsData.standard[i-1].title !== '规格'">
           <li v-for="(item, index) in goodsData.standard[i-1].list" :key="index">
-            <a href="javascript:;" @click="tabsort1(index)" :class="{ active: iscur1 === index}">{{item.option_name}}</a>
+            <a href="javascript:;" @click="tabsort1(index)" :class="{ active: iscur1 == index}">{{item.option_name}}</a>
             <input type="hidden" class="option" v-model="item.option_id">
           </li>
         </ul>
@@ -99,14 +99,15 @@ export default {
   },
   methods: {
     showDetai () {
-      if (localStorage.getItem('groupId') === '2' || localStorage.getItem('groupId') === '3' || localStorage.getItem('groupId') === '5') {
+      const group = localStorage.getItem('groupId')
+      if (group == '2' || group == '3' || group == '5') {
         this.showCar = false
       }
       var self = this
       axios.get('api/goods/get&id=' + this.$route.params.id).then((response) => {
-        if (response.data.status === 0) {
+        if (response.data.status == 0) {
           this.goodsData = response.data.data
-          if (this.goodsData.isFavorite === 1) {
+          if (this.goodsData.isFavorite == 1) {
             this.isActive = true
           } else {
             this.isActive = false
@@ -148,7 +149,7 @@ export default {
         let optionId = Number(this.optionId)
         let colorIdI = Number(this.goodsData.standardPrice[i].color_id)
         let optionIdI = Number(this.goodsData.standardPrice[i].option_id)
-        if (colorId === colorIdI && optionId === optionIdI) {
+        if (colorId == colorIdI && optionId == optionIdI) {
           this.price = this.goodsData.standardPrice[i].price
         }
       }
@@ -161,9 +162,9 @@ export default {
     },
     showCarMethod () {
       axios.get('api/user/getGroup').then((response) => {
-        if (response.data.status === 0) {
+        if (response.data.status == 0) {
           localStorage.setItem('groupId', response.data.data.groupId)
-          if (response.data.data.groupId === 0) {
+          if (response.data.data.groupId == 0) {
             let self = this
             this.$vux.confirm.show({
               title: '提示',
@@ -175,7 +176,7 @@ export default {
               }
             })
             return false
-          } else if (response.data.data.groupId === 6) {
+          } else if (response.data.data.groupId == 6) {
             let self = this
             this.$vux.confirm.show({
               title: '提示',
@@ -186,16 +187,16 @@ export default {
             })
             return false
           } else {
-            if (this.goodsData.standard.length === 1) {
-              if (this.iscur0 === null && this.iscur1 === null) {
+            if (this.goodsData.standard.length == 1) {
+              if (this.iscur0 == null && this.iscur1 == null) {
                 this.shawdow = true
                 this.$vux.toast.show({
                   text: '请选择规格'
                 })
                 return false
               }
-            } else if (this.goodsData.standard.length === 2) {
-              if (this.iscur0 === null | this.iscur1 === null) {
+            } else if (this.goodsData.standard.length == 2) {
+              if (this.iscur0 == null | this.iscur1 == null) {
                 this.shawdow = true
                 this.$vux.toast.show({
                   text: '请选择规格'
@@ -209,13 +210,13 @@ export default {
               'colorId': this.colorId,
               'optionId': this.optionId
             }).then((response) => {
-              if (response.data.status === 0) {
+              if (response.data.status == 0) {
                 this.$vux.toast.show({
                   type: 'success',
                   text: '添加成功'
                 })
                 axios.get('api/mall_cart/getNumber').then((response) => {
-                  if (response.data.status === 0) {
+                  if (response.data.status == 0) {
                     this.showCarNum = response.data.data.total
                   }
                 })
@@ -236,11 +237,11 @@ export default {
     },
     collectMethod () {
       let self = this
-      if (this.isActive === false) {
+      if (this.isActive == false) {
         axios.post('api/goods/addFavorite', {
           'goodsId': this.$route.params.id
         }).then((response) => {
-          if (response.data.status === -2) {
+          if (response.data.status == -2) {
             this.$vux.confirm.show({
               title: '提示',
               content: '您尚未登录，确定现在去登录？',
@@ -251,7 +252,7 @@ export default {
               }
             })
           } else {
-            if (response.data.status === 0) {
+            if (response.data.status == 0) {
               this.$vux.toast.show({
                 type: 'success',
                 text: '收藏成功',
@@ -274,7 +275,7 @@ export default {
         axios.post('api/goods/removeFavorite', {
           'goodsId': this.$route.params.id
         }).then((response) => {
-          if (response.data.status === 0) {
+          if (response.data.status == 0) {
             this.$vux.toast.show({
               type: 'success',
               text: '取消成功',
@@ -312,7 +313,7 @@ export default {
   created () {
     window.scrollTo(0, 0)
     axios.get('api/mall_cart/getNumber').then((response) => {
-      if (response.data.status === 0) {
+      if (response.data.status == 0) {
         this.showCarNum = response.data.data.total
       }
     })

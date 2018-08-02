@@ -30,7 +30,7 @@
     </template>
     <template v-if="!success">
       <div class="text-blue success">
-        <div>感谢{{userName}}{{sex==='男'?'先生':'女士'}}</div>
+        <div>感谢{{userName}}{{sex=='男'?'先生':'女士'}}</div>
         您的金融服务已提交成功
         <br/>
         稍后将有工作人员与您联系
@@ -63,7 +63,7 @@ export default {
             'name': this.userName,
             'sex': this.sex
           }).then((response) => {
-            if (response.data.status === 0) {
+            if (response.data.status == 0) {
               this.success = !this.success
             } else {
               this.$vux.toast.show({

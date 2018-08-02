@@ -8,7 +8,7 @@
         <div style="padding-right: 2rem">&emsp;</div>
       </div>
       <group>
-        <cell is-link link="/address-lists" v-if="roleType==='1'">
+        <cell is-link link="/address-lists" v-if="roleType=='1'">
           <span slot="title">
                 <span style="vertical-align:middle;">收货地址管理</span>
             </span>
@@ -73,18 +73,18 @@ export default {
     getCertification () {
       let self = this
       axios.get('api/user/getCertification').then((response) => {
-        if (response.data.status === 0) {
+        if (response.data.status == 0) {
           if (response.data.data) {
             const {status, agentIdentityCard, role} = response.data.data
-            if (parseInt(status) === 1 || parseInt(status) === 3 || parseInt(status) === 2) {
+            if (parseInt(status) == 1 || parseInt(status) == 3 || parseInt(status) == 2) {
               this.enterprise = true
-              localStorage.setItem('userType', role === '采购商' ? 1 : 2)
+              localStorage.setItem('userType', role == '采购商' ? 1 : 2)
               localStorage.setItem('agent', !agentIdentityCard ? 0 : 1)
               localStorage.setItem('certStatus', 1)
               this.roleType = localStorage.getItem('userType')
             }
           }
-        } else if (response.data.status === -2) {
+        } else if (response.data.status == -2) {
           this.$vux.confirm.show({
             title: '提示',
             content: '您尚未登录，是否去登录？',

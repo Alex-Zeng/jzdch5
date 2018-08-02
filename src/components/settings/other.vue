@@ -38,11 +38,11 @@ export default {
     },
     getInfo () {
       axios.get('api/user/getProfile').then((response) => {
-        if (response.data.status === 0) {
+        if (response.data.status == 0) {
           this.phone = response.data.data.tel
           this.name = response.data.data.contact
           this.logo = response.data.data.path
-        } else if (response.data.status === -2) {
+        } else if (response.data.status == -2) {
           let self = this
           this.$vux.confirm.show({
             title: '提示',
@@ -71,8 +71,8 @@ export default {
         'field': field,
         'value': value
       }).then((response) => {
-        if (response.data.status === 0) {
-        } else if (response.data.status === -2) {
+        if (response.data.status == 0) {
+        } else if (response.data.status == -2) {
           this.$vux.confirm.show({
             title: '提示',
             content: '您尚未登录，是否去登录？',

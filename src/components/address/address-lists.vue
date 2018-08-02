@@ -91,7 +91,7 @@ export default {
       axios.post('api/user/setDefaultAddress', {
         'id': id
       }).then((response) => {
-        if (response.data.status === 0) {
+        if (response.data.status == 0) {
           this.getLists()
         } else {
           this.$vux.toast.show({
@@ -111,7 +111,7 @@ export default {
     }
   },
   created () {
-    if (localStorage.getItem('loginToken') === null) {
+    if (localStorage.getItem('loginToken') == null) {
       this.$router.push('/loginByCode')
     }
     this.getLists()

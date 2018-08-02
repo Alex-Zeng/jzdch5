@@ -50,7 +50,7 @@ export default {
         'email': this.email,
         'channel': 0
       }).then((response) => {
-        if (response.data.status === 0) {
+        if (response.data.status == 0) {
           this.setTimeMethods()
           this.$vux.toast.show({
             type: 'success',
@@ -74,7 +74,7 @@ export default {
             'email': this.email,
             'code': this.code
           }).then((response) => {
-            if (response.data.status === 0) {
+            if (response.data.status == 0) {
               this.$vux.toast.show({
                 type: 'success',
                 text: response.data.msg,

@@ -105,7 +105,7 @@ export default {
         axios.post('api/user/addAddressTag', {
           'tag': this.newTag
         }).then((response) => {
-          if (response.data.status === 0) {
+          if (response.data.status == 0) {
             this.getOldTag()
           }
         }).catch((response) => {
@@ -128,9 +128,9 @@ export default {
             'id': id
           }).then((response) => {
             const {status} = response.data
-            if (status === 0) {
+            if (status == 0) {
               self.getOldTag()
-            } else if (status === -2) {
+            } else if (status == -2) {
               self.$vux.confirm.show({
                 title: '提示',
                 content: '您尚未登录，是否去登录？',
@@ -154,9 +154,9 @@ export default {
       })
     },
     getAreaMethods () {
-      if (localStorage.getItem('addressData') === null) {
+      if (localStorage.getItem('addressData') == null) {
         axios.get('api/index/getArea').then((response) => {
-          if (response.data.status === 0) {
+          if (response.data.status == 0) {
             let str = JSON.stringify(response.data.data.list)
             localStorage.setItem('addressData', str)
             this.addressData = JSON.parse(localStorage.getItem('addressData'))
@@ -170,11 +170,11 @@ export default {
     },
     getOldTag () {
       axios.get('api/user/getAddressTag').then((response) => {
-        if (response.data.status === 0) {
+        if (response.data.status == 0) {
           let self = this
           this.tag = response.data.data
           this.tag.forEach(function (currentValue, index, arr) {
-            if (currentValue.tag === self.activeTag) {
+            if (currentValue.tag == self.activeTag) {
               self.iscur = index
             }
           })
@@ -194,7 +194,7 @@ export default {
             'detail': this.addressDetail,
             'tag': this.checkedTag
           }).then((response) => {
-            if (response.data.status === 0) {
+            if (response.data.status == 0) {
               let self = this
               this.$vux.toast.show({
                 type: 'success',
@@ -229,7 +229,7 @@ export default {
     }
   },
   created () {
-    if (localStorage.getItem('loginToken') === null) {
+    if (localStorage.getItem('loginToken') == null) {
       this.$router.push('/loginByCode')
     }
     this.getOldTag()

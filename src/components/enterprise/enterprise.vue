@@ -169,7 +169,7 @@ export default {
     },
     getCertificationExt () {
       axios.get('api/user/getCertificationExt').then((response) => {
-        if (response.data.status === 0) {
+        if (response.data.status == 0) {
           this.url = response.data.data.attorney
         }
       }).catch(() => {
@@ -181,7 +181,7 @@ export default {
     },
     back () {
       const status = this.data
-      if (parseInt(status) === 1) {
+      if (parseInt(status) == 1) {
         this.$router.replace('settings')
       } else {
         this.$router.go(-1)
@@ -197,7 +197,7 @@ export default {
     async submit () {
       const token = localStorage.getItem('loginToken')
       const {companyName, representative, capital, property, business, permitsAccount, legalIdentityCard, address, orgStructureCode, agentIdentityCard, attorney, taxRegistrationCert} = this.data
-      if (this.data.agent === 1) {
+      if (this.data.agent == 1) {
         if (!agentIdentityCard || !attorney) {
           this.$vux.toast.show({
             type: 'warn',

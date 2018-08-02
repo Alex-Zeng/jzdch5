@@ -17,19 +17,19 @@
                     {{item.name}}
                   </div>
                 </router-link>
-                <a href="http://h5.jizhongdiancai.com/jzdc-services/finance.html" v-else-if="item.flag.toString() === '1'" :key="index">
+                <a href="http://h5.jizhongdiancai.com/jzdc-services/finance.html" v-else-if="item.flag.toString() == '1'" :key="index">
                   <img :src="item.img" alt="" onerror="this.src='./static/images/temp-img.png'"/>
                   <div class="text-truncate">
                     {{item.name}}
                   </div>
                 </a>
-                <a href="http://h5.jizhongdiancai.com/jzdc-services/index.html" v-else-if="item.flag.toString() === '2'" :key="index">
+                <a href="http://h5.jizhongdiancai.com/jzdc-services/index.html" v-else-if="item.flag.toString() == '2'" :key="index">
                   <img :src="item.img" alt="" onerror="this.src='./static/images/temp-img.png'"/>
                   <div class="text-truncate">
                     {{item.name}}
                   </div>
                 </a>
-                <router-link v-else-if="item.flag.toString() === '3'" :to="{path: '/factoring'}" :key="index">
+                <router-link v-else-if="item.flag.toString() == '3'" :to="{path: '/factoring'}" :key="index">
                   <img :src="item.img" alt="" onerror="this.src='./static/images/temp-img.png'"/>
                   <div class="text-truncate">
                     {{item.name}}
@@ -47,19 +47,19 @@
                     {{item.name}}
                   </div>
                 </router-link>
-                <a href="http://h5.jizhongdiancai.com/jzdc-services/finance.html" v-else-if="item.flag.toString() === '1'" :key="index">
+                <a href="http://h5.jizhongdiancai.com/jzdc-services/finance.html" v-else-if="item.flag.toString() == '1'" :key="index">
                   <img :src="item.img" alt="" onerror="this.src='./static/images/temp-img.png'"/>
                   <div class="text-truncate">
                     {{item.name}}
                   </div>
                 </a>
-                <a href="http://h5.jizhongdiancai.com/jzdc-services/index.html" v-else-if="item.flag.toString() === '2'" :key="index">
+                <a href="http://h5.jizhongdiancai.com/jzdc-services/index.html" v-else-if="item.flag.toString() == '2'" :key="index">
                   <img :src="item.img" alt="" onerror="this.src='./static/images/temp-img.png'"/>
                   <div class="text-truncate">
                     {{item.name}}
                   </div>
                 </a>
-                <router-link v-else-if="item.flag.toString() === '3'" :to="{path: '/factoring'}" :key="index">
+                <router-link v-else-if="item.flag.toString() == '3'" :to="{path: '/factoring'}" :key="index">
                   <img :src="item.img" alt="" onerror="this.src='./static/images/temp-img.png'"/>
                   <div class="text-truncate">
                     {{item.name}}
@@ -86,7 +86,7 @@
             {{item.title}}
           </div>
           <div class="goods-price text-red">
-            ￥ {{item.min_price === '0.00'? item.w_price:item.min_price}}{{item.max_price===item.min_price?'':' ~ ￥'+item.max_price}}
+            ￥ {{item.min_price == '0.00'? item.w_price:item.min_price}}{{item.max_price==item.min_price?'':' ~ ￥'+item.max_price}}
           </div>
         </router-link>
       </li>
@@ -130,7 +130,7 @@ export default {
       axios.post('api/img/banner', {
         'type': this.type
       }).then((response) => {
-        if (response.data.status === 0) {
+        if (response.data.status == 0) {
           this.banners = response.data.data
           // 响应成功回调
         } else {
@@ -146,7 +146,7 @@ export default {
     },
     getMenunLists () {
       axios.get('api/goods/getCategory').then((response) => {
-        if (response.data.status === 0) {
+        if (response.data.status == 0) {
           this.menunLists = response.data.data
           // 响应成功回调
           var len = this.menunLists.length
@@ -173,7 +173,7 @@ export default {
       // 联网加载数据
       var self = this
       this.getListDataFromNet(page.num, page.size, function (curPageData, totalSize) {
-        if (page.num === 1) {
+        if (page.num == 1) {
           self.goodsLists = []
         }
         // 更新列表数据
@@ -192,7 +192,7 @@ export default {
           'pageNumber': pageNum,
           'pageSize': pageSize
         }).then((response) => {
-          if (response.data.status === 0) {
+          if (response.data.status == 0) {
             // 响应成功回调
             var data = response.data.data.list
             var total = response.data.data.total

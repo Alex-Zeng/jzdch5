@@ -90,7 +90,7 @@ export default {
     },
     getImgCode () {
       axios.get('api/captcha/img', this.mobile).then((response) => {
-        if (response.data.status === 0) {
+        if (response.data.status == 0) {
           this.id = response.data.data.id
           this.imgCodeSrc = response.data.data.src + '?t=' + new Date().getTime()
         } else {
@@ -113,7 +113,7 @@ export default {
             'id': this.id,
             'codeValid': val
           }).then((response) => {
-            if (response.data.status === 0) {
+            if (response.data.status == 0) {
               this.model1Show = false
               this.model2Show = true
               this.time = 60
@@ -149,7 +149,7 @@ export default {
             'phone': this.mobile,
             'code': this.mobileCode
           }).then((response) => {
-            if (response.data.status === 0) {
+            if (response.data.status == 0) {
               this.model1Show = false
               this.model2Show = false
               this.model3Show = true
@@ -182,7 +182,7 @@ export default {
             'userName': this.userName,
             'channel': 1
           }).then((response) => {
-            if (response.data.status === 0) {
+            if (response.data.status == 0) {
               this.$vux.toast.show({
                 type: 'success',
                 text: '注册成功',
@@ -222,26 +222,26 @@ export default {
       })
     },
     focusInput (event) {
-      if (this.code1 === '') {
+      if (this.code1 == '') {
         setTimeout(function () {
           document.getElementById('code1').focus()
         }, 50)
-      } else if (this.code2 === '') {
+      } else if (this.code2 == '') {
         setTimeout(function () {
           document.getElementById('code2').focus()
         }, 50)
-      } else if (this.code3 === '') {
+      } else if (this.code3 == '') {
         setTimeout(function () {
           document.getElementById('code3').focus()
         }, 50)
-      } else if (this.code4 === '') {
+      } else if (this.code4 == '') {
         setTimeout(function () {
           document.getElementById('code4').focus()
         }, 200)
       }
     },
     clear (event) {
-      if (event.keyCode === 8) {
+      if (event.keyCode == 8) {
         this.code3 = ''
         this.code2 = ''
         this.code1 = ''

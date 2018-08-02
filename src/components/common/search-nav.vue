@@ -67,7 +67,7 @@ export default {
       this.type = val.target.id
     },
     setFocus () {
-      if (this.select === true) {
+      if (this.select == true) {
         this.select = false
         this.isActive = false
       } else {
@@ -81,8 +81,8 @@ export default {
     },
     getResult (val) {
       /* this.mescroll.destroy() */
-      if (val.keyCode === 13 || val === true) {
-        if (val.keyCode === 13) {
+      if (val.keyCode == 13 || val == true) {
+        if (val.keyCode == 13) {
           let obj = { 'keyword': this.keywords }
           let allArr = []
           let oldArr = this.historyLists
@@ -90,7 +90,7 @@ export default {
           for (let i = 0; i < oldArr.length; i++) {
             let flag = true
             for (let j = 0; j < allArr.length; j++) {
-              if (oldArr[i].keyword === allArr[j].keyword) {
+              if (oldArr[i].keyword == allArr[j].keyword) {
                 flag = false
               }
             }
@@ -132,7 +132,7 @@ export default {
       this.keywords = ''
     },
     getHistory () {
-      if (this.loginToken === null) {
+      if (this.loginToken == null) {
         var localKeywords = localStorage.getItem('keyword')
         if (localKeywords !== null) {
           this.showHistory = true
@@ -142,7 +142,7 @@ export default {
         }
       } else {
         axios.get('api/record/getSearch').then((response) => {
-          if (response.data.status === 0) {
+          if (response.data.status == 0) {
             this.showHistory = true
             this.historyLists = response.data.data
           } else {
@@ -209,7 +209,7 @@ export default {
       this.getListDataFromNet(page.num, page.size, function (curPageData, totalSize) {
         // self.mescroll.destroy()
         // curPageData = [] // 打开本行注释,可演示列表无任何数据empty的配置
-        if (page.num === 1) self.goodsLists = []
+        if (page.num == 1) self.goodsLists = []
         // 更新列表数据
         self.goodsLists = self.goodsLists.concat(curPageData)
         self.mescroll.endBySize(curPageData.length, totalSize) // 必传参数(当前页的数据个数, 总数据量)
@@ -234,7 +234,7 @@ export default {
           'pageSize': pageSize,
           'cateId': self.$route.query.id
         }).then((response) => {
-          if (response.data.status === 0) {
+          if (response.data.status == 0) {
             // 响应成功回调
             var data = response.data.data.list
             var total = response.data.data.total

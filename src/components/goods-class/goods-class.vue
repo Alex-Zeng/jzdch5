@@ -45,7 +45,7 @@ export default {
   methods: {
     getCategoryList () {
       axios.get('api/goods/getCategoryList').then((response) => {
-        if (response.data.status === 0) {
+        if (response.data.status == 0) {
           let data = response.data.data
           for (let i = 0; i < data.length; i++) {
             this.categoryList.push({'id': parseInt(data[i].id), 'name': data[i].name})
@@ -66,7 +66,7 @@ export default {
       setTimeout(function () {
         let navData = self.categoryList
         for (let i = 0; i < navData.length; i++) {
-          if (navData[i].id === Number(id)) {
+          if (navData[i].id == Number(id)) {
             self.tabsort(i)
           }
         }

@@ -47,8 +47,8 @@ export default {
   },
   methods: {
     togglePassword (i) {
-      if (i === 1) {
-        if (this.typePassword === 'password') {
+      if (i == 1) {
+        if (this.typePassword == 'password') {
           this.typePassword = 'text'
           this.isTure1 = false
         } else {
@@ -56,8 +56,8 @@ export default {
           this.isTure1 = true
         }
       }
-      if (i === 2) {
-        if (this.typeConfirmPassword === 'password') {
+      if (i == 2) {
+        if (this.typeConfirmPassword == 'password') {
           this.typeConfirmPassword = 'text'
           this.isTure2 = false
         } else {
@@ -74,7 +74,7 @@ export default {
             'password': this.password,
             'confirmPassword': this.confirmPassword
           }).then((response) => {
-            if (response.data.status === 0) {
+            if (response.data.status == 0) {
               this.$vux.toast.show({
                 type: 'success',
                 text: response.data.msg,

@@ -48,10 +48,10 @@ export default {
     getInfo () {
       let self = this
       axios.get('api/user/getProfile').then((response) => {
-        if (response.data.status === 0) {
+        if (response.data.status == 0) {
           this.phone = response.data.data.phone
           this.email = response.data.data.email
-        } else if (response.data.status === -2) {
+        } else if (response.data.status == -2) {
           this.$vux.confirm.show({
             title: '提示',
             content: '您尚未登录，是否去登录？',
@@ -76,13 +76,13 @@ export default {
     },
     initialize () {
       axios.get('api/user/getPasswordStatus').then((response) => {
-        if (response.data.status === 0) {
-          if (response.data.data.password === 0) {
+        if (response.data.status == 0) {
+          if (response.data.data.password == 0) {
             this.passwordLink = '/safety/password-setting'
-          } else if (response.data.data.password === 1) {
+          } else if (response.data.data.password == 1) {
             this.passwordLink = '/safety/password-change'
           }
-        } else if (response.data.status === -2) {
+        } else if (response.data.status == -2) {
           this.$vux.confirm.show({
             title: '提示',
             content: '您尚未登录，是否去登录？',
@@ -102,9 +102,9 @@ export default {
         this.errorMsg()
       })
       axios.get('api/user/getEmailStatus').then((response) => {
-        if (response.data.data.email === 0) {
+        if (response.data.data.email == 0) {
           this.emailLink = '/safety/email-setting'
-        } else if (response.data.data.email === 1) {
+        } else if (response.data.data.email == 1) {
           this.emailLink = '/safety/email-change'
         } else {
           this.$vux.toast.show({

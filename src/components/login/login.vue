@@ -66,7 +66,7 @@ export default {
             'userName': this.mobile,
             'password': this.password
           }).then((response) => {
-            if (response.data.status === 0) {
+            if (response.data.status == 0) {
               localStorage.removeItem('loginToken')
               this.$vux.toast.show({
                 type: 'success',
@@ -106,7 +106,7 @@ export default {
     },
     getImgCode () {
       axios.get('api/captcha/img', this.mobile).then((response) => {
-        if (response.data.status === 0) {
+        if (response.data.status == 0) {
           this.imgCodeSrc = response.data.data.src + '?t=' + new Date().getTime()
         } else {
           this.$vux.toast.show({

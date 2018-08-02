@@ -76,7 +76,7 @@ export default {
         'email': this.email,
         'channel': 1
       }).then((response) => {
-        if (response.data.status === 0) {
+        if (response.data.status == 0) {
           this.setTimeMethods(2)
           this.$vux.toast.show({
             type: 'success',
@@ -95,7 +95,7 @@ export default {
     sendCode () {
       axios.post('api/email/send', {
       }).then((response) => {
-        if (response.data.status === 0) {
+        if (response.data.status == 0) {
           this.setTimeMethods(1)
           this.$vux.toast.show({
             type: 'success',
@@ -117,7 +117,7 @@ export default {
           axios.post('api/email/valid', {
             'code': this.oldCode
           }).then((response) => {
-            if (response.data.status === 0) {
+            if (response.data.status == 0) {
               this.showModel0 = false
               this.showModel1 = true
             } else {
@@ -143,7 +143,7 @@ export default {
             'code': this.oldCode,
             'newCode': this.newCode
           }).then((response) => {
-            if (response.data.status === 0) {
+            if (response.data.status == 0) {
               this.$vux.toast.show({
                 type: 'success',
                 text: response.data.msg,
@@ -167,7 +167,7 @@ export default {
     },
     setTimeMethods (i) {
       var self = this
-      if (i === 1) {
+      if (i == 1) {
         self.time1 = 59
         self.disabled1 = !self.disabled1
         var setTime1 = null
@@ -181,7 +181,7 @@ export default {
           self.disabled1 = !self.disabled1
         }
       }
-      if (i === 2) {
+      if (i == 2) {
         self.time2 = 59
         self.disabled2 = !self.disabled2
         var setTime2 = null
