@@ -25,7 +25,7 @@
             <i class="icon iconfont icon-shangdian text-blue"></i>
             {{i.companyName}}
           </div>
-          <div class="orderNo">订单号：{{i.out_id}} <span>{{parseInt(i.service_type) == 1? '售后处理中': parseInt(i.service_type) == 2 && parseInt(state) == 6? '售后完成': getState(i.state, parseInt(i.groupId))}}</span></div>
+          <div class="orderNo">订单号：{{i.out_id}} <span>{{parseInt(i.service_type) === 1? '售后处理中': parseInt(i.service_type) === 2 && parseInt(state) === 6? '售后完成': getState(parseInt(i.state), parseInt(i.groupId))}}</span></div>
           <div>
             <div class="order-item" v-for="(good, key) in i.goods" :key="wkey+key">
               <div slot="content" class="indent-content">
@@ -68,8 +68,8 @@
           <div class="detail-money"><span>总价：<span class="text-red">{{i.money}}元</span></span><span v-if="i.money !== i.goods_money">（原价:{{i.goods_money}}元）</span></div>
           <div class="order-action">
             <div style="margin-right: auto;"></div>
-            <div class="order-button" v-if="(parseInt(i.state) ==1 || parseInt(i.state) == 0)&&parseInt(i.groupId)==4" @click="cancle(i.out_id)">取消交易</div>
-            <div class="order-button" v-if="(parseInt(i.state) ==6 && (parseInt(i.service_type) ==0 || i.service_type ==2))&&parseInt(i.groupId)==4" @click="receipt(i.out_id)">确定收货</div>
+            <div class="order-button" v-if="(parseInt(i.state) ===1 || parseInt(i.state) === 0)&&parseInt(i.groupId)===4" @click="cancle(i.out_id)">取消交易</div>
+            <div class="order-button" v-if="(parseInt(i.state) ===6 && (parseInt(i.service_type) ===0 || i.service_type ===2))&&parseInt(i.groupId)===4" @click="receipt(i.out_id)">确定收货</div>
             <div class="order-button" @click="gotoDetail(i.out_id)">查看详情</div>
           </div>
         </div>
@@ -138,7 +138,7 @@ export default {
     upCallback: function (page) {
       var self = this
       this.getListDataFromNet(page.num, page.size, self.state, function (curPageData, totalSize) {
-        if (page.num == 1) self.list = []
+        if (page.num === 1) self.list = []
         // 更新列表数据
         self.list = self.list.concat(curPageData)
         self.mescroll.endBySize(curPageData.length, totalSize)
@@ -213,7 +213,7 @@ export default {
           'pageSize': pageSize,
           'status': state
         })
-        if (status == 0) {
+        if (status === 0) {
           let listData = []// 模拟分页数据
           for (let i = 0; i < list.length; i++) {
             if (list[i] !== undefined) {
@@ -273,7 +273,7 @@ export default {
           result = '逾期中'
           break
         case 11:
-          result = (group == 4 ? '交易完成' : '待结算')
+          result = (group === 4 ? '交易完成' : '待结算')
           break
         case 13:
           result = '交易完成'
@@ -290,7 +290,7 @@ export default {
     async showStatusList () {
       try {
         const {status, data, msg} = await service.get('api/order/showStatusList')
-        if (status == 0) {
+        if (status === 0) {
           let keys = Object.keys(data)
           let values = Object.values(data)
           this.menuRaw = data
