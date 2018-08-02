@@ -61,7 +61,7 @@
             <i class="icon iconfont icon-shangdian text-blue"></i>
             {{data.companyName}}
           </div>
-          <div class="orderNo">订单号：{{data.orderNo}} <span>{{parseInt(data.serviceType) === 1? '售后处理中': parseInt(data.serviceType) === 2 && parseInt(type) === 6? '售后完成': getState(parseInt(data.state), parseInt(data.groupId))}}</span></div>
+          <div class="orderNo">订单号：{{data.orderNo}} <span>{{parseInt(data.serviceType) == 1? '售后处理中': parseInt(data.serviceType) == 2 && parseInt(type) == 6? '售后完成': getState(parseInt(data.state), parseInt(data.groupId))}}</span></div>
           <div class="indent-content order-item" v-for="(good, key) in data.goods" :key="key">
             <img :src="good.icon" alt="" onerror="this.src='./static/images/temp-img.png'">
             <div class="indent-info">
@@ -99,7 +99,7 @@
                   <span class="text-red">{{good.price}}元</span>
                 </div>
                 <div class="order-button" style="margin-top: -0.12rem;"
-                     v-if="(parseInt(data.state)===6 || parseInt(data.state) === 13 || parseInt(data.state) === 9 || parseInt(data.state) ===10  || parseInt(data.state)===11)&&(parseInt(good.service_type)===0 )&&(parseInt(data.groupId)===4)"
+                     v-if="(parseInt(data.state)==6 || parseInt(data.state) == 13 || parseInt(data.state) == 9 || parseInt(data.state) ==10  || parseInt(data.state)==11)&&(parseInt(good.service_type)==0 )&&(parseInt(data.groupId)==4)"
                      @click="selectShow=true, goodsId = good.id">售后申请</div>
               </div>
             </div>
@@ -149,7 +149,7 @@
             <span class="label">备注</span><div class="value">{{data.remark}}</div>
           </div>
           <div class="line"></div>
-          <div v-if="parseInt(data.groupId ) === 5 && parseInt(data.state) === 3">
+          <div v-if="parseInt(data.groupId ) == 5 && parseInt(data.state) == 3">
             <div class="item"><b style="color: #222222;">填写发货信息</b></div>
             <Group>
               <XInput title="运单号" v-model="expressForm.expressCode" text-align="right"></XInput>
@@ -161,7 +161,7 @@
               <button type="button" class="btn btn-primary" @click="submitExpress">提交</button>
             </div>
           </div>
-          <div v-if="(parseInt(data.groupId) === 4 && parseInt(data.state) <= 3) || (!data.expressCode || !data.express)">
+          <div v-if="(parseInt(data.groupId) == 4 && parseInt(data.state) <= 3) || (!data.expressCode || !data.express)">
             <div class="order-tips">
               <div><img src="../../assets/images/empty_box.png" alt="" style="background-color: #fff;"></div>
               <div>暂无物流信息</div>
@@ -338,7 +338,7 @@ export default {
           result = '逾期中'
           break
         case 11:
-          result = (group === 4 ? '交易完成' : '待结算')
+          result = (group == 4 ? '交易完成' : '待结算')
           break
         case 13:
           result = '交易完成'
