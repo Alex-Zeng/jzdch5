@@ -25,7 +25,7 @@
             <i class="icon iconfont icon-shangdian text-blue"></i>
             {{i.companyName}}
           </div>
-          <div class="orderNo">订单号：{{i.out_id}} <span>{{parseInt(i.service_type) === 1? '售后处理中': parseInt(i.service_type) === 2 && parseInt(state) === 6? '售后完成': getState(i.state, parseInt(i.groupId))}}</span></div>
+          <div class="orderNo">订单号：{{i.out_id}} <span>{{parseInt(i.service_type) === 1? '售后处理中': parseInt(i.service_type) === 2 && parseInt(state) === 6? '售后完成': getState(parseInt(i.state), parseInt(i.groupId))}}</span></div>
           <div>
             <div class="order-item" v-for="(good, key) in i.goods" :key="wkey+key">
               <div slot="content" class="indent-content">
