@@ -74,7 +74,7 @@
           </div>
           <div style="padding-right: 2rem">&emsp;</div>
         </div>
-        <div class="indent-content" style="margin-top: 0.5rem;">
+        <div class="indent-content" style="margin-top: 2.5rem;">
           <img :src="editor.icon" alt="图片" onerror="this.src='./static/images/temp-img.png'">
           <div class="indent-info">
             <h3>{{editor.title}}</h3>
