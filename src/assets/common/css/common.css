@@ -178,13 +178,17 @@ body{
   margin-right: 1rem;
   flex: 1;
   height: 100%;
-  background: rgba(246, 246, 246, 0.3) url(../../images/search.png) no-repeat 0.5rem center;
+  background: rgba(246, 246, 246, 0.3) no-repeat 0.5rem center;
   border-radius: 0.65rem;
   padding-left: 1.8rem;
 }
 .search .iconfont{
   position: relative;
   color: #FFFFFF;
+}
+.search .iconfont.icon-sousuo{
+  position: absolute;
+  left: 1.5rem;
 }
 .search .vux-badge{
   position: absolute;
