@@ -27,7 +27,7 @@
           <group>
             <x-address @on-hide="logHide" @on-show="logShow" title="所在地址" v-model="value" :list="addressData" @on-shadow-change="onShadowChange" placeholder="请选择您所在的地区" :show.sync="showAddress"></x-address>
           </group>
-          <span v-if="area"  class="help is-danger">所在地址 是必须的</span>
+          <span v-if="myArea"  class="help is-danger">所在地址 是必须的</span>
         </li>
         <li>
           <div class="cells">
@@ -77,7 +77,7 @@ export default {
       showAddress: false,
       userName: '',
       mobile: '',
-      area: false,
+      myArea: false,
       areaId: '',
       addressDetail: '',
       showInput: false,
@@ -101,9 +101,9 @@ export default {
     },
     logHide (str) {
       if (this.value.length > 0) {
-        this.area = false
+        this.myArea = false
       } else {
-        this.area = true
+        this.myArea = true
       }
     },
     logShow (str) {
@@ -227,9 +227,9 @@ export default {
           return
         }
         if (this.value.length > 0) {
-          this.area = false
+          this.myArea = false
         } else {
-          this.area = true
+          this.myArea = true
         }
       })
     },
