@@ -25,10 +25,12 @@
         <button type="submit" class="btn btn-primary">下一步</button>
       </form>
       <div class="user-agreement">
-        未注册用户登录后代表您已阅读并同意
-        <a href="javascript:;" @click="msg = true">《用户协议》</a>
+        <i class="icon iconfont icon-xuanzhong" style="color: #1EB9EE;"></i>
+        我已阅读并同意
+        <a href="javascript:;" @click="msg = true">《用户协议》</a>、<a href="javascript:;" @click="secrecy = true">《保密协议》</a>
       </div>
       <agreement @showbox="toshow" v-if="msg"></agreement>
+      <secrecy @showboxSecrecy="toshowSecrecy" v-if="secrecy"></secrecy>
     </template>
     <template v-if="model2Show">
       <div class="login-top">
@@ -60,6 +62,7 @@
 <script>
 import axios from 'axios'
 import agreement from '@/components/login/agreement'
+import secrecy from '@/components/login/secrecy'
 require('../../assets/css/login.css')
 export default {
   name: 'login',
@@ -81,12 +84,16 @@ export default {
       setTimeOut: true,
       resetCode: false,
       time: 60,
-      msg: false
+      msg: false,
+      secrecy: false
     }
   },
   methods: {
-    toshow (msg) {
-      this.msg = msg
+    toshow (data) {
+      this.msg = data
+    },
+    toshowSecrecy (data) {
+      this.secrecy = data
     },
     getImgCode () {
       axios.get('api/captcha/img', this.mobile).then((response) => {
@@ -300,7 +307,8 @@ export default {
     }
   },
   components: {
-    agreement
+    agreement,
+    secrecy
   }
 }
 </script>

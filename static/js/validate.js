@@ -13,7 +13,7 @@ Validator.localize(Validator.locale, {
   }
 })
 Validator.extend('phone', {
-  getMessage: (field, [args]) => `请输入正确的手机号码`,
+  getMessage: (field, [args]) => `您输入的联系方式无效，请输入有效的手机号码`,
   validate: (value, [args]) =>{
     const reg = /^((13|14|15|17|18)[0-9]{1}\d{8})$/
     return reg.test(value)
