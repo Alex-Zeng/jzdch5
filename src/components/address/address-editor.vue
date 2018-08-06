@@ -10,30 +10,31 @@
     <form class="form" @submit.prevent="getMobileCode(1)">
       <ul>
         <li>
-          <i :class="{'is-danger': errors.has('userName')}"></i>
           <div class="cells">
             <label for="">收货人&emsp;</label>
-            <input name="userName" v-model="userName" v-validate="'required'" type="text" placeholder="请输入收货人姓名">
+            <input name="收货人姓名" v-model="userName" v-validate="'required'" type="text" placeholder="请输入收货人姓名">
           </div>
+          <span v-show="errors.has('收货人姓名')" class="help is-danger">{{ errors.first('收货人姓名') }}</span>
         </li>
         <li>
-          <i :class="{'is-danger': errors.has('mobile')}"></i>
           <div class="cells">
             <label for="">联系方式</label>
-            <input name="mobile" v-model="mobile" v-validate="'required|phone'" type="text" placeholder="请输入您的手机号码">
+            <input name="联系方式" v-model="mobile" v-validate="'required|phone'" type="text" placeholder="请输入您的手机号码">
           </div>
+          <span v-show="errors.has('联系方式')" class="help is-danger">{{ errors.first('联系方式') }}</span>
         </li>
         <li>
           <group>
             <x-address @on-hide="logHide" @on-show="logShow" title="所在地址" v-model="value" :list="addressData" @on-shadow-change="onShadowChange" placeholder="请选择您所在的地区" :show.sync="showAddress"></x-address>
           </group>
+          <span v-if="area"  class="help is-danger">所在地址 是必须的</span>
         </li>
         <li>
-          <i :class="{'is-danger': errors.has('addressDetail')}"></i>
           <div class="cells">
             <label for="">详细地址</label>
-            <input name="addressDetail" v-model="addressDetail" v-validate="'required'" type="text" placeholder="请输入您的详细地址">
+            <input name="详细地址" v-model="addressDetail" v-validate="'required'" type="text" placeholder="请输入您的详细地址">
           </div>
+          <span v-show="errors.has('详细地址')" class="help is-danger">{{ errors.first('详细地址') }}</span>
         </li>
         <li>
           <i :class="{'is-danger': errors.has('newTag')}"></i>
@@ -76,6 +77,7 @@ export default {
       showAddress: false,
       userName: '',
       mobile: '',
+      area: false,
       areaId: '',
       addressDetail: '',
       showInput: false,
@@ -98,6 +100,11 @@ export default {
       this.areaId = ids.slice(-1).join()
     },
     logHide (str) {
+      if (this.value.length > 0) {
+        this.area = false
+      } else {
+        this.area = true
+      }
     },
     logShow (str) {
     },
@@ -219,10 +226,11 @@ export default {
           })
           return
         }
-        this.$vux.toast.show({
-          type: 'warn',
-          text: '请填写相关信息'
-        })
+        if (this.value.length > 0) {
+          this.area = false
+        } else {
+          this.area = true
+        }
       })
     },
     errorMsg () {
