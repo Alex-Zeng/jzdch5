@@ -7,7 +7,7 @@
       </div>
       <div style="padding-right: 2rem">&emsp;</div>
     </div>
-    <div class="search-lists-header"><span style="color: #222222;" @click="defaultSortMethods">默认</span> <span @click="sortMethods">价格<i class="icon iconfont icon-jiagepaixu1"></i></span></div>
+    <div class="search-lists-header"><span style="color: #222222;" @click="defaultSortMethods">默认</span> <span @click="sortMethods">价格<i class="jiagepaixu1" :class="{ 'sort': isSort, 'down': isDown }"></i></span></div>
     <div  class="mescroll" id="mescroll" style="padding-top: 3rem;border-top: 0.05rem solid #E0E0E0;">
       <div id="favoriteList" v-cloak>
         <!--展示上拉加载的数据列表-->
@@ -46,7 +46,9 @@ export default {
     return {
       favoriteList: [],
       field: 'time',
-      mySort: 'asc'
+      mySort: 'asc',
+      isSort: false,
+      isDown: false
     }
   },
   methods: {
@@ -117,8 +119,12 @@ export default {
       this.field = 'price'
       if (this.mySort == 'asc') {
         this.mySort = 'desc'
+        this.isSort = true
+        this.isDown = false
       } else {
         this.mySort = 'asc'
+        this.isSort = false
+        this.isDown = true
       }
       this.mescroll.resetUpScroll()
     },
