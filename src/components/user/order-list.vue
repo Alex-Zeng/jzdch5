@@ -123,12 +123,9 @@ export default {
         // page:{size:8}, //可配置每页8条数据,默认10
         offset: 500,
         empty: { // 配置列表无任何数据的提示
-          warpId: null,
-          // icon: '../res/img/mescroll-empty.png'
-          tip: '亲,暂无相关数据哦~',
-          btntext: '去逛逛 >',
-          btnClick: function () {
-          }
+          warpId: 'order-mescroll',
+          icon: './static/images/temp-img-2.png',
+          tip: '您还没有相关的订单'
         }
       }
     })

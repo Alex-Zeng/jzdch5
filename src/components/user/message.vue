@@ -11,6 +11,7 @@
       <tab-item class="vux-center" :selected="selectedDeafult == item" v-for="(item, index) in list2" @click="selectedDeafult = item" @on-item-click="onItemClick" :key="index" :i="index">{{item}}</tab-item>
     </tab>
     <div  v-show="index == 0" id="mescroll" class="mescroll message-lists" style="padding-bottom: 6rem;">
+      <div id="message-lists">
       <swipeout v-for="(item, index) in MessageList" :key="index">
         <p class="text-muted release-time" style="font-size: 0.6rem;">{{item.release_time}}</p>
         <swipeout-item transition-mode="follow">
@@ -27,9 +28,10 @@
           </div>
         </swipeout-item>
       </swipeout>
+      </div>
     </div>
     <div  v-show="index == 1" id="mescroll1" class="mescroll" style="padding-bottom: 6rem;">
-      <ul class="notice-list">
+      <ul id="notice-list" class="notice-list">
         <li v-for="(item, index) in NoticeList" :key="index">
           <p class="text-muted release-time" style="font-size: 0.6rem;">{{item.release_time}}</p>
           <div class="notice-content" @click="noticeDetail(item.id)">
@@ -195,12 +197,9 @@ export default {
           callback: self.upCallback, // 上拉回调,此处可简写; 相当于 callback: function (page) { getListData(page); }
           isBounce: false, // 此处禁止ios回弹,解析(务必认真阅读,特别是最后一点): http://www.mescroll.com/qa.html#q10
           empty: {
-            warpId: null,
-            // icon: '../res/img/mescroll-empty.png', // 图标,默认null
-            tip: '暂无相关数据~', // 提示
-            btntext: '去逛逛 >', // 按钮,默认""
-            btnClick: function () { // 点击按钮的回调,默认null
-            }
+            warpId: 'message-lists',
+            icon: './static/images/msg.png', // 图标,默认null
+            tip: '暂无相关数据~'
           }
         }
       })
@@ -213,12 +212,9 @@ export default {
           callback: self.upCallback1, // 上拉回调,此处可简写; 相当于 callback: function (page) { getListData(page); }
           isBounce: false, // 此处禁止ios回弹,解析(务必认真阅读,特别是最后一点): http://www.mescroll.com/qa.html#q10
           empty: {
-            warpId: null,
-            // icon: '../res/img/mescroll-empty.png', // 图标,默认null
-            tip: '暂无相关数据~', // 提示
-            btntext: '去逛逛 >', // 按钮,默认""
-            btnClick: function () { // 点击按钮的回调,默认null
-            }
+            warpId: 'notice-list',
+            icon: './static/images/msg.png', // 图标,默认null
+            tip: '暂无相关数据~' // 提示
           }
         }
       })

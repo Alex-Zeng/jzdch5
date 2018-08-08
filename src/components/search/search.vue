@@ -223,13 +223,8 @@ export default {
             offset: 500,
             empty: { // 配置列表无任何数据的提示
               warpId: 'dataList',
-              // icon: '../res/img/mescroll-empty.png'
-              tip: '亲,暂无相关数据哦~',
-              btntext: '去逛逛 >',
-              btnClick: function () {
-                // alert('点击了去逛逛按钮')
-                self.$router.push('/')
-              }
+              icon: './static/images/shoucangjia.png',
+              tip: '暂时还没有相关的商品'
             }
           }
         })

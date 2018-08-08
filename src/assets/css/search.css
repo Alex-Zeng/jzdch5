@@ -49,6 +49,7 @@
   border-top-color: #1EB9EE;
 }
 .search-lists{
+  min-height: 98%;
   border-bottom: 1px solid #E1E1E1;
   padding-top: 0.6rem;
 }

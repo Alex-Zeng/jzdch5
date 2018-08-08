@@ -479,6 +479,20 @@ input:-ms-input-placeholder {
 #app .weui-cell__ft{
   font-size: 0.7rem;
 }
+#app .mescroll-empty .empty-btn{
+  width: 51rem;
+  background: #1EB9EE;
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: bold;
+  border-radius: 0.15rem;
+  border: none;
+  box-sizing: border-box;
+  margin: 0.5rem auto;
+}
+#app .mescroll-empty{
+  padding-top: 6rem;
+}
 /*修改插件样式*/
 
 /*表单*/

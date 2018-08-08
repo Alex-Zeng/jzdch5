@@ -151,9 +151,9 @@ export default {
         offset: 500,
         empty: { // 配置列表无任何数据的提示
           warpId: 'favoriteList',
-          // icon: '../res/img/mescroll-empty.png',
+          icon: './static/images/shoucangjia.png',
           tip: '亲,暂无相关数据哦~',
-          btntext: '去逛逛 >',
+          btntext: '快速收藏',
           btnClick: function () {
             self.$router.push('/')
           }
