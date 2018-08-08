@@ -224,7 +224,7 @@ export default {
             empty: { // 配置列表无任何数据的提示
               warpId: 'dataList',
               icon: './static/images/shoucangjia.png',
-              tip: '暂时还没有相关的商品'
+              tip: '暂时还没有相关的信息'
             }
           }
         })
