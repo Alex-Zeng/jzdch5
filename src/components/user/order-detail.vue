@@ -164,7 +164,7 @@
           <div v-if="(parseInt(data.groupId) == 4 && parseInt(data.state) <= 3) || (!data.expressCode || !data.express)">
             <div class="order-tips">
               <div><img src="../../assets/images/empty_box.png" alt="" style="background-color: #fff;"></div>
-              <div>暂无物流信息</div>
+              <!--<div>暂无物流信息</div>-->
             </div>
           </div>
           <div v-if="(data.state > 3) && (data.expressCode && data.express)">

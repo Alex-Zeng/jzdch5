@@ -5,31 +5,33 @@
         <i class="icon iconfont icon-guanbi" @click="$router.push('/')"></i>
         <router-link to="/login" replace>账号密码登录</router-link>
       </div>
-      <form class="form" @submit.prevent="getMobileCode(1)">
+      <div class="form">
         <ul>
           <li>
             <i :class="{'is-danger': errors.has('mobile')}"></i>
             <div class="cells">
               <label for="">+86</label>
-              <input name="mobile" v-model="mobile" v-validate="'required|phone'" maxlength="11" type="text" placeholder="填写手机号码，未注册用户也可直接登录">
+              <input name="手机号码" v-model="mobile" v-validate="'required|phone'" maxlength="11" type="text" placeholder="填写手机号码，未注册用户也可直接登录">
             </div>
+            <span v-show="errors.has('手机号码')" class="help is-danger">{{ errors.first('手机号码') }}</span>
           </li>
           <li>
             <div class="cells">
-              <input title="验证码" name="code" required maxlength="4" v-model="verificationCode" placeholder="请输入右侧验证码"/>
+              <input title="验证码" name="验证码" v-validate="'required'" maxlength="4" v-model="verificationCode" placeholder="请输入右侧验证码"/>
               <img class="img-code" @click="getImgCode" :src="imgCodeSrc" onerror="this.src='./static/images/temp-img.png'">
             </div>
+            <span v-show="errors.has('验证码')" class="help is-danger">{{ errors.first('验证码') }}</span>
           </li>
         </ul>
-        <button type="submit" class="btn btn-primary">下一步</button>
-      </form>
+        <button type="submit" class="btn btn-primary" @click="getMobileCode(1)">下一步</button>
+      </div>
     </template>
     <template v-if="model2Show">
       <div class="login-top">
         <i class="icon iconfont icon-back" @click="back"></i>
         <router-link to="/login" replace>账号密码登录</router-link>
       </div>
-      <form class="form" @submit.prevent="getMobileCode(0)">
+      <div class="form">
         <div class="text-gray">短信验证码已发送至 {{mobile}}</div>
         <div class="code-input-box" @click="focusInput"  @keyup="clear($event)">
           <input type="number" id="code1" v-model="code1" oninput="if(value.length>1)value=value.slice(0,1)">
@@ -39,15 +41,22 @@
         </div>
         <div class="text-gray" v-if="setTimeOut"><span v-text="time"></span>s后重新发送</div>
         <button type="button" class="btn btn-link" v-if="resetCode" @click="getMobileCode(0)">重新发送验证码</button>
-      </form>
+      </div>
     </template>
     <template v-if="model3Show">
       <div class="login-top"></div>
-      <form class="form" @submit.prevent="submit">
+      <div class="form">
         <input type="hidden" v-model="mobileCode">
-        <input type="text" class="border-input" name="userName" v-validate="'required'" minlength="4" maxlength="20" required v-model="userName" placeholder="首次登录，请设置4~20位非纯数字用户名">
-        <button type="submit" class="btn btn-primary">提交</button>
-      </form>
+        <div class="cells border-input-cells">
+          <input type="text" class="border-input" name="用户名" v-validate="'required'" minlength="4" maxlength="20" required v-model="userName" placeholder="首次登录，请设置4~20位非纯数字用户名">
+          <span v-show="errors.has('用户名')" class="help is-danger">{{ errors.first('用户名') }}</span>
+        </div>
+        <div class="cells border-input-cells">
+          <input type="password" class="border-input" name="密码" v-validate="'required|verificationPassword'" minlength="6" maxlength="20" required v-model="userPassword" placeholder="请设置6~20位字母及数字的组合密码">
+          <span v-show="errors.has('密码')" class="help is-danger">{{ errors.first('密码') }}</span>
+        </div>
+        <button type="submit" class="btn btn-primary" @click="submit">提交</button>
+      </div>
     </template>
   </div>
 </template>
@@ -65,6 +74,7 @@ export default {
       code4: '',
       mobileCode: '',
       userName: '',
+      userPassword: '',
       imgCodeSrc: '',
       channel: '2',
       id: '',
@@ -124,12 +134,8 @@ export default {
             // 响应错误回调
             this.errorMsg()
           })
-          return
+          return  false
         }
-        this.$vux.toast.show({
-          type: 'warn',
-          text: '请填写手机号或图片验证码'
-        })
       })
     },
     checkCode () {
@@ -188,6 +194,7 @@ export default {
             'phone': this.mobile,
             'code': this.mobileCode,
             'userName': this.userName,
+            'password': this.userName,
             'channel': 0
           }).then((response) => {
             if (response.data.status == 0) {

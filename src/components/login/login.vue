@@ -4,22 +4,24 @@
       <i class="icon iconfont icon-guanbi" onclick="history.go(-1)"></i>
       <router-link to="/loginByCode" replace>免密登录</router-link>
     </div>
-    <form class="form">
+    <div class="form">
       <ul>
         <li>
           <i :class="{'is-danger': errors.has('mobile')}"></i>
           <div class="cells">
             <label for="">用户名</label>
-            <input type="text" name="mobile" v-validate="'required'" v-model="mobile" placeholder="请输入您的用户名/手机号/邮箱"/>
+            <input type="text" name="请输入您的用户名/手机号/邮箱" v-validate="'required'" v-model="mobile" placeholder="请输入您的用户名/手机号/邮箱"/>
           </div>
+          <span v-show="errors.has('请输入您的用户名/手机号/邮箱')" class="help is-danger">{{ errors.first('请输入您的用户名/手机号/邮箱') }}</span>
         </li>
         <li>
           <i :class="{'is-danger': errors.has('password')}"></i>
           <div class="cells">
             <label for="">密码&emsp;</label>
-            <input type="password" name="password" v-validate="'required'" v-model="password" placeholder="请输入您的登陆密码"/>
+            <input type="password" name="密码" v-validate="'required'" v-model="password" placeholder="请输入您的登陆密码"/>
             <input type="hidden" v-model="password2">
           </div>
+          <span v-show="errors.has('密码')" class="help is-danger">{{ errors.first('密码') }}</span>
         </li>
         <li v-if="false">
           <div class="cells">
@@ -29,7 +31,7 @@
         </li>
       </ul>
       <button type="button" class="btn btn-primary" @click="login">登录</button>
-    </form>
+    </div>
     <div class="user-agreement">
       <router-link to="/register" replace class="text-muted fl">免费注册</router-link>
       <router-link to="/forget-password" replace class="text-muted fr">忘记密码</router-link>
@@ -96,12 +98,8 @@ export default {
             // 响应错误回调
             this.errorMsg()
           })
-          return
+          return false
         }
-        this.$vux.toast.show({
-          type: 'warn',
-          text: '请填写用户名和密码'
-        })
       })
     },
     getImgCode () {

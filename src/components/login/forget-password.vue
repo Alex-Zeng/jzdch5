@@ -4,7 +4,7 @@
       <div class="login-top">
         <router-link  class="icon iconfont icon-guanbi" to="/login" replace></router-link>
       </div>
-      <form class="form" action="">
+      <div class="form">
         <ul>
           <li>
             <div class="text-muted form-title">
@@ -12,21 +12,22 @@
             </div>
           </li>
           <li>
-            <i :class="{'is-danger': errors.has('mobile')}"></i>
+            <i :class="{'is-danger': errors.has('手机号')}"></i>
             <div class="cells">
               <label>+86</label>
-              <input name="mobile" v-model="mobile" v-validate="'required|phone'" placeholder="请输入注册手机号"/>
+              <input name="手机号" v-model="mobile" v-validate="'required|phone'" placeholder="请输入注册手机号"/>
             </div>
+            <span v-show="errors.has('手机号')" class="help is-danger">{{ errors.first('手机号') }}</span>
           </li>
         </ul>
         <button type="button" class="btn btn-primary" @click="getImgCode">下一步</button>
-      </form>
+      </div>
     </template>
     <template  v-if="model2Show">
       <div class="login-top">
         <i class="icon iconfont icon-back" @click="back"></i>
       </div>
-      <form action="" class="form">
+      <div class="form">
         <ul>
           <li>
             <div class="text-muted form-title">
@@ -34,20 +35,22 @@
             </div>
           </li>
           <li>
+            <i :class="{'is-danger': errors.has('验证码')}"></i>
             <div class="cells">
-              <input title="验证码" name="code" required maxlength="5" v-model="verificationCode" placeholder="请输入右侧验证码"/>
+              <input title="验证码" name="验证码" v-validate="'required'" maxlength="4" v-model="verificationCode" placeholder="请输入右侧验证码"/>
+              <img class="img-code" @click="getImgCode" :src="imgCodeSrc" onerror="this.src='./static/images/temp-img.png'">
             </div>
-            <img class="img-code" @click="getImgCode" :src="imgCodeSrc" onerror="this.src='./static/images/temp-img.png'">
+            <span v-show="errors.has('验证码')" class="help is-danger">{{ errors.first('验证码') }}</span>
           </li>
         </ul>
         <button type="button" class="btn btn-primary" @click="getMobileCode(1)">下一步</button>
-      </form>
+      </div>
     </template>
     <template v-if="model3Show">
       <div class="login-top">
         <i class="icon iconfont icon-back" @click="back"></i>
       </div>
-      <form class="form" action="">
+      <div class="form">
         <div class="text-gray">短信验证码已发送至 {{mobile}}</div>
         <div class="code-input-box" @click="focusInput"  @keyup="clear($event)">
           <input type="number" id="code1" v-model="code1" oninput="if(value.length>1)value=value.slice(0,1)">
@@ -57,15 +60,21 @@
         </div>
         <div class="text-gray" v-if="setTimeOut"><span v-text="time"></span>s后重新发送</div>
         <button type="button" class="btn btn-link" @click="getMobileCode(0)" v-if="resetCode">重新发送验证码</button>
-      </form>
+      </div>
     </template>
     <template v-if="model4Show">
       <div class="login-top"></div>
-      <form class="form" action="" method="post">
-          <input type="password" class="border-input" name="password" minlength="6" maxlength="20" v-validate="'required|verificationPassword'" v-model="password" placeholder="请设置6-20位密码">
-          <input type="password" class="border-input" name="confirmPassword" minlength="6" maxlength="20" v-validate="'required|verificationPassword|confirmed:password'" v-model="confirmPassword" placeholder="请再次输入密码">
+      <div class="form">
+        <div class="cells border-input-cells">
+          <input type="password" class="border-input" name="密码" minlength="6" maxlength="20" v-validate="'required|verificationPassword'" v-model="password" placeholder="请设置6-20位密码">
+          <span v-show="errors.has('密码')" class="help is-danger">{{ errors.first('密码') }}</span>
+        </div>
+        <div class="cells border-input-cells">
+          <input type="password" class="border-input" name="确认密码" minlength="6" maxlength="20" v-validate="'required|verificationPassword|confirmed:password'" v-model="confirmPassword" placeholder="请再次输入密码">
+          <span v-show="errors.has('确认密码')" class="help is-danger">{{ errors.first('确认密码') }}</span>
+        </div>
         <button type="button" class="btn btn-primary" @click="submit">提交</button>
-      </form>
+      </div>
     </template>
   </div>
 </template>
@@ -130,12 +139,8 @@ export default {
             // 响应错误回调
             this.errorMsg()
           })
-          return
+          return false
         }
-        this.$vux.toast.show({
-          type: 'warn',
-          text: '请填写注册手机号'
-        })
       })
     },
     getMobileCode (val) {
@@ -196,34 +201,38 @@ export default {
     },
     submit () {
       var self = this
-      axios.post('api/password/update', {
-        'phone': this.mobile,
-        'code': this.mobileCode,
-        'password': this.password,
-        'confirmPassword': this.confirmPassword
-      }).then((response) => {
-        if (response.data.status == 0) {
-          this.$vux.toast.show({
-            type: 'success',
-            text: '密码修改成功',
-            onShow () {
-              // 响应成功回调
-              document.cookie = '_token='
-              localStorage.clear()
-            },
-            onHide () {
-              self.$router.replace('/login')
+      this.$validator.validateAll().then((result) => {
+        if (result) {
+          axios.post('api/password/update', {
+            'phone': this.mobile,
+            'code': this.mobileCode,
+            'password': this.password,
+            'confirmPassword': this.confirmPassword
+          }).then((response) => {
+            if (response.data.status == 0) {
+              this.$vux.toast.show({
+                type: 'success',
+                text: '密码修改成功',
+                onShow () {
+                  // 响应成功回调
+                  document.cookie = '_token='
+                  localStorage.clear()
+                },
+                onHide () {
+                  self.$router.replace('/login')
+                }
+              })
+            } else {
+              this.$vux.toast.show({
+                type: 'warn',
+                text: response.data.msg
+              })
             }
-          })
-        } else {
-          this.$vux.toast.show({
-            type: 'warn',
-            text: response.data.msg
+          }).catch((response) => {
+            // 响应错误回调
+            this.errorMsg()
           })
         }
-      }).catch((response) => {
-        // 响应错误回调
-        this.errorMsg()
       })
     },
     focusInput (event) {
