@@ -57,25 +57,37 @@ export default {
       document.getElementById(`img${this.id}`).click()
     },
     async upload () {
+      let totalM = 0
       let fd = new FormData()
       fd.append('type', this.type || 'certification ')
       fd.append('image', document.getElementById(`img${this.id}`).files[0])
       this.isProgress = true
       let config = {
         onUploadProgress: progressEvent => {
+          console.log(progressEvent.total)
+          totalM = (progressEvent.total / 1024) / 1024
+          console.log(totalM)
           let complete = (progressEvent.loaded / progressEvent.total * 100 | 0)
           this.count = complete
         }
       }
-      const { data } = await axios.post('api/image_upload/index', fd, config)
-      const {data: { filename }, status, path} = data
-      setTimeout(() => {
-        this.isProgress = false
-      }, 200)
-      if (status == 0) {
-        this.$emit('input', filename)
-        this.$emit('change', filename)
-        this.path = path
+      if (totalM > 8) {
+        this.$vux.toast.show({
+          type: 'warn',
+          text: '上传文件不能大于8M'
+        })
+        return false
+      } else {
+        const { data } = await axios.post('api/image_upload/index', fd, config)
+        const {data: { filename }, status, path} = data
+        setTimeout(() => {
+          this.isProgress = false
+        }, 200)
+        if (status == 0) {
+          this.$emit('input', filename)
+          this.$emit('change', filename)
+          this.path = path
+        }
       }
     }
   }
