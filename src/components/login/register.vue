@@ -5,32 +5,27 @@
         <i class="icon iconfont icon-guanbi" onclick="history.go(-1)"></i>
         <router-link to="/login" replace>账号密码登录</router-link>
       </div>
-      <form class="form" @submit.prevent="getMobileCode(1)">
+      <div class="form">
         <ul>
           <li>
-            <i :class="{'is-danger': errors.has('mobile')}"></i>
+            <i :class="{'is-danger': errors.has('手机号码')}"></i>
             <div class="cells">
               <label>+86</label>
-              <input name="mobile" v-model="mobile" v-validate="'required|phone'" type="text" placeholder="填写手机号码，未注册用户也可直接登录">
+              <input name="手机号码" v-model="mobile" v-validate="'required|phone'" type="text" placeholder="填写手机号码，未注册用户也可直接登录">
             </div>
+            <span v-show="errors.has('手机号码')" class="help is-danger">{{ errors.first('手机号码') }}</span>
           </li>
           <li>
-            <i :class="{'is-danger': errors.has('verificationCode')}"></i>
+            <i :class="{'is-danger': errors.has('验证码')}"></i>
             <div class="cells">
-              <input title="验证码" name="verificationCode" v-model="verificationCode" v-validate="'required|verificationCode'" type="text" maxlength="4" placeholder="请输入右侧验证码"/>
+              <input title="验证码" name="验证码" v-model="verificationCode" v-validate="'required|verificationCode'" type="text" maxlength="4" placeholder="请输入右侧验证码"/>
+              <img class="img-code" @click="getImgCode" :src="imgCodeSrc" onerror="this.src='./static/images/temp-img.png'">
             </div>
-            <img class="img-code" @click="getImgCode" :src="imgCodeSrc" onerror="this.src='./static/images/temp-img.png'">
+            <span v-show="errors.has('验证码')" class="help is-danger">{{ errors.first('验证码') }}</span>
           </li>
         </ul>
-        <button type="submit" class="btn btn-primary">下一步</button>
-      </form>
-      <div class="user-agreement">
-        <i class="icon iconfont icon-xuanzhong" style="color: #1EB9EE;"></i>
-        我已阅读并同意
-        <a href="javascript:;" @click="msg = true">《用户协议》</a>、<a href="javascript:;" @click="secrecy = true">《保密协议》</a>
+        <button type="submit" class="btn btn-primary" @click="getMobileCode(1)">下一步</button>
       </div>
-      <agreement @showbox="toshow" v-if="msg"></agreement>
-      <secrecy @showboxSecrecy="toshowSecrecy" v-if="secrecy"></secrecy>
     </template>
     <template v-if="model2Show">
       <div class="login-top">
@@ -51,11 +46,25 @@
     </template>
     <template v-if="model3Show">
       <div class="login-top"></div>
-      <form class="form" @submit.prevent="submit">
+      <div class="form">
         <input type="hidden" v-model="mobileCode">
-        <input type="text" class="border-input" name="userName" v-validate="'required'" minlength="4" maxlength="20" required v-model="userName" placeholder="首次登录，请设置4~20位非纯数字用户名">
-        <button type="submit" class="btn btn-primary">提交</button>
-      </form>
+        <div class="cells border-input-cells">
+        <input type="text" class="border-input" name="用户名" v-validate="'required'" minlength="4" maxlength="20" required v-model="userName" placeholder="首次登录，请设置4~20位非纯数字用户名">
+        <span v-show="errors.has('用户名')" class="help is-danger">{{ errors.first('用户名') }}</span>
+        </div>
+        <div class="cells border-input-cells">
+          <input type="password" class="border-input" name="密码" v-validate="'required|verificationPassword'" minlength="6" maxlength="20" required v-model="userPassword" placeholder="请设置6~20位字母及数字的组合密码">
+          <span v-show="errors.has('密码')" class="help is-danger">{{ errors.first('密码') }}</span>
+        </div>
+        <button type="submit" class="btn btn-primary" @click="submit">登录</button>
+      </div>
+      <div class="user-agreement">
+        <i class="icon iconfont icon-xuanzhong" style="color: #1EB9EE;"></i>
+        我已阅读并同意
+        <a href="javascript:;" @click="msg = true">《用户协议》</a>、<a href="javascript:;" @click="secrecy = true">《保密协议》</a>
+      </div>
+      <agreement @showbox="toshow" v-if="msg"></agreement>
+      <secrecy @showboxSecrecy="toshowSecrecy" v-if="secrecy"></secrecy>
     </template>
   </div>
 </template>
@@ -75,6 +84,7 @@ export default {
       code4: '',
       mobileCode: '',
       userName: '',
+      userPassword: '',
       imgCodeSrc: '',
       id: '',
       verificationCode: '',
@@ -143,10 +153,11 @@ export default {
           })
           return
         }
-        this.$vux.toast.show({
+        console.log('请填写手机号或图片验证码')
+        /* this.$vux.toast.show({
           type: 'warn',
           text: '请填写手机号或图片验证码'
-        })
+        }) */
       })
     },
     checkCode () {
@@ -187,6 +198,7 @@ export default {
             'phone': this.mobile,
             'code': this.mobileCode,
             'userName': this.userName,
+            'password': this.userPassword,
             'channel': 1
           }).then((response) => {
             if (response.data.status == 0) {
@@ -222,10 +234,11 @@ export default {
           })
           return
         }
-        this.$vux.toast.show({
+        console.log('请填写用户名及登录密码')
+        /* this.$vux.toast.show({
           type: 'warn',
-          text: '请填写用户名'
-        })
+          text: '请填写用户名及登录密码'
+        }) */
       })
     },
     focusInput (event) {

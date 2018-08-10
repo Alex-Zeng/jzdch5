@@ -31,7 +31,7 @@
     <template>
       <div class="search-lists-header">
         <i :class="{'icon iconfont icon-fangge1':isA,'icon iconfont icon-liebiao':!isA}" @click="toggle()"></i>
-        <i class="icon iconfont icon-jiagepaixu1" @click="sortMethod"></i>
+        <i class="jiagepaixu1" :class="{ 'sort': isSort, 'down': isDown }" @click="sortMethod"></i>
       </div>
       <div class="mescroll" id="mescroll" style="padding-top: 2.2rem">
         <!--展示上拉加载的数据列表-->
@@ -94,7 +94,9 @@ export default {
       cateId: '',
       isA: true,
       showList: true,
-      mySort: 'asc'
+      mySort: 'asc',
+      isSort: false,
+      isDown: false
     }
   },
   methods: {
@@ -111,8 +113,12 @@ export default {
     sortMethod () {
       if (this.mySort == 'asc') {
         this.mySort = 'desc'
+        this.isSort = true
+        this.isDown = false
       } else {
         this.mySort = 'asc'
+        this.isSort = false
+        this.isDown = true
       }
       this.mescroll.resetUpScroll()
     },
@@ -217,13 +223,8 @@ export default {
             offset: 500,
             empty: { // 配置列表无任何数据的提示
               warpId: 'dataList',
-              // icon: '../res/img/mescroll-empty.png'
-              tip: '亲,暂无相关数据哦~',
-              btntext: '去逛逛 >',
-              btnClick: function () {
-                // alert('点击了去逛逛按钮')
-                self.$router.push('/')
-              }
+              icon: './static/images/shoucangjia.png',
+              tip: '暂时还没有相关的信息'
             }
           }
         })

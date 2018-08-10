@@ -7,6 +7,12 @@
       </div>
       <div style="padding-right: 2rem">&emsp;</div>
     </div>
+    <div v-if="lists.length == 0" class="temp-box">
+      <img class="temp-img" src="@/assets/images/address-temp.png" alt="">
+      <h3>您还没有添加的收货地址</h3>
+      <p class="text-muted">去添加试试吧</p>
+      <button @click="$router.replace('/')">快速添加</button>
+    </div>
     <ul class="address-lists">
       <li v-for="(item, index) in lists" :key="index">
         <div  @click="selectAddress(index)">
