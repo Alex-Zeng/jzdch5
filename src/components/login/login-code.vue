@@ -55,13 +55,22 @@
           <input type="password" class="border-input" name="密码" v-validate="'required|verificationPassword'" minlength="6" maxlength="20" required v-model="userPassword" placeholder="请设置6~20位字母及数字的组合密码">
           <span v-show="errors.has('密码')" class="help is-danger">{{ errors.first('密码') }}</span>
         </div>
-        <button type="submit" class="btn btn-primary" @click="submit">提交</button>
+        <button type="submit" class="btn btn-primary" @click="submit">登录</button>
       </div>
+      <div class="user-agreement">
+        <i class="icon iconfont icon-xuanzhong" style="color: #1EB9EE;"></i>
+        我已阅读并同意
+        <a href="javascript:;" @click="msg = true">《用户协议》</a>、<a href="javascript:;" @click="secrecy = true">《保密协议》</a>
+      </div>
+      <agreement @showbox="toshow" v-if="msg"></agreement>
+      <secrecy @showboxSecrecy="toshowSecrecy" v-if="secrecy"></secrecy>
     </template>
   </div>
 </template>
 <script>
 import axios from 'axios'
+import agreement from '@/components/login/agreement'
+import secrecy from '@/components/login/secrecy'
 require('../../assets/css/login.css')
 export default {
   name: 'loginByCode',
@@ -84,10 +93,18 @@ export default {
       model3Show: false,
       setTimeOut: true,
       resetCode: false,
+      msg: false,
+      secrecy: false,
       time: 60
     }
   },
   methods: {
+    toshow (data) {
+      this.msg = data
+    },
+    toshowSecrecy (data) {
+      this.secrecy = data
+    },
     getImgCode () {
       axios.get('api/captcha/img', this.mobile).then((response) => {
         if (response.data.status == 0) {
@@ -134,7 +151,7 @@ export default {
             // 响应错误回调
             this.errorMsg()
           })
-          return  false
+          return false
         }
       })
     },
@@ -159,15 +176,9 @@ export default {
                 this.$router.push('/')
               }
             } else if (response.data.status == -3) {
-              this.$vux.toast.show({
-                type: 'warn',
-                text: '请输入用户名，提交注册',
-                onShow () {
-                  self.model1Show = false
-                  self.model2Show = false
-                  self.model3Show = true
-                }
-              })
+              self.model1Show = false
+              self.model2Show = false
+              self.model3Show = true
             } else {
               this.$vux.toast.show({
                 type: 'warn',
@@ -227,12 +238,8 @@ export default {
             // 响应错误回调
             this.errorMsg()
           })
-          return
+          return false
         }
-        this.$vux.toast.show({
-          type: 'warn',
-          text: '请填写用户名'
-        })
       })
     },
     focusInput (event) {
@@ -312,7 +319,10 @@ export default {
       this.checkCode()
     }
   },
-  components: {}
+  components: {
+    agreement,
+    secrecy
+  }
 }
 </script>
 

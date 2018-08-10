@@ -56,7 +56,7 @@
           <input type="password" class="border-input" name="密码" v-validate="'required|verificationPassword'" minlength="6" maxlength="20" required v-model="userPassword" placeholder="请设置6~20位字母及数字的组合密码">
           <span v-show="errors.has('密码')" class="help is-danger">{{ errors.first('密码') }}</span>
         </div>
-        <button type="submit" class="btn btn-primary" @click="submit">提交</button>
+        <button type="submit" class="btn btn-primary" @click="submit">登录</button>
       </div>
       <div class="user-agreement">
         <i class="icon iconfont icon-xuanzhong" style="color: #1EB9EE;"></i>
