@@ -149,19 +149,19 @@
             <span class="label">备注</span><div class="value">{{data.remark}}</div>
           </div>
           <div class="line"></div>
-          <div v-if="parseInt(data.groupId ) == 5 && parseInt(data.state) == 3">
+          <div v-if="parseInt(data.groupId ) == 5 && (!data.expressCode || !data.express)">
             <div class="item"><b style="color: #222222;">填写发货信息</b></div>
             <Group>
-              <XInput title="运单号" v-model="expressForm.expressCode" text-align="right"></XInput>
-              <XInput title="物流公司" v-model="expressForm.express" text-align="right"></XInput>
-              <datetime v-model="expressForm.sendDate" title="发货日期"></datetime>
-              <datetime title="预计到达" v-model="expressForm.estimatedDate"></datetime>
+              <XInput title="运单号" v-model="expressForm.expressCode" text-align="right" placeholder="请输入运单号"></XInput>
+              <XInput title="物流公司" v-model="expressForm.express" text-align="right" placeholder="请输入物流公司"></XInput>
+              <datetime v-model="expressForm.sendDate" title="发货日期" placeholder="请选择发货日期"></datetime>
+              <datetime title="预计到达" v-model="expressForm.estimatedDate" placeholder="请选择预计到达日期"></datetime>
             </Group>
             <div class="item">
               <button type="button" class="btn btn-primary" @click="submitExpress">提交</button>
             </div>
           </div>
-          <div v-if="(parseInt(data.groupId) == 4 && parseInt(data.state) <= 3) || (!data.expressCode || !data.express)">
+          <div v-if="parseInt(data.groupId) == 4 && (parseInt(data.state) <= 3 || (!data.expressCode || !data.express))">
             <div class="order-tips">
               <div><img src="../../assets/images/empty_box.png" alt="" style="background-color: #fff;"></div>
               <div>暂无物流信息</div>
