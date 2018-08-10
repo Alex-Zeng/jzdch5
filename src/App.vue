@@ -10,6 +10,9 @@ export default {
   watch: {
     $route: {
       handler: function (val, oldVal) {
+        if (oldVal.name === 'search') {
+          localStorage.removeItem('searchId')
+        }
         if (localStorage.getItem('loginToken') === null) {
           document.cookie = '_token='
         }
