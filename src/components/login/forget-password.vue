@@ -70,7 +70,7 @@
           <span v-show="errors.has('密码')" class="help is-danger">{{ errors.first('密码') }}</span>
         </div>
         <div class="cells border-input-cells">
-          <input type="password" class="border-input" name="确认密码" minlength="6" maxlength="20" v-validate="'required|verificationPassword|confirmed:password'" v-model="confirmPassword" placeholder="请再次输入密码">
+          <input type="password" class="border-input" name="确认密码" minlength="6" maxlength="20" v-validate="'required|verificationPassword|confirmed:密码'" v-model="confirmPassword" placeholder="请再次输入密码">
           <span v-show="errors.has('确认密码')" class="help is-danger">{{ errors.first('确认密码') }}</span>
         </div>
         <button type="button" class="btn btn-primary" @click="submit">提交</button>
