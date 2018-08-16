@@ -142,7 +142,7 @@
           <div class="line">
           </div>
           <div class="item">
-            <span class="label">交货期</span><span class="value">{{data.date}}</span>
+            <span class="label">期望交货日期</span><span class="value">{{data.date}}</span>
           </div>
 
           <div class="item">

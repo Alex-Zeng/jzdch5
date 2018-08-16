@@ -16,8 +16,8 @@
         <ul>
           <li v-for="(item, index) in detail" :key="index">
             <div class="indent-detail-order">
-              <p><span>订单号</span>{{item.orderNo}}</p>
-              <p><span>交货期</span>{{item.date}}</p>
+              <p><span>&emsp;&emsp;&emsp;订单号</span>{{item.orderNo}}</p>
+              <p><span>期望交货日期</span>{{item.date}}</p>
             </div>
             <div class="indent-detail-seller indent-title">
               <i class="icon iconfont icon-shangdian text-blue"></i>
