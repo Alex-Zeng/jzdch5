@@ -205,7 +205,7 @@ export default {
             'phone': this.mobile,
             'code': this.mobileCode,
             'userName': this.userName,
-            'password': this.userName,
+            'password': this.userPassword,
             'channel': 0
           }).then((response) => {
             if (response.data.status == 0) {
